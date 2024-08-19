@@ -29,6 +29,8 @@ function create_block_ncmaz_fse_core_block_init()
 {
 	register_block_type(__DIR__ . '/build/rating-block');
 	register_block_type(__DIR__ . '/build/review-card-block');
+	register_block_type(__DIR__ . '/build/like-button-block');
+	register_block_type(__DIR__ . '/build/my-first-interactive-block');
 }
 add_action('init', 'create_block_ncmaz_fse_core_block_init');
 
@@ -46,7 +48,8 @@ function register_review_rating_post_meta()
 			'post',
 			$meta_key,
 			array(
-				'show_in_rest'  => true,
+				'description'    => 'A meta key associated with a string meta value.',
+				'show_in_rest'  =>  true,
 				'single'        => true,
 				'type'          => $args['type'],
 				'auth_callback' => function () {
@@ -57,3 +60,45 @@ function register_review_rating_post_meta()
 	}
 }
 add_action('init', 'register_review_rating_post_meta');
+
+
+// Tạo post meta thể hiện trạng thái yêu thích của bài viết bao gồm tổng số lượt yêu thích và danh sách user đã yêu thích
+function register_like_post_meta()
+{
+	$post_meta = array(
+		'_likeCount' => array('type' => 'integer'),
+		'_likedBy'   => array('type' => 'array'),
+	);
+
+	foreach ($post_meta as $meta_key => $args) {
+		register_post_meta(
+			'post',
+			$meta_key,
+			array(
+				'description'    => 'A meta key associated with a string meta value.',
+				'show_in_rest'  =>   array(
+					'schema' => array(
+						'type'  => 'array',
+						'items' => array(
+							'type' => 'number',
+						),
+					),
+				),
+				'single'        => true,
+				'type'          => $args['type'],
+				'auth_callback' => function () {
+					return current_user_can('edit_posts'); // Chỉ cho phép người dùng có quyền chỉnh sửa bài viết xem meta key
+				}
+			)
+		);
+	}
+}
+add_action('init', 'register_like_post_meta');
+
+
+//
+
+
+
+// import file like-handler.php
+require_once plugin_dir_path(__FILE__) . 'includes/like-handler.php';
