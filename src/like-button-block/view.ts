@@ -5,49 +5,65 @@ import { store, getContext } from "@wordpress/interactivity";
 
 // view.js
 interface TContext {
-	isOpen: boolean;
+	isLiked: boolean;
+	postId: number;
+	postLikesCount: number;
+	loading: boolean;
 }
 
 interface TState {
 	nonce: string;
 	ajaxUrl: string;
+	userId: number;
 }
 
 const { state } = store("ncmazfse-core", {
 	state: {} as TState,
 	actions: {
-		toggle: () => {
-			const context = getContext<TContext>();
-			context.isOpen = !context.isOpen;
-			console.log("actions", { state, context });
-		},
 		handleLike: () => {
+			const context = getContext<TContext>();
 			try {
+				// Update the state
+				context.loading = true;
+
+				// Send the data to the server
 				const formData = new FormData();
 				formData.append("action", "handle_like");
 				formData.append("_ajax_nonce", state.nonce);
+				formData.append("post_id", context.postId.toString());
+				formData.append("user_id", state.userId.toString());
 
-				const data = fetch(state.ajaxUrl, {
+				fetch(state.ajaxUrl, {
 					method: "POST",
 					body: formData,
 				})
-					.then((response) => {
-						console.log("Server data!", data);
-						return response.json();
+					.then((response) => response.json())
+					.then(({ data, success }) => {
+						if (!success) {
+							throw new Error("Server error");
+						}
+						const isLiked = Boolean(data.is_liked);
+						context.isLiked = isLiked;
+						if (isLiked) {
+							context.postLikesCount = context.postLikesCount + 1;
+						} else if (context.postLikesCount > 0) {
+							context.postLikesCount = context.postLikesCount - 1;
+						}
 					})
-					.catch((error) => {
-						console.log("Error Server data!", error);
+					.finally(() => {
+						context.loading = false;
 					});
 			} catch (e) {
 				// Something went wrong!
 				console.log("Error Server data!", e);
+				context.loading = false;
 			}
 		},
 	},
 	callbacks: {
-		logIsOpen: () => {
-			const context = getContext<TContext>();
-			console.log("callbacks", { state, context });
+		logHandleLike: () => {
+			const { isLiked, postLikesCount } = getContext<TContext>();
+			console.log("callbacks", { isLiked, postLikesCount, state });
 		},
 	},
 });

@@ -4,14 +4,21 @@ function ncmazfse_core__handle_like()
 {
     // Kiểm tra nonce để đảm bảo an toàn
     check_ajax_referer('like_button_nonce', 'security');
+    $post_id = $_POST['post_id'];
+    $user_id = $_POST['user_id'];
 
-    // Lấy ID bài viết từ dữ liệu gửi lên
-    $post_id = intval($_POST['post_id']);
-
-    // ... Logic xử lý like của bạn (ví dụ: cập nhật database)
-
-    // Trả về phản hồi (có thể là số lượt like mới, thông báo thành công, ...)
-    wp_send_json_success('Đã like bài viết!');
+    if (!$post_id || !$user_id) {
+        wp_send_json_error('Invalid post ID or user ID');
+    } else {
+        // Cập nhật thông tin lượt like
+        $liked = ncmazfse_core__update_post_like($post_id, $user_id);
+        // Trả về phản hồi (có thể là số lượt like mới, thông báo thành công, ...)
+        wp_send_json_success(array(
+            'is_liked' => $liked,
+            'user_id' => $user_id,
+            'post_id' => $post_id
+        ));
+    }
 
     // Luôn kết thúc bằng wp_die() khi xử lý AJAX
     wp_die();
@@ -21,29 +28,75 @@ add_action('wp_ajax_nopriv_handle_like', 'ncmazfse_core__handle_like'); // Đăn
 
 
 // 
-function update_post_likes($post_id, $user_id)
+function ncmazfse_core__update_post_like($post_id, $user_id)
 {
-    $likes = get_post_meta($post_id, 'post_likes', true);
+    // Lấy danh sách lượt like là danh sách post-type "post like", có author là user_id, và title là post_id
+    $post_likes = get_posts([
+        'post_type' => 'post_like',
+        'numberposts' => 1,
+        'title' =>  $post_id,
+        "meta_query" => [
+            [
+                'key' => 'user_id',
+                'value' => $user_id,
+            ],
+        ]
+    ]);
 
-    if (! is_array($likes)) {
-        $likes = array();
-    }
+    // Nếu đã like, thì bỏ like
+    if ($post_likes) {
+        wp_delete_post($post_likes[0]->ID, true);
+        return false;
+    } else {
+        // Nếu chưa like, thì thêm like
+        wp_insert_post([
+            'post_type' => 'post_like',
+            'post_title' => $post_id,
+            'post_status' => 'publish',
+            'meta_input' => [
+                'user_id' => $user_id,
+                'post_id' => $post_id
+            ]
+        ]);
 
-    if (! in_array($user_id, $likes)) {
-        $likes[] = $user_id;
-        update_post_meta($post_id, 'post_likes', $likes);
+        return true;
     }
 }
 
-function get_post_likes($post_id)
+// 
+function ncmazfse_core__check_user_like($post_id, $user_id)
 {
-    $likes = get_post_meta($post_id, 'post_likes', true);
+    $post_likes = get_posts([
+        'post_type' => 'post_like',
+        'numberposts' => 1,
+        'title' =>  $post_id,
+        "meta_query" => [
+            [
+                'key' => 'user_id',
+                'value' => $user_id,
+            ],
+        ]
+    ]);
 
-    if (is_array($likes)) {
-        // Lấy thông tin người dùng từ cơ sở dữ liệu dựa trên $likes
-        // ...
-        return $likes; // Hoặc trả về thông tin người dùng đã xử lý
+    if ($post_likes) {
+        return true;
     } else {
-        return array();
+        return false;
     }
+}
+
+function ncmazfse_core__get_post_likes($post_id)
+{
+    $post_likes = get_posts([
+        'post_type' => 'post_like',
+        'numberposts' => -1,
+        'title' =>  $post_id,
+    ]);
+
+    return $post_likes;
+}
+
+function ncmazfse_core__get_post_likes_count($post_id)
+{
+    return count(ncmazfse_core__get_post_likes($post_id));
 }
