@@ -12,7 +12,7 @@ interface TContext {
 }
 
 interface TState {
-	nonce: string;
+	likeButtonNonce: string;
 	ajaxUrl: string;
 	userId: number;
 }
@@ -22,10 +22,6 @@ const { state } = store("ncmazfse-core", {
 	actions: {
 		handleLike: () => {
 			const context = getContext<TContext>();
-			if (!state.userId) {
-				console.log("User is not logged in!");
-				return;
-			}
 
 			try {
 				// Update the state
@@ -34,9 +30,10 @@ const { state } = store("ncmazfse-core", {
 				// Send the data to the server
 				const formData = new FormData();
 				formData.append("action", "handle_like");
-				formData.append("_ajax_nonce", state.nonce);
+				formData.append("_ajax_nonce", state.likeButtonNonce);
 				formData.append("post_id", context.postId.toString());
 				formData.append("user_id", state.userId.toString());
+				formData.append("handle", context.isLiked ? "remove" : "add");
 
 				fetch(state.ajaxUrl, {
 					method: "POST",
@@ -54,6 +51,25 @@ const { state } = store("ncmazfse-core", {
 						} else if (context.postLikesCount > 0) {
 							context.postLikesCount = context.postLikesCount - 1;
 						}
+
+						if (!state.userId) {
+							// Update local storage
+							const postId = context.postId;
+							const likedPosts = localStorage.getItem("likedPosts");
+							const likedPostsArray = likedPosts ? JSON.parse(likedPosts) : [];
+							if (isLiked) {
+								likedPostsArray.push(postId);
+							} else {
+								const index = likedPostsArray.indexOf(postId);
+								if (index > -1) {
+									likedPostsArray.splice(index, 1);
+								}
+							}
+							localStorage.setItem(
+								"likedPosts",
+								JSON.stringify(likedPostsArray),
+							);
+						}
 					})
 					.finally(() => {
 						context.loading = false;
@@ -66,9 +82,19 @@ const { state } = store("ncmazfse-core", {
 		},
 	},
 	callbacks: {
-		logHandleLike: () => {
-			const { isLiked, postLikesCount } = getContext<TContext>();
-			console.log("callbacks", { isLiked, postLikesCount, state });
+		logHandleLikeInit: () => {
+			const context = getContext<TContext>();
+			console.log("like callbacks init");
+
+			// if user is not logged in
+			if (!state.userId) {
+				// check from local storage
+				const postId = context.postId;
+				const likedPosts = localStorage.getItem("likedPosts");
+				const likedPostsArray = likedPosts ? JSON.parse(likedPosts) : [];
+				context.isLiked = likedPostsArray.includes(postId);
+				console.log("like callbacks -- update local storage", context.isLiked);
+			}
 		},
 	},
 });

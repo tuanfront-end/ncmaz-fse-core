@@ -1,8 +1,7 @@
 <?php
 global $post;
 
-// Generate unique id for aria-controls.
-$_nonce = wp_create_nonce('like_button_nonce');
+// Generate unique id for aria-controls. 
 $unique_id = wp_unique_id('p-');
 $current_post_id = get_the_ID();
 $user_id = get_current_user_id();
@@ -12,7 +11,7 @@ wp_interactivity_state(
 	'ncmazfse-core',
 	[
 		'ajaxUrl' => admin_url('admin-ajax.php'),
-		'nonce'   => $_nonce,
+		'likeButtonNonce'   => wp_create_nonce('like_button_nonce'),
 		"userId" => $user_id,
 	]
 );
@@ -31,13 +30,14 @@ $isLiked = ncmazfse_core__check_user_like($current_post_id, $user_id);
 		"isLiked" => $isLiked,
 		"postLikesCount" => $postLikesCount,
 		"loading" => false,
-		"userID" => $user_id,
 	]); ?>
-	data-wp-watch="callbacks.logHandleLike">
+	data-wp-init="callbacks.logHandleLikeInit">
+
 	<button
 		data-wp-on--click="actions.handleLike"
 		data-wp-class--is-liked="context.isLiked"
-		data-wp-class--open-login-modal="!context.userID"
+		data-wp-class--is-loading="context.loading"
+		data-wp-bind--disabled="context.loading"
 		class="nc-post-like-button">
 
 		<span>

@@ -4,11 +4,10 @@ import { useEntityRecords } from "@wordpress/core-data";
 import { useBlockProps, InspectorControls } from "@wordpress/block-editor";
 import "./editor.scss";
 import { EditProps } from "../types";
-import { FavouriteIcon, StarIcon, ThumbsUpIcon } from "../components/Icon";
+import { AllBookmarkIcon, Bookmark02Icon } from "../components/Icon";
 
 interface Attributes {
-	isLiked: boolean;
-	iconStyle: "star" | "heart" | "like";
+	iconStyle: "bookmarkIcon1" | "bookmarkIcon2";
 	style: Record<string, any>;
 }
 
@@ -21,13 +20,13 @@ export default function Edit(props: EditProps<Attributes>) {
 
 	const { iconStyle } = attributes;
 
-	const { records } = useEntityRecords("postType", "post_like", {
+	const { records } = useEntityRecords("postType", "post_save", {
 		post_status: "publish",
 		per_page: -1,
 		meta_key: "post_id",
 		meta_value: postId,
 	});
-	const postLikesCount = records?.length || 0;
+	const postSavesCount = records?.length || 0;
 
 	const onChangeIconStyle = (iconStyle: string) => {
 		setAttributes({ iconStyle: iconStyle as Attributes["iconStyle"] });
@@ -44,16 +43,12 @@ export default function Edit(props: EditProps<Attributes>) {
 						options={
 							[
 								{
-									label: __("Star", "ncmaz-fse-core"),
-									value: "star",
+									label: __("Bookmark Icon 2", "ncmaz-fse-core"),
+									value: "bookmarkIcon1",
 								},
 								{
-									label: __("Heart", "ncmaz-fse-core"),
-									value: "heart",
-								},
-								{
-									label: __("Like", "ncmaz-fse-core"),
-									value: "like",
+									label: __("Bookmark Icon 2", "ncmaz-fse-core"),
+									value: "bookmarkIcon2",
 								},
 							] as {
 								label: string;
@@ -64,20 +59,17 @@ export default function Edit(props: EditProps<Attributes>) {
 				</PanelBody>
 			</InspectorControls>
 			<div {...useBlockProps()}>
-				<button className="nc-post-like-button">
+				<button className="nc-post-save-button">
 					<span>
-						{iconStyle === "star" && (
-							<StarIcon width={20} height={20} color="currentColor" />
+						{iconStyle === "bookmarkIcon1" && (
+							<Bookmark02Icon width={20} height={20} color="currentColor" />
 						)}
-						{iconStyle === "heart" && (
-							<FavouriteIcon width={20} height={20} color="currentColor" />
-						)}
-						{iconStyle === "like" && (
-							<ThumbsUpIcon width={20} height={20} color="currentColor" />
+						{iconStyle === "bookmarkIcon2" && (
+							<AllBookmarkIcon width={20} height={20} color="currentColor" />
 						)}
 					</span>
 
-					<span>{postLikesCount}</span>
+					<span>{postSavesCount}</span>
 				</button>
 			</div>
 		</>

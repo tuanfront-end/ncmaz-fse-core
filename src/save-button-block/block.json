@@ -5,14 +5,13 @@
 	"version": "0.1.0",
 	"title": "Save Button",
 	"category": "widgets",
-	"icon": "smile",
 	"usesContext": ["postId", "postType"],
 	"description": "Example block scaffolded with Create Block tool.",
 	"example": {},
 	"attributes": {
 		"iconStyle": {
 			"type": "string",
-			"default": "bookmark"
+			"default": "bookmarkIcon1"
 		},
 		"backgroundColor": {
 			"type": "string"
