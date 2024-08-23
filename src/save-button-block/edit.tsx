@@ -59,18 +59,18 @@ export default function Edit(props: EditProps<Attributes>) {
 				</PanelBody>
 			</InspectorControls>
 			<div {...useBlockProps()}>
-				<button className="nc-post-save-button">
-					<span>
+				<div className="nc-post-save-button">
+					<div className="nc-post-save-button__icon">
 						{iconStyle === "bookmarkIcon1" && (
 							<Bookmark02Icon width={20} height={20} color="currentColor" />
 						)}
 						{iconStyle === "bookmarkIcon2" && (
 							<AllBookmarkIcon width={20} height={20} color="currentColor" />
 						)}
-					</span>
+					</div>
 
-					<span>{postSavesCount}</span>
-				</button>
+					<span className="nc-post-save-button__count">{postSavesCount}</span>
+				</div>
 			</div>
 		</>
 	);

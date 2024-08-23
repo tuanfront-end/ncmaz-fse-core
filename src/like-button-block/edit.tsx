@@ -64,8 +64,8 @@ export default function Edit(props: EditProps<Attributes>) {
 				</PanelBody>
 			</InspectorControls>
 			<div {...useBlockProps()}>
-				<button className="nc-post-like-button">
-					<span>
+				<div className="nc-post-like-button">
+					<div className="nc-post-like-button__icon">
 						{iconStyle === "star" && (
 							<StarIcon width={20} height={20} color="currentColor" />
 						)}
@@ -75,10 +75,10 @@ export default function Edit(props: EditProps<Attributes>) {
 						{iconStyle === "like" && (
 							<ThumbsUpIcon width={20} height={20} color="currentColor" />
 						)}
-					</span>
+					</div>
 
-					<span>{postLikesCount}</span>
-				</button>
+					<span className="nc-post-like-button__count">{postLikesCount}</span>
+				</div>
 			</div>
 		</>
 	);

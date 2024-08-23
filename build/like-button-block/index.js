@@ -182,9 +182,11 @@ function Edit(props) {
     }]
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.useBlockProps)()
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "nc-post-like-button"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, iconStyle === "star" && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Icon__WEBPACK_IMPORTED_MODULE_6__.StarIcon, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "nc-post-like-button__icon"
+  }, iconStyle === "star" && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Icon__WEBPACK_IMPORTED_MODULE_6__.StarIcon, {
     width: 20,
     height: 20,
     color: "currentColor"
@@ -196,7 +198,9 @@ function Edit(props) {
     width: 20,
     height: 20,
     color: "currentColor"
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, postLikesCount))));
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "nc-post-like-button__count"
+  }, postLikesCount))));
 
   // Other code will go here, don't forget or delete the closing curly brace!
 }

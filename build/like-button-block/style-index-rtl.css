@@ -1,18 +1,40 @@
 /*!*********************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/like-button-block/style.scss ***!
   \*********************************************************************************************************************************************************************************************************************************************************/
-.nc-post-like-button {
-  padding: 0.25rem 0.5rem;
+.nc-post-like-button,
+.nc-post-save-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  min-width: 3rem;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+.nc-post-like-button.is-liked,
+.nc-post-save-button.is-liked {
+  color: #ff0000;
+}
+.nc-post-like-button:hover .nc-post-like-button__icon,
+.nc-post-like-button:hover .nc-post-save-button__icon,
+.nc-post-save-button:hover .nc-post-like-button__icon,
+.nc-post-save-button:hover .nc-post-save-button__icon {
+  background-color: #fef2f2;
+}
+.nc-post-like-button__icon,
+.nc-post-save-button__icon {
+  font-size: 1.25rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
-  gap: 0.5rem;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  min-width: 3rem;
+  background-color: #f5f5f5;
 }
-.nc-post-like-button.is-liked {
-  color: #ff0000;
-  background-color: #fee2e2;
+.nc-post-like-button__count,
+.nc-post-save-button__count {
+  font-size: 0.875rem;
+  min-width: 1.125rem;
+  text-align: start;
 }
