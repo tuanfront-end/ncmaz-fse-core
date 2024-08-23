@@ -37,6 +37,8 @@ function ncmaz_fse_core_register_blocks_init()
 	register_block_type(__DIR__ . '/build/review-card-block');
 	register_block_type(__DIR__ . '/build/like-button-block');
 	register_block_type(__DIR__ . '/build/save-button-block');
+	register_block_type(__DIR__ . '/build/comment-button-block');
+	register_block_type(__DIR__ . '/build/reading-time-block');
 }
 add_action('init', 'ncmaz_fse_core_register_blocks_init');
 

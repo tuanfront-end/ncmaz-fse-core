@@ -7,14 +7,15 @@
 	min-width: 3rem;
 	font-size: 0.75rem;
 	line-height: 1;
-	&.is-liked {
+	text-decoration: none;
+
+	&.is-liked,
+	&.is-saved {
 		color: #ff0000;
 	}
-
 	&:hover &__icon {
 		background-color: #fef2f2;
 	}
-
 	&__icon {
 		font-size: 1.25rem;
 		width: 2.25rem;
@@ -24,6 +25,10 @@
 		align-items: center;
 		justify-content: center;
 		background-color: #f5f5f5;
+		svg {
+			width: 1rem;
+			height: 1rem;
+		}
 	}
 	&__count {
 		font-size: 0.875rem;

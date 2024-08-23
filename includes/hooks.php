@@ -67,3 +67,15 @@ add_filter('rest_post_save_query', function ($args, $request) {
 
     return $args;
 }, 99, 2);
+
+
+// Adding a new (custom) block category and show that category at the top
+add_filter('block_categories_all', 'ncmaz_fse_core_block_category', 10, 2);
+function ncmaz_fse_core_block_category($categories, $post)
+{
+    array_unshift($categories, array(
+        'slug'    => 'ncmazfse',
+        'title' => 'Ncmaz'
+    ));
+    return $categories;
+}

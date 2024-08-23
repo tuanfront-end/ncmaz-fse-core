@@ -43,7 +43,7 @@ export default function Edit(props: EditProps<Attributes>) {
 						options={
 							[
 								{
-									label: __("Bookmark Icon 2", "ncmaz-fse-core"),
+									label: __("Bookmark Icon 1", "ncmaz-fse-core"),
 									value: "bookmarkIcon1",
 								},
 								{
