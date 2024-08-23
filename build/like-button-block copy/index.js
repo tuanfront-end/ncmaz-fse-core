@@ -71,10 +71,10 @@ const ThumbsUpIcon = props => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElemen
 
 /***/ }),
 
-/***/ "./src/like-button-block/edit.tsx":
-/*!****************************************!*\
-  !*** ./src/like-button-block/edit.tsx ***!
-  \****************************************/
+/***/ "./src/like-button-block copy/edit.tsx":
+/*!*********************************************!*\
+  !*** ./src/like-button-block copy/edit.tsx ***!
+  \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -91,7 +91,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./editor.scss */ "./src/like-button-block/editor.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./editor.scss */ "./src/like-button-block copy/editor.scss");
 /* harmony import */ var _components_Icon__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/Icon */ "./src/components/Icon.tsx");
 
 
@@ -165,18 +165,18 @@ function Edit(props) {
 
 /***/ }),
 
-/***/ "./src/like-button-block/index.ts":
-/*!****************************************!*\
-  !*** ./src/like-button-block/index.ts ***!
-  \****************************************/
+/***/ "./src/like-button-block copy/index.ts":
+/*!*********************************************!*\
+  !*** ./src/like-button-block copy/index.ts ***!
+  \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/like-button-block/style.scss");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/like-button-block/edit.tsx");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./src/like-button-block/block.json");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/like-button-block copy/style.scss");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/like-button-block copy/edit.tsx");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./src/like-button-block copy/block.json");
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
@@ -213,10 +213,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/like-button-block/editor.scss":
-/*!*******************************************!*\
-  !*** ./src/like-button-block/editor.scss ***!
-  \*******************************************/
+/***/ "./src/like-button-block copy/editor.scss":
+/*!************************************************!*\
+  !*** ./src/like-button-block copy/editor.scss ***!
+  \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -225,10 +225,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/like-button-block/style.scss":
-/*!******************************************!*\
-  !*** ./src/like-button-block/style.scss ***!
-  \******************************************/
+/***/ "./src/like-button-block copy/style.scss":
+/*!***********************************************!*\
+  !*** ./src/like-button-block copy/style.scss ***!
+  \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -297,10 +297,10 @@ module.exports = window["wp"]["i18n"];
 
 /***/ }),
 
-/***/ "./src/like-button-block/block.json":
-/*!******************************************!*\
-  !*** ./src/like-button-block/block.json ***!
-  \******************************************/
+/***/ "./src/like-button-block copy/block.json":
+/*!***********************************************!*\
+  !*** ./src/like-button-block copy/block.json ***!
+  \***********************************************/
 /***/ ((module) => {
 
 module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/like-button-block","version":"0.1.0","title":"Like Button","category":"widgets","icon":"heart","usesContext":["postId","postType"],"description":"Example block scaffolded with Create Block tool.","example":{},"attributes":{"isLiked":{"type":"boolean","default":false},"iconStyle":{"type":"string","default":"heart"},"backgroundColor":{"type":"string"},"textColor":{"type":"string"},"gradient":{"type":"string"},"width":{"type":"number"}},"supports":{"anchor":true,"splitting":true,"align":false,"alignWide":false,"color":{"__experimentalSkipSerialization":true,"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"reusable":false,"shadow":{"__experimentalSkipSerialization":true},"spacing":{"__experimentalSkipSerialization":true,"padding":["horizontal","vertical"],"__experimentalDefaultControls":{"padding":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalSkipSerialization":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"__experimentalSelector":".wp-block-button .wp-block-button__link","interactivity":true},"textdomain":"like-button-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
@@ -417,8 +417,8 @@ module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/tru
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
-/******/ 			"like-button-block/index": 0,
-/******/ 			"like-button-block/style-index": 0
+/******/ 			"like-button-block copy/index": 0,
+/******/ 			"like-button-block copy/style-index": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -468,7 +468,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/tru
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["like-button-block/style-index"], () => (__webpack_require__("./src/like-button-block/index.ts")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["like-button-block copy/style-index"], () => (__webpack_require__("./src/like-button-block copy/index.ts")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

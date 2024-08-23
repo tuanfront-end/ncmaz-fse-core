@@ -70,6 +70,10 @@ const {
   actions: {
     handleLike: () => {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      if (!state.userId) {
+        console.log("User is not logged in!");
+        return;
+      }
       try {
         // Update the state
         context.loading = true;

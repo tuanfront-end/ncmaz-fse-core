@@ -47,10 +47,6 @@ function Edit({
 }) {
   const [meta, updateMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.useEntityProp)("postType", postType, "meta", postId);
   const [storedFeaturedImage, setFeaturedImage] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.useEntityProp)("postType", postType, "featured_media", postId);
-  console.log(222, {
-    meta,
-    storedFeaturedImage
-  });
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     const initStyle = meta?._ratingStyle ? meta?._ratingStyle : "star";
     setAttributes({

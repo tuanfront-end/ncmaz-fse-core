@@ -26,8 +26,6 @@ export default function Edit({
 		postId,
 	);
 
-	console.log(222, { meta, storedFeaturedImage });
-
 	useEffect(() => {
 		const initStyle = meta?._ratingStyle ? meta?._ratingStyle : "star";
 		setAttributes({
