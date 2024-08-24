@@ -10,13 +10,12 @@
 
 	&.is-liked,
 	&.is-saved {
-		color: #ff0000;
+		// color: #ff0000;
 	}
 	&:hover &__icon {
-		background-color: #fef2f2;
+		// background-color: #fef2f2;
 	}
 	&__icon {
-		font-size: 1.25rem;
 		// min-width: 2.25rem;
 		// min-height: 2.25rem;
 		// border-radius: 999px;

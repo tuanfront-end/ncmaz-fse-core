@@ -1,13 +1,17 @@
 import { __ } from "@wordpress/i18n";
 import { PanelBody, SelectControl } from "@wordpress/components";
 import { useEntityRecords } from "@wordpress/core-data";
-import { useBlockProps, InspectorControls } from "@wordpress/block-editor";
+import {
+	InspectorControls,
+	useBlockProps,
+	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
+	__experimentalGetGapCSSValue as getGapCSSValue,
+	InnerBlocks,
+} from "@wordpress/block-editor";
 import "./editor.scss";
 import { EditProps } from "../types";
-import { FavouriteIcon, StarIcon, ThumbsUpIcon } from "../components/Icon";
 
 interface Attributes {
-	isLiked: boolean;
 	iconStyle: "star" | "heart" | "like";
 	style: Record<string, any>;
 }
@@ -16,7 +20,7 @@ export default function Edit(props: EditProps<Attributes>) {
 	const {
 		attributes,
 		setAttributes,
-		context: { postId, postType },
+		context: { postId },
 	} = props;
 
 	const { iconStyle } = attributes;
@@ -32,6 +36,11 @@ export default function Edit(props: EditProps<Attributes>) {
 	const onChangeIconStyle = (iconStyle: string) => {
 		setAttributes({ iconStyle: iconStyle as Attributes["iconStyle"] });
 	};
+
+	const spacingProps = useSpacingProps(attributes);
+	const gapCSSValue = getGapCSSValue(attributes.style?.spacing?.blockGap);
+
+	console.log(11, { attributes, spacingProps, gapCSSValue });
 
 	return (
 		<>
@@ -63,25 +72,32 @@ export default function Edit(props: EditProps<Attributes>) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<div {...useBlockProps()}>
-				<div className="nc-post-like-button">
-					<div className="nc-post-like-button__icon">
-						{iconStyle === "star" && (
-							<StarIcon width={20} height={20} color="currentColor" />
-						)}
-						{iconStyle === "heart" && (
-							<FavouriteIcon width={20} height={20} color="currentColor" />
-						)}
-						{iconStyle === "like" && (
-							<ThumbsUpIcon width={20} height={20} color="currentColor" />
-						)}
-					</div>
+			<div
+				{...useBlockProps({
+					className: "nc-post-like-button",
+					style: {
+						gap: gapCSSValue,
+						...spacingProps.style,
+					},
+				})}
+			>
+				{/* insert Innerblock */}
+				<InnerBlocks />
 
-					<span className="nc-post-like-button__count">{postLikesCount}</span>
-				</div>
+				{/* <div className="nc-post-like-button__icon">
+					{iconStyle === "star" && (
+						<StarIcon width={20} height={20} color="currentColor" />
+					)}
+					{iconStyle === "heart" && (
+						<FavouriteIcon width={20} height={20} color="currentColor" />
+					)}
+					{iconStyle === "like" && (
+						<ThumbsUpIcon width={20} height={20} color="currentColor" />
+					)}
+				</div> */}
+
+				<span className="nc-post-like-button__count">{postLikesCount}</span>
 			</div>
 		</>
 	);
-
-	// Other code will go here, don't forget or delete the closing curly brace!
 }

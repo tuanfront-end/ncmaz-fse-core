@@ -9,20 +9,8 @@
   line-height: 1;
   text-decoration: none;
 }
-.nc-post-like-button.is-liked, .nc-post-like-button.is-saved,
-.nc-post-save-button.is-liked,
-.nc-post-save-button.is-saved {
-  color: #ff0000;
-}
-.nc-post-like-button:hover .nc-post-like-button__icon,
-.nc-post-like-button:hover .nc-post-save-button__icon,
-.nc-post-save-button:hover .nc-post-like-button__icon,
-.nc-post-save-button:hover .nc-post-save-button__icon {
-  background-color: #fef2f2;
-}
 .nc-post-like-button__icon,
 .nc-post-save-button__icon {
-  font-size: 1.25rem;
   display: flex;
   align-items: center;
   justify-content: center;

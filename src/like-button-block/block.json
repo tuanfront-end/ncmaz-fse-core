@@ -8,36 +8,21 @@
 	"icon": "heart",
 	"usesContext": ["postId", "postType"],
 	"description": "Example block scaffolded with Create Block tool.",
+	"parent": ["core/post-template"],
+	"allowedBlocks": [
+		"core/post-title",
+		"core/paragraph",
+		"outermost/icon-block"
+	],
 	"example": {},
 	"attributes": {
-		"isLiked": {
-			"type": "boolean",
-			"default": false
-		},
 		"iconStyle": {
 			"type": "string",
 			"default": "heart"
-		},
-		"backgroundColor": {
-			"type": "string"
-		},
-		"textColor": {
-			"type": "string"
-		},
-		"gradient": {
-			"type": "string"
-		},
-		"width": {
-			"type": "number"
 		}
 	},
 	"supports": {
-		"anchor": true,
-		"splitting": true,
-		"align": false,
-		"alignWide": false,
 		"color": {
-			"__experimentalSkipSerialization": true,
 			"gradients": true,
 			"__experimentalDefaultControls": {
 				"background": true,
@@ -58,15 +43,14 @@
 				"fontSize": true
 			}
 		},
-		"reusable": false,
-		"shadow": {
-			"__experimentalSkipSerialization": true
-		},
+		"shadow": true,
 		"spacing": {
-			"__experimentalSkipSerialization": true,
-			"padding": ["horizontal", "vertical"],
+			"padding": true,
+			"margin": true,
+			"blockGap": true,
 			"__experimentalDefaultControls": {
-				"padding": true
+				"padding": true,
+				"blockGap": true
 			}
 		},
 		"__experimentalBorder": {
@@ -74,7 +58,6 @@
 			"radius": true,
 			"style": true,
 			"width": true,
-			"__experimentalSkipSerialization": true,
 			"__experimentalDefaultControls": {
 				"color": true,
 				"radius": true,
@@ -82,7 +65,18 @@
 				"width": true
 			}
 		},
-		"__experimentalSelector": ".wp-block-button .wp-block-button__link",
+		"__experimentalLayout": {
+			"default": {
+				"type": "flex",
+				"flexWrap": "nowrap"
+			}
+		},
+		"layout": {
+			"default": {
+				"type": "flex",
+				"flexWrap": "nowrap"
+			}
+		},
 		"interactivity": true
 	},
 	"textdomain": "like-button-block",
