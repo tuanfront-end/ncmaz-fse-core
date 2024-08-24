@@ -1,5 +1,10 @@
 import { __ } from "@wordpress/i18n";
-import { PanelBody, SelectControl } from "@wordpress/components";
+import {
+	PanelBody,
+	SelectControl,
+	FormToggle,
+	CheckboxControl,
+} from "@wordpress/components";
 import { useEntityRecords } from "@wordpress/core-data";
 import { useBlockProps, InspectorControls } from "@wordpress/block-editor";
 import "./editor.scss";
@@ -8,6 +13,7 @@ import { AllBookmarkIcon, Bookmark02Icon } from "../components/Icon";
 
 interface Attributes {
 	iconStyle: "bookmarkIcon1" | "bookmarkIcon2";
+	showCount: boolean;
 	style: Record<string, any>;
 }
 
@@ -18,7 +24,7 @@ export default function Edit(props: EditProps<Attributes>) {
 		context: { postId, postType },
 	} = props;
 
-	const { iconStyle } = attributes;
+	const { iconStyle, showCount } = attributes;
 
 	const { records } = useEntityRecords("postType", "post_save", {
 		post_status: "publish",
@@ -56,6 +62,12 @@ export default function Edit(props: EditProps<Attributes>) {
 							}[]
 						}
 					/>
+					<CheckboxControl
+						__nextHasNoMarginBottom
+						checked={showCount}
+						label={__("Show Count Number", "ncmaz-fse-core")}
+						onChange={(e) => setAttributes({ showCount: e })}
+					/>
 				</PanelBody>
 			</InspectorControls>
 			<div {...useBlockProps()}>
@@ -69,7 +81,9 @@ export default function Edit(props: EditProps<Attributes>) {
 						)}
 					</div>
 
-					<span className="nc-post-save-button__count">{postSavesCount}</span>
+					{!!showCount && (
+						<span className="nc-post-save-button__count">{postSavesCount}</span>
+					)}
 				</div>
 			</div>
 		</>

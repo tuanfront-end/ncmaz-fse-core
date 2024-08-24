@@ -12,9 +12,13 @@
   "description": "Example block scaffolded with Create Block tool.",
   "example": {},
   "attributes": {
-    "iconStyle": {
+    "minReadText": {
       "type": "string",
-      "default": "commentIcon1"
+      "default": "min read"
+    },
+    "minReadTextOnMobile": {
+      "type": "string",
+      "default": "min"
     },
     "backgroundColor": {
       "type": "string"

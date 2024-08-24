@@ -5,10 +5,7 @@
 .nc-post-save-button {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
   cursor: pointer;
-  min-width: 3rem;
-  font-size: 0.75rem;
   line-height: 1;
   text-decoration: none;
 }
@@ -26,22 +23,12 @@
 .nc-post-like-button__icon,
 .nc-post-save-button__icon {
   font-size: 1.25rem;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 999px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f5f5f5;
-}
-.nc-post-like-button__icon svg,
-.nc-post-save-button__icon svg {
-  width: 1rem;
-  height: 1rem;
 }
 .nc-post-like-button__count,
 .nc-post-save-button__count {
-  font-size: 0.875rem;
   min-width: 1.125rem;
   text-align: start;
 }

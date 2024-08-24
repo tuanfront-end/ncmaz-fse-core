@@ -241,7 +241,8 @@ function Edit(props) {
     }
   } = props;
   const {
-    iconStyle
+    iconStyle,
+    showCount
   } = attributes;
   const {
     records
@@ -270,6 +271,13 @@ function Edit(props) {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Bookmark Icon 2", "ncmaz-fse-core"),
       value: "bookmarkIcon2"
     }]
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CheckboxControl, {
+    __nextHasNoMarginBottom: true,
+    checked: showCount,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show Count Number", "ncmaz-fse-core"),
+    onChange: e => setAttributes({
+      showCount: e
+    })
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.useBlockProps)()
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -284,7 +292,7 @@ function Edit(props) {
     width: 20,
     height: 20,
     color: "currentColor"
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+  })), !!showCount && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "nc-post-save-button__count"
   }, postSavesCount))));
 
@@ -443,7 +451,7 @@ module.exports = window["wp"]["primitives"];
   \******************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/save-button-block","version":"0.1.0","title":"Save Button","category":"ncmazfse","usesContext":["postId","postType"],"description":"Example block scaffolded with Create Block tool.","example":{},"attributes":{"iconStyle":{"type":"string","default":"bookmarkIcon1"},"backgroundColor":{"type":"string"},"textColor":{"type":"string"},"gradient":{"type":"string"},"width":{"type":"number"}},"supports":{"anchor":true,"splitting":true,"align":false,"alignWide":false,"color":{"__experimentalSkipSerialization":true,"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"reusable":false,"shadow":{"__experimentalSkipSerialization":true},"spacing":{"__experimentalSkipSerialization":true,"padding":["horizontal","vertical"],"__experimentalDefaultControls":{"padding":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalSkipSerialization":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"__experimentalSelector":".wp-block-button .wp-block-button__link","interactivity":true},"textdomain":"like-button-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/save-button-block","version":"0.1.0","title":"Save Button","category":"ncmazfse","usesContext":["postId","postType"],"description":"Example block scaffolded with Create Block tool.","example":{},"attributes":{"iconStyle":{"type":"string","default":"bookmarkIcon1"},"showCount":{"type":"boolean","default":"false"},"backgroundColor":{"type":"string"},"textColor":{"type":"string"},"gradient":{"type":"string"},"width":{"type":"number"}},"supports":{"anchor":true,"splitting":true,"align":false,"alignWide":false,"color":{"__experimentalSkipSerialization":true,"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"reusable":false,"shadow":{"__experimentalSkipSerialization":true},"spacing":{"__experimentalSkipSerialization":true,"padding":["horizontal","vertical"],"__experimentalDefaultControls":{"padding":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalSkipSerialization":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"__experimentalSelector":".wp-block-button .wp-block-button__link","interactivity":true},"textdomain":"like-button-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
 
 /***/ })
 

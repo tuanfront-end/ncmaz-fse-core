@@ -13,6 +13,10 @@
 			"type": "string",
 			"default": "bookmarkIcon1"
 		},
+		"showCount": {
+			"type": "boolean",
+			"default": "false"
+		},
 		"backgroundColor": {
 			"type": "string"
 		},
