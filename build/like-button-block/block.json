@@ -11,22 +11,42 @@
     "postType"
   ],
   "description": "Example block scaffolded with Create Block tool.",
-  "parent": [
-    "core/post-template"
-  ],
   "allowedBlocks": [
-    "core/post-title",
-    "core/paragraph",
     "outermost/icon-block"
   ],
   "example": {},
   "attributes": {
-    "iconStyle": {
+    "activeColor": {
+      "type": "string"
+    },
+    "customActiveColor": {
       "type": "string",
-      "default": "heart"
+      "default": "#dc2626"
+    },
+    "activeBgColor": {
+      "type": "string"
+    },
+    "customActiveBgColor": {
+      "type": "string",
+      "default": "#fee2e2"
+    },
+    "activeIconBgColor": {
+      "type": "string"
+    },
+    "customActiveIconBgColor": {
+      "type": "string",
+      "default": "#fee2e2"
+    },
+    "activeBorderColor": {
+      "type": "string"
+    },
+    "customActiveBorderColor": {
+      "type": "string",
+      "default": "#dc2626"
     }
   },
   "supports": {
+    "html": false,
     "color": {
       "gradients": true,
       "__experimentalDefaultControls": {
@@ -68,18 +88,6 @@
         "radius": true,
         "style": true,
         "width": true
-      }
-    },
-    "__experimentalLayout": {
-      "default": {
-        "type": "flex",
-        "flexWrap": "nowrap"
-      }
-    },
-    "layout": {
-      "default": {
-        "type": "flex",
-        "flexWrap": "nowrap"
       }
     },
     "interactivity": true
