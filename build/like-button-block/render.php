@@ -24,16 +24,16 @@ $isLiked = ncmazfse_core__check_user_like($current_post_id, $user_id);
 $colorCssVars = [
 	"--active-color" => ($attributes["activeColor"] ?? null)
 		? 'var( --wp--preset--color--' . $attributes["activeColor"] . ' )'
-		: $attributes["customActiveColor"],
+		: $attributes["customActiveColor"] ?? null,
 	"--active-background-color" => ($attributes['activeBgColor'] ?? null)
 		? 'var( --wp--preset--color--' . $attributes['activeBgColor'] . ' )'
-		: $attributes['customActiveBgColor'],
+		: $attributes['customActiveBgColor'] ?? null,
 	"--active-border-color" => ($attributes['activeBorderColor'] ?? null)
 		? 'var( --wp--preset--color--' . $attributes['activeBorderColor'] . ' )'
-		: $attributes['customActiveBorderColor'],
+		: $attributes['customActiveBorderColor'] ?? null,
 	"--active-icon-background-color" => ($attributes['activeIconBgColor'] ?? null)
 		? 'var( --wp--preset--color--' . $attributes['activeIconBgColor'] . ' )'
-		: $attributes['customActiveIconBgColor'],
+		: $attributes['customActiveIconBgColor'] ?? null,
 ];
 // convert the colorCssVars array to style string.
 $colorStyle = '';
