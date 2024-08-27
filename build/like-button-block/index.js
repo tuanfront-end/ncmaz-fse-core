@@ -21,13 +21,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor.scss */ "./src/like-button-block/editor.scss");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
 
 
 
-// get type keyof Attributes with type of value
+
+// get type keyof Attributes with type value is type
 
 function Edit(props) {
   const {
@@ -51,7 +54,8 @@ function Edit(props) {
     customActiveBorderColor,
     customActiveColor,
     customActiveIconBgColor,
-    style
+    style,
+    showCountText
   } = attributes;
   const currentUserId = window.wp.data.select("core").getCurrentUser()?.id || 0;
 
@@ -148,14 +152,28 @@ function Edit(props) {
       });
     }
   }];
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Post Like Button", "ncmaz-fse-core")
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
+    __nextHasNoMarginBottom: true,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show Count", "ncmaz-fse-core"),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show/Hide count number", "ncmaz-fse-core"),
+    checked: showCountText,
+    onChange: newValue => {
+      setAttributes({
+        showCountText: newValue
+      });
+    }
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, {
     group: "color"
   }, colorSettings.map(({
     onChange,
     label,
     value,
     resetAllFilter
-  }) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.__experimentalColorGradientSettingsDropdown, {
+  }) =>
+  // @ts-ignore
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.__experimentalColorGradientSettingsDropdown, {
     __experimentalIsRenderedInSidebar: true,
     key: `like-btns-color-${label}`,
     settings: [{
@@ -168,7 +186,9 @@ function Edit(props) {
     }],
     panelId: clientId,
     ...colorGradientSettings
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "outermost-icon-block__color-settings__help"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active: ", "ncmaz-fse-core")), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)(" Set the color for the active state (liked/saved/hovering) of the button.", "ncmaz-fse-core"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)({
       className: "nc-post-reaction-button" + (isLiked ? " is-actived" : ""),
       style: {
@@ -183,11 +203,11 @@ function Edit(props) {
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InnerBlocks, {
     allowedBlocks: ["outermost/icon-block"],
     template: [["outermost/icon-block", {
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000000" fill="none"><path d="M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>',
-      iconColorValue: "#000000",
-      iconBackgroundColorValue: "#eee",
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#000000" fill="none"><path d="M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>',
+      iconColorValue: "#334155",
+      iconBackgroundColorValue: "#f3f4f6",
       itemsJustification: "center",
-      width: "36px",
+      width: "34px",
       hasNoIconFill: true,
       style: {
         border: {
@@ -199,9 +219,9 @@ function Edit(props) {
       }
     }]],
     templateLock: "insert"
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+  }), showCountText ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "nc__count"
-  }, postLikesCount)));
+  }, postLikesCount) : null));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.withColors)({
   activeColor: "active-color",
@@ -341,6 +361,16 @@ module.exports = window["wp"]["blocks"];
 
 /***/ }),
 
+/***/ "@wordpress/components":
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["components"];
+
+/***/ }),
+
 /***/ "@wordpress/core-data":
 /*!**********************************!*\
   !*** external ["wp","coreData"] ***!
@@ -367,7 +397,7 @@ module.exports = window["wp"]["i18n"];
   \******************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/like-button-block","version":"0.1.0","title":"Like Button","category":"ncmazfse","icon":"heart","usesContext":["postId","postType"],"description":"Example block scaffolded with Create Block tool.","allowedBlocks":["outermost/icon-block"],"example":{},"attributes":{"activeColor":{"type":"string"},"customActiveColor":{"type":"string","default":"#dc2626"},"activeBgColor":{"type":"string"},"customActiveBgColor":{"type":"string","default":"#fee2e2"},"activeIconBgColor":{"type":"string"},"customActiveIconBgColor":{"type":"string","default":"#fee2e2"},"activeBorderColor":{"type":"string"},"customActiveBorderColor":{"type":"string","default":"#dc2626"}},"supports":{"html":false,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"shadow":true,"spacing":{"padding":true,"margin":true,"blockGap":true,"__experimentalDefaultControls":{"padding":true,"blockGap":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"interactivity":true},"textdomain":"like-button-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/like-button-block","version":"0.1.0","title":"Like Button","category":"ncmazfse","icon":"heart","usesContext":["postId","postType"],"description":"Example block scaffolded with Create Block tool.","allowedBlocks":["outermost/icon-block"],"example":{},"attributes":{"showCountText":{"type":"boolean","default":true},"activeColor":{"type":"string"},"customActiveColor":{"type":"string","default":"#dc2626"},"activeBgColor":{"type":"string"},"customActiveBgColor":{"type":"string","default":"#fee2e2"},"activeIconBgColor":{"type":"string"},"customActiveIconBgColor":{"type":"string","default":"#fee2e2"},"activeBorderColor":{"type":"string"},"customActiveBorderColor":{"type":"string","default":"#dc2626"}},"supports":{"html":false,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"shadow":true,"spacing":{"padding":true,"margin":true,"blockGap":true,"__experimentalDefaultControls":{"padding":true,"blockGap":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"interactivity":true},"textdomain":"like-button-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
 
 /***/ })
 

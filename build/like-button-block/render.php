@@ -62,5 +62,9 @@ foreach ($colorCssVars as $key => $value) {
 	data-wp-bind--disabled="context.loading">
 
 	<?php echo $content; ?>
-	<span class="nc__count" data-wp-text="context.postLikesCount"></span>
+
+	<?php if ($attributes["showCountText"]): ?>
+		<span class="nc__count" data-wp-text="context.postLikesCount"></span>
+	<?php endif; ?>
+
 </div>

@@ -11,6 +11,11 @@
 	"allowedBlocks": ["outermost/icon-block"],
 	"example": {},
 	"attributes": {
+		"showCountText": {
+			"type": "boolean",
+			"default": true
+		},
+
 		"activeColor": {
 			"type": "string"
 		},

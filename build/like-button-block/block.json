@@ -16,6 +16,10 @@
   ],
   "example": {},
   "attributes": {
+    "showCountText": {
+      "type": "boolean",
+      "default": true
+    },
     "activeColor": {
       "type": "string"
     },

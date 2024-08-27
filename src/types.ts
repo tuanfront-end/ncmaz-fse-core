@@ -21,3 +21,11 @@ declare module "@wordpress/block-editor" {
 	export function __experimentalColorGradientSettingsDropdown(): void;
 	export function __experimentalUseMultipleOriginColorsAndGradients(): void;
 }
+
+export type TAttrs<T extends Record<string, any>> = {
+	[K in keyof T]: T[K] extends { default: infer D }
+		? D
+		: T[K] extends { myType: infer U }
+		? U
+		: string;
+};
