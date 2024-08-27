@@ -7,32 +7,47 @@
 	"category": "ncmazfse",
 	"usesContext": ["postId", "postType"],
 	"description": "Example block scaffolded with Create Block tool.",
+	"allowedBlocks": ["outermost/icon-block"],
 	"example": {},
 	"attributes": {
-		"iconStyle": {
+		"showCountText": {
+			"type": "boolean",
+			"default": true
+		},
+
+		"activeColor": {
+			"type": "string"
+		},
+		"customActiveColor": {
 			"type": "string",
-			"default": "commentIcon1"
+			"default": "#00ba7d"
 		},
-		"backgroundColor": {
+
+		"activeBgColor": {
 			"type": "string"
 		},
-		"textColor": {
+		"customActiveBgColor": {
 			"type": "string"
 		},
-		"gradient": {
+
+		"activeIconBgColor": {
 			"type": "string"
 		},
-		"width": {
-			"type": "number"
+		"customActiveIconBgColor": {
+			"type": "string",
+			"default": "#00ba7c1a"
+		},
+
+		"activeBorderColor": {
+			"type": "string"
+		},
+		"customActiveBorderColor": {
+			"type": "string"
 		}
 	},
 	"supports": {
-		"anchor": true,
-		"splitting": true,
-		"align": false,
-		"alignWide": false,
+		"html": false,
 		"color": {
-			"__experimentalSkipSerialization": true,
 			"gradients": true,
 			"__experimentalDefaultControls": {
 				"background": true,
@@ -53,15 +68,14 @@
 				"fontSize": true
 			}
 		},
-		"reusable": false,
-		"shadow": {
-			"__experimentalSkipSerialization": true
-		},
+		"shadow": true,
 		"spacing": {
-			"__experimentalSkipSerialization": true,
-			"padding": ["horizontal", "vertical"],
+			"padding": true,
+			"margin": true,
+			"blockGap": true,
 			"__experimentalDefaultControls": {
-				"padding": true
+				"padding": true,
+				"blockGap": true
 			}
 		},
 		"__experimentalBorder": {
@@ -69,7 +83,6 @@
 			"radius": true,
 			"style": true,
 			"width": true,
-			"__experimentalSkipSerialization": true,
 			"__experimentalDefaultControls": {
 				"color": true,
 				"radius": true,
@@ -77,7 +90,6 @@
 				"width": true
 			}
 		},
-		"__experimentalSelector": ".wp-block-button .wp-block-button__link",
 		"interactivity": true
 	},
 	"textdomain": "like-button-block",

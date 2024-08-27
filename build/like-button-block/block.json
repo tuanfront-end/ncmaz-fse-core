@@ -31,22 +31,20 @@
       "type": "string"
     },
     "customActiveBgColor": {
-      "type": "string",
-      "default": "#fee2e2"
+      "type": "string"
     },
     "activeIconBgColor": {
       "type": "string"
     },
     "customActiveIconBgColor": {
       "type": "string",
-      "default": "#fee2e2"
+      "default": "#fee2e2b5"
     },
     "activeBorderColor": {
       "type": "string"
     },
     "customActiveBorderColor": {
-      "type": "string",
-      "default": "#dc2626"
+      "type": "string"
     }
   },
   "supports": {
