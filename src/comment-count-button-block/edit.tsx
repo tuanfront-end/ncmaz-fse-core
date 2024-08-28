@@ -108,7 +108,7 @@ function Edit(props: EditProps<Attributes>) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__("Post Comment Button", "ncmaz-fse-core")}>
+				<PanelBody title={__("Post Comment Count Button", "ncmaz-fse-core")}>
 					<ToggleControl
 						__nextHasNoMarginBottom
 						label={__("Show Count", "ncmaz-fse-core")}

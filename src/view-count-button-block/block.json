@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "ncmazfse-block/comment-button-block",
+	"name": "ncmazfse-block/view-count-button-block",
 	"version": "0.1.0",
-	"title": "Comment Button",
+	"title": "View Count Button",
 	"category": "ncmazfse",
 	"usesContext": ["postId", "postType"],
 	"description": "Example block scaffolded with Create Block tool.",
@@ -20,7 +20,7 @@
 		},
 		"customActiveColor": {
 			"type": "string",
-			"default": "#00ba7d"
+			"default": "#2563eb"
 		},
 
 		"activeBgColor": {
@@ -35,7 +35,7 @@
 		},
 		"customActiveIconBgColor": {
 			"type": "string",
-			"default": "#00ba7c1a"
+			"default": "#2563eb1a"
 		},
 
 		"activeBorderColor": {
@@ -47,6 +47,7 @@
 	},
 	"supports": {
 		"html": false,
+		"anchor": false,
 		"color": {
 			"gradients": true,
 			"__experimentalDefaultControls": {
@@ -89,13 +90,11 @@
 				"style": true,
 				"width": true
 			}
-		},
-		"interactivity": true
+		}
 	},
 	"textdomain": "like-button-block",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
-	"render": "file:./render.php",
-	"viewScriptModule": "file:./view.js"
+	"render": "file:./render.php"
 }

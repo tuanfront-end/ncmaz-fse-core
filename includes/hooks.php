@@ -25,7 +25,7 @@ function ncmaz_fse_core_register_review_rating_post_meta()
         );
     }
 }
-add_action('init', 'ncmaz_fse_core_register_review_rating_post_meta');
+// add_action('init', 'ncmaz_fse_core_register_review_rating_post_meta');
 
 
 
@@ -48,6 +48,7 @@ function ncmaz_fse_core_set_user_cookie()
 }
 // add_action('init', 'ncmaz_fse_core_set_user_cookie');
 
+// Add meta-data post-(like, view, save) to the REST API response for posts
 add_filter('rest_post_like_query', function ($args, $request) {
     $args += [
         'meta_key' => $request['meta_key'],
@@ -57,8 +58,16 @@ add_filter('rest_post_like_query', function ($args, $request) {
 
     return $args;
 }, 99, 2);
-
 add_filter('rest_post_save_query', function ($args, $request) {
+    $args += [
+        'meta_key' => $request['meta_key'],
+        'meta_value' => $request['meta_value'],
+        'meta_query' => $request['meta_query'],
+    ];
+
+    return $args;
+}, 99, 2);
+add_filter('rest_post_view_query', function ($args, $request) {
     $args += [
         'meta_key' => $request['meta_key'],
         'meta_value' => $request['meta_value'],
@@ -79,3 +88,10 @@ function ncmaz_fse_core_block_category($categories, $post)
     ));
     return $categories;
 }
+
+
+// Increase the view count number of posts  when the post is viewed
+add_action('wp_head', function () {
+    global $post;
+    ncmazfse_core__update_post_view($post->ID);
+});

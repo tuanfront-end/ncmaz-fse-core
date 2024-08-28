@@ -37,8 +37,9 @@ function ncmaz_fse_core_register_blocks_init()
 	register_block_type(__DIR__ . '/build/review-card-block');
 	register_block_type(__DIR__ . '/build/like-button-block');
 	register_block_type(__DIR__ . '/build/save-button-block');
-	register_block_type(__DIR__ . '/build/comment-button-block');
+	register_block_type(__DIR__ . '/build/comment-count-button-block');
 	register_block_type(__DIR__ . '/build/reading-time-block');
+	register_block_type(__DIR__ . '/build/view-count-button-block');
 }
 add_action('init', 'ncmaz_fse_core_register_blocks_init');
 
@@ -50,3 +51,4 @@ require_once plugin_dir_path(__FILE__) . 'includes/utils.php';
 require_once plugin_dir_path(__FILE__) . 'includes/acf.php';
 require_once plugin_dir_path(__FILE__) . 'includes/like-handler.php';
 require_once plugin_dir_path(__FILE__) . 'includes/save-handler.php';
+require_once plugin_dir_path(__FILE__) . 'includes/view-handler.php';

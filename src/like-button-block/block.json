@@ -5,7 +5,6 @@
 	"version": "0.1.0",
 	"title": "Like Button",
 	"category": "ncmazfse",
-	"icon": "heart",
 	"usesContext": ["postId", "postType"],
 	"description": "Example block scaffolded with Create Block tool.",
 	"allowedBlocks": ["outermost/icon-block"],
@@ -47,6 +46,7 @@
 		}
 	},
 	"supports": {
+		"anchor": false,
 		"html": false,
 		"color": {
 			"gradients": true,

@@ -1,9 +1,9 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "ncmazfse-block/comment-button-block",
+  "name": "ncmazfse-block/comment-count-button-block",
   "version": "0.1.0",
-  "title": "Comment Button",
+  "title": "Comment Count Button",
   "category": "ncmazfse",
   "usesContext": [
     "postId",

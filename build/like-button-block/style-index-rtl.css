@@ -16,6 +16,7 @@
 .nc-post-reaction-button.is-actived .wp-block-outermost-icon-block .icon-container, .nc-post-reaction-button:hover .wp-block-outermost-icon-block .icon-container {
   background-color: var(--active-icon-background-color) !important;
   color: var(--active-color, inherit) !important;
+  transition-duration: 0.3s;
 }
 .nc-post-reaction-button.is-actived svg {
   fill: var(--active-color, inherit);

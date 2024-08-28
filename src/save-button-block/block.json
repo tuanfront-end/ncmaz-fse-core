@@ -46,6 +46,7 @@
 		}
 	},
 	"supports": {
+		"anchor": false,
 		"html": false,
 		"color": {
 			"gradients": true,

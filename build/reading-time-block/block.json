@@ -19,22 +19,10 @@
     "minReadTextOnMobile": {
       "type": "string",
       "default": "min"
-    },
-    "backgroundColor": {
-      "type": "string"
-    },
-    "textColor": {
-      "type": "string"
-    },
-    "gradient": {
-      "type": "string"
-    },
-    "width": {
-      "type": "number"
     }
   },
   "supports": {
-    "anchor": true,
+    "anchor": false,
     "splitting": true,
     "align": false,
     "alignWide": false,
@@ -86,14 +74,11 @@
         "style": true,
         "width": true
       }
-    },
-    "__experimentalSelector": ".wp-block-button .wp-block-button__link",
-    "interactivity": true
+    }
   },
   "textdomain": "like-button-block",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",
-  "render": "file:./render.php",
-  "viewScriptModule": "file:./view.js"
+  "render": "file:./render.php"
 }

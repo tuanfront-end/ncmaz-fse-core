@@ -15,6 +15,7 @@
 		.wp-block-outermost-icon-block .icon-container {
 			background-color: var(--active-icon-background-color) !important;
 			color: var(--active-color, inherit) !important;
+			transition-duration: 0.3s;
 		}
 	}
 	&.is-actived {
