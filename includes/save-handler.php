@@ -116,6 +116,9 @@ function ncmazfse_core__check_user_save($post_id, $user_id)
 
 function ncmazfse_core__get_post_saves($post_id)
 {
+    if (!$post_id) {
+        return [];
+    }
     $post_saves = get_posts([
         'post_type' => 'post_save',
         'numberposts' => -1,

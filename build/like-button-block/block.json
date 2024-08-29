@@ -5,9 +5,14 @@
   "version": "0.1.0",
   "title": "Like Button",
   "category": "ncmazfse",
+  "ancestor": [
+    "core/comment-template",
+    "core/post-template"
+  ],
   "usesContext": [
     "postId",
-    "postType"
+    "postType",
+    "commentId"
   ],
   "description": "Example block scaffolded with Create Block tool.",
   "allowedBlocks": [

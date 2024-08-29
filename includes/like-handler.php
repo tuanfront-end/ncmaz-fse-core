@@ -113,6 +113,9 @@ function ncmazfse_core__check_user_like($post_id, $user_id)
 
 function ncmazfse_core__get_post_likes($post_id)
 {
+    if (!$post_id) {
+        return [];
+    }
     $post_likes = get_posts([
         'post_type' => 'post_like',
         'numberposts' => -1,

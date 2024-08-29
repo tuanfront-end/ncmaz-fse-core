@@ -2,7 +2,6 @@
 global $post;
 
 // Generate unique id for aria-controls.
-$unique_id = wp_unique_id('p-');
 $current_post_id = get_the_ID();
 $user_id = get_current_user_id();
 

@@ -65,22 +65,47 @@ __webpack_require__.r(__webpack_exports__);
 
 const {
   state
-} = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("ncmazfse-core", {
-  state: {},
+} = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("ncmazfse-core/like-button", {
+  state: {
+    get isLiked() {
+      const {
+        contextIsLiked,
+        postId
+      } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      return state.likeData?.[postId] ? state.likeData[postId].isLiked : contextIsLiked;
+    },
+    get likeCount() {
+      const {
+        contextLikeCount,
+        postId
+      } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      return state.likeData?.[postId] ? state.likeData[postId].likeCount : contextLikeCount;
+    },
+    get isLoading() {
+      const {
+        postId
+      } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      return state.loadingList.includes(postId);
+    }
+  },
   actions: {
     handleLike: () => {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      console.log("like actions -- handle like", context);
+      const {
+        postId
+      } = context;
       try {
         // Update the state
-        context.loading = true;
+        state.loadingList.push(postId);
 
         // Send the data to the server
         const formData = new FormData();
         formData.append("action", "handle_like");
         formData.append("_ajax_nonce", state.likeButtonNonce);
-        formData.append("post_id", context.postId.toString());
+        formData.append("post_id", postId.toString());
         formData.append("user_id", state.userId.toString());
-        formData.append("handle", context.isLiked ? "remove" : "add");
+        formData.append("handle", state.isLiked ? "remove" : "add");
         fetch(state.ajaxUrl, {
           method: "POST",
           body: formData
@@ -92,15 +117,25 @@ const {
             throw new Error("Server error");
           }
           const isLiked = Boolean(data.is_liked);
-          context.isLiked = isLiked;
+          let likeCount = 0;
           if (isLiked) {
-            context.postLikesCount = context.postLikesCount + 1;
-          } else if (context.postLikesCount > 0) {
-            context.postLikesCount = context.postLikesCount - 1;
+            likeCount = context.contextLikeCount + 1;
+          } else if (context.contextLikeCount > 0) {
+            likeCount = context.contextLikeCount - 1;
           }
+
+          // Update the local-context
+          context.contextLikeCount = likeCount;
+          context.contextIsLiked = isLiked;
+          state.likeData = {
+            ...state.likeData,
+            [postId]: {
+              likeCount,
+              isLiked
+            }
+          };
           if (!state.userId) {
             // Update local storage
-            const postId = context.postId;
             const likedPosts = localStorage.getItem("likedPosts");
             const likedPostsArray = likedPosts ? JSON.parse(likedPosts) : [];
             if (isLiked) {
@@ -114,28 +149,28 @@ const {
             localStorage.setItem("likedPosts", JSON.stringify(likedPostsArray));
           }
         }).finally(() => {
-          context.loading = false;
+          state.loadingList = state.loadingList.filter(id => id !== postId);
         });
       } catch (e) {
         // Something went wrong!
         console.log("Error Server data!", e);
-        context.loading = false;
+        state.loadingList = state.loadingList.filter(id => id !== postId);
       }
     }
   },
   callbacks: {
     logHandleLikeInit: () => {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-      console.log("like callbacks init");
-
+      console.log("like callbacks -- update local storage", {
+        context,
+        state
+      });
       // if user is not logged in
       if (!state.userId) {
         // check from local storage
-        const postId = context.postId;
         const likedPosts = localStorage.getItem("likedPosts");
         const likedPostsArray = likedPosts ? JSON.parse(likedPosts) : [];
-        context.isLiked = likedPostsArray.includes(postId);
-        console.log("like callbacks -- update local storage", context.isLiked);
+        context.contextIsLiked = likedPostsArray.includes(context.postId);
       }
     }
   }

@@ -68,7 +68,9 @@ function Edit(props) {
     attributes,
     setAttributes,
     context: {
-      postId
+      postId: postIdContext,
+      commentId,
+      postType
     },
     activeColor,
     activeBgColor,
@@ -89,6 +91,12 @@ function Edit(props) {
   } = attributes;
   const currentUserId = window.wp.data.select("core").getCurrentUser()?.id || 0;
 
+  // const [content] = useEntityProp("root", "comment", "content", commentId);
+  let postId = postIdContext;
+  if (!postType && !postIdContext && commentId) {
+    postId = commentId;
+  }
+
   // get the post likes count
   const {
     records
@@ -96,9 +104,9 @@ function Edit(props) {
     post_status: "publish",
     per_page: -1,
     meta_key: "post_id",
-    meta_value: postId
+    meta_value: postId || 0
   });
-  const postLikesCount = records?.length || 0;
+  const postLikesCount = postId ? records?.length || 0 : 99;
 
   // check if the current user liked the post
   const {
@@ -133,7 +141,7 @@ function Edit(props) {
     resetAllFilter: () => {
       setActiveColor(undefined);
       setAttributes({
-        customActiveColor: undefined
+        customActiveColor: "#dc2626"
       });
     }
   }, {
@@ -178,7 +186,7 @@ function Edit(props) {
     resetAllFilter: () => {
       setActiveIconBgColor(undefined);
       setAttributes({
-        customActiveIconBgColor: undefined
+        customActiveIconBgColor: "#fee2e2b5"
       });
     }
   }];
@@ -300,11 +308,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/**
- * Every block starts by registering a new block type definition.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
- */
+// @ts-ignore
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_3__.name, {
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["default"],
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -435,7 +439,7 @@ module.exports = window["wp"]["primitives"];
   \******************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/like-button-block","version":"0.1.0","title":"Like Button","category":"ncmazfse","usesContext":["postId","postType"],"description":"Example block scaffolded with Create Block tool.","allowedBlocks":["outermost/icon-block"],"example":{},"attributes":{"showCountText":{"type":"boolean","default":true},"activeColor":{"type":"string"},"customActiveColor":{"type":"string","default":"#dc2626"},"activeBgColor":{"type":"string"},"customActiveBgColor":{"type":"string"},"activeIconBgColor":{"type":"string"},"customActiveIconBgColor":{"type":"string","default":"#fee2e2b5"},"activeBorderColor":{"type":"string"},"customActiveBorderColor":{"type":"string"}},"supports":{"anchor":false,"html":false,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"shadow":true,"spacing":{"padding":true,"margin":true,"blockGap":true,"__experimentalDefaultControls":{"padding":true,"blockGap":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"interactivity":true},"textdomain":"like-button-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/like-button-block","version":"0.1.0","title":"Like Button","category":"ncmazfse","ancestor":["core/comment-template","core/post-template"],"usesContext":["postId","postType","commentId"],"description":"Example block scaffolded with Create Block tool.","allowedBlocks":["outermost/icon-block"],"example":{},"attributes":{"showCountText":{"type":"boolean","default":true},"activeColor":{"type":"string"},"customActiveColor":{"type":"string","default":"#dc2626"},"activeBgColor":{"type":"string"},"customActiveBgColor":{"type":"string"},"activeIconBgColor":{"type":"string"},"customActiveIconBgColor":{"type":"string","default":"#fee2e2b5"},"activeBorderColor":{"type":"string"},"customActiveBorderColor":{"type":"string"}},"supports":{"anchor":false,"html":false,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"shadow":true,"spacing":{"padding":true,"margin":true,"blockGap":true,"__experimentalDefaultControls":{"padding":true,"blockGap":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"interactivity":true},"textdomain":"like-button-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
 
 /***/ })
 

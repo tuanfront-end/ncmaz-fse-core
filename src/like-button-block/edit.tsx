@@ -22,7 +22,7 @@ function Edit(props: EditProps<Attributes>) {
 		clientId,
 		attributes,
 		setAttributes,
-		context: { postId },
+		context: { postId: postIdContext, commentId, postType },
 		activeColor,
 		activeBgColor,
 		activeBorderColor,
@@ -44,14 +44,21 @@ function Edit(props: EditProps<Attributes>) {
 
 	const currentUserId = window.wp.data.select("core").getCurrentUser()?.id || 0;
 
+	// const [content] = useEntityProp("root", "comment", "content", commentId);
+	let postId = postIdContext;
+
+	if (!postType && !postIdContext && commentId) {
+		postId = commentId;
+	}
+
 	// get the post likes count
 	const { records } = useEntityRecords("postType", "post_like", {
 		post_status: "publish",
 		per_page: -1,
 		meta_key: "post_id",
-		meta_value: postId,
+		meta_value: postId || 0,
 	});
-	const postLikesCount = records?.length || 0;
+	const postLikesCount = postId ? records?.length || 0 : 99;
 
 	// check if the current user liked the post
 	const { records: isLikedRecords } = useEntityRecords(
@@ -84,7 +91,7 @@ function Edit(props: EditProps<Attributes>) {
 			},
 			resetAllFilter: () => {
 				setActiveColor(undefined);
-				setAttributes({ customActiveColor: undefined });
+				setAttributes({ customActiveColor: "#dc2626" });
 			},
 		},
 		{
@@ -120,7 +127,7 @@ function Edit(props: EditProps<Attributes>) {
 			},
 			resetAllFilter: () => {
 				setActiveIconBgColor(undefined);
-				setAttributes({ customActiveIconBgColor: undefined });
+				setAttributes({ customActiveIconBgColor: "#fee2e2b5" });
 			},
 		},
 	];

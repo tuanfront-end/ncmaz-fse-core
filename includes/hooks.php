@@ -91,7 +91,8 @@ function ncmaz_fse_core_block_category($categories, $post)
 
 
 // Increase the view count number of posts  when the post is viewed
-add_action('wp_head', function () {
-    global $post;
-    ncmazfse_core__update_post_view($post->ID);
+add_action('template_redirect', function () {
+    if (is_single() || is_page()) {
+        ncmazfse_core__update_post_view(get_the_ID());
+    }
 });

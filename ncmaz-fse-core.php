@@ -20,14 +20,13 @@ if (!defined('ABSPATH')) {
 
 
 define('NCMAZ_FSE_CORE_VERSION', '0.1.0');
-define('NCMAZ_FSE_CORE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('NCMAZ_FSE_CORE_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('NCMAZ_FSE_CORE_PLUGIN_BASE', plugin_basename(__FILE__));
 define('NCMAZ_FSE_CORE_PLUGIN_FILE', __FILE__);
 define('NCMAZ_FSE_CORE_PLUGIN_ASSETS', NCMAZ_FSE_CORE_PLUGIN_URL . 'assets/');
-define('NCMAZ_FSE_CORE_PLUGIN_BUILD', NCMAZ_FSE_CORE_PLUGIN_DIR . 'build/');
-define('NCMAZ_FSE_CORE_PLUGIN_SRC', NCMAZ_FSE_CORE_PLUGIN_DIR . 'src/');
-define('NCMAZ_FSE_CORE_PLUGIN_INCLUDES', NCMAZ_FSE_CORE_PLUGIN_DIR . 'includes/');
+define('NCMAZ_FSE_CORE_PLUGIN_BUILD', NCMAZ_FSE_CORE_PLUGIN_URL . 'build/');
+define('NCMAZ_FSE_CORE_PLUGIN_SRC', NCMAZ_FSE_CORE_PLUGIN_URL . 'src/');
+define('NCMAZ_FSE_CORE_PLUGIN_INCLUDES', NCMAZ_FSE_CORE_PLUGIN_URL . 'includes/');
 define('NCMAZ_FSE_CORE_TEXT_DOMAIN',  'ncmaz-fse-core');
 define('NCMAZ_FSE_CORE_STORE',  'ncmazfse-core');
 
@@ -40,6 +39,7 @@ function ncmaz_fse_core_register_blocks_init()
 	register_block_type(__DIR__ . '/build/comment-count-button-block');
 	register_block_type(__DIR__ . '/build/reading-time-block');
 	register_block_type(__DIR__ . '/build/view-count-button-block');
+	register_block_type(__DIR__ . '/build/common-css-block');
 }
 add_action('init', 'ncmaz_fse_core_register_blocks_init');
 
@@ -52,3 +52,6 @@ require_once plugin_dir_path(__FILE__) . 'includes/acf.php';
 require_once plugin_dir_path(__FILE__) . 'includes/like-handler.php';
 require_once plugin_dir_path(__FILE__) . 'includes/save-handler.php';
 require_once plugin_dir_path(__FILE__) . 'includes/view-handler.php';
+
+// enqueue scripts
+require_once plugin_dir_path(__FILE__) . 'includes/enqueue-scripts.php';

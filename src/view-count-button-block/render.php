@@ -4,11 +4,24 @@ global $post;
 // Generate unique id for aria-controls.
 $current_post_id = get_the_ID();
 
-// get comment count of the post 
-$comment_count = get_comments_number($current_post_id);
+// Get the post view count
+$args = array(
+	'meta_query' => array(
+		array('key' => 'post_id', 'value' => $current_post_id)
+	),
+	'post_type' => 'post_view',
+	'posts_per_page' => 1
+);
+$post_views = get_posts($args);
+
+if (empty($post_views)) {
+	$view_count = 0;
+} else {
+	$view_count = get_post_meta($post_views[0]->ID, 'view_count', true);
+}
+
 // get link to the post
 $post_link = get_permalink($current_post_id);
-
 
 // Get the block attributes colors.
 $colorCssVars = [
@@ -42,7 +55,7 @@ foreach ($colorCssVars as $key => $value) {
 	<?php echo $content; ?>
 	<?php if ($attributes["showCountText"]): ?>
 		<span class="nc__count">
-			<?php echo $comment_count; ?>
+			<?php echo $view_count; ?>
 		</span>
 	<?php endif; ?>
 
