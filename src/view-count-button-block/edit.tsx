@@ -72,7 +72,7 @@ function Edit(props: EditProps<Attributes>) {
 			},
 			resetAllFilter: () => {
 				setActiveColor(undefined);
-				setAttributes({ customActiveColor: undefined });
+				setAttributes({ customActiveColor: "#2563eb" });
 			},
 		},
 		{
@@ -108,7 +108,7 @@ function Edit(props: EditProps<Attributes>) {
 			},
 			resetAllFilter: () => {
 				setActiveIconBgColor(undefined);
-				setAttributes({ customActiveIconBgColor: undefined });
+				setAttributes({ customActiveIconBgColor: "#2563eb1a" });
 			},
 		},
 	];
@@ -152,7 +152,7 @@ function Edit(props: EditProps<Attributes>) {
 				<p className="outermost-icon-block__color-settings__help">
 					<strong>{__("Active: ", "ncmaz-fse-core")}</strong>
 					{__(
-						" Set the color for the active state (liked/saved/hovering) of the button.",
+						"Set the color for the active state (liked/saved/hovering) of the button.",
 						"ncmaz-fse-core",
 					)}
 				</p>

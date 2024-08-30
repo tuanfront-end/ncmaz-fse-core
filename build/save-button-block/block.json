@@ -5,6 +5,9 @@
   "version": "0.1.0",
   "title": "Save Button",
   "category": "ncmazfse",
+  "ancestor": [
+    "core/post-template"
+  ],
   "usesContext": [
     "postId",
     "postType"

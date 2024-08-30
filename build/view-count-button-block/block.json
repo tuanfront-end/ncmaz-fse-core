@@ -4,6 +4,9 @@
   "name": "ncmazfse-block/view-count-button-block",
   "version": "0.1.0",
   "title": "View Count Button",
+  "ancestor": [
+    "core/post-template"
+  ],
   "category": "ncmazfse",
   "usesContext": [
     "postId",

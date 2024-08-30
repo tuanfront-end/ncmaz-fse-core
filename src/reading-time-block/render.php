@@ -1,7 +1,7 @@
 <?php
 global $post;
 // Generate unique id for aria-controls.
-$current_post_id = get_the_ID();
+$current_post_id =  $block->context['postId'] ?? 0;
 // get content of the post
 $post_content = get_post_field('post_content', $current_post_id);
 // get the number of words in the post

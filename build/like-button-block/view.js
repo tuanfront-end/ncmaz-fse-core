@@ -91,7 +91,6 @@ const {
   actions: {
     handleLike: () => {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-      console.log("like actions -- handle like", context);
       const {
         postId
       } = context;
@@ -161,10 +160,7 @@ const {
   callbacks: {
     logHandleLikeInit: () => {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-      console.log("like callbacks -- update local storage", {
-        context,
-        state
-      });
+
       // if user is not logged in
       if (!state.userId) {
         // check from local storage

@@ -64,7 +64,7 @@ function Edit(props: EditProps<Attributes>) {
 			},
 			resetAllFilter: () => {
 				setActiveColor(undefined);
-				setAttributes({ customActiveColor: undefined });
+				setAttributes({ customActiveColor: "#16a34a" });
 			},
 		},
 		{
@@ -100,7 +100,7 @@ function Edit(props: EditProps<Attributes>) {
 			},
 			resetAllFilter: () => {
 				setActiveIconBgColor(undefined);
-				setAttributes({ customActiveIconBgColor: undefined });
+				setAttributes({ customActiveIconBgColor: "#00ba7c1a" });
 			},
 		},
 	];

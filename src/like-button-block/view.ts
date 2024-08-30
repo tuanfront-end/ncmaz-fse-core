@@ -50,7 +50,6 @@ const { state } = store("ncmazfse-core/like-button", {
 	actions: {
 		handleLike: () => {
 			const context = getContext<TContext>();
-			console.log("like actions -- handle like", context);
 			const { postId } = context;
 
 			try {
@@ -127,10 +126,6 @@ const { state } = store("ncmazfse-core/like-button", {
 		logHandleLikeInit: () => {
 			const context = getContext<TContext>();
 
-			console.log("like callbacks -- update local storage", {
-				context,
-				state,
-			});
 			// if user is not logged in
 			if (!state.userId) {
 				// check from local storage

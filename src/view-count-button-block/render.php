@@ -2,7 +2,7 @@
 global $post;
 
 // Generate unique id for aria-controls.
-$current_post_id = get_the_ID();
+$current_post_id =  $block->context['postId'] ?? 0;
 
 // Get the post view count
 $args = array(
