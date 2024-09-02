@@ -1,0 +1,53 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ncmazfse-block/terms-query",
+	"title": "Terms Query Loop",
+	"category": "ncmazfse",
+	"description": "An advanced block that allows displaying post types based on different query parameters and visual configurations.",
+	"textdomain": "default",
+	"attributes": {
+		"queryId": {
+			"type": "number"
+		},
+		"query": {
+			"type": "object",
+			"default": {
+				"perPage": null,
+				"postType": "post",
+				"order": "desc",
+				"orderBy": "date",
+				"exclude": [],
+				"isFilterByOrder": true,
+				"taxonomySlug": "category",
+				"termIdList": []
+			}
+		},
+		"tagName": {
+			"type": "string",
+			"default": "div"
+		},
+		"namespace": {
+			"type": "string"
+		},
+		"enhancedPagination": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"providesContext": {
+		"queryId": "queryId",
+		"query": "query",
+		"displayLayout": "displayLayout",
+		"enhancedPagination": "enhancedPagination"
+	},
+	"supports": {
+		"align": ["wide", "full"],
+		"html": false,
+		"layout": true,
+		"interactivity": true
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

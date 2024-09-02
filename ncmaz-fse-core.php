@@ -32,6 +32,7 @@ define('NCMAZ_FSE_CORE_STORE',  'ncmazfse-core');
 
 function ncmaz_fse_core_register_blocks_init()
 {
+	register_block_type(__DIR__ . '/build/common-css-block');
 	register_block_type(__DIR__ . '/build/rating-block');
 	register_block_type(__DIR__ . '/build/review-card-block');
 	register_block_type(__DIR__ . '/build/like-button-block');
@@ -39,7 +40,8 @@ function ncmaz_fse_core_register_blocks_init()
 	register_block_type(__DIR__ . '/build/comment-count-button-block');
 	register_block_type(__DIR__ . '/build/reading-time-block');
 	register_block_type(__DIR__ . '/build/view-count-button-block');
-	register_block_type(__DIR__ . '/build/common-css-block');
+	register_block_type(__DIR__ . '/build/terms-list-block');
+	register_block_type(__DIR__ . '/build/terms-query');
 }
 add_action('init', 'ncmaz_fse_core_register_blocks_init');
 
