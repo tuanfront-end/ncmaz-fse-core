@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { useSelect, useDispatch } from "@wordpress/data";
+import { useDispatch } from "@wordpress/data";
 import { useInstanceId } from "@wordpress/compose";
 import { useEffect } from "@wordpress/element";
 import {
@@ -13,15 +13,24 @@ import {
 } from "@wordpress/block-editor";
 import { SelectControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { store as coreStore } from "@wordpress/core-data";
 
 /**
  * Internal dependencies
  */
 import QueryToolbar from "./query-toolbar";
 import QueryInspectorControls from "./inspector-controls";
+import { TermQueryEditProps } from ".";
+import metadata from "../block.json";
 
-const DEFAULTS_POSTS_PER_PAGE = 3;
+export type MyTermQueryKey =
+	keyof typeof metadata.attributes.myQuery.default & {};
+
+export type MyTermQueryUpdateFuncT = (
+	query: Partial<Record<MyTermQueryKey, any>>,
+) => void;
+
+// export type TermQueryObT = TAttrs<typeof metadata.attributes.myQuery.default>;
+// export type UpdateTermQueryFuncT = (newQuery: Record<string,any>) => void;
 
 const TEMPLATE = [["core/post-template"]];
 export default function QueryContent({
@@ -30,43 +39,22 @@ export default function QueryContent({
 	openPatternSelectionModal,
 	name,
 	clientId,
-}) {
+}: TermQueryEditProps) {
 	const {
-		queryId,
-		query,
+		myQueryId: queryId,
+		myQuery,
 		displayLayout,
 		tagName: TagName = "div",
-		query: { inherit } = {},
 	} = attributes;
 	const { __unstableMarkNextChangeAsNotPersistent } =
 		useDispatch(blockEditorStore);
 	const instanceId = useInstanceId(QueryContent);
 	const blockProps = useBlockProps();
+
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		template: TEMPLATE,
 	});
-	const { postsPerPage } = useSelect((select) => {
-		const { getSettings } = select(blockEditorStore);
-		const { getEntityRecord, getEntityRecordEdits, canUser } =
-			select(coreStore);
-		const settingPerPage = canUser("read", {
-			kind: "root",
-			name: "site",
-		})
-			? +getEntityRecord("root", "site")?.posts_per_page
-			: +getSettings().postsPerPage;
 
-		// Gets changes made via the template area posts per page setting. These won't be saved
-		// until the page is saved, but we should reflect this setting within the query loops
-		// that inherit it.
-		const editedSettingPerPage = +getEntityRecordEdits("root", "site")
-			?.posts_per_page;
-
-		return {
-			postsPerPage:
-				editedSettingPerPage || settingPerPage || DEFAULTS_POSTS_PER_PAGE,
-		};
-	}, []);
 	// There are some effects running where some initialization logic is
 	// happening and setting some values to some attributes (ex. queryId).
 	// These updates can cause an `undo trap` where undoing will result in
@@ -76,34 +64,26 @@ export default function QueryContent({
 	// Changes in query property (which is an object) need to be in the same callback,
 	// because updates are batched after the render and changes in different query properties
 	// would cause to override previous wanted changes.
-	useEffect(() => {
-		const newQuery = {};
-		// When we inherit from global query always need to set the `perPage`
-		// based on the reading settings.
-		if (inherit && query.perPage !== postsPerPage) {
-			newQuery.perPage = postsPerPage;
-		} else if (!query.perPage && postsPerPage) {
-			newQuery.perPage = postsPerPage;
-		}
-		if (!!Object.keys(newQuery).length) {
-			__unstableMarkNextChangeAsNotPersistent();
-			updateQuery(newQuery);
-		}
-	}, [query.perPage, postsPerPage, inherit]);
+
 	// We need this for multi-query block pagination.
 	// Query parameters for each block are scoped to their ID.
 	useEffect(() => {
 		if (!Number.isFinite(queryId)) {
 			__unstableMarkNextChangeAsNotPersistent();
-			setAttributes({ queryId: instanceId });
+			setAttributes({ myQueryId: instanceId });
 		}
 	}, [queryId, instanceId]);
-	const updateQuery = (newQuery) =>
-		setAttributes({ query: { ...query, ...newQuery } });
-	const updateDisplayLayout = (newDisplayLayout) =>
+
+	const updateQuery: MyTermQueryUpdateFuncT = (newQuery) => {
+		setAttributes({ myQuery: { ...myQuery, ...newQuery } });
+	};
+
+	const updateDisplayLayout = (newDisplayLayout: Record<string, any>) => {
 		setAttributes({
 			displayLayout: { ...displayLayout, ...newDisplayLayout },
 		});
+	};
+
 	const htmlElementMessages = {
 		main: __(
 			"The <main> element should be used for the primary content of your document only.",
@@ -131,8 +111,8 @@ export default function QueryContent({
 				<QueryToolbar
 					name={name}
 					clientId={clientId}
-					attributes={attributes}
-					setQuery={updateQuery}
+					// attributes={attributes}
+					// setQuery={updateQuery}
 					openPatternSelectionModal={openPatternSelectionModal}
 				/>
 			</BlockControls>
@@ -141,15 +121,17 @@ export default function QueryContent({
 					__nextHasNoMarginBottom
 					__next40pxDefaultSize
 					label={__("HTML element")}
-					options={[
-						{ label: __("Default (<div>)"), value: "div" },
-						{ label: "<main>", value: "main" },
-						{ label: "<section>", value: "section" },
-						{ label: "<aside>", value: "aside" },
-					]}
+					options={
+						[
+							{ label: __("Default (<div>)"), value: "div" },
+							{ label: "<main>", value: "main" },
+							{ label: "<section>", value: "section" },
+							{ label: "<aside>", value: "aside" },
+						] as { label: string; value: "main" | "section" | "aside" }[]
+					}
 					value={TagName}
 					onChange={(value) => setAttributes({ tagName: value })}
-					help={htmlElementMessages[TagName]}
+					help={htmlElementMessages[TagName as "main" | "section" | "aside"]}
 				/>
 			</InspectorControls>
 			<TagName {...innerBlocksProps} />

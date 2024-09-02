@@ -7,13 +7,14 @@
 	"description": "An advanced block that allows displaying post types based on different query parameters and visual configurations.",
 	"textdomain": "default",
 	"attributes": {
-		"queryId": {
-			"type": "number"
+		"myQueryId": {
+			"type": "number",
+			"myType": 0
 		},
-		"query": {
+		"myQuery": {
 			"type": "object",
 			"default": {
-				"perPage": null,
+				"perPage": 8,
 				"postType": "post",
 				"order": "desc",
 				"orderBy": "date",
@@ -33,6 +34,10 @@
 		"enhancedPagination": {
 			"type": "boolean",
 			"default": false
+		},
+		"displayLayout": {
+			"type": "object",
+			"myType": {}
 		}
 	},
 	"providesContext": {

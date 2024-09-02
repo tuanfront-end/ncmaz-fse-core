@@ -10,6 +10,7 @@ import { useState } from "@wordpress/element";
 import {
 	useBlockProps,
 	store as blockEditorStore,
+	// @ts-ignore
 	__experimentalBlockVariationPicker,
 } from "@wordpress/block-editor";
 import { Button, Placeholder } from "@wordpress/components";
@@ -19,21 +20,25 @@ import { __ } from "@wordpress/i18n";
  * Internal dependencies
  */
 import { useScopedBlockVariations, useBlockNameForPatterns } from "../utils";
+import { TermQueryEditProps } from ".";
 
 export default function QueryPlaceholder({
 	attributes,
 	clientId,
 	name,
 	openPatternSelectionModal,
-}) {
+}: TermQueryEditProps) {
 	const [isStartingBlank, setIsStartingBlank] = useState(false);
 	const blockProps = useBlockProps();
 	const blockNameForPatterns = useBlockNameForPatterns(clientId, attributes);
 	const { blockType, activeBlockVariation, hasPatterns } = useSelect(
 		(select) => {
-			const { getActiveBlockVariation, getBlockType } = select(blocksStore);
-			const { getBlockRootClientId, getPatternsByBlockTypes } =
-				select(blockEditorStore);
+			const { getActiveBlockVariation, getBlockType } = select(
+				blocksStore,
+			) as Record<string, any>;
+			const { getBlockRootClientId, getPatternsByBlockTypes } = select(
+				blockEditorStore,
+			) as Record<string, any>;
 			const rootClientId = getBlockRootClientId(clientId);
 			return {
 				blockType: getBlockType(name),
@@ -53,6 +58,7 @@ export default function QueryPlaceholder({
 	const label = activeBlockVariation?.title || blockType?.title;
 	if (isStartingBlank) {
 		return (
+			// @ts-ignore
 			<QueryVariationPicker
 				clientId={clientId}
 				attributes={attributes}
@@ -94,7 +100,12 @@ export default function QueryPlaceholder({
 	);
 }
 
-function QueryVariationPicker({ clientId, attributes, icon, label }) {
+function QueryVariationPicker({
+	clientId,
+	attributes,
+	icon,
+	label,
+}: TermQueryEditProps) {
 	const scopeVariations = useScopedBlockVariations(attributes);
 
 	const { replaceInnerBlocks } = useDispatch(blockEditorStore);
@@ -105,7 +116,7 @@ function QueryVariationPicker({ clientId, attributes, icon, label }) {
 				icon={icon}
 				label={label}
 				variations={scopeVariations}
-				onSelect={(variation) => {
+				onSelect={(variation: Record<string, any>) => {
 					if (variation.innerBlocks) {
 						replaceInnerBlocks(
 							clientId,

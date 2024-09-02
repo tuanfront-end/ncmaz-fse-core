@@ -12,13 +12,26 @@ import { __ } from "@wordpress/i18n";
 import { TokenItem } from "@wordpress/components/build-types/form-token-field/types";
 import { useEntityRecords } from "@wordpress/core-data";
 import { useMemo } from "@wordpress/element";
+import { TermQueryEditProps } from "..";
+import { MyTermQueryUpdateFuncT } from "../query-content";
 
-export default function QueryInspectorControls(props) {
+export default function QueryInspectorControls(
+	props: Pick<
+		TermQueryEditProps,
+		| "attributes"
+		| "setQuery"
+		| "setDisplayLayout"
+		| "clientId"
+		| "setAttributes"
+	> & {
+		setQuery: MyTermQueryUpdateFuncT;
+	},
+) {
 	const { attributes, setQuery, setDisplayLayout, setAttributes, clientId } =
 		props;
-	const { query, displayLayout, enhancedPagination } = attributes;
+	const { myQuery, displayLayout, enhancedPagination } = attributes;
 	const { order, orderBy, perPage, isFilterByOrder, taxonomySlug, termIdList } =
-		query;
+		myQuery;
 
 	const { records: taxonomiesRecords } = useEntityRecords<Record<string, any>>(
 		"root",
@@ -147,8 +160,10 @@ export default function QueryInspectorControls(props) {
 						onOrderChange={(value) => {
 							setQuery({ order: value });
 						}}
-						order={order}
-						orderBy={orderBy}
+						order={order as "asc" | "desc"}
+						orderBy={orderBy as "title" | "date"}
+						minItems={1}
+						maxItems={100}
 					/>
 				</PanelBody>
 			)}
