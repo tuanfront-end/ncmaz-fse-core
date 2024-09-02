@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 import { useSelect } from "@wordpress/data";
-import { useState } from "@wordpress/element";
 import { store as blockEditorStore } from "@wordpress/block-editor";
 
 /**
@@ -18,9 +17,8 @@ type Attributes = TAttrs<typeof metadata.attributes>;
 export type TermQueryEditProps = EditProps<Attributes> & { name: string };
 
 const QueryEdit = (props: TermQueryEditProps) => {
-	const { clientId, attributes } = props;
-	const [isPatternSelectionModalOpen, setIsPatternSelectionModalOpen] =
-		useState(false);
+	const { clientId } = props;
+
 	const hasInnerBlocks = useSelect(
 		(select) => !!(select(blockEditorStore) as any).getBlocks(clientId).length,
 		[clientId],
@@ -28,10 +26,7 @@ const QueryEdit = (props: TermQueryEditProps) => {
 	const Component = hasInnerBlocks ? QueryContent : QueryPlaceholder;
 	return (
 		<>
-			<Component
-				{...props}
-				openPatternSelectionModal={() => setIsPatternSelectionModalOpen(true)}
-			/>
+			<Component {...props} />
 		</>
 	);
 };

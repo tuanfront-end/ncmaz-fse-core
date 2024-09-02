@@ -15,7 +15,12 @@ const variations = [
 		icon: titleDate,
 		attributes: {},
 		innerBlocks: [
-			["core/post-template", {}, [["core/post-title"], ["core/post-date"]]],
+			// ["core/post-template", {}, [["core/post-title"], ["core/post-date"]]],
+			[
+				"core/paragraph",
+				{ content: __("Add a summary, this is term query paragraph!!") },
+			],
+			["ncmazfse-block/term-template-block", {}],
 		],
 		scope: ["block"],
 	},

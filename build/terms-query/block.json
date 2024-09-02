@@ -7,20 +7,18 @@
   "description": "An advanced block that allows displaying post types based on different query parameters and visual configurations.",
   "textdomain": "default",
   "attributes": {
-    "queryId": {
-      "type": "number"
+    "myQueryId": {
+      "type": "number",
+      "myType": 0
     },
-    "query": {
+    "myQuery": {
       "type": "object",
       "default": {
-        "perPage": null,
-        "postType": "post",
-        "order": "desc",
-        "orderBy": "date",
-        "exclude": [],
+        "perPage": 8,
         "isFilterByOrder": true,
         "taxonomySlug": "category",
-        "termIdList": []
+        "termIdList": [],
+        "inherit": false
       }
     },
     "tagName": {
@@ -33,11 +31,15 @@
     "enhancedPagination": {
       "type": "boolean",
       "default": false
+    },
+    "displayLayout": {
+      "type": "object",
+      "myType": {}
     }
   },
   "providesContext": {
-    "queryId": "queryId",
-    "query": "query",
+    "ncmazfse_termQueryId": "myQueryId",
+    "ncmazfse_termQuery": "myQuery",
     "displayLayout": "displayLayout",
     "enhancedPagination": "enhancedPagination"
   },

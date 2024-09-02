@@ -29,8 +29,8 @@ export default function QueryInspectorControls(
 ) {
 	const { attributes, setQuery, setDisplayLayout, setAttributes, clientId } =
 		props;
-	const { myQuery, displayLayout, enhancedPagination } = attributes;
-	const { order, orderBy, perPage, isFilterByOrder, taxonomySlug, termIdList } =
+	const { myQuery, displayLayout } = attributes;
+	const { perPage, isFilterByOrder, taxonomySlug, termIdList, inherit } =
 		myQuery;
 
 	const { records: taxonomiesRecords } = useEntityRecords<Record<string, any>>(
@@ -105,29 +105,43 @@ export default function QueryInspectorControls(
 	return (
 		<>
 			<PanelBody title={__("Settings")}>
-				{/* // loai taxonomies -> lua chon loai taxonomy de filter terms */}
-				<SelectControl
-					__nextHasNoMarginBottom
-					label={__("Taxonomy type")}
-					value={taxonomySlug}
-					options={taxonomies}
-					onChange={(value) => setQuery({ taxonomySlug: value })}
-				/>
-
 				<ToggleControl
 					__nextHasNoMarginBottom
-					checked={isFilterByOrder}
-					label={__("Filter by order.")}
+					checked={inherit}
+					label={__("Inherit sub-terms from template.")}
 					onChange={(value) => {
-						setQuery({ isFilterByOrder: value });
+						setQuery({ inherit: value });
 					}}
-					help={__(
-						"Display a list of terms in a sort order-by or in a specific terms selected.",
-					)}
+					help={__("Display a list of sub-terms of the current Archive page.")}
 				/>
+
+				{/* // loai taxonomies -> lua chon loai taxonomy de filter terms */}
+				{!inherit && (
+					<SelectControl
+						__nextHasNoMarginBottom
+						label={__("Taxonomy type")}
+						value={taxonomySlug}
+						options={taxonomies}
+						onChange={(value) => setQuery({ taxonomySlug: value })}
+					/>
+				)}
+
+				{!inherit && (
+					<ToggleControl
+						__nextHasNoMarginBottom
+						checked={isFilterByOrder}
+						label={__("Filter by order.")}
+						onChange={(value) => {
+							setQuery({ isFilterByOrder: value });
+						}}
+						help={__(
+							"Display a list of terms in a sort order-by or in a specific terms selected.",
+						)}
+					/>
+				)}
 			</PanelBody>
 
-			{!isFilterByOrder && (
+			{!isFilterByOrder && !inherit && (
 				<PanelBody title={__("Terms")}>
 					{/* // danh sach terms -> lua chon terms */}
 					<FormTokenField
@@ -147,21 +161,13 @@ export default function QueryInspectorControls(
 				</PanelBody>
 			)}
 
-			{!!isFilterByOrder && (
+			{(inherit || !!isFilterByOrder) && (
 				<PanelBody title={__("Query")}>
 					<QueryControls
 						numberOfItems={perPage}
 						onNumberOfItemsChange={(value) => {
 							setQuery({ perPage: value });
 						}}
-						onOrderByChange={(value) => {
-							setQuery({ orderBy: value });
-						}}
-						onOrderChange={(value) => {
-							setQuery({ order: value });
-						}}
-						order={order as "asc" | "desc"}
-						orderBy={orderBy as "title" | "date"}
 						minItems={1}
 						maxItems={100}
 					/>

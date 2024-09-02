@@ -5,7 +5,6 @@ import { useDispatch } from "@wordpress/data";
 import { useInstanceId } from "@wordpress/compose";
 import { useEffect } from "@wordpress/element";
 import {
-	BlockControls,
 	InspectorControls,
 	useBlockProps,
 	store as blockEditorStore,
@@ -17,7 +16,6 @@ import { __ } from "@wordpress/i18n";
 /**
  * Internal dependencies
  */
-import QueryToolbar from "./query-toolbar";
 import QueryInspectorControls from "./inspector-controls";
 import { TermQueryEditProps } from ".";
 import metadata from "../block.json";
@@ -32,11 +30,10 @@ export type MyTermQueryUpdateFuncT = (
 // export type TermQueryObT = TAttrs<typeof metadata.attributes.myQuery.default>;
 // export type UpdateTermQueryFuncT = (newQuery: Record<string,any>) => void;
 
-const TEMPLATE = [["core/post-template"]];
+const TEMPLATE = [["ncmazfse-block/term-template-block"]];
 export default function QueryContent({
 	attributes,
 	setAttributes,
-	openPatternSelectionModal,
 	name,
 	clientId,
 }: TermQueryEditProps) {
@@ -107,15 +104,7 @@ export default function QueryContent({
 					clientId={clientId}
 				/>
 			</InspectorControls>
-			<BlockControls>
-				<QueryToolbar
-					name={name}
-					clientId={clientId}
-					// attributes={attributes}
-					// setQuery={updateQuery}
-					openPatternSelectionModal={openPatternSelectionModal}
-				/>
-			</BlockControls>
+
 			<InspectorControls group="advanced">
 				<SelectControl
 					__nextHasNoMarginBottom

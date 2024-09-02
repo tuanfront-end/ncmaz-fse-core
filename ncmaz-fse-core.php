@@ -42,6 +42,7 @@ function ncmaz_fse_core_register_blocks_init()
 	register_block_type(__DIR__ . '/build/view-count-button-block');
 	register_block_type(__DIR__ . '/build/terms-list-block');
 	register_block_type(__DIR__ . '/build/terms-query');
+	register_block_type(__DIR__ . '/build/term-template-block');
 }
 add_action('init', 'ncmaz_fse_core_register_blocks_init');
 

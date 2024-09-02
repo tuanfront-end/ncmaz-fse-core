@@ -1,0 +1,69 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ncmazfse-block/term-template-block",
+	"title": "Term Template",
+	"category": "ncmazfse",
+	"parent": ["ncmazfse-block/terms-query"],
+	"description": "Contains the block elements used to render a term, like the title, featured image, description, posts count.",
+	"textdomain": "default",
+	"attributes": {
+		"layout": {
+			"type": "object",
+			"default": {
+				"type": "grid",
+				"columnCount": null,
+				"minimumColumnWidth": "12rem"
+			}
+		}
+	},
+	"usesContext": [
+		"ncmazfse_termQuery",
+		"ncmazfse_termQueryId",
+		"displayLayout",
+		"templateSlug",
+		"previewPostType",
+		"enhancedPagination"
+	],
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"align": ["wide", "full"],
+		"layout": true,
+		"color": {
+			"gradients": true,
+			"link": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"spacing": {
+			"blockGap": {
+				"__experimentalDefault": "1.25em"
+			},
+			"__experimentalDefaultControls": {
+				"blockGap": true
+			}
+		},
+		"interactivity": {
+			"clientNavigation": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}
