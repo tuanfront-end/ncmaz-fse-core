@@ -96,10 +96,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _order_control__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./order-control */ "./src/terms-query/edit/inspector-controls/order-control.tsx");
+/* harmony import */ var _per_page_control__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./per-page-control */ "./src/terms-query/edit/inspector-controls/per-page-control.tsx");
+/* harmony import */ var _page_control__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./page-control */ "./src/terms-query/edit/inspector-controls/page-control.tsx");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utils */ "./src/terms-query/utils.ts");
 
 /**
  * WordPress dependencies
  */
+
+
+
+
 
 
 
@@ -121,15 +129,16 @@ function QueryInspectorControls(props) {
     isFilterByOrder,
     taxonomySlug,
     termIdList,
-    inherit
+    inherit,
+    excludeIdList,
+    hideEmpty,
+    order,
+    orderBy,
+    parentIdString,
+    postType,
+    page
   } = myQuery;
-  const {
-    records: taxonomiesRecords
-  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityRecords)("root", "taxonomy", {
-    per_page: -1,
-    orderby: "name",
-    order: "asc"
-  });
+  const taxonomiesRecords = (0,_utils__WEBPACK_IMPORTED_MODULE_8__.useTaxonomies)(postType);
   const {
     records: termRecords
   } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityRecords)("taxonomy", taxonomySlug, {
@@ -139,6 +148,10 @@ function QueryInspectorControls(props) {
     _fields: "id,name,parent",
     context: "view"
   });
+  const {
+    postTypesTaxonomiesMap = {},
+    postTypesSelectOptions
+  } = (0,_utils__WEBPACK_IMPORTED_MODULE_8__.usePostTypes)();
   const taxonomies = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => {
     const data = taxonomiesRecords?.map(item => {
       if (!item?.visibility?.publicly_queryable) {
@@ -163,31 +176,95 @@ function QueryInspectorControls(props) {
       return {
         ...item,
         id: item.id.toString(),
-        label
+        label,
+        parent: item.parent
       };
     }) || [];
     return data;
   }, [termRecords]);
+  const childTermRecords = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => {
+    if (typeof parentIdString !== "string") {
+      return termRecordsConvert;
+    }
+    return termRecordsConvert.filter(item => item.parent == parentIdString);
+  }, [termRecordsConvert, parentIdString]);
+  const onPostTypeChange = newValue => {
+    let updateQuery = {
+      postType: newValue
+    };
+    // We need to dynamically update the `taxQuery` property,
+    // by removing any not supported taxonomy from the query.
+    const supportedTaxonomies = postTypesTaxonomiesMap[newValue];
+
+    // // const updatedTaxQuery = Object.entries(taxQuery || {}).reduce(
+    // // 	(accumulator, [taxonomySlug, terms]) => {
+    // // 		if (supportedTaxonomies.includes(taxonomySlug)) {
+    // // 			accumulator[taxonomySlug] = terms;
+    // // 		}
+    // // 		return accumulator;
+    // // 	},
+    // // 	{},
+    // // );
+
+    // updateQuery.taxQuery = !!Object.keys(updatedTaxQuery).length
+    // 	? updatedTaxQuery
+    // 	: undefined;
+
+    setQuery({
+      ...updateQuery,
+      parent: 0,
+      taxonomySlug: supportedTaxonomies[0]
+    });
+  };
   const termNameList = termRecordsConvert.map(item => item.label);
+  const temChildNameList = childTermRecords.map(item => item.label);
+  console.log("___________ncmazfse-terms-query", {
+    parentIdString,
+    termRecords,
+    childTermRecords
+  });
   const getTermNameListFromIds = (ids = []) => {
     return termRecordsConvert.filter(item => ids.includes(item.id)).map(item => item.label);
   };
   const getTermIdsFromNames = (names = []) => {
     return termRecordsConvert.filter(item => names.includes(item.label)).map(item => item.id);
   };
+  const postTypeControlHelp = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Limit results to taxonomies associated with a specific post type.");
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Settings")
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
     __nextHasNoMarginBottom: true,
     checked: inherit,
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Inherit sub-terms from template."),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Inherit from the archive page."),
     onChange: value => {
       setQuery({
         inherit: value
       });
     },
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Display a list of sub-terms of the current Archive page.")
-  }), !inherit && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Limit results are set to terms assigned to the parent - current archive page. Note: This only works in archive pages.")
+  }), !inherit && (postTypesSelectOptions.length > 2 ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    options: postTypesSelectOptions,
+    value: postType,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Post type"),
+    onChange: onPostTypeChange,
+    help: postTypeControlHelp
+  }) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalToggleGroupControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    isBlock: true,
+    value: postType,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Post type"),
+    onChange: value => {
+      value ? onPostTypeChange(value?.toString() || "") : null;
+    },
+    help: postTypeControlHelp
+  }, postTypesSelectOptions.map(option => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalToggleGroupControlOption, {
+    key: option.value,
+    value: option.value,
+    label: option.label
+  })))), !inherit && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, taxonomies.length ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
     __nextHasNoMarginBottom: true,
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Taxonomy type"),
     value: taxonomySlug,
@@ -195,46 +272,269 @@ function QueryInspectorControls(props) {
     onChange: value => setQuery({
       taxonomySlug: value
     })
-  }), !inherit && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
+  }) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.BaseControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Taxonomy type"),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("No taxonomy found, please try again with another post type.")
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
     __nextHasNoMarginBottom: true,
-    checked: isFilterByOrder,
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Filter by order."),
+    checked: hideEmpty,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Hide empty terms."),
     onChange: value => {
       setQuery({
-        isFilterByOrder: value
+        hideEmpty: value
       });
     },
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Display a list of terms in a sort order-by or in a specific terms selected.")
-  })), !isFilterByOrder && !inherit && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Terms")
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Display a list of terms that have posts associated with them.")
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Query")
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_order_control__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    order: order,
+    orderBy: orderBy,
+    onChange: setQuery
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_per_page_control__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    perPage: perPage,
+    onChange: setQuery
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_page_control__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    page: page,
+    onChange: setQuery
+  })), !inherit && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Terms Settings")
+  }, !!termNameList.length ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.BaseControl, {
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Limit result set to terms assigned to a specific parent. Data will return empty if the selected has no children. ")
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FormTokenField, {
     __experimentalAutoSelectFirstMatch: true,
     __experimentalExpandOnFocus: true,
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Terms"),
+    __experimentalShowHowTo: false,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Parent"),
     onChange: value => {
       if (!Array.isArray(value)) {
         return;
       }
-      const newIds = getTermIdsFromNames(value);
+      // cần reverse để lấy id của parent cuối cùng trong mảng. VÌ chỉ chọn 1 parent
+      const parentIds = getTermIdsFromNames([value.reverse()[0]]);
       setQuery({
-        termIdList: newIds
+        parentIdString: parentIds[0]
       });
     },
     suggestions: termNameList,
-    value: getTermNameListFromIds(termIdList)
-  })), (inherit || !!isFilterByOrder) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Query")
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.QueryControls, {
-    numberOfItems: perPage,
-    onNumberOfItemsChange: value => {
+    value: getTermNameListFromIds(typeof parentIdString === "string" ? [parentIdString] : []),
+    maxLength: 1,
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Select only one parent")
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.BaseControl, {
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Show a list of terms with related posts. Leave blank if you want to catch all.")
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FormTokenField, {
+    __experimentalAutoSelectFirstMatch: true,
+    __experimentalExpandOnFocus: true,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Terms include"),
+    onChange: value => {
+      if (!Array.isArray(value)) {
+        return;
+      }
       setQuery({
-        perPage: value
+        termIdList: getTermIdsFromNames(value)
       });
     },
-    minItems: 1,
-    maxItems: 100
-  })));
+    suggestions: temChildNameList,
+    value: getTermNameListFromIds(termIdList)
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.BaseControl, {
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Exclude a list of terms with related posts.")
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FormTokenField, {
+    __experimentalAutoSelectFirstMatch: true,
+    __experimentalExpandOnFocus: true,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Terms exclude"),
+    onChange: value => {
+      if (!Array.isArray(value)) {
+        return;
+      }
+      setQuery({
+        excludeIdList: getTermIdsFromNames(value)
+      });
+    },
+    suggestions: temChildNameList,
+    value: getTermNameListFromIds(excludeIdList)
+  }))) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.BaseControl, {
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Please select a taxonomy type to filter terms by parent, include, exclude. Or with your current query no results are found, please try again.")
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null))));
 }
+
+/***/ }),
+
+/***/ "./src/terms-query/edit/inspector-controls/order-control.tsx":
+/*!*******************************************************************!*\
+  !*** ./src/terms-query/edit/inspector-controls/order-control.tsx ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+
+/**
+ * WordPress dependencies
+ */
+
+
+const orderOptions = [{
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Include/desc"),
+  value: "include/desc"
+}, {
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Include/asc"),
+  value: "include/asc"
+}, {
+  /* translators: label for ordering posts by title in ascending order */
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("A → Z"),
+  value: "name/asc"
+}, {
+  /* translators: label for ordering posts by title in descending order */
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Z → A"),
+  value: "name/desc"
+}, {
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Count/asc"),
+  value: "count/asc"
+}, {
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Count/desc"),
+  value: "count/desc"
+}, {
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Term group/asc"),
+  value: "term_group/asc"
+}, {
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Term group/desc"),
+  value: "term_group/desc"
+}];
+function OrderControl({
+  order,
+  orderBy,
+  onChange
+}) {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Order by"),
+    value: `${orderBy}/${order}`,
+    options: orderOptions,
+    onChange: value => {
+      const [newOrderBy, newOrder] = value.split("/");
+      onChange({
+        order: newOrder,
+        orderBy: newOrderBy
+      });
+    }
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OrderControl);
+
+/***/ }),
+
+/***/ "./src/terms-query/edit/inspector-controls/page-control.tsx":
+/*!******************************************************************!*\
+  !*** ./src/terms-query/edit/inspector-controls/page-control.tsx ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PageControl: () => (/* binding */ PageControl),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+
+/**
+ * WordPress dependencies
+ */
+
+
+const PageControl = ({
+  page,
+  onChange
+}) => {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalNumberControl, {
+    __next40pxDefaultSize: true,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Page to show."),
+    value: page,
+    min: 0,
+    onChange: value => {
+      if (typeof value === "undefined") {
+        return;
+      }
+      let newPage = 0;
+      newPage = parseInt(value);
+      if (isNaN(newPage) || newPage < 0) {
+        return;
+      }
+      onChange({
+        page: newPage
+      });
+    },
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Use this to specify the number of pages of the query to display. If you set it to 0 or leave it blank, it will display the first page of the query.")
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PageControl);
+
+/***/ }),
+
+/***/ "./src/terms-query/edit/inspector-controls/per-page-control.tsx":
+/*!**********************************************************************!*\
+  !*** ./src/terms-query/edit/inspector-controls/per-page-control.tsx ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+
+/**
+ * WordPress dependencies
+ */
+
+
+const MIN_POSTS_PER_PAGE = 1;
+const MAX_POSTS_PER_PAGE = 100;
+const PerPageControl = ({
+  perPage,
+  onChange
+}) => {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+    __next40pxDefaultSize: true,
+    __nextHasNoMarginBottom: true,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Posts per page"),
+    min: MIN_POSTS_PER_PAGE,
+    max: MAX_POSTS_PER_PAGE,
+    onChange: newPerPage => {
+      if (typeof newPerPage === "undefined") {
+        return;
+      }
+      if (isNaN(newPerPage) || newPerPage < MIN_POSTS_PER_PAGE || newPerPage > MAX_POSTS_PER_PAGE) {
+        return;
+      }
+      onChange({
+        perPage: newPerPage
+      });
+    }
+    // @ts-ignore
+    ,
+    value: parseInt(perPage, 10)
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PerPageControl);
 
 /***/ }),
 
@@ -659,7 +959,9 @@ function save({
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   useBlockNameForPatterns: () => (/* binding */ useBlockNameForPatterns),
-/* harmony export */   useScopedBlockVariations: () => (/* binding */ useScopedBlockVariations)
+/* harmony export */   usePostTypes: () => (/* binding */ usePostTypes),
+/* harmony export */   useScopedBlockVariations: () => (/* binding */ useScopedBlockVariations),
+/* harmony export */   useTaxonomies: () => (/* binding */ useTaxonomies)
 /* harmony export */ });
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
@@ -669,6 +971,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__);
 /**
  * WordPress dependencies
  */
@@ -676,6 +980,81 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+/**
+ * Hook that returns the taxonomies associated with a specific post type.
+ *
+ * @param {string} postType The post type from which to retrieve the associated taxonomies.
+ * @return {Object[]} An array of the associated taxonomies.
+ */
+const useTaxonomies = postType => {
+  const taxonomies = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useSelect)(select => {
+    const {
+      getTaxonomies,
+      getPostType
+    } = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__.store);
+    // Does the post type have taxonomies?
+    // @ts-ignore
+    if (getPostType(postType)?.taxonomies?.length > 0) {
+      // @ts-ignore
+      return getTaxonomies({
+        type: postType,
+        per_page: -1
+      });
+    }
+    return [];
+  }, [postType]);
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
+    return taxonomies?.filter(({
+      visibility
+    }) => !!visibility?.publicly_queryable);
+  }, [taxonomies]);
+};
+
+/**
+ * Returns a helper object that contains:
+ * 1. An `options` object from the available post types, to be passed to a `SelectControl`.
+ * 2. A helper map with available taxonomies per post type.
+ *
+ * @return {Object} The helper object related to post types.
+ */
+const usePostTypes = () => {
+  const postTypes = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useSelect)(select => {
+    const {
+      getPostTypes
+    } = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__.store);
+    const excludedPostTypes = ["attachment"];
+    // @ts-ignore
+    const filteredPostTypes = getPostTypes({
+      per_page: -1
+    })?.filter(({
+      viewable,
+      slug
+    }) => viewable && !excludedPostTypes.includes(slug));
+    return filteredPostTypes;
+  }, []);
+  const postTypesTaxonomiesMap = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
+    if (!postTypes?.length) {
+      return;
+    }
+    return postTypes.reduce((accumulator, type) => {
+      accumulator[type.slug] = type.taxonomies;
+      return accumulator;
+    }, {});
+  }, [postTypes]);
+  const postTypesSelectOptions = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => (postTypes || []).map(({
+    labels,
+    slug
+  }) => ({
+    label: labels.singular_name,
+    value: slug
+  })), [postTypes]);
+  return {
+    postTypesTaxonomiesMap,
+    postTypesSelectOptions
+  };
+};
 
 /**
  * Helper hook that determines if there is an active variation of the block
@@ -920,7 +1299,7 @@ module.exports = window["wp"]["primitives"];
   \************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/terms-query","title":"Terms Query Loop","category":"ncmazfse","description":"An advanced block that allows displaying post types based on different query parameters and visual configurations.","textdomain":"default","attributes":{"myQueryId":{"type":"number","myType":0},"myQuery":{"type":"object","default":{"perPage":8,"isFilterByOrder":true,"taxonomySlug":"category","termIdList":[],"inherit":false}},"tagName":{"type":"string","default":"div"},"namespace":{"type":"string"},"enhancedPagination":{"type":"boolean","default":false},"displayLayout":{"type":"object","myType":{}}},"providesContext":{"ncmazfse_termQueryId":"myQueryId","ncmazfse_termQuery":"myQuery","displayLayout":"displayLayout","enhancedPagination":"enhancedPagination"},"supports":{"align":["wide","full"],"html":false,"layout":true,"interactivity":true},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/terms-query","title":"Terms Query Loop","category":"ncmazfse","description":"An advanced block that allows displaying post types based on different query parameters and visual configurations.","textdomain":"default","attributes":{"myQueryId":{"type":"number","myType":0},"myQuery":{"type":"object","default":{"perPage":8,"isFilterByOrder":true,"taxonomySlug":"category","termIdList":[],"inherit":false,"postType":"post","orderBy":"date","order":"desc","parentIdString":null,"hideEmpty":true,"excludeIdList":[],"page":1}},"tagName":{"type":"string","default":"div"},"namespace":{"type":"string"},"enhancedPagination":{"type":"boolean","default":false},"displayLayout":{"type":"object","myType":{}}},"providesContext":{"ncmazfse_termQueryId":"myQueryId","ncmazfse_termQuery":"myQuery","displayLayout":"displayLayout","enhancedPagination":"enhancedPagination"},"supports":{"align":["wide","full"],"html":false,"layout":true,"interactivity":true},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ })
 

@@ -2,11 +2,13 @@
  * WordPress dependencies
  */
 import {
+	BaseControl,
 	FormTokenField,
 	PanelBody,
-	QueryControls,
 	SelectControl,
 	ToggleControl,
+	__experimentalToggleGroupControl as ToggleGroupControl,
+	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { TokenItem } from "@wordpress/components/build-types/form-token-field/types";
@@ -14,6 +16,10 @@ import { useEntityRecords } from "@wordpress/core-data";
 import { useMemo } from "@wordpress/element";
 import { TermQueryEditProps } from "..";
 import { MyTermQueryUpdateFuncT } from "../query-content";
+import OrderControl from "./order-control";
+import PerPageControl from "./per-page-control";
+import PageControl from "./page-control";
+import { usePostTypes, useTaxonomies } from "../../utils";
 
 export default function QueryInspectorControls(
 	props: Pick<
@@ -30,18 +36,22 @@ export default function QueryInspectorControls(
 	const { attributes, setQuery, setDisplayLayout, setAttributes, clientId } =
 		props;
 	const { myQuery, displayLayout } = attributes;
-	const { perPage, isFilterByOrder, taxonomySlug, termIdList, inherit } =
-		myQuery;
+	const {
+		perPage,
+		isFilterByOrder,
+		taxonomySlug,
+		termIdList,
+		inherit,
+		excludeIdList,
+		hideEmpty,
+		order,
+		orderBy,
+		parentIdString,
+		postType,
+		page,
+	} = myQuery;
 
-	const { records: taxonomiesRecords } = useEntityRecords<Record<string, any>>(
-		"root",
-		"taxonomy",
-		{
-			per_page: -1,
-			orderby: "name",
-			order: "asc",
-		},
-	);
+	const taxonomiesRecords = useTaxonomies(postType);
 
 	const { records: termRecords } = useEntityRecords<Record<string, any>>(
 		"taxonomy",
@@ -54,6 +64,9 @@ export default function QueryInspectorControls(
 			context: "view",
 		},
 	);
+
+	const { postTypesTaxonomiesMap = {}, postTypesSelectOptions } =
+		usePostTypes();
 
 	const taxonomies = useMemo(() => {
 		const data =
@@ -84,12 +97,54 @@ export default function QueryInspectorControls(
 					...item,
 					id: item.id.toString(),
 					label,
+					parent: item.parent,
 				};
 			}) || [];
 		return data;
 	}, [termRecords]);
 
+	const childTermRecords = useMemo(() => {
+		if (typeof parentIdString !== "string") {
+			return termRecordsConvert;
+		}
+		return termRecordsConvert.filter((item) => item.parent == parentIdString);
+	}, [termRecordsConvert, parentIdString]);
+
+	const onPostTypeChange = (newValue: string) => {
+		let updateQuery = { postType: newValue };
+		// We need to dynamically update the `taxQuery` property,
+		// by removing any not supported taxonomy from the query.
+		const supportedTaxonomies = postTypesTaxonomiesMap[newValue];
+
+		// // const updatedTaxQuery = Object.entries(taxQuery || {}).reduce(
+		// // 	(accumulator, [taxonomySlug, terms]) => {
+		// // 		if (supportedTaxonomies.includes(taxonomySlug)) {
+		// // 			accumulator[taxonomySlug] = terms;
+		// // 		}
+		// // 		return accumulator;
+		// // 	},
+		// // 	{},
+		// // );
+
+		// updateQuery.taxQuery = !!Object.keys(updatedTaxQuery).length
+		// 	? updatedTaxQuery
+		// 	: undefined;
+
+		setQuery({
+			...updateQuery,
+			parent: 0,
+			taxonomySlug: supportedTaxonomies[0],
+		});
+	};
+
 	const termNameList = termRecordsConvert.map((item) => item.label);
+	const temChildNameList = childTermRecords.map((item) => item.label);
+
+	console.log("___________ncmazfse-terms-query", {
+		parentIdString,
+		termRecords,
+		childTermRecords,
+	});
 
 	const getTermNameListFromIds = (ids: string[] = []) => {
 		return termRecordsConvert
@@ -102,75 +157,192 @@ export default function QueryInspectorControls(
 			.map((item) => item.id);
 	};
 
+	const postTypeControlHelp = __(
+		"Limit results to taxonomies associated with a specific post type.",
+	);
 	return (
 		<>
 			<PanelBody title={__("Settings")}>
 				<ToggleControl
 					__nextHasNoMarginBottom
 					checked={inherit}
-					label={__("Inherit sub-terms from template.")}
+					label={__("Inherit from the archive page.")}
 					onChange={(value) => {
 						setQuery({ inherit: value });
 					}}
-					help={__("Display a list of sub-terms of the current Archive page.")}
+					help={__(
+						"Limit results are set to terms assigned to the parent - current archive page. Note: This only works in archive pages.",
+					)}
 				/>
+
+				{!inherit &&
+					(postTypesSelectOptions.length > 2 ? (
+						<SelectControl
+							__nextHasNoMarginBottom
+							__next40pxDefaultSize
+							options={postTypesSelectOptions}
+							value={postType}
+							label={__("Post type")}
+							onChange={onPostTypeChange}
+							help={postTypeControlHelp}
+						/>
+					) : (
+						<ToggleGroupControl
+							__nextHasNoMarginBottom
+							__next40pxDefaultSize
+							isBlock
+							value={postType}
+							label={__("Post type")}
+							onChange={(value) => {
+								value ? onPostTypeChange(value?.toString() || "") : null;
+							}}
+							help={postTypeControlHelp}
+						>
+							{postTypesSelectOptions.map((option) => (
+								<ToggleGroupControlOption
+									key={option.value}
+									value={option.value}
+									label={option.label}
+								/>
+							))}
+						</ToggleGroupControl>
+					))}
 
 				{/* // loai taxonomies -> lua chon loai taxonomy de filter terms */}
 				{!inherit && (
-					<SelectControl
-						__nextHasNoMarginBottom
-						label={__("Taxonomy type")}
-						value={taxonomySlug}
-						options={taxonomies}
-						onChange={(value) => setQuery({ taxonomySlug: value })}
-					/>
+					<>
+						{taxonomies.length ? (
+							<SelectControl
+								__nextHasNoMarginBottom
+								label={__("Taxonomy type")}
+								value={taxonomySlug}
+								options={taxonomies}
+								onChange={(value) => setQuery({ taxonomySlug: value })}
+							/>
+						) : (
+							<BaseControl
+								label={__("Taxonomy type")}
+								help={__(
+									"No taxonomy found, please try again with another post type.",
+								)}
+							>
+								<div />
+							</BaseControl>
+						)}
+					</>
 				)}
 
-				{!inherit && (
-					<ToggleControl
-						__nextHasNoMarginBottom
-						checked={isFilterByOrder}
-						label={__("Filter by order.")}
-						onChange={(value) => {
-							setQuery({ isFilterByOrder: value });
-						}}
-						help={__(
-							"Display a list of terms in a sort order-by or in a specific terms selected.",
-						)}
-					/>
-				)}
+				<ToggleControl
+					__nextHasNoMarginBottom
+					checked={hideEmpty}
+					label={__("Hide empty terms.")}
+					onChange={(value) => {
+						setQuery({ hideEmpty: value });
+					}}
+					help={__(
+						"Display a list of terms that have posts associated with them.",
+					)}
+				/>
+
+				{/* <ToggleControl
+					__nextHasNoMarginBottom
+					checked={isFilterByOrder}
+					label={__("Filter by order.")}
+					onChange={(value) => {
+						setQuery({ isFilterByOrder: value });
+					}}
+					help={__(
+						"Display a list of terms in a sort order-by or in a specific terms selected.",
+					)}
+				/> */}
 			</PanelBody>
 
-			{!isFilterByOrder && !inherit && (
-				<PanelBody title={__("Terms")}>
-					{/* // danh sach terms -> lua chon terms */}
-					<FormTokenField
-						__experimentalAutoSelectFirstMatch
-						__experimentalExpandOnFocus
-						label={__("Terms")}
-						onChange={(value) => {
-							if (!Array.isArray(value)) {
-								return;
-							}
-							const newIds = getTermIdsFromNames(value);
-							setQuery({ termIdList: newIds });
-						}}
-						suggestions={termNameList}
-						value={getTermNameListFromIds(termIdList)}
-					/>
-				</PanelBody>
-			)}
+			<PanelBody title={__("Query")}>
+				<OrderControl order={order} orderBy={orderBy} onChange={setQuery} />
+				<PerPageControl perPage={perPage} onChange={setQuery} />
+				<PageControl page={page} onChange={setQuery} />
+			</PanelBody>
 
-			{(inherit || !!isFilterByOrder) && (
-				<PanelBody title={__("Query")}>
-					<QueryControls
-						numberOfItems={perPage}
-						onNumberOfItemsChange={(value) => {
-							setQuery({ perPage: value });
-						}}
-						minItems={1}
-						maxItems={100}
-					/>
+			{!inherit && (
+				<PanelBody title={__("Terms Settings")}>
+					{!!termNameList.length ? (
+						<>
+							<BaseControl
+								help={__(
+									"Limit result set to terms assigned to a specific parent. Data will return empty if the selected has no children. ",
+								)}
+							>
+								<FormTokenField
+									__experimentalAutoSelectFirstMatch
+									__experimentalExpandOnFocus
+									__experimentalShowHowTo={false}
+									label={__("Parent")}
+									onChange={(value) => {
+										if (!Array.isArray(value)) {
+											return;
+										}
+										// cần reverse để lấy id của parent cuối cùng trong mảng. VÌ chỉ chọn 1 parent
+										const parentIds = getTermIdsFromNames([value.reverse()[0]]);
+										setQuery({
+											parentIdString: parentIds[0],
+										});
+									}}
+									suggestions={termNameList}
+									value={getTermNameListFromIds(
+										typeof parentIdString === "string" ? [parentIdString] : [],
+									)}
+									maxLength={1}
+									placeholder={__("Select only one parent")}
+								/>
+							</BaseControl>
+
+							<BaseControl
+								help={__(
+									"Show a list of terms with related posts. Leave blank if you want to catch all.",
+								)}
+							>
+								<FormTokenField
+									__experimentalAutoSelectFirstMatch
+									__experimentalExpandOnFocus
+									label={__("Terms include")}
+									onChange={(value) => {
+										if (!Array.isArray(value)) {
+											return;
+										}
+										setQuery({ termIdList: getTermIdsFromNames(value) });
+									}}
+									suggestions={temChildNameList}
+									value={getTermNameListFromIds(termIdList)}
+								/>
+							</BaseControl>
+
+							<BaseControl
+								help={__("Exclude a list of terms with related posts.")}
+							>
+								<FormTokenField
+									__experimentalAutoSelectFirstMatch
+									__experimentalExpandOnFocus
+									label={__("Terms exclude")}
+									onChange={(value) => {
+										if (!Array.isArray(value)) {
+											return;
+										}
+										setQuery({ excludeIdList: getTermIdsFromNames(value) });
+									}}
+									suggestions={temChildNameList}
+									value={getTermNameListFromIds(excludeIdList)}
+								/>
+							</BaseControl>
+						</>
+					) : (
+						<BaseControl
+							help={__(
+								"Please select a taxonomy type to filter terms by parent, include, exclude. Or with your current query no results are found, please try again.",
+							)}
+						>
+							<div />
+						</BaseControl>
+					)}
 				</PanelBody>
 			)}
 		</>

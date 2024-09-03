@@ -24,21 +24,29 @@ const TEMPLATE = [
 	// ["core/post-excerpt"],
 ];
 
-function PostTemplateInnerBlocks({ classList }) {
+function PostTemplateInnerBlocks({ classList }: { classList: string }) {
 	const innerBlocksProps = useInnerBlocksProps(
 		{ className: clsx("wp-block-post", classList) },
+		// @ts-ignore
 		{ template: TEMPLATE, __unstableDisableLayoutClassNames: true },
 	);
 	return <li {...innerBlocksProps} />;
 }
 
+interface PostTemplateBlockPreviewProps {
+	blocks: Record<string, any>[];
+	blockContextId: number;
+	classList: string;
+	isHidden: boolean;
+	setActiveBlockContextId: (blockContextId: number) => void;
+}
 function PostTemplateBlockPreview({
 	blocks,
 	blockContextId,
 	classList,
 	isHidden,
 	setActiveBlockContextId,
-}) {
+}: PostTemplateBlockPreviewProps) {
 	const blockPreviewProps = useBlockPreview({
 		blocks,
 		props: {
@@ -61,7 +69,7 @@ function PostTemplateBlockPreview({
 			// eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
 			role="button"
 			onClick={handleOnClick}
-			onKeyPress={handleOnClick}
+			onKeyDown={handleOnClick}
 			style={style}
 		/>
 	);
@@ -85,6 +93,13 @@ export default function TermTemplateEdit({
 			taxonomySlug,
 			termIdList,
 			inherit,
+			postType,
+			orderBy,
+			order,
+			parentIdString,
+			hideEmpty,
+			excludeIdList,
+			page,
 			...restQueryArgs
 		} = {},
 		templateSlug,
@@ -94,9 +109,7 @@ export default function TermTemplateEdit({
 	__unstableLayoutClassNames,
 }: Props) {
 	const { type: layoutType, columnCount = 3 } = layout || {};
-	const [activeBlockContextId, setActiveBlockContextId] = useState();
-
-	console.log(1111, { templateSlug });
+	const [activeBlockContextId, setActiveBlockContextId] = useState<number>();
 
 	const { terms, blocks } = useSelect(
 		(select) => {
@@ -113,6 +126,7 @@ export default function TermTemplateEdit({
 					_fields: ["id"],
 					slug: templateSlug.replace("category-", ""),
 				});
+
 			const query = {};
 
 			if (perPage) {
@@ -136,26 +150,33 @@ export default function TermTemplateEdit({
 				// }),
 				terms:
 					// @ts-ignore
-					getEntityRecords("taxonomy", taxonomySlug, {
+					(getEntityRecords("taxonomy", taxonomySlug, {
 						...query,
 						...restQueryArgs,
-					}) || [],
-				blocks: getBlocks(clientId),
+					}) as Record<string, any>[]) || [],
+				blocks: (getBlocks(clientId) as Record<string, any>[]) || [],
 			};
 		},
 		[perPage, clientId, inherit, templateSlug, restQueryArgs, previewPostType],
 	);
 
-	const blockContexts = useMemo(
-		() =>
-			terms?.map((term) => ({
-				// postType: post.type,
-				// postId: post.id,
-				// classList: post.class_list ?? "",
-				...terms,
-			})),
-		[terms],
-	);
+	const blockContexts = useMemo(() => {
+		const items = terms?.length
+			? terms.map((term) => ({
+					// postType: post.type,
+					// postId: post.id,
+					// classList: post.class_list ?? "",
+					...terms,
+					termId: term.id,
+					termTaxonomy: term.taxonomy,
+					classList: term.class_list ?? "",
+			  }))
+			: [];
+
+		return items;
+	}, [terms]);
+
+	console.log(1, "_____term-template-block", { templateSlug, terms });
 
 	const blockProps = useBlockProps({
 		className: clsx(__unstableLayoutClassNames, {
@@ -175,7 +196,7 @@ export default function TermTemplateEdit({
 		return <p {...blockProps}> {__("No results found.")}</p>;
 	}
 
-	const setDisplayLayout = (newDisplayLayout) =>
+	const setDisplayLayout = (newDisplayLayout: Record<string, any>) =>
 		setAttributes({
 			layout: { ...layout, ...newDisplayLayout },
 		});
@@ -213,21 +234,21 @@ export default function TermTemplateEdit({
 				{blockContexts &&
 					blockContexts.map((blockContext) => (
 						<BlockContextProvider
-							key={blockContext.postId}
+							key={blockContext.termId}
 							value={blockContext}
 						>
-							{blockContext.postId ===
-							(activeBlockContextId || blockContexts[0]?.postId) ? (
+							{blockContext.termId ===
+							(activeBlockContextId || blockContexts[0]?.termId) ? (
 								<PostTemplateInnerBlocks classList={blockContext.classList} />
 							) : null}
 							<MemoizedPostTemplateBlockPreview
 								blocks={blocks}
-								blockContextId={blockContext.postId}
+								blockContextId={blockContext.termId}
 								classList={blockContext.classList}
 								setActiveBlockContextId={setActiveBlockContextId}
 								isHidden={
-									blockContext.postId ===
-									(activeBlockContextId || blockContexts[0]?.postId)
+									blockContext.termId ===
+									(activeBlockContextId || blockContexts[0]?.termId)
 								}
 							/>
 						</BlockContextProvider>

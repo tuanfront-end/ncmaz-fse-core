@@ -5,6 +5,75 @@ import { useSelect } from "@wordpress/data";
 import { useMemo } from "@wordpress/element";
 import { store as blockEditorStore } from "@wordpress/block-editor";
 import { store as blocksStore } from "@wordpress/blocks";
+import { store as coreStore } from "@wordpress/core-data";
+
+/**
+ * Hook that returns the taxonomies associated with a specific post type.
+ *
+ * @param {string} postType The post type from which to retrieve the associated taxonomies.
+ * @return {Object[]} An array of the associated taxonomies.
+ */
+export const useTaxonomies = (postType: string) => {
+	const taxonomies = useSelect(
+		(select) => {
+			const { getTaxonomies, getPostType } = select(coreStore);
+			// Does the post type have taxonomies?
+			// @ts-ignore
+			if (getPostType(postType)?.taxonomies?.length > 0) {
+				// @ts-ignore
+				return getTaxonomies({
+					type: postType,
+					per_page: -1,
+				});
+			}
+			return [];
+		},
+		[postType],
+	) as Record<string, any>[];
+	return useMemo(() => {
+		return taxonomies?.filter(
+			({ visibility }: Record<string, any>) => !!visibility?.publicly_queryable,
+		);
+	}, [taxonomies]);
+};
+
+/**
+ * Returns a helper object that contains:
+ * 1. An `options` object from the available post types, to be passed to a `SelectControl`.
+ * 2. A helper map with available taxonomies per post type.
+ *
+ * @return {Object} The helper object related to post types.
+ */
+export const usePostTypes = () => {
+	const postTypes = useSelect((select) => {
+		const { getPostTypes } = select(coreStore);
+		const excludedPostTypes = ["attachment"];
+		// @ts-ignore
+		const filteredPostTypes = getPostTypes({ per_page: -1 })?.filter(
+			({ viewable, slug }: Record<string, any>) =>
+				viewable && !excludedPostTypes.includes(slug),
+		);
+		return filteredPostTypes as Record<string, any>[];
+	}, []);
+	const postTypesTaxonomiesMap = useMemo(() => {
+		if (!postTypes?.length) {
+			return;
+		}
+		return postTypes.reduce((accumulator, type) => {
+			accumulator[type.slug] = type.taxonomies;
+			return accumulator;
+		}, {});
+	}, [postTypes]);
+	const postTypesSelectOptions = useMemo(
+		() =>
+			(postTypes || []).map(({ labels, slug }) => ({
+				label: labels.singular_name,
+				value: slug,
+			})),
+		[postTypes],
+	);
+	return { postTypesTaxonomiesMap, postTypesSelectOptions };
+};
 
 /**
  * Helper hook that determines if there is an active variation of the block

@@ -143,7 +143,9 @@ function PostTemplateInnerBlocks({
 }) {
   const innerBlocksProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.useInnerBlocksProps)({
     className: (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])("wp-block-post", classList)
-  }, {
+  },
+  // @ts-ignore
+  {
     template: TEMPLATE,
     __unstableDisableLayoutClassNames: true
   });
@@ -177,7 +179,7 @@ function PostTemplateBlockPreview({
     ,
     role: "button",
     onClick: handleOnClick,
-    onKeyPress: handleOnClick,
+    onKeyDown: handleOnClick,
     style: style
   });
 }
@@ -194,6 +196,13 @@ function TermTemplateEdit({
       taxonomySlug,
       termIdList,
       inherit,
+      postType,
+      orderBy,
+      order,
+      parentIdString,
+      hideEmpty,
+      excludeIdList,
+      page,
       ...restQueryArgs
     } = {},
     templateSlug,
@@ -209,9 +218,6 @@ function TermTemplateEdit({
     columnCount = 3
   } = layout || {};
   const [activeBlockContextId, setActiveBlockContextId] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)();
-  console.log(1111, {
-    templateSlug
-  });
   const {
     terms,
     blocks
@@ -256,15 +262,28 @@ function TermTemplateEdit({
         ...query,
         ...restQueryArgs
       }) || [],
-      blocks: getBlocks(clientId)
+      blocks: getBlocks(clientId) || []
     };
   }, [perPage, clientId, inherit, templateSlug, restQueryArgs, previewPostType]);
-  const blockContexts = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useMemo)(() => terms?.map(term => ({
-    // postType: post.type,
-    // postId: post.id,
-    // classList: post.class_list ?? "",
-    ...terms
-  })), [terms]);
+  const blockContexts = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useMemo)(() => {
+    const items = terms?.length ? terms.map(term => {
+      var _term$class_list;
+      return {
+        // postType: post.type,
+        // postId: post.id,
+        // classList: post.class_list ?? "",
+        ...terms,
+        termId: term.id,
+        termTaxonomy: term.taxonomy,
+        classList: (_term$class_list = term.class_list) !== null && _term$class_list !== void 0 ? _term$class_list : ""
+      };
+    }) : [];
+    return items;
+  }, [terms]);
+  console.log(1, "_____term-template-block", {
+    templateSlug,
+    terms
+  });
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.useBlockProps)({
     className: (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])(__unstableLayoutClassNames, {
       [`columns-${columnCount}`]: layoutType === "grid" && columnCount // Ensure column count is flagged via classname for backwards compatibility.
@@ -312,16 +331,16 @@ function TermTemplateEdit({
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", {
     ...blockProps
   }, blockContexts && blockContexts.map(blockContext => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.BlockContextProvider, {
-    key: blockContext.postId,
+    key: blockContext.termId,
     value: blockContext
-  }, blockContext.postId === (activeBlockContextId || blockContexts[0]?.postId) ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(PostTemplateInnerBlocks, {
+  }, blockContext.termId === (activeBlockContextId || blockContexts[0]?.termId) ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(PostTemplateInnerBlocks, {
     classList: blockContext.classList
   }) : null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(MemoizedPostTemplateBlockPreview, {
     blocks: blocks,
-    blockContextId: blockContext.postId,
+    blockContextId: blockContext.termId,
     classList: blockContext.classList,
     setActiveBlockContextId: setActiveBlockContextId,
-    isHidden: blockContext.postId === (activeBlockContextId || blockContexts[0]?.postId)
+    isHidden: blockContext.termId === (activeBlockContextId || blockContexts[0]?.termId)
   })))));
 }
 
