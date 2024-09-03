@@ -20,7 +20,7 @@
 				"termIdList": [],
 				"inherit": false,
 				"postType": "post",
-				"orderBy": "date",
+				"orderBy": "name",
 				"order": "desc",
 				"parentIdString": null,
 				"hideEmpty": true,

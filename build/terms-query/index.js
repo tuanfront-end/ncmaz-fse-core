@@ -195,25 +195,12 @@ function QueryInspectorControls(props) {
     // We need to dynamically update the `taxQuery` property,
     // by removing any not supported taxonomy from the query.
     const supportedTaxonomies = postTypesTaxonomiesMap[newValue];
-
-    // // const updatedTaxQuery = Object.entries(taxQuery || {}).reduce(
-    // // 	(accumulator, [taxonomySlug, terms]) => {
-    // // 		if (supportedTaxonomies.includes(taxonomySlug)) {
-    // // 			accumulator[taxonomySlug] = terms;
-    // // 		}
-    // // 		return accumulator;
-    // // 	},
-    // // 	{},
-    // // );
-
-    // updateQuery.taxQuery = !!Object.keys(updatedTaxQuery).length
-    // 	? updatedTaxQuery
-    // 	: undefined;
-
     setQuery({
       ...updateQuery,
-      parent: 0,
-      taxonomySlug: supportedTaxonomies[0]
+      taxonomySlug: supportedTaxonomies[0],
+      parent: null,
+      termIdList: [],
+      excludeIdList: []
     });
   };
   const termNameList = termRecordsConvert.map(item => item.label);
@@ -269,9 +256,14 @@ function QueryInspectorControls(props) {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Taxonomy type"),
     value: taxonomySlug,
     options: taxonomies,
-    onChange: value => setQuery({
-      taxonomySlug: value
-    })
+    onChange: value => {
+      setQuery({
+        taxonomySlug: value,
+        parent: null,
+        termIdList: [],
+        excludeIdList: []
+      });
+    }
   }) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.BaseControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Taxonomy type"),
     help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("No taxonomy found, please try again with another post type.")
@@ -298,7 +290,8 @@ function QueryInspectorControls(props) {
     page: page,
     onChange: setQuery
   })), !inherit && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Terms Settings")
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Terms Settings"),
+    initialOpen: false
   }, !!termNameList.length ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.BaseControl, {
     help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Limit result set to terms assigned to a specific parent. Data will return empty if the selected has no children. ")
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FormTokenField, {
@@ -313,7 +306,9 @@ function QueryInspectorControls(props) {
       // cần reverse để lấy id của parent cuối cùng trong mảng. VÌ chỉ chọn 1 parent
       const parentIds = getTermIdsFromNames([value.reverse()[0]]);
       setQuery({
-        parentIdString: parentIds[0]
+        parentIdString: parentIds[0],
+        termIdList: [],
+        excludeIdList: []
       });
     },
     suggestions: termNameList,
@@ -1299,7 +1294,7 @@ module.exports = window["wp"]["primitives"];
   \************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/terms-query","title":"Terms Query Loop","category":"ncmazfse","description":"An advanced block that allows displaying post types based on different query parameters and visual configurations.","textdomain":"default","attributes":{"myQueryId":{"type":"number","myType":0},"myQuery":{"type":"object","default":{"perPage":8,"isFilterByOrder":true,"taxonomySlug":"category","termIdList":[],"inherit":false,"postType":"post","orderBy":"date","order":"desc","parentIdString":null,"hideEmpty":true,"excludeIdList":[],"page":1}},"tagName":{"type":"string","default":"div"},"namespace":{"type":"string"},"enhancedPagination":{"type":"boolean","default":false},"displayLayout":{"type":"object","myType":{}}},"providesContext":{"ncmazfse_termQueryId":"myQueryId","ncmazfse_termQuery":"myQuery","displayLayout":"displayLayout","enhancedPagination":"enhancedPagination"},"supports":{"align":["wide","full"],"html":false,"layout":true,"interactivity":true},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/terms-query","title":"Terms Query Loop","category":"ncmazfse","description":"An advanced block that allows displaying post types based on different query parameters and visual configurations.","textdomain":"default","attributes":{"myQueryId":{"type":"number","myType":0},"myQuery":{"type":"object","default":{"perPage":8,"isFilterByOrder":true,"taxonomySlug":"category","termIdList":[],"inherit":false,"postType":"post","orderBy":"name","order":"desc","parentIdString":null,"hideEmpty":true,"excludeIdList":[],"page":1}},"tagName":{"type":"string","default":"div"},"namespace":{"type":"string"},"enhancedPagination":{"type":"boolean","default":false},"displayLayout":{"type":"object","myType":{}}},"providesContext":{"ncmazfse_termQueryId":"myQueryId","ncmazfse_termQuery":"myQuery","displayLayout":"displayLayout","enhancedPagination":"enhancedPagination"},"supports":{"align":["wide","full"],"html":false,"layout":true,"interactivity":true},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ })
 

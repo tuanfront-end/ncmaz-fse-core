@@ -133,8 +133,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const TEMPLATE = [["core/paragraph", {
-  placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Write post content…")
-}]
+  placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Write post content xxxx …")
+}], ["ncmazfse-block/term-title-block"]
 // ["core/post-date"],
 // ["core/post-excerpt"],
 ];
@@ -187,12 +187,11 @@ const MemoizedPostTemplateBlockPreview = (0,_wordpress_element__WEBPACK_IMPORTED
 function TermTemplateEdit({
   setAttributes,
   clientId,
-  context,
   context: {
     ncmazfse_termQueryId,
     ncmazfse_termQuery: {
       perPage,
-      isFilterByOrder,
+      // isFilterByOrder,
       taxonomySlug,
       termIdList,
       inherit,
@@ -223,8 +222,7 @@ function TermTemplateEdit({
     blocks
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => {
     const {
-      getEntityRecords,
-      getTaxonomies
+      getEntityRecords
     } = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_7__.store);
     const {
       getBlocks
@@ -237,30 +235,40 @@ function TermTemplateEdit({
       _fields: ["id"],
       slug: templateSlug.replace("category-", "")
     });
-    const query = {};
+    let query = {
+      order,
+      orderby: orderBy,
+      hide_empty: !!hideEmpty
+    };
     if (perPage) {
       query.per_page = perPage;
+    }
+    if (page) {
+      query.page = page;
     }
 
     // If `inherit` is truthy, adjust conditionally the query to create a better preview.
     if (inherit) {
-      // Change the post-type if needed.
-      if (templateSlug?.startsWith("archive-")) {
-        query.postType = templateSlug.replace("archive-", "");
-      } else if (templateCategory) {
-        query.categories = templateCategory[0]?.id;
+      if (templateCategory) {
+        query.parent = templateCategory[0]?.id;
+      }
+    } else {
+      if (parentIdString) {
+        query.parent = parentIdString;
+      }
+      if (excludeIdList?.length) {
+        query.exclude = excludeIdList;
+      }
+      if (termIdList?.length) {
+        query.include = termIdList;
       }
     }
     return {
-      // posts: getEntityRecords("postType", usedPostType, {
-      // 	...query,
-      // 	...restQueryArgs,
-      // }),
       terms:
       // @ts-ignore
       getEntityRecords("taxonomy", taxonomySlug, {
-        ...query,
-        ...restQueryArgs
+        ...query
+        // ...restQueryArgs,
       }) || [],
       blocks: getBlocks(clientId) || []
     };
@@ -269,9 +277,6 @@ function TermTemplateEdit({
     const items = terms?.length ? terms.map(term => {
       var _term$class_list;
       return {
-        // postType: post.type,
-        // postId: post.id,
-        // classList: post.class_list ?? "",
         ...terms,
         termId: term.id,
         termTaxonomy: term.taxonomy,
@@ -280,10 +285,13 @@ function TermTemplateEdit({
     }) : [];
     return items;
   }, [terms]);
-  console.log(1, "_____term-template-block", {
-    templateSlug,
-    terms
-  });
+
+  // console.log(1, "_____term-template-block", {
+  // 	templateSlug,
+  // 	previewPostType,
+  // 	terms,
+  // });
+
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.useBlockProps)({
     className: (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])(__unstableLayoutClassNames, {
       [`columns-${columnCount}`]: layoutType === "grid" && columnCount // Ensure column count is flagged via classname for backwards compatibility.

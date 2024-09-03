@@ -19,7 +19,8 @@ import { EditProps, TAttrs } from "../types";
 import metadata from "./block.json";
 
 const TEMPLATE = [
-	["core/paragraph", { placeholder: __("Write post content…") }],
+	["core/paragraph", { placeholder: __("Write post content xxxx …") }],
+	["ncmazfse-block/term-title-block"],
 	// ["core/post-date"],
 	// ["core/post-excerpt"],
 ];
@@ -81,15 +82,25 @@ type Attributes = TAttrs<typeof metadata.attributes>;
 
 type Props = EditProps<Attributes> & { name: string };
 
+interface TermQueryOpt {
+	order: string;
+	orderby: string;
+	hide_empty: boolean;
+	per_page?: number;
+	page?: number;
+	parent?: string;
+	exclude?: number[];
+	include?: number[];
+}
+
 export default function TermTemplateEdit({
 	setAttributes,
 	clientId,
-	context,
 	context: {
 		ncmazfse_termQueryId,
 		ncmazfse_termQuery: {
 			perPage,
-			isFilterByOrder,
+			// isFilterByOrder,
 			taxonomySlug,
 			termIdList,
 			inherit,
@@ -113,7 +124,7 @@ export default function TermTemplateEdit({
 
 	const { terms, blocks } = useSelect(
 		(select) => {
-			const { getEntityRecords, getTaxonomies } = select(coreStore);
+			const { getEntityRecords } = select(coreStore);
 			const { getBlocks } = select(blockEditorStore) as Record<string, any>;
 
 			const templateCategory =
@@ -127,32 +138,42 @@ export default function TermTemplateEdit({
 					slug: templateSlug.replace("category-", ""),
 				});
 
-			const query = {};
+			let query: TermQueryOpt = {
+				order,
+				orderby: orderBy,
+				hide_empty: !!hideEmpty,
+			};
 
 			if (perPage) {
 				query.per_page = perPage;
 			}
+			if (page) {
+				query.page = page;
+			}
 
 			// If `inherit` is truthy, adjust conditionally the query to create a better preview.
 			if (inherit) {
-				// Change the post-type if needed.
-				if (templateSlug?.startsWith("archive-")) {
-					query.postType = templateSlug.replace("archive-", "");
-				} else if (templateCategory) {
-					query.categories = templateCategory[0]?.id;
+				if (templateCategory) {
+					query.parent = templateCategory[0]?.id;
+				}
+			} else {
+				if (parentIdString) {
+					query.parent = parentIdString;
+				}
+				if (excludeIdList?.length) {
+					query.exclude = excludeIdList;
+				}
+				if (termIdList?.length) {
+					query.include = termIdList;
 				}
 			}
 
 			return {
-				// posts: getEntityRecords("postType", usedPostType, {
-				// 	...query,
-				// 	...restQueryArgs,
-				// }),
 				terms:
 					// @ts-ignore
 					(getEntityRecords("taxonomy", taxonomySlug, {
 						...query,
-						...restQueryArgs,
+						// ...restQueryArgs,
 					}) as Record<string, any>[]) || [],
 				blocks: (getBlocks(clientId) as Record<string, any>[]) || [],
 			};
@@ -163,9 +184,6 @@ export default function TermTemplateEdit({
 	const blockContexts = useMemo(() => {
 		const items = terms?.length
 			? terms.map((term) => ({
-					// postType: post.type,
-					// postId: post.id,
-					// classList: post.class_list ?? "",
 					...terms,
 					termId: term.id,
 					termTaxonomy: term.taxonomy,
@@ -176,7 +194,11 @@ export default function TermTemplateEdit({
 		return items;
 	}, [terms]);
 
-	console.log(1, "_____term-template-block", { templateSlug, terms });
+	// console.log(1, "_____term-template-block", {
+	// 	templateSlug,
+	// 	previewPostType,
+	// 	terms,
+	// });
 
 	const blockProps = useBlockProps({
 		className: clsx(__unstableLayoutClassNames, {

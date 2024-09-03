@@ -116,24 +116,12 @@ export default function QueryInspectorControls(
 		// by removing any not supported taxonomy from the query.
 		const supportedTaxonomies = postTypesTaxonomiesMap[newValue];
 
-		// // const updatedTaxQuery = Object.entries(taxQuery || {}).reduce(
-		// // 	(accumulator, [taxonomySlug, terms]) => {
-		// // 		if (supportedTaxonomies.includes(taxonomySlug)) {
-		// // 			accumulator[taxonomySlug] = terms;
-		// // 		}
-		// // 		return accumulator;
-		// // 	},
-		// // 	{},
-		// // );
-
-		// updateQuery.taxQuery = !!Object.keys(updatedTaxQuery).length
-		// 	? updatedTaxQuery
-		// 	: undefined;
-
 		setQuery({
 			...updateQuery,
-			parent: 0,
 			taxonomySlug: supportedTaxonomies[0],
+			parent: null,
+			termIdList: [],
+			excludeIdList: [],
 		});
 	};
 
@@ -217,7 +205,14 @@ export default function QueryInspectorControls(
 								label={__("Taxonomy type")}
 								value={taxonomySlug}
 								options={taxonomies}
-								onChange={(value) => setQuery({ taxonomySlug: value })}
+								onChange={(value) => {
+									setQuery({
+										taxonomySlug: value,
+										parent: null,
+										termIdList: [],
+										excludeIdList: [],
+									});
+								}}
 							/>
 						) : (
 							<BaseControl
@@ -264,7 +259,7 @@ export default function QueryInspectorControls(
 			</PanelBody>
 
 			{!inherit && (
-				<PanelBody title={__("Terms Settings")}>
+				<PanelBody title={__("Terms Settings")} initialOpen={false}>
 					{!!termNameList.length ? (
 						<>
 							<BaseControl
@@ -285,6 +280,8 @@ export default function QueryInspectorControls(
 										const parentIds = getTermIdsFromNames([value.reverse()[0]]);
 										setQuery({
 											parentIdString: parentIds[0],
+											termIdList: [],
+											excludeIdList: [],
 										});
 									}}
 									suggestions={termNameList}
