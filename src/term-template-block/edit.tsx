@@ -97,7 +97,7 @@ export default function TermTemplateEdit({
 	setAttributes,
 	clientId,
 	context: {
-		ncmazfse_termQueryId,
+		// ncmazfse_termQueryId,
 		ncmazfse_termQuery: {
 			perPage,
 			// isFilterByOrder,
