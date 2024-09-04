@@ -1,0 +1,15 @@
+/*!**************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/term-description-block/style.scss ***!
+  \**************************************************************************************************************************************************************************************************************************************************************/
+:where(.wp-block-ncmazfse-block-term-description) {
+  box-sizing: border-box;
+  margin-top: var(--wp--style--block-gap);
+  margin-bottom: var(--wp--style--block-gap);
+}
+
+.wp-block-ncmazfse-block-term-description__description {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/*# sourceMappingURL=style-index.css.map*/

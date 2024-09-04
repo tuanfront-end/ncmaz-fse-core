@@ -22,6 +22,7 @@ declare module "@wordpress/block-editor" {
 	export function __experimentalUseMultipleOriginColorsAndGradients(): void;
 }
 
+// lay type cua attributes tu block.json theo default -> neu co myType thi lay theo myType -> neu khong thi lay theo string
 export type TAttrs<T extends Record<string, any>> = {
 	[K in keyof T]: T[K] extends { default: infer D }
 		? D
