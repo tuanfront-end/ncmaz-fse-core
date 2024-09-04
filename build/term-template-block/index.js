@@ -132,12 +132,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const TEMPLATE = [["core/paragraph", {
-  placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Write post content xxxx …")
-}], ["ncmazfse-block/term-title-block"]
-// ["core/post-date"],
-// ["core/post-excerpt"],
-];
+const TEMPLATE = [["ncmazfse-block/term-name"], ["ncmazfse-block/term-description"], ["ncmazfse-block/term-count"]];
 function PostTemplateInnerBlocks({
   classList
 }) {
@@ -285,13 +280,6 @@ function TermTemplateEdit({
     }) : [];
     return items;
   }, [terms]);
-
-  // console.log(1, "_____term-template-block", {
-  // 	templateSlug,
-  // 	previewPostType,
-  // 	terms,
-  // });
-
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.useBlockProps)({
     className: (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])(__unstableLayoutClassNames, {
       [`columns-${columnCount}`]: layoutType === "grid" && columnCount // Ensure column count is flagged via classname for backwards compatibility.
@@ -415,7 +403,7 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ PostTemplateSave)
+/* harmony export */   "default": () => (/* binding */ Save)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
@@ -426,7 +414,7 @@ __webpack_require__.r(__webpack_exports__);
  * WordPress dependencies
  */
 
-function PostTemplateSave() {
+function Save() {
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null);
 }
 
@@ -555,7 +543,7 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
   \********************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/term-template-block","title":"Term Template","category":"ncmazfse","parent":["ncmazfse-block/terms-query"],"description":"Contains the block elements used to render a term, like the title, featured image, description, posts count.","textdomain":"default","attributes":{"layout":{"type":"object","default":{"type":"grid","columnCount":null,"minimumColumnWidth":"12rem"}}},"usesContext":["ncmazfse_termQuery","ncmazfse_termQueryId","displayLayout","templateSlug","previewPostType","enhancedPagination"],"supports":{"reusable":false,"html":false,"align":["wide","full"],"layout":true,"color":{"gradients":true,"link":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalDefaultControls":{"fontSize":true}},"spacing":{"blockGap":{"__experimentalDefault":"1.25em"},"__experimentalDefaultControls":{"blockGap":true}},"interactivity":{"clientNavigation":true}},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/term-template","title":"Ncmaz Term Template","category":"ncmazfse","ancestor":["ncmazfse-block/term-query-loop"],"description":"Contains the block elements used to render a term, like the title, featured image, description, posts count.","textdomain":"default","attributes":{"layout":{"type":"object","myType":{}}},"usesContext":["ncmazfse_termQuery","ncmazfse_termQueryId","displayLayout","templateSlug","previewPostType","enhancedPagination"],"supports":{"reusable":false,"html":false,"align":["wide","full"],"layout":true,"color":{"gradients":true,"link":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalDefaultControls":{"fontSize":true}},"spacing":{"blockGap":{"__experimentalDefault":"1.25em"},"__experimentalDefaultControls":{"blockGap":true}},"interactivity":{"clientNavigation":true}},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
 
 /***/ })
 

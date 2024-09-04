@@ -19,10 +19,9 @@ import { EditProps, TAttrs } from "../types";
 import metadata from "./block.json";
 
 const TEMPLATE = [
-	["core/paragraph", { placeholder: __("Write post content xxxx …") }],
-	["ncmazfse-block/term-title-block"],
-	// ["core/post-date"],
-	// ["core/post-excerpt"],
+	["ncmazfse-block/term-name"],
+	["ncmazfse-block/term-description"],
+	["ncmazfse-block/term-count"],
 ];
 
 function PostTemplateInnerBlocks({ classList }: { classList: string }) {
@@ -119,7 +118,14 @@ export default function TermTemplateEdit({
 	attributes: { layout },
 	__unstableLayoutClassNames,
 }: Props) {
-	const { type: layoutType, columnCount = 3 } = layout || {};
+	const {
+		type: layoutType,
+		columnCount = 3,
+	}: {
+		type?: string;
+		columnCount?: number;
+	} = layout || ({} as any);
+
 	const [activeBlockContextId, setActiveBlockContextId] = useState<number>();
 
 	const { terms, blocks } = useSelect(
@@ -193,12 +199,6 @@ export default function TermTemplateEdit({
 
 		return items;
 	}, [terms]);
-
-	// console.log(1, "_____term-template-block", {
-	// 	templateSlug,
-	// 	previewPostType,
-	// 	terms,
-	// });
 
 	const blockProps = useBlockProps({
 		className: clsx(__unstableLayoutClassNames, {

@@ -1167,9 +1167,7 @@ const variations = [{
   attributes: {},
   innerBlocks: [
   // ["core/post-template", {}, [["core/post-title"], ["core/post-date"]]],
-  ["core/paragraph", {
-    content: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Add a summary, this is term query paragraph!!")
-  }], ["ncmazfse-block/term-template-block", {}]],
+  ["ncmazfse-block/term-template", {}, [["ncmazfse-block/term-title"], ["ncmazfse-block/term-description"]]]],
   scope: ["block"]
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (variations);

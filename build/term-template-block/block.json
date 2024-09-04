@@ -1,22 +1,18 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "ncmazfse-block/term-template-block",
-  "title": "Term Template",
+  "name": "ncmazfse-block/term-template",
+  "title": "Ncmaz Term Template",
   "category": "ncmazfse",
-  "parent": [
-    "ncmazfse-block/terms-query"
+  "ancestor": [
+    "ncmazfse-block/term-query-loop"
   ],
   "description": "Contains the block elements used to render a term, like the title, featured image, description, posts count.",
   "textdomain": "default",
   "attributes": {
     "layout": {
       "type": "object",
-      "default": {
-        "type": "grid",
-        "columnCount": null,
-        "minimumColumnWidth": "12rem"
-      }
+      "myType": {}
     }
   },
   "usesContext": [

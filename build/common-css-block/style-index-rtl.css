@@ -4,6 +4,47 @@
 /**
  *  COMMON CSS BLOCK
  */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  font-size: 100%;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.relative {
+  position: relative;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.is-style-line-clamp-1,
+.is-style-line-clamp-1 > a {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.is-style-line-clamp-2,
+.is-style-line-clamp-2 > a {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 .nc-post-reaction-button {
   cursor: pointer;
   line-height: 1;
