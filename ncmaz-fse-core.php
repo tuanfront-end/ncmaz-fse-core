@@ -43,6 +43,8 @@ function ncmaz_fse_core_register_blocks_init()
 	register_block_type(__DIR__ . '/build/term-name-block');
 	register_block_type(__DIR__ . '/build/term-description-block');
 	register_block_type(__DIR__ . '/build/term-count-block');
+	// 
+	register_block_type(__DIR__ . '/build/enable-linked-groups');
 }
 add_action('init', 'ncmaz_fse_core_register_blocks_init');
 
@@ -58,3 +60,83 @@ require_once plugin_dir_path(__FILE__) . 'includes/view-handler.php';
 
 // enqueue scripts
 require_once plugin_dir_path(__FILE__) . 'includes/enqueue-scripts.php';
+
+
+/**
+ * PluginName:         Enable Linked Groups
+ * PluginURI:          https://www.nickdiego.com/
+ * Description:         Easily add links to Group blocks.
+ *
+ * @package enable-linked-groups
+ */
+
+
+/**
+ * Enqueue block styles 
+ * (Applies to both frontend and Editor)
+ * 
+ * @since 0.1.0
+ */
+function ncmazfse_enable_linked_groups_block_styles()
+{
+	wp_enqueue_block_style(
+		'core/group',
+		array(
+			'handle' => 'enable-linked-groups-block-styles',
+			'src'    => plugin_dir_url(__FILE__) . 'build/enable-linked-groups/style-index.css',
+			'ver'    => wp_get_theme()->get('Version'),
+			'path'   => plugin_dir_path(__FILE__) . 'build/enable-linked-groups/style-index.css',
+		)
+	);
+}
+add_action('init', 'ncmazfse_enable_linked_groups_block_styles');
+
+
+function ncmazfse_enable_linked_groups_render_block_button($block_content, $block)
+{
+	if (! isset($block['attrs']['href']) && ! isset($block['attrs']['linkDestination'])) {
+		return $block_content;
+	}
+
+	$href             = $block['attrs']['href'] ?? '';
+	$link_destination = $block['attrs']['linkDestination'] ?? '';
+	$link_target      = $block['attrs']['linkTarget'] ?? '_self';
+	$link_rel         = '_blank' === $link_target ? 'noopener noreferrer' : 'follow';
+
+	$link = '';
+
+	if ('custom' === $link_destination && $href) {
+		$link = $href;
+	} elseif ('post' === $link_destination) {
+		$link = get_permalink();
+	}
+
+	if (! $link) {
+		return $block_content;
+	}
+
+	// Add the is-linked class to the group block.
+	$p = new WP_HTML_Tag_Processor($block_content);
+	if ($p->next_tag()) {
+		$p->add_class('is-linked');
+	}
+	$block_content = $p->get_updated_html();
+
+	$link_markup = sprintf(
+		'<a class="wp-block-group__link" href="%1$s" target="%2$s" rel="%3$s" aria-hidden="true" tabindex="-1">&nbsp;</a>',
+		esc_url($link),
+		esc_attr($link_target),
+		esc_attr($link_rel)
+	);
+
+	// Insert the link markup after the opening tag.
+	$block_content = preg_replace(
+		'/^\s*<(\w+)([^>]*)>/m',
+		'<$1$2>' . $link_markup,
+		$block_content,
+		1
+	);
+
+	return $block_content;
+}
+add_filter('render_block_core/group', 'ncmazfse_enable_linked_groups_render_block_button', 10, 2);
