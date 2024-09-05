@@ -61,8 +61,7 @@ export default function TermDescriptionEdit({
 		);
 	}
 
-	const excerptClassName =
-		"wp-block-ncmazfse-block-term-description__description";
+	const excerptClassName = "wp-block-ncmfse-term-description__description";
 
 	/**
 	 * The excerpt length setting needs to be applied to both

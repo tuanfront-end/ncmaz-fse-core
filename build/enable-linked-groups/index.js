@@ -208,7 +208,8 @@ function addAttributes(settings) {
     attributes: {
       ...settings.attributes,
       ...linkAttributes
-    }
+    },
+    usesContext: [...(settings.usesContext || {}), "termId", "termTaxonomy", "ncmazfse_termQueryId"]
   };
   return newSettings;
 }
@@ -283,11 +284,11 @@ function addInspectorControls(BlockEdit) {
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.MenuGroup, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.MenuItem, {
       icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_10__["default"],
       iconPosition: "left",
-      info: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Use when the Group is located in a Query block.", "enable-linked-groups"),
+      info: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Use when the Group is located in a Query block.", "ncmazfse"),
       onClick: () => setAttributes({
         linkDestination: "post"
       })
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Link to current post", "enable-linked-groups")))), linkDestination === "post" && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Link to current object", "ncmazfse")))), linkDestination === "post" && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "enable-linked-groups__link-popover-post-selected"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "enable-linked-groups__link-popover-post-selected-label"
@@ -295,9 +296,13 @@ function addInspectorControls(BlockEdit) {
       className: "enable-linked-groups__link-popover-post-selected-icon"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_11__["default"], {
       icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_10__["default"]
-    })), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Linked to current post", "enable-linked-groups")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Button, {
+    })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Linked to current object", "ncmazfse")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+      style: {
+        fontSize: 10
+      }
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Use when the Group is located in a Query block.", "ncmazfse")))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Button, {
       icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__["default"],
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Remove link", "enable-linked-groups"),
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Remove link", "ncmazfse"),
       onClick: () => setAttributes({
         linkDestination: undefined
       })

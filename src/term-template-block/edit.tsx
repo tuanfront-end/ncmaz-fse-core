@@ -19,9 +19,11 @@ import { EditProps, TAttrs } from "../types";
 import metadata from "./block.json";
 
 const TEMPLATE = [
-	["ncmazfse-block/term-name"],
-	["ncmazfse-block/term-description"],
-	["ncmazfse-block/term-count"],
+	[
+		"core/group",
+		{},
+		[["ncmfse/term-name"], ["ncmfse/term-description"], ["ncmfse/term-count"]],
+	],
 ];
 
 function PostTemplateInnerBlocks({ classList }: { classList: string }) {

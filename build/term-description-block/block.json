@@ -1,11 +1,11 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "ncmazfse-block/term-description",
+  "name": "ncmfse/term-description",
   "title": "Ncmaz Term Description",
   "category": "ncmazfse",
   "ancestor": [
-    "ncmazfse-block/term-template"
+    "ncmfse/term-template"
   ],
   "description": "Display the description.",
   "textdomain": "default",

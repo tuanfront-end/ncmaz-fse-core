@@ -51,6 +51,12 @@ function addAttributes(settings: Record<string, any>) {
 			...settings.attributes,
 			...linkAttributes,
 		},
+		usesContext: [
+			...(settings.usesContext || {}),
+			"termId",
+			"termTaxonomy",
+			"ncmazfse_termQueryId",
+		],
 	};
 
 	return newSettings;
@@ -132,7 +138,7 @@ function addInspectorControls(BlockEdit) {
 											iconPosition="left"
 											info={__(
 												"Use when the Group is located in a Query block.",
-												"enable-linked-groups",
+												"ncmazfse",
 											)}
 											onClick={() =>
 												setAttributes({
@@ -140,7 +146,7 @@ function addInspectorControls(BlockEdit) {
 												})
 											}
 										>
-											{__("Link to current post", "enable-linked-groups")}
+											{__("Link to current object", "ncmazfse")}
 										</MenuItem>
 									</MenuGroup>
 								</div>
@@ -151,11 +157,19 @@ function addInspectorControls(BlockEdit) {
 										<span className="enable-linked-groups__link-popover-post-selected-icon">
 											<Icon icon={page} />
 										</span>
-										{__("Linked to current post", "enable-linked-groups")}
+										<div>
+											<span>{__("Linked to current object", "ncmazfse")}</span>
+											<span style={{ fontSize: 10 }}>
+												{__(
+													"Use when the Group is located in a Query block.",
+													"ncmazfse",
+												)}
+											</span>
+										</div>
 									</div>
 									<Button
 										icon={linkOff}
-										label={__("Remove link", "enable-linked-groups")}
+										label={__("Remove link", "ncmazfse")}
 										onClick={() =>
 											setAttributes({
 												linkDestination: undefined,

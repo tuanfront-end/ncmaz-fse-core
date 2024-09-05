@@ -16,12 +16,18 @@ const variations = [
 		attributes: {},
 		innerBlocks: [
 			[
-				"ncmazfse-block/term-template",
+				"ncmfse/term-template",
 				{},
 				[
-					["ncmazfse-block/term-name"],
-					["ncmazfse-block/term-description"],
-					["ncmazfse-block/term-count"],
+					[
+						"core/group",
+						{},
+						[
+							["ncmfse/term-name"],
+							["ncmfse/term-description"],
+							["ncmfse/term-count"],
+						],
+					],
 				],
 			],
 		],

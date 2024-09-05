@@ -571,7 +571,7 @@ __webpack_require__.r(__webpack_exports__);
 // export type TermQueryObT = TAttrs<typeof metadata.attributes.myQuery.default>;
 // export type UpdateTermQueryFuncT = (newQuery: Record<string,any>) => void;
 
-const TEMPLATE = [["ncmazfse-block/term-template-block"]];
+const TEMPLATE = [["ncmfse/term-template-block"]];
 function QueryContent({
   attributes,
   setAttributes,
@@ -1061,8 +1061,8 @@ const usePostTypes = () => {
  * @return {string} The block name to be used in the patterns suggestions.
  */
 function useBlockNameForPatterns(clientId, attributes) {
-  const activeVariationName = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useSelect)(select => select(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.store).getActiveBlockVariation("ncmazfse-block/term-query-loop", attributes)?.name, [attributes]);
-  const blockName = `ncmazfse-block/term-query-loop/${activeVariationName}`;
+  const activeVariationName = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useSelect)(select => select(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.store).getActiveBlockVariation("ncmfse/term-query-loop", attributes)?.name, [attributes]);
+  const blockName = `ncmfse/term-query-loop/${activeVariationName}`;
   const hasActiveVariationPatterns = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useSelect)(select => {
     if (!activeVariationName) {
       return false;
@@ -1075,7 +1075,7 @@ function useBlockNameForPatterns(clientId, attributes) {
     const activePatterns = getPatternsByBlockTypes(blockName, rootClientId);
     return activePatterns.length > 0;
   }, [clientId, activeVariationName, blockName]);
-  return hasActiveVariationPatterns ? blockName : "ncmazfse-block/term-query-loop";
+  return hasActiveVariationPatterns ? blockName : "ncmfse/term-query-loop";
 }
 
 /**
@@ -1111,8 +1111,8 @@ function useScopedBlockVariations(attributes) {
       getBlockVariations
     } = select(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.store);
     return {
-      activeVariationName: getActiveBlockVariation("ncmazfse-block/term-query-loop", attributes)?.name,
-      blockVariations: getBlockVariations("ncmazfse-block/term-query-loop", "block")
+      activeVariationName: getActiveBlockVariation("ncmfse/term-query-loop", attributes)?.name,
+      blockVariations: getBlockVariations("ncmfse/term-query-loop", "block")
     };
   }, [attributes]);
   const variations = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
@@ -1160,7 +1160,7 @@ const variations = [{
   title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Title & Date"),
   icon: _icons__WEBPACK_IMPORTED_MODULE_1__.titleDate,
   attributes: {},
-  innerBlocks: [["ncmazfse-block/term-template", {}, [["ncmazfse-block/term-name"], ["ncmazfse-block/term-description"], ["ncmazfse-block/term-count"]]]],
+  innerBlocks: [["ncmfse/term-template", {}, [["core/group", {}, [["ncmfse/term-name"], ["ncmfse/term-description"], ["ncmfse/term-count"]]]]]],
   scope: ["block"]
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (variations);
@@ -1285,7 +1285,7 @@ module.exports = window["wp"]["primitives"];
   \**********************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/term-query-loop","title":"Ncmaz Terms Query Loop","category":"ncmazfse","description":"An advanced block that allows displaying post types based on different query parameters and visual configurations.","textdomain":"default","attributes":{"myQueryId":{"type":"number","myType":0},"myQuery":{"type":"object","default":{"perPage":8,"isFilterByOrder":true,"taxonomySlug":"category","termIdList":[],"inherit":false,"postType":"post","orderBy":"name","order":"desc","parentIdString":null,"hideEmpty":true,"excludeIdList":[],"page":1}},"tagName":{"type":"string","default":"div"},"namespace":{"type":"string"},"enhancedPagination":{"type":"boolean","default":false},"displayLayout":{"type":"object","myType":{}}},"providesContext":{"ncmazfse_termQueryId":"myQueryId","ncmazfse_termQuery":"myQuery","displayLayout":"displayLayout","enhancedPagination":"enhancedPagination"},"supports":{"align":["wide","full"],"html":false,"layout":true,"interactivity":true},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/term-query-loop","title":"Ncmaz Terms Query Loop","category":"ncmazfse","description":"An advanced block that allows displaying post types based on different query parameters and visual configurations.","textdomain":"default","attributes":{"myQueryId":{"type":"number","myType":0},"myQuery":{"type":"object","default":{"perPage":8,"isFilterByOrder":true,"taxonomySlug":"category","termIdList":[],"inherit":false,"postType":"post","orderBy":"name","order":"desc","parentIdString":null,"hideEmpty":true,"excludeIdList":[],"page":1}},"tagName":{"type":"string","default":"div"},"namespace":{"type":"string"},"enhancedPagination":{"type":"boolean","default":false},"displayLayout":{"type":"object","myType":{}}},"providesContext":{"ncmazfse_termQueryId":"myQueryId","ncmazfse_termQuery":"myQuery","displayLayout":"displayLayout","enhancedPagination":"enhancedPagination"},"supports":{"align":["wide","full"],"html":false,"layout":true,"interactivity":true},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ })
 

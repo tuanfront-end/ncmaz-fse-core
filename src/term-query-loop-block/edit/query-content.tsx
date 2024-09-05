@@ -30,7 +30,7 @@ export type MyTermQueryUpdateFuncT = (
 // export type TermQueryObT = TAttrs<typeof metadata.attributes.myQuery.default>;
 // export type UpdateTermQueryFuncT = (newQuery: Record<string,any>) => void;
 
-const TEMPLATE = [["ncmazfse-block/term-template-block"]];
+const TEMPLATE = [["ncmfse/term-template-block"]];
 export default function QueryContent({
 	attributes,
 	setAttributes,

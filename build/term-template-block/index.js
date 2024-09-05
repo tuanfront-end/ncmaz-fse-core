@@ -132,7 +132,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const TEMPLATE = [["ncmazfse-block/term-name"], ["ncmazfse-block/term-description"], ["ncmazfse-block/term-count"]];
+const TEMPLATE = [["core/group", {}, [["ncmfse/term-name"], ["ncmfse/term-description"], ["ncmfse/term-count"]]]];
 function PostTemplateInnerBlocks({
   classList
 }) {
@@ -543,7 +543,7 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
   \********************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/term-template","title":"Ncmaz Term Template","category":"ncmazfse","ancestor":["ncmazfse-block/term-query-loop"],"description":"Contains the block elements used to render a term, like the title, featured image, description, posts count.","textdomain":"default","attributes":{"layout":{"type":"object","myType":{}}},"usesContext":["ncmazfse_termQuery","ncmazfse_termQueryId","displayLayout","templateSlug","previewPostType","enhancedPagination"],"supports":{"reusable":false,"html":false,"align":["wide","full"],"layout":true,"color":{"gradients":true,"link":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalDefaultControls":{"fontSize":true}},"spacing":{"blockGap":{"__experimentalDefault":"1.25em"},"__experimentalDefaultControls":{"blockGap":true}},"interactivity":{"clientNavigation":true}},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/term-template","title":"Ncmaz Term Template","category":"ncmazfse","ancestor":["ncmfse/term-query-loop"],"description":"Contains the block elements used to render a term, like the title, featured image, description, posts count.","textdomain":"default","attributes":{"layout":{"type":"object","myType":{}}},"usesContext":["ncmazfse_termQuery","ncmazfse_termQueryId","displayLayout","templateSlug","previewPostType","enhancedPagination"],"supports":{"reusable":false,"html":false,"align":["wide","full"],"layout":true,"color":{"gradients":true,"link":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalDefaultControls":{"fontSize":true}},"spacing":{"blockGap":{"__experimentalDefault":"1.25em"},"__experimentalDefaultControls":{"blockGap":true}},"interactivity":{"clientNavigation":true}},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
 
 /***/ })
 

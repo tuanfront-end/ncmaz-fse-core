@@ -109,7 +109,7 @@ foreach ($query as $term) {
 
 	// Wrap the render inner blocks in a `li` element with the appropriate post classes.
 	// $post_classes = implode(' ', get_post_class('wp-block-post'));
-	$term_classes = 'ncmazfse-block-term-item';
+	$term_classes = 'ncmfse-term-item';
 
 	// $inner_block_directives = $enhanced_pagination ? ' data-wp-key="term-template-item-' . $term_id . '"' : '';
 	$inner_block_directives = '';

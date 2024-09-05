@@ -30,7 +30,7 @@ if (isset($attributes['textAlign'])) {
 }
 
 $wrapper_attributes = get_block_wrapper_attributes(array('class' => implode(' ', $classes)));
-$content               = '<p class="wp-block-ncmazfse-block-term-description__description">' . $description . '</p>';
+$content               = '<p class="wp-block-ncmfse-term-description__description">' . $description . '</p>';
 ?>
 
 <div <?php echo  $wrapper_attributes; ?>>

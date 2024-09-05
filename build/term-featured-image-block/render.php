@@ -19,7 +19,7 @@ if (isset($attributes['textAlign'])) {
 }
 
 $wrapper_attributes = get_block_wrapper_attributes(array('class' => implode(' ', $classes)));
-$content               = '<p class="wp-block-ncmazfse-block-term-count__count">' . $term->count . '</p>';
+$content               = '<p class="wp-block-ncmfse-term-count__count">' . $term->count . '</p>';
 ?>
 
 <div <?php echo  $wrapper_attributes; ?>>

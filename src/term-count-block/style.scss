@@ -1,5 +1,5 @@
 // Lowest specificity on wrapper margins to avoid overriding layout styles.
-:where(.wp-block-ncmazfse-block-term-count) {
+:where(.wp-block-ncmfse-term-count) {
 	// This block has customizable padding, border-box makes that more predictable.
 	box-sizing: border-box;
 
@@ -8,7 +8,7 @@
 }
 
 // Zero out the margin on the excerpt paragraph, to match the body paragraphs.
-.wp-block-ncmazfse-block-term-count__count {
+.wp-block-ncmfse-term-count__count {
 	margin-top: 0;
 	margin-bottom: 0;
 }

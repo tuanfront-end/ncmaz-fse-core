@@ -59,7 +59,7 @@ export default function TermDescriptionEdit({
 			</BlockControls>
 
 			<div {...blockProps}>
-				<p className={"wp-block-ncmazfse-block-term-count__count"}>
+				<p className={"wp-block-ncmfse-term-count__count"}>
 					{record?.count ?? 99}
 				</p>
 			</div>

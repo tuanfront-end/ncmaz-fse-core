@@ -1,10 +1,10 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "ncmazfse-block/term-template",
+	"name": "ncmfse/term-template",
 	"title": "Ncmaz Term Template",
 	"category": "ncmazfse",
-	"ancestor": ["ncmazfse-block/term-query-loop"],
+	"ancestor": ["ncmfse/term-query-loop"],
 	"description": "Contains the block elements used to render a term, like the title, featured image, description, posts count.",
 	"textdomain": "default",
 	"attributes": {

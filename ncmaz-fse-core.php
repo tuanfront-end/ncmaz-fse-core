@@ -33,6 +33,7 @@ define('NCMAZ_FSE_CORE_STORE',  'ncmazfse-core');
 function ncmaz_fse_core_register_blocks_init()
 {
 	register_block_type(__DIR__ . '/build/common-css-block');
+	register_block_type(__DIR__ . '/build/enable-linked-groups');
 	register_block_type(__DIR__ . '/build/like-button-block');
 	register_block_type(__DIR__ . '/build/save-button-block');
 	register_block_type(__DIR__ . '/build/comment-count-button-block');
@@ -43,8 +44,7 @@ function ncmaz_fse_core_register_blocks_init()
 	register_block_type(__DIR__ . '/build/term-name-block');
 	register_block_type(__DIR__ . '/build/term-description-block');
 	register_block_type(__DIR__ . '/build/term-count-block');
-	// 
-	register_block_type(__DIR__ . '/build/enable-linked-groups');
+	register_block_type(__DIR__ . '/build/term-featured-image-block');
 }
 add_action('init', 'ncmaz_fse_core_register_blocks_init');
 
@@ -92,7 +92,9 @@ function ncmazfse_enable_linked_groups_block_styles()
 add_action('init', 'ncmazfse_enable_linked_groups_block_styles');
 
 
-function ncmazfse_enable_linked_groups_render_block_button($block_content, $block)
+
+
+function ncmazfse_enable_linked_groups_render_block_button($block_content, $block, $instance)
 {
 	if (! isset($block['attrs']['href']) && ! isset($block['attrs']['linkDestination'])) {
 		return $block_content;
@@ -102,13 +104,18 @@ function ncmazfse_enable_linked_groups_render_block_button($block_content, $bloc
 	$link_destination = $block['attrs']['linkDestination'] ?? '';
 	$link_target      = $block['attrs']['linkTarget'] ?? '_self';
 	$link_rel         = '_blank' === $link_target ? 'noopener noreferrer' : 'follow';
+	$termId 		= $instance->context['termId'] ?? '';
 
 	$link = '';
 
 	if ('custom' === $link_destination && $href) {
 		$link = $href;
 	} elseif ('post' === $link_destination) {
-		$link = get_permalink();
+		if ($termId) {
+			$link =  get_term_link($termId);
+		} else {
+			$link = get_permalink();
+		}
 	}
 
 	if (! $link) {
@@ -139,4 +146,4 @@ function ncmazfse_enable_linked_groups_render_block_button($block_content, $bloc
 
 	return $block_content;
 }
-add_filter('render_block_core/group', 'ncmazfse_enable_linked_groups_render_block_button', 10, 2);
+add_filter('render_block_core/group', 'ncmazfse_enable_linked_groups_render_block_button', 10, 3);
