@@ -12,18 +12,13 @@
  * @return string Returns the filtered post title for the current post wrapped inside "h1" tags.
  */
 
-if (! isset($block->context['termId'])) {
-	return '';
-}
-/**
- * The `$post` argument is intentionally omitted so that changes are reflected when previewing a post.
- * See: https://github.com/WordPress/gutenberg/pull/37622#issuecomment-1000932816.
- */
-$title = get_term_by('id', $block->context['termId'], $block->context['termTaxonomy'])->name;
 
-if (! $title) {
+$term = ncmazfse_get_term_from_termIdContext_or_archivePage($block->context['termId'] ?? '', $block->context['termTaxonomy'] ?? '');
+if (! $term) {
 	return '';
 }
+$title = $term->name;
+$termId = $term->term_taxonomy_id;
 
 $tag_name = 'h2';
 if (isset($attributes['level'])) {
@@ -32,7 +27,7 @@ if (isset($attributes['level'])) {
 
 if (isset($attributes['isLink']) && $attributes['isLink']) {
 	$rel   = ! empty($attributes['rel']) ? 'rel="' . esc_attr($attributes['rel']) . '"' : '';
-	$title = sprintf('<a href="%1$s" target="%2$s" %3$s>%4$s</a>', esc_url(get_term_link($block->context['termId'])), esc_attr($attributes['linkTarget']), $rel, $title);
+	$title = sprintf('<a href="%1$s" target="%2$s" %3$s>%4$s</a>', esc_url(get_term_link($termId)), esc_attr($attributes['linkTarget']), $rel, $title);
 }
 
 $classes = array();

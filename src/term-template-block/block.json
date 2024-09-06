@@ -4,7 +4,7 @@
 	"name": "ncmfse/term-template",
 	"title": "Ncmaz Term Template",
 	"category": "ncmazfse",
-	"ancestor": ["ncmfse/term-query-loop"],
+	"parent": ["ncmfse/term-query-loop"],
 	"description": "Contains the block elements used to render a term, like the title, featured image, description, posts count.",
 	"textdomain": "default",
 	"attributes": {

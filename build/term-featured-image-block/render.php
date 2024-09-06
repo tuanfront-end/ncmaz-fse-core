@@ -7,20 +7,11 @@
  * @return string Returns the filtered post excerpt for the current post wrapped inside "p" tags.
  */
 
-$termId = $block->context['termId'] ?? '';
-if (! $termId && !is_tax()) {
+$term = ncmazfse_get_term_from_termIdContext_or_archivePage($block->context['termId'] ?? '', $block->context['termTaxonomy'] ?? '');
+if (! $term) {
 	return '';
 }
-if ($termId) {
-	$term = get_term($termId, $block->context['termTaxonomy']); //for example uncategorized category
-} else {
-	$term = get_queried_object();
-}
-
-// get the term id if current on a term archive page
-$termId = $termId ? $termId : get_queried_object_id();
-//  ---------------------------------  //
-
+$termId = $term->term_taxonomy_id;
 
 /**
  *

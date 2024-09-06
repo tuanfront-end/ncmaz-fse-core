@@ -4,9 +4,6 @@
   "name": "ncmfse/term-count",
   "title": "Ncmaz Term Count",
   "category": "ncmazfse",
-  "ancestor": [
-    "ncmfse/term-template"
-  ],
   "description": "Display the description.",
   "textdomain": "default",
   "attributes": {

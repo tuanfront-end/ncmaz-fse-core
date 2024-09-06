@@ -5,9 +5,6 @@
   "title": "Ncmaz Term Name",
   "category": "ncmazfse",
   "description": "Displays the title of a term.",
-  "ancestor": [
-    "ncmfse/term-template"
-  ],
   "textdomain": "default",
   "usesContext": [
     "termId",

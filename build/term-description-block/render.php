@@ -8,15 +8,11 @@
  */
 
 
-$termId = $block->context['termId'] ?? '';
-
-if (! $termId && !is_tax()) {
+$term = ncmazfse_get_term_from_termIdContext_or_archivePage($block->context['termId'] ?? '', $block->context['termTaxonomy'] ?? '');
+if (! $term) {
 	return '';
 }
-
-// get the term id if current on a term archive page
-$termId = $termId ? $termId : get_queried_object_id();
-
+$termId = $term->term_taxonomy_id;
 
 /*
 	* The purpose of the description length setting is to limit the length of both
@@ -25,7 +21,7 @@ $termId = $termId ? $termId : get_queried_object_id();
 	* wp_trim_words is used instead.
 	*/
 $description_length = $attributes['descriptionLength'];
-$term_description    =  term_description($termId);
+$term_description    =  $term->description;
 
 if (isset($term_description)) {
 	$description = wp_trim_words($term_description, $description_length);
