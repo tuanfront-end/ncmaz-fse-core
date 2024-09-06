@@ -17,6 +17,7 @@ import { store as coreStore } from "@wordpress/core-data";
 import { list, grid } from "@wordpress/icons";
 import { EditProps, TAttrs } from "../types";
 import metadata from "./block.json";
+import "./editor.scss";
 
 const TEMPLATE = [
 	[

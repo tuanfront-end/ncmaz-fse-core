@@ -84,8 +84,6 @@ export default function TermFeaturedImageEdit({
 		[featuredImage],
 	);
 
-	console.log(11111, { isDescendentOfQueryLoop, media, termRecord });
-
 	const mediaUrl = getMediaSourceUrlBySizeSlug(media, sizeSlug);
 
 	const blockProps = useBlockProps({

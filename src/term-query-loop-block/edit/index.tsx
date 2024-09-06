@@ -11,6 +11,7 @@ import QueryContent from "./query-content";
 import QueryPlaceholder from "./query-placeholder";
 import metadata from "../block.json";
 import { EditProps, TAttrs } from "../../types";
+import "../editor.scss";
 
 type Attributes = TAttrs<typeof metadata.attributes>;
 

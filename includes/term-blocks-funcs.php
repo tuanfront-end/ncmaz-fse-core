@@ -133,7 +133,7 @@ endif;
 if (!function_exists('ncmazfse_get_term_from_termIdContext_or_archivePage')):
     function ncmazfse_get_term_from_termIdContext_or_archivePage(string $termIdContext, string $termTaxonomyContext)
     {
-        if (! $termIdContext && !is_tax()) {
+        if (! $termIdContext && !is_tax() && !is_category() && !is_tag()) {
             return;
         }
         if ($termIdContext) {

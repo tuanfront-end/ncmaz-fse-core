@@ -4,7 +4,7 @@
   "name": "ncmfse/term-description",
   "title": "Ncmaz Term Description",
   "category": "ncmazfse",
-  "description": "Display the description.",
+  "description": "Display the description of categories, tags and custom taxonomies.",
   "textdomain": "default",
   "attributes": {
     "textAlign": {
@@ -26,7 +26,7 @@
   "supports": {
     "html": false,
     "color": {
-      "gradients": true,
+      "link": true,
       "__experimentalDefaultControls": {
         "background": true,
         "text": true

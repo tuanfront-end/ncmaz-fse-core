@@ -121,8 +121,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
 /* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/list.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/grid.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/list.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/grid.js");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./editor.scss */ "./src/term-template-block/editor.scss");
+
 
 
 
@@ -304,14 +306,14 @@ function TermTemplateEdit({
     }
   });
   const displayLayoutControls = [{
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__["default"],
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__._x)("List view", "Post template block display setting"),
     onClick: () => setDisplayLayout({
       type: "default"
     }),
     isActive: layoutType === "default" || layoutType === "constrained"
   }, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_10__["default"],
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__._x)("Grid view", "Post template block display setting"),
     onClick: () => setDisplayLayout({
       type: "grid",
@@ -419,6 +421,18 @@ __webpack_require__.r(__webpack_exports__);
 function Save() {
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null);
 }
+
+/***/ }),
+
+/***/ "./src/term-template-block/editor.scss":
+/*!*********************************************!*\
+  !*** ./src/term-template-block/editor.scss ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
 
 /***/ }),
 
@@ -545,7 +559,7 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
   \********************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/term-template","title":"Ncmaz Term Template","category":"ncmazfse","ancestor":["ncmfse/term-query-loop"],"description":"Contains the block elements used to render a term, like the title, featured image, description, posts count.","textdomain":"default","attributes":{"layout":{"type":"object","myType":{}}},"usesContext":["ncmazfse_termQuery","ncmazfse_termQueryId","displayLayout","templateSlug","previewPostType","enhancedPagination"],"supports":{"reusable":false,"html":false,"align":["wide","full"],"layout":true,"color":{"gradients":true,"link":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalDefaultControls":{"fontSize":true}},"spacing":{"blockGap":{"__experimentalDefault":"1.25em"},"__experimentalDefaultControls":{"blockGap":true}},"interactivity":{"clientNavigation":true}},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/term-template","title":"Ncmaz Term Template","category":"ncmazfse","parent":["ncmfse/term-query-loop"],"description":"Contains the block elements used to render a term, like the title, featured image, description, posts count.","textdomain":"default","attributes":{"layout":{"type":"object","myType":{}}},"usesContext":["ncmazfse_termQuery","ncmazfse_termQueryId","displayLayout","templateSlug","previewPostType","enhancedPagination"],"supports":{"reusable":false,"html":false,"align":["wide","full"],"layout":true,"color":{"gradients":true,"link":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalDefaultControls":{"fontSize":true}},"spacing":{"blockGap":{"__experimentalDefault":"1.25em"},"__experimentalDefaultControls":{"blockGap":true}},"interactivity":{"clientNavigation":true}},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
 
 /***/ })
 

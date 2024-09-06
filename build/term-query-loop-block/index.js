@@ -50,6 +50,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _query_content__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./query-content */ "./src/term-query-loop-block/edit/query-content.tsx");
 /* harmony import */ var _query_placeholder__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./query-placeholder */ "./src/term-query-loop-block/edit/query-placeholder.tsx");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../editor.scss */ "./src/term-query-loop-block/editor.scss");
 
 /**
  * WordPress dependencies
@@ -60,6 +61,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Internal dependencies
  */
+
 
 
 const QueryEdit = props => {
@@ -1166,6 +1168,18 @@ const variations = [{
   scope: ["block"]
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (variations);
+
+/***/ }),
+
+/***/ "./src/term-query-loop-block/editor.scss":
+/*!***********************************************!*\
+  !*** ./src/term-query-loop-block/editor.scss ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
 
 /***/ }),
 

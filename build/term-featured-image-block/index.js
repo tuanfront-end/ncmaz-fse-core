@@ -339,11 +339,6 @@ function TermFeaturedImageEdit({
       })
     };
   }, [featuredImage]);
-  console.log(11111, {
-    isDescendentOfQueryLoop,
-    media,
-    termRecord
-  });
   const mediaUrl = getMediaSourceUrlBySizeSlug(media, sizeSlug);
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.useBlockProps)({
     style: {
