@@ -14,6 +14,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editor.scss */ "./src/common-css-block/editor.scss");
+
 
 
 const edit = () => {
@@ -68,6 +70,18 @@ __webpack_require__.r(__webpack_exports__);
    */
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
+
+/***/ }),
+
+/***/ "./src/common-css-block/editor.scss":
+/*!******************************************!*\
+  !*** ./src/common-css-block/editor.scss ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
 
 /***/ }),
 

@@ -7,11 +7,11 @@
  * @return string Returns the filtered post excerpt for the current post wrapped inside "p" tags.
  */
 
-if (! isset($block->context['termId'])) {
+$term = ncmazfse_get_term_from_termIdContext_or_archivePage($block->context['termId'] ?? '', $block->context['termTaxonomy'] ?? '');
+if (! $term) {
 	return '';
 }
-
-$term = get_term($block->context['termId'], $block->context['termTaxonomy']); //for example uncategorized category
+$termId = $term->term_taxonomy_id;
 
 $classes = array();
 if (isset($attributes['textAlign'])) {

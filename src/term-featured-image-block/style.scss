@@ -1,14 +1,46 @@
-// Lowest specificity on wrapper margins to avoid overriding layout styles.
-:where(.wp-block-ncmfse-term-count) {
-	// This block has customizable padding, border-box makes that more predictable.
-	box-sizing: border-box;
+.wp-block-ncmfse-term-featured-img {
+	margin-left: 0;
+	margin-right: 0;
+	a {
+		display: block;
+		height: 100%;
+	}
+	:where(img) {
+		max-width: 100%;
+		width: 100%;
+		height: auto;
+		vertical-align: bottom;
+		box-sizing: border-box;
+	}
 
-	margin-top: var(--wp--style--block-gap);
-	margin-bottom: var(--wp--style--block-gap);
-}
+	&.alignwide img,
+	&.alignfull img {
+		width: 100%;
+	}
 
-// Zero out the margin on the excerpt paragraph, to match the body paragraphs.
-.wp-block-ncmfse-term-count__count {
-	margin-top: 0;
-	margin-bottom: 0;
+	.wp-block-ncmfse-term-featured-img__overlay {
+		&.has-background-dim {
+			position: absolute;
+			inset: 0;
+			background-color: #000;
+
+			@at-root .wp-block-ncmfse-term-featured-img {
+				position: relative;
+			}
+		}
+
+		&.has-background-gradient {
+			background-color: transparent;
+		}
+
+		@for $i from 0 through 10 {
+			&.has-background-dim-#{ $i * 10 } {
+				opacity: $i * 0.1;
+			}
+		}
+	}
+
+	&:where(.alignleft, .alignright) {
+		width: 100%;
+	}
 }

@@ -13,6 +13,16 @@ import {
 } from "@wordpress/block-editor";
 import { compose } from "@wordpress/compose";
 import { __ } from "@wordpress/i18n";
+import { TermFeaturedImageEditProps } from "./edit";
+
+interface Props
+	extends Pick<
+		TermFeaturedImageEditProps,
+		"attributes" | "setAttributes" | "clientId"
+	> {
+	overlayColor: Record<string, string>;
+	setOverlayColor: () => void;
+}
 
 const Overlay = ({
 	clientId,
@@ -20,7 +30,7 @@ const Overlay = ({
 	setAttributes,
 	overlayColor,
 	setOverlayColor,
-}) => {
+}: Props) => {
 	const { dimRatio } = attributes;
 	const { gradientValue, setGradient } = useGradient();
 	const colorGradientSettings = useMultipleOriginColorsAndGradients();

@@ -4,7 +4,7 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 import { registerBlockType } from "@wordpress/blocks";
-import { termDescription as icon } from "@wordpress/icons";
+import { postFeaturedImage as icon } from "@wordpress/icons";
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * All files containing `style` keyword are bundled together. The code used

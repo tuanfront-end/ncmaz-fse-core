@@ -1160,7 +1160,9 @@ const variations = [{
   title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Title & Date"),
   icon: _icons__WEBPACK_IMPORTED_MODULE_1__.titleDate,
   attributes: {},
-  innerBlocks: [["ncmfse/term-template", {}, [["core/group", {}, [["ncmfse/term-name"], ["ncmfse/term-description"], ["ncmfse/term-count"]]]]]],
+  innerBlocks: [["ncmfse/term-template", {}, [["core/group", {}, [
+  // ["ncmfse/term-cover-img"],
+  ["ncmfse/term-featured-img"], ["ncmfse/term-name"], ["ncmfse/term-description"], ["ncmfse/term-count"]]]]]],
   scope: ["block"]
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (variations);

@@ -15,6 +15,7 @@ import {
 	store as blockEditorStore,
 } from "@wordpress/block-editor";
 import { useSelect } from "@wordpress/data";
+import { TermFeaturedImageEditProps } from "./edit";
 
 const SCALE_OPTIONS = (
 	<>
@@ -48,12 +49,20 @@ const scaleHelp = {
 	),
 };
 
+interface Props
+	extends Pick<
+		TermFeaturedImageEditProps,
+		"attributes" | "setAttributes" | "clientId"
+	> {
+	media: Record<string, any>;
+}
+
 const DimensionControls = ({
 	clientId,
 	attributes: { aspectRatio, width, height, scale, sizeSlug },
 	setAttributes,
 	media,
-}) => {
+}: Props) => {
 	const [availableUnits, defaultRatios, themeRatios, showDefaultRatios] =
 		useSettings(
 			"spacing.units",
@@ -69,15 +78,15 @@ const DimensionControls = ({
 		[],
 	);
 	const imageSizeOptions = imageSizes
-		.filter(({ slug }) => {
+		.filter(({ slug }: { slug: string }) => {
 			return media?.media_details?.sizes?.[slug]?.source_url;
 		})
-		.map(({ name, slug }) => ({
+		.map(({ name, slug }: { name: string; slug: string }) => ({
 			value: slug,
 			label: name,
 		}));
 
-	const onDimensionChange = (dimension, nextValue) => {
+	const onDimensionChange = (dimension: string, nextValue: string) => {
 		const parsedValue = parseFloat(nextValue);
 		/**
 		 * If we have no value set and we change the unit,

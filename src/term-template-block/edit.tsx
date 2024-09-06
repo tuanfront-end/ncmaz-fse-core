@@ -22,7 +22,13 @@ const TEMPLATE = [
 	[
 		"core/group",
 		{},
-		[["ncmfse/term-name"], ["ncmfse/term-description"], ["ncmfse/term-count"]],
+		[
+			// ["ncmfse/term-cover-img"],
+			["ncmfse/term-featured-img"],
+			["ncmfse/term-name"],
+			["ncmfse/term-description"],
+			["ncmfse/term-count"],
+		],
 	],
 ];
 

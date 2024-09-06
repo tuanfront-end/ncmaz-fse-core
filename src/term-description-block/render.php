@@ -7,9 +7,12 @@
  * @return string Returns the filtered post excerpt for the current post wrapped inside "p" tags.
  */
 
-if (! isset($block->context['termId'])) {
+
+$term = ncmazfse_get_term_from_termIdContext_or_archivePage($block->context['termId'] ?? '', $block->context['termTaxonomy'] ?? '');
+if (! $term) {
 	return '';
 }
+$termId = $term->term_taxonomy_id;
 
 /*
 	* The purpose of the description length setting is to limit the length of both
@@ -18,7 +21,7 @@ if (! isset($block->context['termId'])) {
 	* wp_trim_words is used instead.
 	*/
 $description_length = $attributes['descriptionLength'];
-$term_description    =  term_description($block->context['termId']);
+$term_description    =  $term->description;
 
 if (isset($term_description)) {
 	$description = wp_trim_words($term_description, $description_length);

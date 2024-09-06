@@ -7,9 +7,16 @@
  * @return string Returns the filtered post excerpt for the current post wrapped inside "p" tags.
  */
 
-if (! isset($block->context['termId'])) {
+
+$termId = $block->context['termId'] ?? '';
+
+if (! $termId && !is_tax()) {
 	return '';
 }
+
+// get the term id if current on a term archive page
+$termId = $termId ? $termId : get_queried_object_id();
+
 
 /*
 	* The purpose of the description length setting is to limit the length of both
@@ -18,7 +25,7 @@ if (! isset($block->context['termId'])) {
 	* wp_trim_words is used instead.
 	*/
 $description_length = $attributes['descriptionLength'];
-$term_description    =  term_description($block->context['termId']);
+$term_description    =  term_description($termId);
 
 if (isset($term_description)) {
 	$description = wp_trim_words($term_description, $description_length);

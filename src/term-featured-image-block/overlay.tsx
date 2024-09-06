@@ -2,10 +2,6 @@
  * External dependencies
  */
 import clsx from "clsx";
-
-/**
- * WordPress dependencies
- */
 import {
 	withColors,
 	__experimentalUseGradient,
@@ -18,8 +14,17 @@ import { compose } from "@wordpress/compose";
  * Internal dependencies
  */
 import { dimRatioToClass } from "./utils";
+import { TermFeaturedImageEditProps } from "./edit";
 
-const Overlay = ({ attributes, overlayColor }) => {
+interface Props
+	extends Pick<
+		TermFeaturedImageEditProps,
+		"attributes" | "setAttributes" | "clientId"
+	> {
+	overlayColor: Record<string, string>;
+}
+
+const Overlay = ({ attributes, overlayColor }: Props) => {
 	const { dimRatio } = attributes;
 	const { gradientClass, gradientValue } = __experimentalUseGradient();
 	const colorGradientSettings = useMultipleOriginColorsAndGradients();
@@ -39,7 +44,7 @@ const Overlay = ({ attributes, overlayColor }) => {
 		<span
 			aria-hidden="true"
 			className={clsx(
-				"wp-block-post-featured-image__overlay",
+				"wp-block-ncmfse-term-featured-img__overlay",
 				dimRatioToClass(dimRatio),
 				{
 					[overlayColor.class]: overlayColor.class,

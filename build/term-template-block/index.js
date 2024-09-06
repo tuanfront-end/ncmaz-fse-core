@@ -132,7 +132,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const TEMPLATE = [["core/group", {}, [["ncmfse/term-name"], ["ncmfse/term-description"], ["ncmfse/term-count"]]]];
+const TEMPLATE = [["core/group", {}, [
+// ["ncmfse/term-cover-img"],
+["ncmfse/term-featured-img"], ["ncmfse/term-name"], ["ncmfse/term-description"], ["ncmfse/term-count"]]]];
 function PostTemplateInnerBlocks({
   classList
 }) {

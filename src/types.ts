@@ -5,6 +5,7 @@ export interface EditProps<T> {
 	setAttributes: (attrs: Partial<T>) => void;
 	context: Record<string, any>;
 	clientId: string;
+	name: string;
 	[key: string]: any;
 }
 

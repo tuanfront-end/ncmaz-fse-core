@@ -23,6 +23,8 @@ const variations = [
 						"core/group",
 						{},
 						[
+							// ["ncmfse/term-cover-img"],
+							["ncmfse/term-featured-img"],
 							["ncmfse/term-name"],
 							["ncmfse/term-description"],
 							["ncmfse/term-count"],

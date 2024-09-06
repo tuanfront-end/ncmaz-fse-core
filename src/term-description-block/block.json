@@ -4,7 +4,6 @@
 	"name": "ncmfse/term-description",
 	"title": "Ncmaz Term Description",
 	"category": "ncmazfse",
-	"ancestor": ["ncmfse/term-template"],
 	"description": "Display the description.",
 	"textdomain": "default",
 	"attributes": {

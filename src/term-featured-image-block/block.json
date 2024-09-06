@@ -94,10 +94,10 @@
 		}
 	},
 	"selectors": {
-		"border": ".wp-block-post-featured-image img, .wp-block-post-featured-image .block-editor-media-placeholder, .wp-block-post-featured-image .wp-block-post-featured-image__overlay",
-		"shadow": ".wp-block-post-featured-image img, .wp-block-post-featured-image .components-placeholder",
+		"border": ".wp-block-ncmfse-term-featured-img img, .wp-block-ncmfse-term-featured-img .block-editor-media-placeholder, .wp-block-ncmfse-term-featured-img .wp-block-ncmfse-term-featured-img__overlay",
+		"shadow": ".wp-block-ncmfse-term-featured-img img, .wp-block-ncmfse-term-featured-img .components-placeholder",
 		"filter": {
-			"duotone": ".wp-block-post-featured-image img, .wp-block-post-featured-image .wp-block-post-featured-image__placeholder, .wp-block-post-featured-image .components-placeholder__illustration, .wp-block-post-featured-image .components-placeholder::before"
+			"duotone": ".wp-block-ncmfse-term-featured-img img, .wp-block-ncmfse-term-featured-img .wp-block-ncmfse-term-featured-img__placeholder, .wp-block-ncmfse-term-featured-img .components-placeholder__illustration, .wp-block-ncmfse-term-featured-img .components-placeholder::before"
 		}
 	},
 	"editorScript": "file:./index.js",
