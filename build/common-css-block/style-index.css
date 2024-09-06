@@ -45,6 +45,14 @@ textarea {
   -webkit-line-clamp: 2;
 }
 
+.hidden-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hidden-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .nc-post-reaction-button {
   cursor: pointer;
   line-height: 1;
