@@ -34,7 +34,7 @@ foreach ($colorCssVars as $key => $value) {
 
 <div
 	<?php echo get_block_wrapper_attributes([
-		'class' => '',
+		'class' => 'is-layout-flex',
 		'style' => $colorStyle,
 	]); ?>
 
