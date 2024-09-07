@@ -1162,9 +1162,7 @@ const variations = [{
   title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Title & Date"),
   icon: _icons__WEBPACK_IMPORTED_MODULE_1__.titleDate,
   attributes: {},
-  innerBlocks: [["ncmfse/term-template", {}, [["core/group", {}, [
-  // ["ncmfse/term-cover-img"],
-  ["ncmfse/term-featured-img"], ["ncmfse/term-name"], ["ncmfse/term-description"], ["ncmfse/term-count"]]]]]],
+  innerBlocks: [["ncmfse/term-template", {}, [["core/group", {}, [["ncmfse/term-featured-img"], ["ncmfse/term-name"], ["ncmfse/term-description"], ["ncmfse/term-count"]]]]]],
   scope: ["block"]
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (variations);
@@ -1301,7 +1299,7 @@ module.exports = window["wp"]["primitives"];
   \**********************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/term-query-loop","title":"Ncmaz Terms Query Loop","category":"ncmazfse","description":"An advanced block that allows displaying post types based on different query parameters and visual configurations.","textdomain":"default","attributes":{"myQueryId":{"type":"number","myType":0},"myQuery":{"type":"object","default":{"perPage":8,"isFilterByOrder":true,"taxonomySlug":"category","termIdList":[],"inherit":false,"postType":"post","orderBy":"name","order":"desc","parentIdString":null,"hideEmpty":true,"excludeIdList":[],"page":1}},"tagName":{"type":"string","default":"div"},"namespace":{"type":"string"},"enhancedPagination":{"type":"boolean","default":false},"displayLayout":{"type":"object","myType":{}}},"providesContext":{"ncmazfse_termQueryId":"myQueryId","ncmazfse_termQuery":"myQuery","displayLayout":"displayLayout","enhancedPagination":"enhancedPagination"},"supports":{"align":["wide","full"],"html":false,"layout":true,"interactivity":true},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/term-query-loop","title":"Ncmaz Terms Query Loop","category":"ncmfse","description":"An advanced block that allows displaying post types based on different query parameters and visual configurations.","textdomain":"default","attributes":{"myQueryId":{"type":"number","myType":0},"myQuery":{"type":"object","default":{"perPage":8,"isFilterByOrder":true,"taxonomySlug":"category","termIdList":[],"inherit":false,"postType":"post","orderBy":"name","order":"desc","parentIdString":null,"hideEmpty":true,"excludeIdList":[],"page":1}},"tagName":{"type":"string","default":"div"},"namespace":{"type":"string"},"enhancedPagination":{"type":"boolean","default":false},"displayLayout":{"type":"object","myType":{}}},"providesContext":{"ncmazfse_termQueryId":"myQueryId","ncmazfse_termQuery":"myQuery","displayLayout":"displayLayout","enhancedPagination":"enhancedPagination"},"supports":{"align":["wide","full"],"html":false,"layout":true,"interactivity":true},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ })
 

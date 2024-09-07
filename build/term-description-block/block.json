@@ -3,7 +3,7 @@
   "apiVersion": 3,
   "name": "ncmfse/term-description",
   "title": "Ncmaz Term Description",
-  "category": "ncmazfse",
+  "category": "ncmfse",
   "description": "Display the description of categories, tags and custom taxonomies.",
   "textdomain": "default",
   "attributes": {

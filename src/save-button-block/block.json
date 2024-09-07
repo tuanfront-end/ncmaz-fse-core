@@ -4,7 +4,7 @@
 	"name": "ncmfse/save-button-btn",
 	"version": "0.1.0",
 	"title": "Save Button",
-	"category": "ncmazfse",
+	"category": "ncmfse",
 	"ancestor": ["core/post-template"],
 	"usesContext": ["postId", "postType"],
 	"description": "Example block scaffolded with Create Block tool.",

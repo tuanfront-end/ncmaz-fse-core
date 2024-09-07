@@ -20,7 +20,9 @@
 		}
 
 		// Show default placeholder height when not resized.
-		min-height: 200px;
+		& {
+			min-height: 200px;
+		}
 	}
 
 	// The following override the default placeholder styles that remove

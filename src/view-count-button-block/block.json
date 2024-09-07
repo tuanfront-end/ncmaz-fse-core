@@ -5,7 +5,7 @@
 	"version": "0.1.0",
 	"title": "View Count Button",
 	"ancestor": ["core/post-template"],
-	"category": "ncmazfse",
+	"category": "ncmfse",
 	"usesContext": ["postId", "postType"],
 	"description": "Example block scaffolded with Create Block tool.",
 	"allowedBlocks": ["outermost/icon-block"],

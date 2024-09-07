@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ncmfse/snap-scroll-arrow-next",
+	"version": "0.1.0",
+	"title": "Arrow Next",
+	"category": "ncmfse",
+	"parent": ["ncmfse/snap-scroll-arrows"],
+	"description": "Example block scaffolded with Create Block tool.",
+	"allowedBlocks": ["outermost/icon-block"],
+	"example": {},
+	"usesContext": ["ncmazfse_termQueryId", "queryId"],
+	"attributes": {},
+	"supports": {
+		"anchor": false,
+		"html": false,
+		"interactivity": true
+	},
+	"textdomain": "like-button-block",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScriptModule": "file:./view.js"
+}

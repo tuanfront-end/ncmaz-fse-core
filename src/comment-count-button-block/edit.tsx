@@ -56,7 +56,7 @@ function Edit(props: EditProps<Attributes>) {
 	const colorGradientSettings = useMultipleOriginColorsAndGradients() as any;
 	const colorSettings = [
 		{
-			label: __("Active Color", "ncmaz-fse-core"),
+			label: __("Active Color", "ncmfse"),
 			value: activeColor.color || customActiveColor,
 			onChange: (value: string) => {
 				setActiveColor(value);
@@ -68,7 +68,7 @@ function Edit(props: EditProps<Attributes>) {
 			},
 		},
 		{
-			label: __("Active Background Color", "ncmaz-fse-core"),
+			label: __("Active Background Color", "ncmfse"),
 			value: activeBgColor.color || customActiveBgColor,
 			onChange: (value: string) => {
 				setActiveBgColor(value);
@@ -80,7 +80,7 @@ function Edit(props: EditProps<Attributes>) {
 			},
 		},
 		{
-			label: __("Active Border Color", "ncmaz-fse-core"),
+			label: __("Active Border Color", "ncmfse"),
 			value: activeBorderColor.color || customActiveBorderColor,
 			onChange: (value: string) => {
 				setActiveBorderColor(value);
@@ -92,7 +92,7 @@ function Edit(props: EditProps<Attributes>) {
 			},
 		},
 		{
-			label: __("Active Icon Background Color", "ncmaz-fse-core"),
+			label: __("Active Icon Background Color", "ncmfse"),
 			value: activeIconBgColor.color || customActiveIconBgColor,
 			onChange: (value: string) => {
 				setActiveIconBgColor(value);
@@ -108,11 +108,11 @@ function Edit(props: EditProps<Attributes>) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__("Post Comment Count Button", "ncmaz-fse-core")}>
+				<PanelBody title={__("Post Comment Count Button", "ncmfse")}>
 					<ToggleControl
 						__nextHasNoMarginBottom
-						label={__("Show Count", "ncmaz-fse-core")}
-						help={__("Show/Hide count number", "ncmaz-fse-core")}
+						label={__("Show Count", "ncmfse")}
+						help={__("Show/Hide count number", "ncmfse")}
 						checked={showCountText}
 						onChange={(newValue) => {
 							setAttributes({ showCountText: newValue });
@@ -142,10 +142,10 @@ function Edit(props: EditProps<Attributes>) {
 					/>
 				))}
 				<p className="outermost-icon-block__color-settings__help">
-					<strong>{__("Active: ", "ncmaz-fse-core")}</strong>
+					<strong>{__("Active: ", "ncmfse")}</strong>
 					{__(
 						" Set the color for the active state (liked/saved/hovering) of the button.",
-						"ncmaz-fse-core",
+						"ncmfse",
 					)}
 				</p>
 			</InspectorControls>

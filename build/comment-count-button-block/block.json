@@ -1,10 +1,10 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "ncmazfse/comment-count-btn",
+  "name": "ncmfse/comment-count-btn",
   "version": "0.1.0",
   "title": "Comment Count Button",
-  "category": "ncmazfse",
+  "category": "ncmfse",
   "ancestor": [
     "core/post-template"
   ],

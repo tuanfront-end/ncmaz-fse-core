@@ -3,7 +3,7 @@
   "apiVersion": 3,
   "name": "ncmfse/term-template",
   "title": "Ncmaz Term Template",
-  "category": "ncmazfse",
+  "category": "ncmfse",
   "parent": [
     "ncmfse/term-query-loop"
   ],

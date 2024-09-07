@@ -7,7 +7,7 @@
   "ancestor": [
     "core/post-template"
   ],
-  "category": "ncmazfse",
+  "category": "ncmfse",
   "usesContext": [
     "postId",
     "postType"

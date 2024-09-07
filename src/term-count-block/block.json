@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "ncmfse/term-count",
 	"title": "Ncmaz Term Count",
-	"category": "ncmazfse",
+	"category": "ncmfse",
 	"description": "Display the description.",
 	"textdomain": "default",
 	"attributes": {

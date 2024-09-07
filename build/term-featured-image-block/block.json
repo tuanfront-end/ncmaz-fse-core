@@ -3,7 +3,7 @@
   "apiVersion": 3,
   "name": "ncmfse/term-featured-img",
   "title": "Ncmaz Term Featured Image",
-  "category": "ncmazfse",
+  "category": "ncmfse",
   "description": "Display a term's featured image.",
   "textdomain": "default",
   "attributes": {

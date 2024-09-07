@@ -3,7 +3,7 @@
   "apiVersion": 3,
   "name": "ncmfse/term-name",
   "title": "Ncmaz Term Name",
-  "category": "ncmazfse",
+  "category": "ncmfse",
   "description": "Displays the title of a term.",
   "textdomain": "default",
   "usesContext": [

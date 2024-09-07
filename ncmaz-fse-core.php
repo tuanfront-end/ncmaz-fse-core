@@ -2,14 +2,14 @@
 
 /**
  * Plugin Name:       Ncmaz Fse Core
- * Description:       Example block scaffolded with Create Block tool.
+ * Description:        Ncmaz Fse Core is a plugin that provides some custom blocks for Full Site Editing.
  * Requires at least: 6.1
  * Requires PHP:      7.0
  * Version:           0.1.0
  * Author:            The WordPress Contributors
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       ncmaz-fse-core
+ * Text Domain:       ncmfse
  *
  * @package CreateBlock
  */
@@ -27,8 +27,8 @@ define('NCMAZ_FSE_CORE_PLUGIN_ASSETS', NCMAZ_FSE_CORE_PLUGIN_URL . 'assets/');
 define('NCMAZ_FSE_CORE_PLUGIN_BUILD', NCMAZ_FSE_CORE_PLUGIN_URL . 'build/');
 define('NCMAZ_FSE_CORE_PLUGIN_SRC', NCMAZ_FSE_CORE_PLUGIN_URL . 'src/');
 define('NCMAZ_FSE_CORE_PLUGIN_INCLUDES', NCMAZ_FSE_CORE_PLUGIN_URL . 'includes/');
-define('NCMAZ_FSE_CORE_TEXT_DOMAIN',  'ncmaz-fse-core');
-define('NCMAZ_FSE_CORE_STORE',  'ncmazfse-core');
+define('NCMAZ_FSE_CORE_TEXT_DOMAIN',  'ncmfse');
+define('NCMAZ_FSE_CORE_STORE',  'ncmfse');
 
 function ncmaz_fse_core_register_blocks_init()
 {
@@ -44,6 +44,9 @@ function ncmaz_fse_core_register_blocks_init()
 	register_block_type(__DIR__ . '/build/term-description-block');
 	register_block_type(__DIR__ . '/build/term-count-block');
 	register_block_type(__DIR__ . '/build/term-featured-image-block');
+	register_block_type(__DIR__ . '/build/snap-scroll-arrows-block');
+	register_block_type(__DIR__ . '/build/snap-scroll-arrow-next-block');
+	register_block_type(__DIR__ . '/build/snap-scroll-arrow-previous-block');
 
 	//  SOME CUSTOM BLOCKS
 	register_block_type(__DIR__ . '/build/enable-linked-groups');
@@ -51,7 +54,6 @@ function ncmaz_fse_core_register_blocks_init()
 	// END SOME CUSTOM BLOCKS
 }
 add_action('init', 'ncmaz_fse_core_register_blocks_init');
-
 
 
 //  Import file utils.php
@@ -65,15 +67,6 @@ require_once plugin_dir_path(__FILE__) . 'includes/term-blocks-funcs.php';
 
 // enqueue scripts
 require_once plugin_dir_path(__FILE__) . 'includes/enqueue-scripts.php';
-
-
-/**
- * PluginName:         Enable Linked Groups
- * PluginURI:          https://www.nickdiego.com/
- * Description:         Easily add links to Group blocks.
- *
- * @package enable-linked-groups
- */
 
 
 /**
@@ -187,13 +180,16 @@ function ncmazfse_enable_snapping_templates_render_block_button($block_content, 
 		return $block_content;
 	}
 
+	$queryId = $instance->context['queryId'] ?? $instance->context['ncmazfse_termQueryId'] ?? "";
+
 	$childWidth             = $block['attrs']['childWidth'] ?? '';
 	$showScrollbar          = $block['attrs']['showScrollbar'] ?? '';
 
 	// Add the is-linked class to the group block.
 	$p = new WP_HTML_Tag_Processor($block_content);
 	if ($p->next_tag()) {
-		$p->add_class('is-h-scroll-snapping');
+		$p->add_class('is-h-scroll-snapping relative');
+		$p->set_attribute('data-ncmfse-snap-scroll-id', $queryId);
 		$p->add_class($showScrollbar ? '' : 'hidden-scrollbar');
 		$p->set_attribute('style', '--child-width: ' . $childWidth . '; ' . $p->get_attribute('style'));
 	}

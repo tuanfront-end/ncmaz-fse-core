@@ -32,16 +32,16 @@ export default function Edit(props: EditProps<Attributes>) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__("Reading Time", "ncmaz-fse-core")}>
+				<PanelBody title={__("Reading Time", "ncmfse")}>
 					<TextControl
 						__nextHasNoMarginBottom
-						label={__("Text", "ncmaz-fse-core")}
+						label={__("Text", "ncmfse")}
 						value={minReadText}
 						onChange={(value) => setAttributes({ minReadText: value })}
 					/>
 					<TextControl
 						__nextHasNoMarginBottom
-						label={__("Text on mobile", "ncmaz-fse-core")}
+						label={__("Text on mobile", "ncmfse")}
 						value={minReadTextOnMobile}
 						onChange={(value) => setAttributes({ minReadText: value })}
 					/>

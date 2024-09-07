@@ -4,7 +4,7 @@
   "name": "ncmfse/reading-time",
   "version": "0.1.0",
   "title": "Reading time",
-  "category": "ncmazfse",
+  "category": "ncmfse",
   "ancestor": [
     "core/post-template"
   ],

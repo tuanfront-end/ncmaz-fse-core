@@ -12,11 +12,14 @@
   align-items: center;
   padding: 0;
   display: flex;
-  min-height: 200px;
 }
 .wp-block-ncmfse-term-featured-img .wp-block-ncmfse-term-featured-img__placeholder .components-form-file-upload,
 .wp-block-ncmfse-term-featured-img .components-placeholder .components-form-file-upload {
   display: none;
+}
+.wp-block-ncmfse-term-featured-img .wp-block-ncmfse-term-featured-img__placeholder,
+.wp-block-ncmfse-term-featured-img .components-placeholder {
+  min-height: 200px;
 }
 .wp-block-ncmfse-term-featured-img .wp-block-ncmfse-term-featured-img__placeholder:where(.has-border-color),
 .wp-block-ncmfse-term-featured-img .components-placeholder:where(.has-border-color),
