@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "ncmfse/view-count-btn",
 	"version": "0.1.0",
-	"title": "View Count Button",
+	"title": "Ncmaz Post View Count",
 	"ancestor": ["core/post-template"],
 	"category": "ncmfse",
 	"usesContext": ["postId", "postType"],
@@ -90,6 +90,12 @@
 				"radius": true,
 				"style": true,
 				"width": true
+			}
+		},
+		"layout": {
+			"default": {
+				"type": "flex",
+				"flexWrap": "nowrap"
 			}
 		}
 	},

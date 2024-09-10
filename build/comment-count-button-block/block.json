@@ -3,7 +3,7 @@
   "apiVersion": 3,
   "name": "ncmfse/comment-count-btn",
   "version": "0.1.0",
-  "title": "Ncmaz Comment Count Button",
+  "title": "Ncmaz Post Comment Count",
   "category": "ncmfse",
   "ancestor": [
     "core/post-template"
@@ -47,14 +47,6 @@
     },
     "customActiveBorderColor": {
       "type": "string"
-    },
-    "style": {
-      "type": "object",
-      "default": {
-        "spacing": {
-          "blockGap": "var:preset|spacing|4"
-        }
-      }
     }
   },
   "supports": {

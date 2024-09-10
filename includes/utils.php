@@ -21,3 +21,17 @@ function ncmfse_getSpacingPresetCssVar($value)
 
     return $value;
 }
+
+function ncmfse_getColorPresetCssVar($value)
+{
+    if (!$value) {
+        return;
+    }
+
+    if (preg_match('/var:preset\|color\|(.+)/', $value, $matches)) {
+        $slug = $matches[1];
+        return "var(--wp--preset--spacing--{$slug})";
+    }
+
+    return $value;
+}

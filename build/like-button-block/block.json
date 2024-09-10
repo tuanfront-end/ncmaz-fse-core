@@ -93,6 +93,12 @@
         "width": true
       }
     },
+    "layout": {
+      "default": {
+        "type": "flex",
+        "flexWrap": "nowrap"
+      }
+    },
     "interactivity": true
   },
   "textdomain": "like-button-block",

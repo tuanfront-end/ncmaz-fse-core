@@ -25,6 +25,8 @@ $colorCssVars = [
 		? 'var( --wp--preset--color--' . $attributes['activeIconBgColor'] . ' )'
 		: $attributes['customActiveIconBgColor'] ?? null,
 ];
+// remove null values from the array.
+$colorCssVars =  array_filter($colorCssVars);
 // convert the colorCssVars array to style string.
 $colorStyle = '';
 foreach ($colorCssVars as $key => $value) {

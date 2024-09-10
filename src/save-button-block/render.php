@@ -49,20 +49,18 @@ $colorCssVars = [
 		? 'var( --wp--preset--color--' . $attributes['activeIconBgColor'] . ' )'
 		: $attributes['customActiveIconBgColor'] ?? null,
 ];
+// remove null values from the array.
+$colorCssVars =  array_filter($colorCssVars);
 // convert the colorCssVars array to style string.
 $colorStyle = '';
 foreach ($colorCssVars as $key => $value) {
 	$colorStyle .= $key . ':' . $value . ';';
 };
-
-// Get the blockGap attributes.
-$gapStyle = ncmfse_getSpacingPresetCssVar($attributes['style']['spacing']['blockGap'] ?? "");
-$colorStyle =  $colorStyle . $gapStyle ? 'gap: ' . $gapStyle : ''
 ?>
 
 <button
 	<?php echo get_block_wrapper_attributes([
-		'class' => 'nc-post-reaction-button',
+		'class' => 'nc-post-reaction-button ' . (!isset($attributes['style']['spacing']['blockGap']) ? 'gap-1.5' : ''),
 		'style' => $colorStyle,
 	]); ?>
 	data-wp-interactive="ncmazfse-core"

@@ -99,7 +99,7 @@ function Edit(props: EditProps<Attributes>) {
 	];
 
 	const blockProps = useBlockProps({
-		className: "nc-post-reaction-button gap-2",
+		className: "nc-post-reaction-button",
 		style: {
 			"--active-color": activeColor.slug
 				? `var( --wp--preset--color--${activeColor.slug} )`

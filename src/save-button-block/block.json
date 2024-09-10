@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "ncmfse/save-button-btn",
 	"version": "0.1.0",
-	"title": "Save Button",
+	"title": "Ncmaz Post Bookmark",
 	"category": "ncmfse",
 	"ancestor": ["core/post-template"],
 	"usesContext": ["postId", "postType"],
@@ -90,6 +90,12 @@
 				"radius": true,
 				"style": true,
 				"width": true
+			}
+		},
+		"layout": {
+			"default": {
+				"type": "flex",
+				"flexWrap": "nowrap"
 			}
 		},
 		"interactivity": true
