@@ -19,6 +19,12 @@
 			scroll-snap-align: start;
 			flex-shrink: 0;
 			width: var(--child-width);
+			max-width: 100%;
+
+			// scale width at mobile
+			@media (max-width: 600px) {
+				width: 90%;
+			}
 		}
 
 		// Ensure the first real element inside the group is not affected by the overlay.

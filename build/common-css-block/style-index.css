@@ -29,6 +29,14 @@ textarea {
   z-index: 10;
 }
 
+.gap-1\.5 {
+  gap: var(--wp--preset--spacing--1-5);
+}
+
+.gap-2 {
+  gap: var(--wp--preset--spacing--2);
+}
+
 .is-style-line-clamp-1,
 .is-style-line-clamp-1 > a {
   overflow: hidden;
@@ -57,9 +65,6 @@ textarea {
   cursor: pointer;
   line-height: 1;
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
   font-size: var(--wp--preset--font-size--xs);
   border: 0px solid transparent;
   background-color: initial;
@@ -67,7 +72,8 @@ textarea {
 }
 .nc-post-reaction-button.is-actived, .nc-post-reaction-button:hover {
   color: var(--active-color, inherit) !important;
-  border-color: var(--active-border-color, transparent) !important;
+  border-color: var(--active-border-color, inherit) !important;
+  background-color: var(--active-background-color, inherit) !important;
 }
 .nc-post-reaction-button.is-actived .wp-block-outermost-icon-block .icon-container, .nc-post-reaction-button:hover .wp-block-outermost-icon-block .icon-container {
   background-color: var(--active-icon-background-color, transparent) !important;

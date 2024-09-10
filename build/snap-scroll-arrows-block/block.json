@@ -20,40 +20,18 @@
     "queryId"
   ],
   "attributes": {
-    "activeColor": {
-      "type": "string"
-    },
-    "customActiveColor": {
-      "type": "string",
-      "default": "#16a34a"
-    },
-    "activeBgColor": {
-      "type": "string"
-    },
-    "customActiveBgColor": {
-      "type": "string"
-    },
-    "activeIconBgColor": {
-      "type": "string"
-    },
-    "customActiveIconBgColor": {
-      "type": "string",
-      "default": "#00ba7c1a"
-    },
-    "activeBorderColor": {
-      "type": "string"
-    },
-    "customActiveBorderColor": {
-      "type": "string"
+    "stackInMiddle": {
+      "type": "boolean",
+      "default": false
     },
     "layout": {
       "type": "object",
       "default": {
         "type": "flex",
         "justifyContent": "center",
-        "alignItems": "center"
-      },
-      "myType": {}
+        "alignItems": "center",
+        "flexWrap": "nowrap"
+      }
     }
   },
   "supports": {
@@ -65,20 +43,6 @@
       "__experimentalDefaultControls": {
         "background": true,
         "text": true
-      }
-    },
-    "typography": {
-      "fontSize": true,
-      "lineHeight": true,
-      "__experimentalFontFamily": true,
-      "__experimentalFontWeight": true,
-      "__experimentalFontStyle": true,
-      "__experimentalTextTransform": true,
-      "__experimentalTextDecoration": true,
-      "__experimentalLetterSpacing": true,
-      "__experimentalWritingMode": true,
-      "__experimentalDefaultControls": {
-        "fontSize": true
       }
     },
     "shadow": true,

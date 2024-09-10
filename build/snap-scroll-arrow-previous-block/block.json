@@ -21,6 +21,10 @@
   "supports": {
     "anchor": false,
     "html": false,
+    "spacing": {
+      "padding": true,
+      "margin": true
+    },
     "interactivity": true
   },
   "textdomain": "like-button-block",

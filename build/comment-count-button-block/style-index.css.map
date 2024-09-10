@@ -1,0 +1,1 @@
+{"version":3,"file":"comment-count-button-block/style-index.css","mappings":";;;AAAA;EACC;AACD,C","sources":["webpack://todo-list/./src/comment-count-button-block/style.scss"],"sourcesContent":[".wp-block-ncmfse-comment-count-btn {\n\tgap: 0.375rem;\n}\n"],"names":[],"sourceRoot":""}

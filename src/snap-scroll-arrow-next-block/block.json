@@ -13,6 +13,10 @@
 	"attributes": {},
 	"supports": {
 		"anchor": false,
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
 		"html": false,
 		"interactivity": true
 	},

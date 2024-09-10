@@ -21,6 +21,13 @@
   scroll-snap-align: start;
   flex-shrink: 0;
   width: var(--child-width);
+  max-width: 100%;
+}
+@media (max-width: 600px) {
+  .wp-block-ncmfse-term-template.is-h-scroll-snapping > *,
+  .wp-block-post-template.is-h-scroll-snapping > * {
+    width: 90%;
+  }
 }
 .wp-block-ncmfse-term-template.is-h-scroll-snapping:not(.block-editor-block-list__block) > :nth-child(2),
 .wp-block-post-template.is-h-scroll-snapping:not(.block-editor-block-list__block) > :nth-child(2) {

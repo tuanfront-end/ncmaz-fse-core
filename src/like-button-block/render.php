@@ -58,6 +58,10 @@ $colorStyle = '';
 foreach ($colorCssVars as $key => $value) {
 	$colorStyle .= $key . ':' . $value . ';';
 };
+
+// Get the blockGap attributes.
+$gapStyle = ncmfse_getSpacingPresetCssVar($attributes['style']['spacing']['blockGap'] ?? "");
+$colorStyle =  $colorStyle . $gapStyle ? 'gap: ' . $gapStyle : ''
 ?>
 
 

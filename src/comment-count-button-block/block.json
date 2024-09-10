@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "ncmfse/comment-count-btn",
 	"version": "0.1.0",
-	"title": "Comment Count Button",
+	"title": "Ncmaz Comment Count Button",
 	"category": "ncmfse",
 	"ancestor": ["core/post-template"],
 	"usesContext": ["postId", "postType"],
@@ -15,7 +15,6 @@
 			"type": "boolean",
 			"default": true
 		},
-
 		"activeColor": {
 			"type": "string"
 		},
@@ -23,14 +22,12 @@
 			"type": "string",
 			"default": "#16a34a"
 		},
-
 		"activeBgColor": {
 			"type": "string"
 		},
 		"customActiveBgColor": {
 			"type": "string"
 		},
-
 		"activeIconBgColor": {
 			"type": "string"
 		},
@@ -38,12 +35,19 @@
 			"type": "string",
 			"default": "#00ba7c1a"
 		},
-
 		"activeBorderColor": {
 			"type": "string"
 		},
 		"customActiveBorderColor": {
 			"type": "string"
+		},
+		"style": {
+			"type": "object",
+			"default": {
+				"spacing": {
+					"blockGap": "var:preset|spacing|4"
+				}
+			}
 		}
 	},
 	"supports": {
@@ -90,6 +94,12 @@
 				"radius": true,
 				"style": true,
 				"width": true
+			}
+		},
+		"layout": {
+			"default": {
+				"type": "flex",
+				"flexWrap": "nowrap"
 			}
 		}
 	},

@@ -32,6 +32,62 @@ const queryPagination = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wo
 
 /***/ }),
 
+/***/ "./src/hooks/hooks.ts":
+/*!****************************!*\
+  !*** ./src/hooks/hooks.ts ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useCanEditEntity: () => (/* binding */ useCanEditEntity),
+/* harmony export */   useUpdateLayoutFromDefault: () => (/* binding */ useUpdateLayoutFromDefault)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+/**
+ * Returns whether the current user can edit the given entity.
+ *
+ * @param {string} kind     Entity kind.
+ * @param {string} name     Entity name.
+ * @param {string} recordId Record's id.
+ */
+function useCanEditEntity(kind, name, recordId) {
+  return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useSelect)(select => select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.store).canUser("update", {
+    kind,
+    name,
+    id: recordId
+  }), [kind, name, recordId]);
+}
+
+/**
+ *  Update layout from default layout when block is first loaded.
+ */
+function useUpdateLayoutFromDefault(setAttributes, layout) {
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    if (!layout?.type || layout.x) {
+      return;
+    }
+    setAttributes({
+      // phải set X ở đây vì để tạo giá trị khác với giá giá trị mặc định -> để setAttributes hoạt động được
+      layout: {
+        ...layout,
+        x: "x"
+      }
+    });
+  }, []);
+}
+
+/***/ }),
+
 /***/ "./src/snap-scroll-arrows-block/edit.tsx":
 /*!***********************************************!*\
   !*** ./src/snap-scroll-arrows-block/edit.tsx ***!
@@ -49,146 +105,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./editor.scss */ "./src/snap-scroll-arrows-block/editor.scss");
+/* harmony import */ var _hooks_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks/hooks */ "./src/hooks/hooks.ts");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__);
+
+
 
 
 
 
 function Edit(props) {
   const {
-    clientId,
     attributes,
-    setAttributes,
-    activeColor,
-    activeBgColor,
-    activeBorderColor,
-    activeIconBgColor,
-    setActiveColor,
-    setActiveBgColor,
-    setActiveBorderColor,
-    setActiveIconBgColor
+    setAttributes
   } = props;
-  const {
-    customActiveBgColor,
-    customActiveBorderColor,
-    customActiveColor,
-    customActiveIconBgColor,
-    style
-  } = attributes;
-  const gapCSSValue = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.getSpacingPresetCssVar)(attributes.style?.spacing?.blockGap);
 
-  //
-  const colorGradientSettings = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.__experimentalUseMultipleOriginColorsAndGradients)();
-  const colorSettings = [{
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Color", "ncmfse"),
-    value: activeColor.color || customActiveColor,
-    onChange: value => {
-      setActiveColor(value);
-      setAttributes({
-        customActiveColor: value
-      });
-    },
-    resetAllFilter: () => {
-      setActiveColor(undefined);
-      setAttributes({
-        customActiveColor: "#16a34a"
-      });
-    }
-  }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Background Color", "ncmfse"),
-    value: activeBgColor.color || customActiveBgColor,
-    onChange: value => {
-      setActiveBgColor(value);
-      setAttributes({
-        customActiveBgColor: value
-      });
-    },
-    resetAllFilter: () => {
-      setActiveBgColor(undefined);
-      setAttributes({
-        customActiveBgColor: undefined
-      });
-    }
-  }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Border Color", "ncmfse"),
-    value: activeBorderColor.color || customActiveBorderColor,
-    onChange: value => {
-      setActiveBorderColor(value);
-      setAttributes({
-        customActiveBorderColor: value
-      });
-    },
-    resetAllFilter: () => {
-      setActiveBorderColor(undefined);
-      setAttributes({
-        customActiveBorderColor: undefined
-      });
-    }
-  }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Icon Background Color", "ncmfse"),
-    value: activeIconBgColor.color || customActiveIconBgColor,
-    onChange: value => {
-      setActiveIconBgColor(value);
-      setAttributes({
-        customActiveIconBgColor: value
-      });
-    },
-    resetAllFilter: () => {
-      setActiveIconBgColor(undefined);
-      setAttributes({
-        customActiveIconBgColor: "#00ba7c1a"
-      });
-    }
-  }];
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
-    group: "color"
-  }, colorSettings.map(({
-    onChange,
-    label,
-    value,
-    resetAllFilter
-  }) =>
-  // @ts-ignore
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.__experimentalColorGradientSettingsDropdown, {
-    __experimentalIsRenderedInSidebar: true,
-    key: `like-btns-color-${label}`,
-    settings: [{
-      colorValue: value,
-      label,
-      onColorChange: onChange,
-      isShownByDefault: true,
-      resetAllFilter,
-      enableAlpha: true
-    }],
-    panelId: clientId,
-    ...colorGradientSettings
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
-    className: "outermost-icon-block__color-settings__help"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active: ", "ncmfse")), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Set the color for the active state (hovering/active) of the button.", "ncmfse"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  // Update layout from default layout when block is first loaded.
+  (0,_hooks_hooks__WEBPACK_IMPORTED_MODULE_4__.useUpdateLayoutFromDefault)(setAttributes, attributes.layout);
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Settings", "ncmfse")
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Stack in the middle of the Carousel", "ncmfse"),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("If enabled, the arrows will be stacked in the middle of the carousel.", "ncmfse"),
+    checked: !!attributes.stackInMiddle,
+    onChange: stackInMiddle => setAttributes({
+      stackInMiddle
+    })
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
-      className: "",
-      style: {
-        ...style,
-        gap: gapCSSValue,
-        "--active-color": activeColor.slug ? `var( --wp--preset--color--${activeColor.slug} )` : customActiveColor,
-        "--active-background-color": activeBgColor.slug ? `var( --wp--preset--color--${activeBgColor.slug} )` : customActiveBgColor,
-        "--active-border-color": activeBorderColor.slug ? `var( --wp--preset--color--${activeBorderColor.slug} )` : customActiveBorderColor,
-        "--active-icon-background-color": activeIconBgColor.slug ? `var( --wp--preset--color--${activeIconBgColor.slug} )` : customActiveIconBgColor
-      }
+      className: attributes.stackInMiddle ? "nc-is-stack-in-middle gap-2" : "gap-2"
     })
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InnerBlocks, {
     allowedBlocks: ["ncmfse/snap-scroll-arrow-previous", "ncmfse/snap-scroll-arrow-next"],
     template: [["ncmfse/snap-scroll-arrow-previous", {}], ["ncmfse/snap-scroll-arrow-next", {}]],
     templateLock: "insert"
   })));
-
-  // Other code will go here, don't forget or delete the closing curly brace!
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.withColors)({
-  activeColor: "active-color",
-  activeBgColor: "active-background-color",
-  activeBorderColor: "active-border-color",
-  activeIconBgColor: "active-icon-background-color"
-})(Edit));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Edit);
 
 /***/ }),
 
@@ -321,6 +274,46 @@ module.exports = window["wp"]["blocks"];
 
 /***/ }),
 
+/***/ "@wordpress/components":
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["components"];
+
+/***/ }),
+
+/***/ "@wordpress/core-data":
+/*!**********************************!*\
+  !*** external ["wp","coreData"] ***!
+  \**********************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["coreData"];
+
+/***/ }),
+
+/***/ "@wordpress/data":
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["data"];
+
+/***/ }),
+
+/***/ "@wordpress/element":
+/*!*********************************!*\
+  !*** external ["wp","element"] ***!
+  \*********************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["element"];
+
+/***/ }),
+
 /***/ "@wordpress/i18n":
 /*!******************************!*\
   !*** external ["wp","i18n"] ***!
@@ -347,7 +340,7 @@ module.exports = window["wp"]["primitives"];
   \*************************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/snap-scroll-arrows","version":"0.1.0","title":"Ncmaz Snap Scroll Arrows","category":"ncmfse","ancestor":["core/query","ncmfse/term-query-loop"],"description":"Example block scaffolded with Create Block tool.","allowedBlocks":["outermost/icon-block","core/paragraph"],"example":{},"usesContext":["ncmazfse_termQueryId","queryId"],"attributes":{"activeColor":{"type":"string"},"customActiveColor":{"type":"string","default":"#16a34a"},"activeBgColor":{"type":"string"},"customActiveBgColor":{"type":"string"},"activeIconBgColor":{"type":"string"},"customActiveIconBgColor":{"type":"string","default":"#00ba7c1a"},"activeBorderColor":{"type":"string"},"customActiveBorderColor":{"type":"string"},"layout":{"type":"object","default":{"type":"flex","justifyContent":"center","alignItems":"center"},"myType":{}}},"supports":{"reusable":false,"anchor":false,"html":false,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"shadow":true,"spacing":{"padding":true,"margin":true,"blockGap":true,"__experimentalDefaultControls":{"padding":true,"blockGap":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"layout":true,"interactivity":true},"textdomain":"like-button-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/snap-scroll-arrows","version":"0.1.0","title":"Ncmaz Snap Scroll Arrows","category":"ncmfse","ancestor":["core/query","ncmfse/term-query-loop"],"description":"Example block scaffolded with Create Block tool.","allowedBlocks":["outermost/icon-block","core/paragraph"],"example":{},"usesContext":["ncmazfse_termQueryId","queryId"],"attributes":{"stackInMiddle":{"type":"boolean","default":false},"layout":{"type":"object","default":{"type":"flex","justifyContent":"center","alignItems":"center","flexWrap":"nowrap"}}},"supports":{"reusable":false,"anchor":false,"html":false,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"shadow":true,"spacing":{"padding":true,"margin":true,"blockGap":true,"__experimentalDefaultControls":{"padding":true,"blockGap":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"layout":true,"interactivity":true},"textdomain":"like-button-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
 
 /***/ })
 

@@ -35,7 +35,7 @@ foreach ($colorCssVars as $key => $value) {
 <a
 	href="<?php echo esc_url($comment_link); ?>"
 	<?php echo get_block_wrapper_attributes([
-		'class' => 'nc-post-reaction-button',
+		'class' => 'nc-post-reaction-button ' . (!isset($attributes['style']['spacing']['blockGap']) ? 'gap-1.5' : ''),
 		'style' => $colorStyle,
 	]); ?>>
 
