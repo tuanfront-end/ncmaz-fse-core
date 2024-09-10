@@ -11,8 +11,6 @@
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
-  scroll-snap-points-x: repeat(100%);
-  scroll-snap-destination: 0% 0%;
   padding-top: 2px;
   padding-bottom: 2px;
 }

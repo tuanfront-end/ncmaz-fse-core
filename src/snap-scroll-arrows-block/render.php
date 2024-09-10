@@ -9,7 +9,7 @@ wp_interactivity_state(
 
 <div
 	<?php echo get_block_wrapper_attributes([
-		'class' => $attributes['stackInMiddle'] ? 'nc-is-stack-in-middle gap-2' : 'gap-2',
+		'class' => !isset($attributes['style']['spacing']['blockGap']) ? 'gap-2' : ''
 	]); ?>
 	data-wp-interactive="ncmfse/snap-scroll-arrows"
 	<?php echo wp_interactivity_data_wp_context([

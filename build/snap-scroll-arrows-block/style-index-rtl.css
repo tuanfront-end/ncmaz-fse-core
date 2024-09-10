@@ -31,23 +31,23 @@
 .wp-block-ncmfse-snap-scroll-arrows .wp-block-outermost-icon-block .icon-container {
   background-color: var(--wp--preset--color--shadcn-background);
 }
-.wp-block-ncmfse-snap-scroll-arrows.nc-is-stack-in-middle {
+.wp-block-ncmfse-snap-scroll-arrows.is-style-stack-in-middle {
   position: unset;
 }
-.wp-block-ncmfse-snap-scroll-arrows.nc-is-stack-in-middle .wp-block-ncmfse-snap-scroll-arrow-previous,
-.wp-block-ncmfse-snap-scroll-arrows.nc-is-stack-in-middle .wp-block-ncmfse-snap-scroll-arrow-next {
+.wp-block-ncmfse-snap-scroll-arrows.is-style-stack-in-middle .wp-block-ncmfse-snap-scroll-arrow-previous,
+.wp-block-ncmfse-snap-scroll-arrows.is-style-stack-in-middle .wp-block-ncmfse-snap-scroll-arrow-next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 4;
 }
-.wp-block-ncmfse-snap-scroll-arrows.nc-is-stack-in-middle .wp-block-ncmfse-snap-scroll-arrow-previous:hover,
-.wp-block-ncmfse-snap-scroll-arrows.nc-is-stack-in-middle .wp-block-ncmfse-snap-scroll-arrow-next:hover {
+.wp-block-ncmfse-snap-scroll-arrows.is-style-stack-in-middle .wp-block-ncmfse-snap-scroll-arrow-previous:hover,
+.wp-block-ncmfse-snap-scroll-arrows.is-style-stack-in-middle .wp-block-ncmfse-snap-scroll-arrow-next:hover {
   transform: translateY(-50%) scale(1.05);
 }
-.wp-block-ncmfse-snap-scroll-arrows.nc-is-stack-in-middle .wp-block-ncmfse-snap-scroll-arrow-previous {
+.wp-block-ncmfse-snap-scroll-arrows.is-style-stack-in-middle .wp-block-ncmfse-snap-scroll-arrow-previous {
   right: 0;
 }
-.wp-block-ncmfse-snap-scroll-arrows.nc-is-stack-in-middle .wp-block-ncmfse-snap-scroll-arrow-next {
+.wp-block-ncmfse-snap-scroll-arrows.is-style-stack-in-middle .wp-block-ncmfse-snap-scroll-arrow-next {
   left: 0;
 }

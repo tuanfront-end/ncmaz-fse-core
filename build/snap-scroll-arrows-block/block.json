@@ -20,18 +20,9 @@
     "queryId"
   ],
   "attributes": {
-    "stackInMiddle": {
-      "type": "boolean",
-      "default": false
-    },
     "layout": {
       "type": "object",
-      "default": {
-        "type": "flex",
-        "justifyContent": "center",
-        "alignItems": "center",
-        "flexWrap": "nowrap"
-      }
+      "myType": {}
     }
   },
   "supports": {
@@ -67,7 +58,13 @@
         "width": true
       }
     },
-    "layout": true,
+    "layout": {
+      "default": {
+        "type": "flex",
+        "justifyContent": "center",
+        "flexWrap": "nowrap"
+      }
+    },
     "interactivity": true
   },
   "textdomain": "like-button-block",
