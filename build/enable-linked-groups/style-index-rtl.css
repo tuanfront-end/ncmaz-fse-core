@@ -17,6 +17,7 @@
   text-decoration: none !important;
 }
 .wp-block-group.is-linked .wp-block-button,
+.wp-block-group.is-linked button,
 .wp-block-group.is-linked a {
   position: relative;
   z-index: 4;

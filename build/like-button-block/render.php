@@ -63,7 +63,7 @@ foreach ($colorCssVars as $key => $value) {
 ?>
 
 
-<button
+<a role="button" tabindex="0"
 	<?php echo get_block_wrapper_attributes([
 		'class' => 'nc-post-reaction-button ' . (!isset($attributes['style']['spacing']['blockGap']) ? 'gap-1.5' : ''),
 		'style' => $colorStyle,
@@ -86,4 +86,4 @@ foreach ($colorCssVars as $key => $value) {
 		<span class="nc__count" data-wp-text="state.likeCount"></span>
 	<?php endif; ?>
 
-</button>
+</a>

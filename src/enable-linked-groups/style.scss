@@ -20,6 +20,7 @@
 
 		// Ensure buttons and links are above the overlay.
 		.wp-block-button,
+		button,
 		a {
 			position: relative;
 			z-index: 4;

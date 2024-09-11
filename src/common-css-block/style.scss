@@ -101,6 +101,9 @@ textarea {
 	border: 0px solid transparent;
 	background-color: initial;
 	background-image: none;
+	&:focus {
+		outline: none;
+	}
 	&.is-actived,
 	&:hover {
 		color: var(--active-color, inherit) !important;

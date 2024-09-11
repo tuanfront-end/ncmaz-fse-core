@@ -114,6 +114,9 @@ textarea {
   background-color: initial;
   background-image: none;
 }
+.nc-post-reaction-button:focus {
+  outline: none;
+}
 .nc-post-reaction-button.is-actived, .nc-post-reaction-button:hover {
   color: var(--active-color, inherit) !important;
   border-color: var(--active-border-color, inherit) !important;
