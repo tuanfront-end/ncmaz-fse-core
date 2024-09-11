@@ -47,6 +47,7 @@ function ncmaz_fse_core_register_blocks_init()
 	register_block_type(__DIR__ . '/build/snap-scroll-arrows-block');
 	register_block_type(__DIR__ . '/build/snap-scroll-arrow-next-block');
 	register_block_type(__DIR__ . '/build/snap-scroll-arrow-previous-block');
+	register_block_type(__DIR__ . '/build/mega-menu-block');
 
 	//  SOME CUSTOM BLOCKS
 	register_block_type(__DIR__ . '/build/enable-linked-groups');
@@ -199,3 +200,31 @@ function ncmazfse_enable_snapping_templates_render_block_button($block_content, 
 }
 add_filter('render_block_ncmfse/term-template', 'ncmazfse_enable_snapping_templates_render_block_button', 10, 3);
 add_filter('render_block_core/post-template', 'ncmazfse_enable_snapping_templates_render_block_button', 10, 3);
+
+
+
+/**
+ * Adds a custom template part area for mega menus to the list of template part areas.
+ *
+ * This function introduces a new area specifically for menu templates, allowing
+ * the creation of sections within a mega menu. The new area is appended to the 
+ * existing list of template part areas.
+ * 
+ * @see https://developer.wordpress.org/reference/hooks/default_wp_template_part_areas/
+ *
+ * @param array $areas Existing array of template part areas.
+ * @return array Modified array of template part areas including the new mega menu area.
+ */
+function ncmfse_mega_menu_template_part_areas(array $areas)
+{
+	$areas[] = array(
+		'area'        => 'menu',
+		'area_tag'    => 'div',
+		'description' => __('Menu templates are used to create sections of a mega menu.', 'mega-menu-block'),
+		'icon' 		  => 'layout',
+		'label'       => __('Menu', 'mega-menu-block'),
+	);
+
+	return $areas;
+}
+add_filter('default_wp_template_part_areas', 'ncmfse_mega_menu_template_part_areas');

@@ -1,0 +1,44 @@
+/*!*******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/mega-menu-block/style.scss ***!
+  \*******************************************************************************************************************************************************************************************************************************************************/
+.wp-block-outermost-mega-menu .wp-block-outermost-mega-menu__toggle {
+  background-color: initial;
+  border: none;
+  color: currentColor;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  padding: 0;
+  text-align: right;
+  text-transform: inherit;
+}
+.wp-block-outermost-mega-menu .wp-block-outermost-mega-menu__toggle .wp-block-outermost-mega-menu__toggle-icon {
+  align-self: center;
+  display: inline-block;
+  font-size: inherit;
+  height: 0.6em;
+  line-height: 0;
+  margin-right: 0.25em;
+  padding: 0;
+  width: 0.6em;
+}
+.wp-block-outermost-mega-menu .wp-block-outermost-mega-menu__toggle .wp-block-outermost-mega-menu__toggle-icon svg {
+  stroke: currentColor;
+  display: inline-block;
+  height: inherit;
+  margin-top: 0.075em;
+  width: inherit;
+  transition: all 0.1s linear;
+  transform: rotate(90deg);
+}
+.wp-block-outermost-mega-menu .wp-block-outermost-mega-menu__toggle[aria-expanded=true] .wp-block-outermost-mega-menu__toggle-icon svg {
+  transform: rotate(0deg);
+}
+.wp-block-outermost-mega-menu .wp-block-outermost-mega-menu__toggle[aria-expanded=true] ~ .wp-block-outermost-mega-menu__menu-container {
+  opacity: 1;
+  overflow: visible;
+  visibility: visible;
+}
