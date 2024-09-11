@@ -135,6 +135,13 @@ function addInspectorControls(BlockEdit) {
       childWidth,
       showScrollbar
     } = attributes;
+    (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useEffect)(() => {
+      if (isHorizontalScrollSnapping && attributes.layout.type !== "flex") {
+        setAttributes({
+          isHorizontalScrollSnapping: false
+        });
+      }
+    }, [attributes.layout.type, isHorizontalScrollSnapping]);
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(BlockEdit, {
       ...props
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.BlockControls, {
@@ -152,16 +159,17 @@ function addInspectorControls(BlockEdit) {
       focusOnMount: true,
       offset: 10,
       className: "enable-snapping-templates__popover",
-      variant: "alternate"
+      variant: "toolbar"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Horizontal Scroll Snapping"),
       help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Enable horizontal scroll snapping for this template."),
+      __nextHasNoMarginBottom: true,
       checked: isHorizontalScrollSnapping,
       onChange: newValue => {
         setAttributes({
           isHorizontalScrollSnapping: newValue,
           showScrollbar: newValue ? false : showScrollbar,
-          childWidth: newValue ? childWidth || "25%" : undefined,
+          childWidth: newValue ? childWidth || "20rem" : undefined,
           layout: {
             type: newValue ? "flex" : "grid",
             orientation: newValue ? "horizontal" : undefined,
@@ -171,7 +179,7 @@ function addInspectorControls(BlockEdit) {
         });
       }
     }), !!isHorizontalScrollSnapping && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.HeightControl, {
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Child Width"),
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Item Width"),
       onChange: value => {
         setAttributes({
           childWidth: value

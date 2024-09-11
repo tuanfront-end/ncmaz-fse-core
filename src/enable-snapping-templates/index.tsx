@@ -7,7 +7,7 @@ import { addFilter } from "@wordpress/hooks";
 import { BlockControls, HeightControl } from "@wordpress/block-editor";
 import { ToolbarButton, Popover, ToggleControl } from "@wordpress/components";
 import { queryPaginationNext } from "@wordpress/icons";
-import { useState } from "@wordpress/element";
+import { useState, useEffect } from "@wordpress/element";
 import "./style.scss";
 import "./editor.scss";
 
@@ -84,6 +84,14 @@ function addInspectorControls(BlockEdit) {
 		const { isHorizontalScrollSnapping, childWidth, showScrollbar } =
 			attributes;
 
+		useEffect(() => {
+			if (isHorizontalScrollSnapping && attributes.layout.type !== "flex") {
+				setAttributes({
+					isHorizontalScrollSnapping: false,
+				});
+			}
+		}, [attributes.layout.type, isHorizontalScrollSnapping]);
+
 		return (
 			<>
 				<BlockEdit {...props} />
@@ -103,19 +111,20 @@ function addInspectorControls(BlockEdit) {
 							focusOnMount={true}
 							offset={10}
 							className="enable-snapping-templates__popover"
-							variant="alternate"
+							variant="toolbar"
 						>
 							<ToggleControl
 								label={__("Horizontal Scroll Snapping")}
 								help={__(
 									"Enable horizontal scroll snapping for this template.",
 								)}
+								__nextHasNoMarginBottom
 								checked={isHorizontalScrollSnapping}
 								onChange={(newValue: boolean) => {
 									setAttributes({
 										isHorizontalScrollSnapping: newValue,
 										showScrollbar: newValue ? false : showScrollbar,
-										childWidth: newValue ? childWidth || "25%" : undefined,
+										childWidth: newValue ? childWidth || "20rem" : undefined,
 										layout: {
 											type: newValue ? "flex" : "grid",
 											orientation: newValue ? "horizontal" : undefined,
@@ -129,7 +138,7 @@ function addInspectorControls(BlockEdit) {
 							{!!isHorizontalScrollSnapping && (
 								<>
 									<HeightControl
-										label={__("Child Width")}
+										label={__("Item Width")}
 										onChange={(value: string | number | undefined) => {
 											setAttributes({ childWidth: value });
 										}}

@@ -37,6 +37,50 @@ textarea {
   gap: var(--wp--preset--spacing--2);
 }
 
+.hidden {
+  display: none;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.top-0 {
+  top: 0;
+}
+
+.left-0 {
+  right: 0;
+}
+
+.right-0 {
+  left: 0;
+}
+
+.bottom-0 {
+  bottom: 0;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.sticky {
+  position: sticky;
+}
+
 .is-style-line-clamp-1,
 .is-style-line-clamp-1 > a {
   overflow: hidden;
