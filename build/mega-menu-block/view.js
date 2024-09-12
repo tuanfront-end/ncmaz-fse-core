@@ -208,42 +208,31 @@ const {
     initAction() {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const {
-        width,
-        justifyMenu
+        width
       } = context;
       const {
         ref: menuRef
       } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
-      updatePositionMegaMenuToCenterWindow(menuRef, width, justifyMenu);
+
+      // Do not update the position of the mega menu if the width is set to "content".
+      // if break the layout of the menu, so we need to custom with css to fix it.
+      if (width === "content") {
+        return;
+      }
+      // Update the position of the mega menu to center the window. This is necessary for wide and full-width menus.
+      setTimeout(() => {
+        updatePositionMegaMenuToCenterWindow(menuRef);
+      }, 200);
       window.addEventListener("resize", (0,_utils_utils__WEBPACK_IMPORTED_MODULE_1__.debounce)(() => {
-        updatePositionMegaMenuToCenterWindow(menuRef, width, justifyMenu);
+        updatePositionMegaMenuToCenterWindow(menuRef);
       }, 500));
     }
   }
 });
-const updatePositionMegaMenuToCenterWindow = (menuRef, width = "content", justifyMenu = "center") => {
+const updatePositionMegaMenuToCenterWindow = menuRef => {
   const megaMenuRef = menuRef?.querySelector(".wp-block-outermost-mega-menu__menu-container");
   const navRef = menuRef?.closest(".wp-block-navigation");
   if (!navRef || !megaMenuRef) {
-    return;
-  }
-  if (width === "content") {
-    // check if the menu is wider than the window
-    const navRect = navRef.getBoundingClientRect();
-    const megaMenuRect = megaMenuRef.getBoundingClientRect();
-    console.log(111);
-
-    // kiểm tra justifyMenu
-    // Nếu justifyMenu = left và menu vượt ra ngoài màn hình bên trái thì đưa về bên phải
-    if (justifyMenu === "left" && navRect.left + megaMenuRect.width > window.innerWidth) {
-      megaMenuRef.style.left = `${window.innerWidth - megaMenuRect.width}px`;
-      return;
-    }
-    // Nếu justifyMenu = right và menu vượt ra  ngoài màn hình bên phải thì đưa về  bên trái
-    if (justifyMenu === "right" && navRect.right - megaMenuRect.width < 0) {
-      megaMenuRef.style.left = `${0}px`;
-      return;
-    }
     return;
   }
   const navRect = navRef.getBoundingClientRect();

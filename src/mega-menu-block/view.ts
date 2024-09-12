@@ -18,7 +18,7 @@ interface TContext {
 	previousFocus: HTMLElement | null;
 	initMenuOpenedBy: {};
 	width: "full" | "wide" | "content";
-	justifyMenu: "center" | "left" | "right";
+	// justifyMenu: "center" | "left" | "right";
 }
 const { state, actions } = store("outermost/mega-menu", {
 	state: {
@@ -118,45 +118,34 @@ const { state, actions } = store("outermost/mega-menu", {
 		},
 		initAction() {
 			const context = getContext<TContext>();
-			const { width, justifyMenu } = context;
+			const { width } = context;
 			const { ref: menuRef } = getElement();
 
-			updatePositionMegaMenuToCenterWindow(menuRef, width, justifyMenu);
+			// Do not update the position of the mega menu if the width is set to "content".
+			// if break the layout of the menu, so we need to custom with css to fix it.
+			if (width === "content") {
+				return;
+			}
+			// Update the position of the mega menu to center the window. This is necessary for wide and full-width menus.
+			setTimeout(() => {
+				updatePositionMegaMenuToCenterWindow(menuRef);
+			}, 200);
 			window.addEventListener(
 				"resize",
 				debounce(() => {
-					updatePositionMegaMenuToCenterWindow(menuRef, width, justifyMenu);
+					updatePositionMegaMenuToCenterWindow(menuRef);
 				}, 500),
 			);
 		},
 	},
 });
 
-const updatePositionMegaMenuToCenterWindow = (
-	menuRef?: HTMLElement | null,
-	width: TContext["width"] = "content",
-	justifyMenu: TContext["justifyMenu"] = "center",
-) => {
+const updatePositionMegaMenuToCenterWindow = (menuRef?: HTMLElement | null) => {
 	const megaMenuRef = menuRef?.querySelector(
 		".wp-block-outermost-mega-menu__menu-container",
 	) as HTMLElement | null;
 	const navRef = menuRef?.closest(".wp-block-navigation") as HTMLElement | null;
 	if (!navRef || !megaMenuRef) {
-		return;
-	}
-
-	if (width === "content") {
-		// check if the menu is wider than the window
-		const navRect = navRef.getBoundingClientRect();
-		const megaMenuRect = megaMenuRef.getBoundingClientRect();
-
-		console.log(111);
-
-		// kiểm tra justifyMenu
-		// Nếu justifyMenu = left và menu vượt ra ngoài màn hình bên trái thì đưa về bên phải
-
-		// Nếu justifyMenu = right và menu vượt ra  ngoài màn hình bên phải thì đưa về  bên trái
-
 		return;
 	}
 

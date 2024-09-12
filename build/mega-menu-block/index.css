@@ -11,7 +11,7 @@
   top: 30px;
   transition: opacity 0.1s linear;
   visibility: hidden;
-  z-index: 2;
+  z-index: 10;
 }
 .wp-block-outermost-mega-menu__menu-container.menu-width-content {
   max-width: min(var(--wp--style--global--content-size), 100vw);
@@ -54,12 +54,12 @@
   display: flex;
 }
 .wp-block-outermost-mega-menu__menu-container.menu-width-content.menu-justified-left {
-  left: -1px;
+  left: 0;
   right: unset;
 }
 .wp-block-outermost-mega-menu__menu-container.menu-width-content.menu-justified-right {
   left: unset;
-  right: -1px;
+  right: 0;
 }
 .wp-block-outermost-mega-menu__menu-container.menu-width-content.menu-justified-center {
   right: unset;

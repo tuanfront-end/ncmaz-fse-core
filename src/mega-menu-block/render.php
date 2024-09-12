@@ -48,7 +48,6 @@ $toggle_icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" widt
 			'focus' => true
 		],
 		'width' => $menu_width,
-		'justifyMenu' => $justify_menu
 	]); ?>
 	data-wp-on--focusout="actions.handleMenuFocusout"
 	data-wp-on--keydown="actions.handleMenuKeydown"
@@ -65,7 +64,8 @@ $toggle_icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" widt
 
 	<div
 		class="<?php echo $menu_classes; ?>"
-		tabindex="-1">
+		tabindex="-1"
+		id="xxx">
 		<?php echo block_template_part($menu_slug); ?>
 		<button
 			aria-label="<?php echo __('Close menu', 'mega-menu'); ?>"
