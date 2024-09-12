@@ -15,8 +15,8 @@ $disable_when_collapsed = $attributes['disableWhenCollapsed'] ?? false;
 $label                  = esc_html($attributes['label'] ?? '');
 $menu_slug              = esc_attr($attributes['menuSlug'] ?? '');
 $collapsed_url          = esc_url($attributes['collapsedUrl'] ?? '');
-$justify_menu           = esc_attr($attributes['justifyMenu'] ?? '');
-$menu_width             = esc_attr($attributes['width'] ?? 'content');
+$justify_menu           = esc_attr($attributes['justifyMenu'] ?? 'center');
+$menu_width             = esc_attr($attributes['width'] ?? 'full');
 
 // Don't display the mega menu link if there is no label or no menu slug.
 if (! $label || ! $menu_slug) {
@@ -64,8 +64,7 @@ $toggle_icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" widt
 
 	<div
 		class="<?php echo $menu_classes; ?>"
-		tabindex="-1"
-		id="xxx">
+		tabindex="-1">
 		<?php echo block_template_part($menu_slug); ?>
 		<button
 			aria-label="<?php echo __('Close menu', 'mega-menu'); ?>"

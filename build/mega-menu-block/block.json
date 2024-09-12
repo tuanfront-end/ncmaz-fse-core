@@ -3,7 +3,7 @@
   "apiVersion": 3,
   "name": "outermost/mega-menu",
   "version": "0.1.0",
-  "title": "Mega Menu",
+  "title": "Ncmaz Mega Menu",
   "category": "design",
   "description": "Add a mega menu to your navigation.",
   "parent": [
@@ -30,10 +30,12 @@
       "type": "string"
     },
     "justifyMenu": {
-      "type": "string"
+      "type": "string",
+      "default": "center"
     },
     "width": {
-      "type": "string"
+      "type": "string",
+      "default": "full"
     }
   },
   "supports": {
