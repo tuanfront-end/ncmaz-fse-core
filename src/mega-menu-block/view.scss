@@ -1,7 +1,10 @@
 // Front-end specific styles.
 .wp-block-outermost-mega-menu__menu-container {
+	visibility: visible !important;
+	opacity: 1 !important;
+	//
 	height: auto;
-	left: -1px;
+	// left: -1px;
 	opacity: 0;
 	overflow: hidden;
 	position: absolute;
@@ -11,12 +14,12 @@
 	z-index: 2;
 
 	&.menu-width-content {
-		max-width: var(--wp--style--global--content-size);
+		max-width: min(var(--wp--style--global--content-size), 100vw);
 		width: var(--wp--style--global--content-size);
 	}
 
 	&.menu-width-wide {
-		max-width: var(--wp--style--global--wide-size);
+		max-width: min(var(--wp--style--global--wide-size), 100vw);
 		width: var(--wp--style--global--wide-size);
 	}
 
@@ -61,34 +64,8 @@
 	.is-responsive {
 		display: flex;
 	}
-}
 
-// Change the position of the menu depending on navigation alignment.
-.wp-block-navigation {
-	&.items-justified-right {
-		.wp-block-outermost-mega-menu__menu-container {
-			left: unset;
-			right: -1px;
-		}
-	}
-
-	&.items-justified-center,
-	&.items-justified-space-between {
-		.wp-block-outermost-mega-menu__menu-container {
-			&.menu-width-content {
-				left: calc((-1 * var(--wp--style--global--content-size) / 2) + 50%);
-			}
-
-			&.menu-width-wide {
-				left: calc((-1 * var(--wp--style--global--wide-size) / 2) + 50%);
-			}
-		}
-	}
-}
-
-// Change the position of the menu depending on the menu alignment (override Navigation block).
-.wp-block-navigation {
-	.wp-block-outermost-mega-menu__menu-container {
+	&.menu-width-content {
 		&.menu-justified-left {
 			left: -1px;
 			right: unset;
@@ -101,16 +78,59 @@
 
 		&.menu-justified-center {
 			right: unset;
-
-			&.menu-width-content {
-				left: calc((-1 * var(--wp--style--global--content-size) / 2) + 50%);
-			}
-
-			&.menu-width-wide {
-				left: calc((-1 * var(--wp--style--global--wide-size) / 2) + 50%);
-			}
+			left: calc((-1 * var(--wp--style--global--content-size) / 2) + 50%);
 		}
 	}
+}
+
+// Change the position of the menu depending on navigation alignment.
+// .wp-block-navigation {
+// 	&.items-justified-right {
+// 		.wp-block-outermost-mega-menu__menu-container {
+// 			left: unset;
+// 			right: -1px;
+// 		}
+// 	}
+
+// 	&.items-justified-center,
+// 	&.items-justified-space-between {
+// 		.wp-block-outermost-mega-menu__menu-container {
+// 			&.menu-width-content {
+// 				left: calc((-1 * var(--wp--style--global--content-size) / 2) + 50%);
+// 			}
+
+// 			&.menu-width-wide {
+// 				left: calc((-1 * var(--wp--style--global--wide-size) / 2) + 50%);
+// 			}
+// 		}
+// 	}
+// }
+
+// Change the position of the menu depending on the menu alignment (override Navigation block).
+.wp-block-navigation {
+	// .wp-block-outermost-mega-menu__menu-container {
+	// 	&.menu-justified-left {
+	// 		left: -1px;
+	// 		right: unset;
+	// 	}
+
+	// 	&.menu-justified-right {
+	// 		left: unset;
+	// 		right: -1px;
+	// 	}
+
+	// 	&.menu-justified-center {
+	// 		right: unset;
+
+	// 		&.menu-width-content {
+	// 			left: calc((-1 * var(--wp--style--global--content-size) / 2) + 50%);
+	// 		}
+
+	// 		&.menu-width-wide {
+	// 			left: calc((-1 * var(--wp--style--global--wide-size) / 2) + 50%);
+	// 		}
+	// 	}
+	// }
 }
 
 // If there is a collapsed link, start hidden.

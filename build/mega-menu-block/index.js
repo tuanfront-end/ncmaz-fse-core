@@ -258,24 +258,24 @@ function Edit({
   } = attributes;
 
   // Get the Url for the template part screen in the Site Editor.
-  const siteUrl = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select('core').getSite()?.url);
-  const menuTemplateUrl = siteUrl ? siteUrl + '/wp-admin/site-editor.php?path=%2Fpatterns&categoryType=wp_template_part&categoryId=menu' : '';
+  const siteUrl = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select("core").getSite()?.url);
+  const menuTemplateUrl = siteUrl ? siteUrl + "/wp-admin/site-editor.php?path=%2Fpatterns&categoryType=wp_template_part&categoryId=menu" : "";
 
   // Get the layout settings.
-  const layout = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select('core/editor').getEditorSettings()?.__experimentalFeatures?.layout);
+  const layout = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => select("core/editor").getEditorSettings()?.__experimentalFeatures?.layout);
 
   // Fetch all template parts.
   const {
     hasResolved,
     records
-  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityRecords)('postType', 'wp_template_part', {
+  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityRecords)("postType", "wp_template_part", {
     per_page: -1
   });
   let menuOptions = [];
 
   // Filter the template parts for those in the 'menu' area.
   if (hasResolved) {
-    menuOptions = records.filter(item => item.area === 'menu').map(item => ({
+    menuOptions = records.filter(item => item.area === "menu").map(item => ({
       label: item.title.rendered,
       value: item.slug
     }));
@@ -287,7 +287,7 @@ function Edit({
   const noMenusNotice = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Notice, {
     status: "warning",
     isDismissible: false
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.createInterpolateElement)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No menu templates could be found. Create a new one in the <a>Site Editor</a>.', 'mega-menu-block'), {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.createInterpolateElement)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("No menu templates could be found. Create a new one in the <a>Site Editor</a>.", "mega-menu-block"), {
     a: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
       // eslint-disable-line
       href: menuTemplateUrl,
@@ -300,50 +300,50 @@ function Edit({
   const menuDoesntExistNotice = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Notice, {
     status: "warning",
     isDismissible: false
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('The selected menu template no longer exists. Choose another.', 'mega-menu-block'));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("The selected menu template no longer exists. Choose another.", "mega-menu-block"));
 
   // Modify block props.
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
-    className: 'wp-block-navigation-item wp-block-outermost-mega-menu__toggle'
+    className: "wp-block-navigation-item wp-block-outermost-mega-menu__toggle"
   });
   const justificationOptions = [{
-    value: 'left',
+    value: "left",
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__["default"],
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Justify menu left', 'mega-menu-block')
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Justify menu left", "mega-menu-block")
   }, {
-    value: 'center',
+    value: "center",
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__["default"],
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Justify menu center', 'mega-menu-block')
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Justify menu center", "mega-menu-block")
   }, {
-    value: 'right',
+    value: "right",
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_10__["default"],
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Justify menu right', 'mega-menu-block')
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Justify menu right", "mega-menu-block")
   }];
   const widthOptions = [{
-    value: 'content',
+    value: "content",
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__["default"],
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)(
     // translators: %s: container size (i.e. 600px etc)
-    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Content width (%s wide)', 'mega-menu-block'), layout.contentSize)
+    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Content width (%s wide)", "mega-menu-block"), layout.contentSize)
   }, {
-    value: 'wide',
+    value: "wide",
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__["default"],
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)(
     // translators: %s: container size (i.e. 600px etc)
-    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Wide width (%s wide)', 'mega-menu-block'), layout.wideSize)
+    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Wide width (%s wide)", "mega-menu-block"), layout.wideSize)
   }, {
-    value: 'full',
+    value: "full",
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__["default"],
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Full width', 'mega-menu-block')
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Full width", "mega-menu-block")
   }];
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
     group: "settings"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelBody, {
     className: "outermost-mega-menu__settings-panel",
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Settings', 'mega-menu-block'),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Settings", "mega-menu-block"),
     initialOpen: true
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Label', 'mega-menu-block'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Label", "mega-menu-block"),
     type: "text",
     value: label,
     onChange: value => setAttributes({
@@ -351,13 +351,13 @@ function Edit({
     }),
     autoComplete: "off"
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.ComboboxControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Menu Template', 'mega-menu-block'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Menu Template", "mega-menu-block"),
     value: menuSlug,
     options: menuOptions,
     onChange: value => setAttributes({
       menuSlug: value
     }),
-    help: hasMenus && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.createInterpolateElement)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Create and modify menu templates in the <a>Site Editor</a>.', 'mega-menu-block'), {
+    help: hasMenus && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.createInterpolateElement)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Create and modify menu templates in the <a>Site Editor</a>.", "mega-menu-block"), {
       a: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
         // eslint-disable-line
         href: menuTemplateUrl,
@@ -367,57 +367,57 @@ function Edit({
     })
   }), !hasMenus && noMenusNotice, hasMenus && !selectedMenuAndExists && menuDoesntExistNotice, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextareaControl, {
     className: "settings-panel__description",
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Description', 'mega-menu-block'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Description", "mega-menu-block"),
     type: "text",
-    value: description || '',
+    value: description || "",
     onChange: descriptionValue => {
       setAttributes({
         description: descriptionValue
       });
     },
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('The description will be displayed in the menu if the current theme supports it.', 'mega-menu-block'),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("The description will be displayed in the menu if the current theme supports it.", "mega-menu-block"),
     autoComplete: "off"
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Title', 'mega-menu-block'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Title", "mega-menu-block"),
     type: "text",
-    value: title || '',
+    value: title || "",
     onChange: titleValue => {
       setAttributes({
         title: titleValue
       });
     },
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Additional information to help clarify the purpose of the link.', 'mega-menu-block'),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Additional information to help clarify the purpose of the link.", "mega-menu-block"),
     autoComplete: "off"
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.ToggleControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Disable in navigation overlay', 'mega-menu-block'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Disable in navigation overlay", "mega-menu-block"),
     checked: disableWhenCollapsed,
     onChange: () => {
       setAttributes({
         disableWhenCollapsed: !disableWhenCollapsed
       });
     },
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('When the navigation options are displayed in an overlay, typically on mobile devices, disable the mega menu.', 'mega-menu-block')
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("When the navigation options are displayed in an overlay, typically on mobile devices, disable the mega menu.", "mega-menu-block")
   }), disableWhenCollapsed && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Url', 'mega-menu-block'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Url", "mega-menu-block"),
     type: "text",
-    value: collapsedUrl || '',
+    value: collapsedUrl || "",
     onChange: collapsedUrlValue => {
       setAttributes({
         collapsedUrl: collapsedUrlValue
       });
     },
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('When the navigtion menu is collapsed, link to this URL instead.', 'mega-menu-block'),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("When the navigtion menu is collapsed, link to this URL instead.", "mega-menu-block"),
     autoComplete: "off"
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelBody, {
     className: "outermost-mega-menu__layout-panel",
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Layout', 'mega-menu-block'),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Layout", "mega-menu-block"),
     initialOpen: true
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.__experimentalHStack, {
     alignment: "top",
     justify: "space-between"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.__experimentalToggleGroupControl, {
     className: "block-editor-hooks__flex-layout-justification-controls",
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Justification', 'mega-menu-block'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Justification", "mega-menu-block"),
     value: justifyMenu,
     onChange: justificationValue => {
       setAttributes({
@@ -434,16 +434,27 @@ function Edit({
       key: value,
       value: value,
       icon: icon,
-      label: iconLabel
+      label: iconLabel,
+      disabled: value !== "center" && width !== "content",
+      style: value !== "center" && width !== "content" ? {
+        opacity: 0.5
+      } : {}
     });
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.__experimentalToggleGroupControl, {
     className: "block-editor-hooks__flex-layout-justification-controls",
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Width', 'mega-menu-block'),
-    value: width || 'content',
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Width", "mega-menu-block"),
+    value: width || "content",
     onChange: widthValue => {
-      setAttributes({
-        width: widthValue
-      });
+      if (widthValue !== "content") {
+        setAttributes({
+          width: widthValue,
+          justifyMenu: "center"
+        });
+      } else {
+        setAttributes({
+          width: widthValue
+        });
+      }
     },
     __nextHasNoMarginBottom: true
   }, widthOptions.map(({
@@ -457,7 +468,9 @@ function Edit({
       icon: icon,
       label: iconLabel
     });
-  }))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.BaseControl, {
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Mega-menu with width "Full" or "Wide" will always be centered.', "mega-menu-block")
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     className: "wp-block-navigation-item__content wp-block-outermost-mega-menu__toggle"
@@ -468,9 +481,9 @@ function Edit({
     onChange: labelValue => setAttributes({
       label: labelValue
     }),
-    "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Mega menu link text', 'mega-menu-block'),
-    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add label…', 'mega-menu-block'),
-    allowedFormats: ['core/bold', 'core/italic', 'core/image', 'core/strikethrough']
+    "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Mega menu link text", "mega-menu-block"),
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Add label…", "mega-menu-block"),
+    allowedFormats: ["core/bold", "core/italic", "core/image", "core/strikethrough"]
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "wp-block-outermost-mega-menu__toggle-icon"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
