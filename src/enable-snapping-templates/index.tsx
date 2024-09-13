@@ -85,12 +85,12 @@ function addInspectorControls(BlockEdit) {
 			attributes;
 
 		useEffect(() => {
-			if (isHorizontalScrollSnapping && attributes.layout.type !== "flex") {
+			if (isHorizontalScrollSnapping && attributes.layout?.type !== "flex") {
 				setAttributes({
 					isHorizontalScrollSnapping: false,
 				});
 			}
-		}, [attributes.layout.type, isHorizontalScrollSnapping]);
+		}, [attributes.layout?.type, isHorizontalScrollSnapping]);
 
 		return (
 			<>

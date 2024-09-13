@@ -90,7 +90,7 @@ function ncmazfse_enable_linked_groups_block_styles()
 }
 add_action('init', 'ncmazfse_enable_linked_groups_block_styles');
 
-function ncmazfse_enable_linked_groups_render_block_button($block_content, $block, $instance)
+function ncmazfse_enable_linked_groups_render_block($block_content, $block, $instance)
 {
 	if (! isset($block['attrs']['href']) && ! isset($block['attrs']['linkDestination'])) {
 		return $block_content;
@@ -142,7 +142,7 @@ function ncmazfse_enable_linked_groups_render_block_button($block_content, $bloc
 
 	return $block_content;
 }
-add_filter('render_block_core/group', 'ncmazfse_enable_linked_groups_render_block_button', 10, 3);
+add_filter('render_block_core/group', 'ncmazfse_enable_linked_groups_render_block', 10, 3);
 
 
 
@@ -175,7 +175,7 @@ function ncmazfse_enable_snapping_templates_block_styles()
 }
 add_action('init', 'ncmazfse_enable_snapping_templates_block_styles');
 
-function ncmazfse_enable_snapping_templates_render_block_button($block_content, $block, $instance)
+function ncmazfse_enable_snapping_templates_render_block($block_content, $block, $instance)
 {
 	if (! ($block['attrs']['isHorizontalScrollSnapping'] ?? "")) {
 		return $block_content;
@@ -198,8 +198,8 @@ function ncmazfse_enable_snapping_templates_render_block_button($block_content, 
 
 	return $block_content;
 }
-add_filter('render_block_ncmfse/term-template', 'ncmazfse_enable_snapping_templates_render_block_button', 10, 3);
-add_filter('render_block_core/post-template', 'ncmazfse_enable_snapping_templates_render_block_button', 10, 3);
+add_filter('render_block_ncmfse/term-template', 'ncmazfse_enable_snapping_templates_render_block', 10, 3);
+add_filter('render_block_core/post-template', 'ncmazfse_enable_snapping_templates_render_block', 10, 3);
 
 
 

@@ -3,7 +3,7 @@
   "apiVersion": 3,
   "name": "ncmfse/reading-time",
   "version": "0.1.0",
-  "title": "Reading time",
+  "title": "Ncmaz Post Reading Time",
   "category": "ncmfse",
   "ancestor": [
     "core/post-template"

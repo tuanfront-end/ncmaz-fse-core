@@ -136,12 +136,12 @@ function addInspectorControls(BlockEdit) {
       showScrollbar
     } = attributes;
     (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useEffect)(() => {
-      if (isHorizontalScrollSnapping && attributes.layout.type !== "flex") {
+      if (isHorizontalScrollSnapping && attributes.layout?.type !== "flex") {
         setAttributes({
           isHorizontalScrollSnapping: false
         });
       }
-    }, [attributes.layout.type, isHorizontalScrollSnapping]);
+    }, [attributes.layout?.type, isHorizontalScrollSnapping]);
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(BlockEdit, {
       ...props
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.BlockControls, {
