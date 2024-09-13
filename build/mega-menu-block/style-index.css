@@ -5,19 +5,19 @@
   overflow: hidden;
   position: relative;
 }
+.wp-block-outermost-mega-menu:hover {
+  overflow: visible;
+  position: initial;
+}
+.wp-block-outermost-mega-menu:hover .wp-block-outermost-mega-menu__menu-container {
+  opacity: 1;
+  overflow: visible;
+  visibility: visible;
+}
 .wp-block-outermost-mega-menu .wp-block-outermost-mega-menu__toggle {
-  background-color: initial;
-  border: none;
-  color: currentColor;
   cursor: pointer;
-  font-family: inherit;
-  font-size: inherit;
-  font-style: inherit;
-  font-weight: inherit;
-  line-height: inherit;
-  padding: 0;
-  text-align: left;
-  text-transform: inherit;
+  align-items: center;
+  display: flex;
 }
 .wp-block-outermost-mega-menu .wp-block-outermost-mega-menu__toggle .wp-block-outermost-mega-menu__toggle-icon {
   align-self: center;
@@ -36,15 +36,6 @@
   margin-top: 0.075em;
   width: inherit;
   transition: all 0.1s linear;
-  transform: rotate(-90deg);
-}
-.wp-block-outermost-mega-menu .wp-block-outermost-mega-menu__toggle[aria-expanded=true] .wp-block-outermost-mega-menu__toggle-icon svg {
-  transform: rotate(0deg);
-}
-.wp-block-outermost-mega-menu .wp-block-outermost-mega-menu__toggle[aria-expanded=true] ~ .wp-block-outermost-mega-menu__menu-container {
-  opacity: 1;
-  overflow: visible;
-  visibility: visible;
 }
 
 /*# sourceMappingURL=style-index.css.map*/

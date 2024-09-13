@@ -30,25 +30,16 @@ import {
 	stretchWide,
 	stretchFullWidth,
 } from "@wordpress/icons";
-
-/**
- * Internal dependencies
- */
 import "./edit.scss";
+import { TAttrs, EditProps } from "../types";
+import metadata from "./block.json";
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
- * @param {Object}   props               Properties passed to the function.
- * @param {Object}   props.attributes    Available block attributes.
- * @param {Function} props.setAttributes Function that updates individual attributes.
- *
- * @return {Element} Element to render.
- */
-export default function Edit({ attributes, setAttributes }) {
+type Attributes = TAttrs<typeof metadata.attributes>;
+
+export default function Edit({
+	attributes,
+	setAttributes,
+}: EditProps<Attributes>) {
 	const {
 		label,
 		menuSlug,
@@ -74,7 +65,7 @@ export default function Edit({ attributes, setAttributes }) {
 	);
 
 	// Fetch all template parts.
-	const { hasResolved, records } = useEntityRecords(
+	const { hasResolved, records } = useEntityRecords<Record<string, any>>(
 		"postType",
 		"wp_template_part",
 		{
@@ -82,16 +73,20 @@ export default function Edit({ attributes, setAttributes }) {
 		},
 	);
 
-	let menuOptions = [];
+	let menuOptions: {
+		label: string;
+		value: string;
+	}[] = [];
 
 	// Filter the template parts for those in the 'menu' area.
 	if (hasResolved) {
-		menuOptions = records
-			.filter((item) => item.area === "menu")
-			.map((item) => ({
-				label: item.title.rendered,
-				value: item.slug,
-			}));
+		menuOptions =
+			records
+				?.filter((item) => item.area === "menu")
+				.map((item) => ({
+					label: item.title.rendered,
+					value: item.slug,
+				})) || [];
 	}
 
 	const hasMenus = menuOptions.length > 0;
@@ -105,7 +100,7 @@ export default function Edit({ attributes, setAttributes }) {
 			{createInterpolateElement(
 				__(
 					"No menu templates could be found. Create a new one in the <a>Site Editor</a>.",
-					"mega-menu-block",
+					"ncmfse",
 				),
 				{
 					a: (
@@ -125,7 +120,7 @@ export default function Edit({ attributes, setAttributes }) {
 		<Notice status="warning" isDismissible={false}>
 			{__(
 				"The selected menu template no longer exists. Choose another.",
-				"mega-menu-block",
+				"ncmfse",
 			)}
 		</Notice>
 	);
@@ -139,17 +134,20 @@ export default function Edit({ attributes, setAttributes }) {
 		{
 			value: "left",
 			icon: justifyLeft,
-			label: __("Justify menu left", "mega-menu-block"),
+			label: __("Justify menu left", "ncmfse"),
+			iconLabel: __("Left", "ncmfse"),
 		},
 		{
 			value: "center",
 			icon: justifyCenter,
-			label: __("Justify menu center", "mega-menu-block"),
+			label: __("Justify menu center", "ncmfse"),
+			iconLabel: __("Center", "ncmfse"),
 		},
 		{
 			value: "right",
 			icon: justifyRight,
-			label: __("Justify menu right", "mega-menu-block"),
+			label: __("Justify menu right", "ncmfse"),
+			iconLabel: __("Right", "ncmfse"),
 		},
 	];
 
@@ -159,23 +157,26 @@ export default function Edit({ attributes, setAttributes }) {
 			icon: alignNone,
 			label: sprintf(
 				// translators: %s: container size (i.e. 600px etc)
-				__("Content width (%s wide)", "mega-menu-block"),
+				__("Content width (%s wide)", "ncmfse"),
 				layout.contentSize,
 			),
+			iconLabel: __("Content", "ncmfse"),
 		},
 		{
 			value: "wide",
 			icon: stretchWide,
 			label: sprintf(
 				// translators: %s: container size (i.e. 600px etc)
-				__("Wide width (%s wide)", "mega-menu-block"),
+				__("Wide width (%s wide)", "ncmfse"),
 				layout.wideSize,
 			),
+			iconLabel: __("Wide", "ncmfse"),
 		},
 		{
 			value: "full",
 			icon: stretchFullWidth,
-			label: __("Full width", "mega-menu-block"),
+			label: __("Full width", "ncmfse"),
+			iconLabel: __("Full", "ncmfse"),
 		},
 	];
 
@@ -184,27 +185,27 @@ export default function Edit({ attributes, setAttributes }) {
 			<InspectorControls group="settings">
 				<PanelBody
 					className="outermost-mega-menu__settings-panel"
-					title={__("Settings", "mega-menu-block")}
+					title={__("Settings", "ncmfse")}
 					initialOpen={true}
 				>
 					<TextControl
-						label={__("Label", "mega-menu-block")}
+						label={__("Label", "ncmfse")}
 						type="text"
 						value={label}
 						onChange={(value) => setAttributes({ label: value })}
 						autoComplete="off"
 					/>
 					<ComboboxControl
-						label={__("Menu Template", "mega-menu-block")}
+						label={__("Menu Template", "ncmfse")}
 						value={menuSlug}
 						options={menuOptions}
-						onChange={(value) => setAttributes({ menuSlug: value })}
+						onChange={(value) => setAttributes({ menuSlug: value || "" })}
 						help={
 							hasMenus &&
 							createInterpolateElement(
 								__(
 									"Create and modify menu templates in the <a>Site Editor</a>.",
-									"mega-menu-block",
+									"ncmfse",
 								),
 								{
 									a: (
@@ -222,7 +223,7 @@ export default function Edit({ attributes, setAttributes }) {
 					{hasMenus && !selectedMenuAndExists && menuDoesntExistNotice}
 					<TextareaControl
 						className="settings-panel__description"
-						label={__("Description", "mega-menu-block")}
+						label={__("Description", "ncmfse")}
 						type="text"
 						value={description || ""}
 						onChange={(descriptionValue) => {
@@ -230,12 +231,12 @@ export default function Edit({ attributes, setAttributes }) {
 						}}
 						help={__(
 							"The description will be displayed in the menu if the current theme supports it.",
-							"mega-menu-block",
+							"ncmfse",
 						)}
 						autoComplete="off"
 					/>
 					<TextControl
-						label={__("Title", "mega-menu-block")}
+						label={__("Title", "ncmfse")}
 						type="text"
 						value={title || ""}
 						onChange={(titleValue) => {
@@ -243,26 +244,26 @@ export default function Edit({ attributes, setAttributes }) {
 						}}
 						help={__(
 							"Additional information to help clarify the purpose of the link.",
-							"mega-menu-block",
+							"ncmfse",
 						)}
 						autoComplete="off"
 					/>
 					<ToggleControl
-						label={__("Disable in navigation overlay", "mega-menu-block")}
+						label={__("Disable in navigation overlay", "ncmfse")}
 						checked={disableWhenCollapsed}
-						onChange={() => {
+						onChange={(value) => {
 							setAttributes({
-								disableWhenCollapsed: !disableWhenCollapsed,
+								disableWhenCollapsed: value,
 							});
 						}}
 						help={__(
 							"When the navigation options are displayed in an overlay, typically on mobile devices, disable the mega menu.",
-							"mega-menu-block",
+							"ncmfse",
 						)}
 					/>
 					{disableWhenCollapsed && (
 						<TextControl
-							label={__("Url", "mega-menu-block")}
+							label={__("Url", "ncmfse")}
 							type="text"
 							value={collapsedUrl || ""}
 							onChange={(collapsedUrlValue) => {
@@ -272,7 +273,7 @@ export default function Edit({ attributes, setAttributes }) {
 							}}
 							help={__(
 								"When the navigtion menu is collapsed, link to this URL instead.",
-								"mega-menu-block",
+								"ncmfse",
 							)}
 							autoComplete="off"
 						/>
@@ -280,17 +281,17 @@ export default function Edit({ attributes, setAttributes }) {
 				</PanelBody>
 				<PanelBody
 					className="outermost-mega-menu__layout-panel"
-					title={__("Layout", "mega-menu-block")}
+					title={__("Layout", "ncmfse")}
 					initialOpen={true}
 				>
 					<HStack alignment="top" justify="space-between">
 						<ToggleGroupControl
 							className="block-editor-hooks__flex-layout-justification-controls"
-							label={__("Justification", "mega-menu-block")}
+							label={__("Justification", "ncmfse")}
 							value={justifyMenu}
 							onChange={(justificationValue) => {
 								setAttributes({
-									justifyMenu: justificationValue,
+									justifyMenu: (justificationValue as string) || "center",
 								});
 							}}
 							isDeselectable={true}
@@ -314,12 +315,12 @@ export default function Edit({ attributes, setAttributes }) {
 						</ToggleGroupControl>
 						<ToggleGroupControl
 							className="block-editor-hooks__flex-layout-justification-controls"
-							label={__("Width", "mega-menu-block")}
+							label={__("Width", "ncmfse")}
 							value={width || "content"}
 							onChange={(widthValue) => {
 								if (widthValue !== "content") {
 									setAttributes({
-										width: widthValue,
+										width: (widthValue as string) || "",
 										justifyMenu: "center",
 									});
 								} else {
@@ -345,7 +346,7 @@ export default function Edit({ attributes, setAttributes }) {
 					<BaseControl
 						help={__(
 							'Mega-menu with width "Full" or "Wide" will always be centered.',
-							"mega-menu-block",
+							"ncmfse",
 						)}
 					>
 						<p></p>
@@ -353,7 +354,7 @@ export default function Edit({ attributes, setAttributes }) {
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
-				<button className="wp-block-navigation-item__content wp-block-outermost-mega-menu__toggle">
+				<div className="wp-block-navigation-item__content wp-block-outermost-mega-menu__toggle">
 					<RichText
 						identifier="label"
 						className="wp-block-navigation-item__label"
@@ -363,8 +364,8 @@ export default function Edit({ attributes, setAttributes }) {
 								label: labelValue,
 							})
 						}
-						aria-label={__("Mega menu link text", "mega-menu-block")}
-						placeholder={__("Add label…", "mega-menu-block")}
+						aria-label={__("Mega menu link text", "ncmfse")}
+						placeholder={__("Add label…", "ncmfse")}
 						allowedFormats={[
 							"core/bold",
 							"core/italic",
@@ -379,8 +380,6 @@ export default function Edit({ attributes, setAttributes }) {
 							height="12"
 							viewBox="0 0 12 12"
 							fill="none"
-							aria-hidden="true"
-							focusable="false"
 						>
 							<path d="M1.50002 4L6.00002 8L10.5 4" strokeWidth="1.5"></path>
 						</svg>
@@ -390,7 +389,7 @@ export default function Edit({ attributes, setAttributes }) {
 							{description}
 						</span>
 					)}
-				</button>
+				</div>
 			</div>
 		</>
 	);

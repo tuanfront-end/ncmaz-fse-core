@@ -22,7 +22,8 @@
 			"type": "string"
 		},
 		"disableWhenCollapsed": {
-			"type": "boolean"
+			"type": "boolean",
+			"default": false
 		},
 		"collapsedUrl": {
 			"type": "string"

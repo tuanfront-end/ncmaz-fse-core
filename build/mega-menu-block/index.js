@@ -225,23 +225,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/**
- * Internal dependencies
- */
-
-
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
- * @param {Object}   props               Properties passed to the function.
- * @param {Object}   props.attributes    Available block attributes.
- * @param {Function} props.setAttributes Function that updates individual attributes.
- *
- * @return {Element} Element to render.
- */
 function Edit({
   attributes,
   setAttributes
@@ -275,10 +258,10 @@ function Edit({
 
   // Filter the template parts for those in the 'menu' area.
   if (hasResolved) {
-    menuOptions = records.filter(item => item.area === "menu").map(item => ({
+    menuOptions = records?.filter(item => item.area === "menu").map(item => ({
       label: item.title.rendered,
       value: item.slug
-    }));
+    })) || [];
   }
   const hasMenus = menuOptions.length > 0;
   const selectedMenuAndExists = menuSlug ? menuOptions.some(option => option.value === menuSlug) : true;
@@ -287,7 +270,7 @@ function Edit({
   const noMenusNotice = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Notice, {
     status: "warning",
     isDismissible: false
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.createInterpolateElement)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("No menu templates could be found. Create a new one in the <a>Site Editor</a>.", "mega-menu-block"), {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.createInterpolateElement)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("No menu templates could be found. Create a new one in the <a>Site Editor</a>.", "ncmfse"), {
     a: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
       // eslint-disable-line
       href: menuTemplateUrl,
@@ -300,7 +283,7 @@ function Edit({
   const menuDoesntExistNotice = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Notice, {
     status: "warning",
     isDismissible: false
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("The selected menu template no longer exists. Choose another.", "mega-menu-block"));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("The selected menu template no longer exists. Choose another.", "ncmfse"));
 
   // Modify block props.
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
@@ -309,41 +292,47 @@ function Edit({
   const justificationOptions = [{
     value: "left",
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__["default"],
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Justify menu left", "mega-menu-block")
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Justify menu left", "ncmfse"),
+    iconLabel: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Left", "ncmfse")
   }, {
     value: "center",
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__["default"],
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Justify menu center", "mega-menu-block")
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Justify menu center", "ncmfse"),
+    iconLabel: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Center", "ncmfse")
   }, {
     value: "right",
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_10__["default"],
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Justify menu right", "mega-menu-block")
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Justify menu right", "ncmfse"),
+    iconLabel: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Right", "ncmfse")
   }];
   const widthOptions = [{
     value: "content",
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__["default"],
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)(
     // translators: %s: container size (i.e. 600px etc)
-    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Content width (%s wide)", "mega-menu-block"), layout.contentSize)
+    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Content width (%s wide)", "ncmfse"), layout.contentSize),
+    iconLabel: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Content", "ncmfse")
   }, {
     value: "wide",
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__["default"],
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)(
     // translators: %s: container size (i.e. 600px etc)
-    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Wide width (%s wide)", "mega-menu-block"), layout.wideSize)
+    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Wide width (%s wide)", "ncmfse"), layout.wideSize),
+    iconLabel: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Wide", "ncmfse")
   }, {
     value: "full",
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__["default"],
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Full width", "mega-menu-block")
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Full width", "ncmfse"),
+    iconLabel: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Full", "ncmfse")
   }];
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
     group: "settings"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelBody, {
     className: "outermost-mega-menu__settings-panel",
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Settings", "mega-menu-block"),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Settings", "ncmfse"),
     initialOpen: true
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Label", "mega-menu-block"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Label", "ncmfse"),
     type: "text",
     value: label,
     onChange: value => setAttributes({
@@ -351,13 +340,13 @@ function Edit({
     }),
     autoComplete: "off"
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.ComboboxControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Menu Template", "mega-menu-block"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Menu Template", "ncmfse"),
     value: menuSlug,
     options: menuOptions,
     onChange: value => setAttributes({
-      menuSlug: value
+      menuSlug: value || ""
     }),
-    help: hasMenus && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.createInterpolateElement)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Create and modify menu templates in the <a>Site Editor</a>.", "mega-menu-block"), {
+    help: hasMenus && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.createInterpolateElement)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Create and modify menu templates in the <a>Site Editor</a>.", "ncmfse"), {
       a: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
         // eslint-disable-line
         href: menuTemplateUrl,
@@ -367,7 +356,7 @@ function Edit({
     })
   }), !hasMenus && noMenusNotice, hasMenus && !selectedMenuAndExists && menuDoesntExistNotice, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextareaControl, {
     className: "settings-panel__description",
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Description", "mega-menu-block"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Description", "ncmfse"),
     type: "text",
     value: description || "",
     onChange: descriptionValue => {
@@ -375,10 +364,10 @@ function Edit({
         description: descriptionValue
       });
     },
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("The description will be displayed in the menu if the current theme supports it.", "mega-menu-block"),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("The description will be displayed in the menu if the current theme supports it.", "ncmfse"),
     autoComplete: "off"
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Title", "mega-menu-block"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Title", "ncmfse"),
     type: "text",
     value: title || "",
     onChange: titleValue => {
@@ -386,19 +375,19 @@ function Edit({
         title: titleValue
       });
     },
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Additional information to help clarify the purpose of the link.", "mega-menu-block"),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Additional information to help clarify the purpose of the link.", "ncmfse"),
     autoComplete: "off"
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.ToggleControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Disable in navigation overlay", "mega-menu-block"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Disable in navigation overlay", "ncmfse"),
     checked: disableWhenCollapsed,
-    onChange: () => {
+    onChange: value => {
       setAttributes({
-        disableWhenCollapsed: !disableWhenCollapsed
+        disableWhenCollapsed: value
       });
     },
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("When the navigation options are displayed in an overlay, typically on mobile devices, disable the mega menu.", "mega-menu-block")
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("When the navigation options are displayed in an overlay, typically on mobile devices, disable the mega menu.", "ncmfse")
   }), disableWhenCollapsed && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Url", "mega-menu-block"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Url", "ncmfse"),
     type: "text",
     value: collapsedUrl || "",
     onChange: collapsedUrlValue => {
@@ -406,22 +395,22 @@ function Edit({
         collapsedUrl: collapsedUrlValue
       });
     },
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("When the navigtion menu is collapsed, link to this URL instead.", "mega-menu-block"),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("When the navigtion menu is collapsed, link to this URL instead.", "ncmfse"),
     autoComplete: "off"
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.PanelBody, {
     className: "outermost-mega-menu__layout-panel",
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Layout", "mega-menu-block"),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Layout", "ncmfse"),
     initialOpen: true
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.__experimentalHStack, {
     alignment: "top",
     justify: "space-between"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.__experimentalToggleGroupControl, {
     className: "block-editor-hooks__flex-layout-justification-controls",
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Justification", "mega-menu-block"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Justification", "ncmfse"),
     value: justifyMenu,
     onChange: justificationValue => {
       setAttributes({
-        justifyMenu: justificationValue
+        justifyMenu: justificationValue || "center"
       });
     },
     isDeselectable: true
@@ -442,12 +431,12 @@ function Edit({
     });
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.__experimentalToggleGroupControl, {
     className: "block-editor-hooks__flex-layout-justification-controls",
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Width", "mega-menu-block"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Width", "ncmfse"),
     value: width || "content",
     onChange: widthValue => {
       if (widthValue !== "content") {
         setAttributes({
-          width: widthValue,
+          width: widthValue || "",
           justifyMenu: "center"
         });
       } else {
@@ -469,10 +458,10 @@ function Edit({
       label: iconLabel
     });
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.BaseControl, {
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Mega-menu with width "Full" or "Wide" will always be centered.', "mega-menu-block")
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Mega-menu with width "Full" or "Wide" will always be centered.', "ncmfse")
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wp-block-navigation-item__content wp-block-outermost-mega-menu__toggle"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
     identifier: "label",
@@ -481,8 +470,8 @@ function Edit({
     onChange: labelValue => setAttributes({
       label: labelValue
     }),
-    "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Mega menu link text", "mega-menu-block"),
-    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Add label…", "mega-menu-block"),
+    "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Mega menu link text", "ncmfse"),
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Add label…", "ncmfse"),
     allowedFormats: ["core/bold", "core/italic", "core/image", "core/strikethrough"]
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "wp-block-outermost-mega-menu__toggle-icon"
@@ -491,9 +480,7 @@ function Edit({
     width: "12",
     height: "12",
     viewBox: "0 0 12 12",
-    fill: "none",
-    "aria-hidden": "true",
-    focusable: "false"
+    fill: "none"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
     d: "M1.50002 4L6.00002 8L10.5 4",
     strokeWidth: "1.5"
@@ -720,7 +707,7 @@ module.exports = window["wp"]["primitives"];
   \****************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"outermost/mega-menu","version":"0.1.0","title":"Ncmaz Mega Menu","category":"design","description":"Add a mega menu to your navigation.","parent":["core/navigation"],"example":{},"attributes":{"label":{"type":"string"},"description":{"type":"string"},"title":{"type":"string"},"menuSlug":{"type":"string"},"disableWhenCollapsed":{"type":"boolean"},"collapsedUrl":{"type":"string"},"justifyMenu":{"type":"string","default":"center"},"width":{"type":"string","default":"full"}},"supports":{"html":false,"interactivity":true,"renaming":false,"reusable":false,"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalDefaultControls":{"fontSize":true}},"__experimentalSlashInserter":true},"textdomain":"mega-menu-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js","viewStyle":"file:./index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"outermost/mega-menu","version":"0.1.0","title":"Ncmaz Mega Menu","category":"design","description":"Add a mega menu to your navigation.","parent":["core/navigation"],"example":{},"attributes":{"label":{"type":"string"},"description":{"type":"string"},"title":{"type":"string"},"menuSlug":{"type":"string"},"disableWhenCollapsed":{"type":"boolean","default":false},"collapsedUrl":{"type":"string"},"justifyMenu":{"type":"string","default":"center"},"width":{"type":"string","default":"full"}},"supports":{"html":false,"interactivity":true,"renaming":false,"reusable":false,"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalDefaultControls":{"fontSize":true}},"__experimentalSlashInserter":true},"textdomain":"mega-menu-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js","viewStyle":"file:./index.css"}');
 
 /***/ })
 
