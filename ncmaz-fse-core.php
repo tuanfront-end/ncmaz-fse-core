@@ -217,12 +217,13 @@ add_filter('render_block_core/post-template', 'ncmazfse_enable_snapping_template
  */
 function ncmfse_mega_menu_template_part_areas(array $areas)
 {
+
 	$areas[] = array(
 		'area'        => 'menu',
 		'area_tag'    => 'div',
-		'description' => __('Menu templates are used to create sections of a mega menu.', 'mega-menu-block'),
+		'description' => __('Menu templates are used to create sections of a mega menu.', 'ncmfse'),
 		'icon' 		  => 'layout',
-		'label'       => __('Menu', 'mega-menu-block'),
+		'label'       => __('Menu', 'ncmfse'),
 	);
 
 	return $areas;
