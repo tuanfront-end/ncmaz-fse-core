@@ -13,6 +13,7 @@ export interface EditProps<T> {
 declare global {
 	interface Window {
 		wp: Record<string, any>;
+		mailpoetLists: Record<string, any>[] | undefined;
 	}
 }
 

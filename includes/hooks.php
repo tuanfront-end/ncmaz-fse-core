@@ -70,3 +70,27 @@ add_action(
 		}
 	}
 );
+
+
+// Hiển thị danh sách list của MailPoet trong trang Editor. Phục vụ cho block Ncmaz MailPoet Form
+add_action('admin_footer', 'ncmaz_fse_core_mailpoet_list_to_window');
+function ncmaz_fse_core_mailpoet_list_to_window()
+{
+	// Kiểm tra xem MailPoet đã được cài đặt và kích hoạt chưa
+	if (! class_exists(\MailPoet\API\API::class)) {
+		return;
+	}
+
+	// Khởi tạo MailPoet API
+	$mailpoet_api = \MailPoet\API\API::MP('v1');
+
+	try {
+		// Lấy tất cả các list
+		$lists = $mailpoet_api->getLists();
+
+		// thêm vào biến window
+		echo '<script>window.mailpoetLists = ' . wp_json_encode($lists) . ';</script>';
+	} catch (\Exception $e) {
+		return;
+	}
+}

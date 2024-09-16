@@ -64,6 +64,14 @@ if ($inherit_query) {
 
 $query = get_terms($term_query);
 
+if (is_wp_error($query)) {
+	return  esc_html_e('No terms found.', 'ncmaz-fse');
+}
+
+if (empty($query)) {
+	return  esc_html_e('No terms found.', 'ncmaz-fse');
+}
+
 
 $classnames = '';
 if (isset($block->context['displayLayout']) && isset($block->context['ncmazfse_termQuery'])) {

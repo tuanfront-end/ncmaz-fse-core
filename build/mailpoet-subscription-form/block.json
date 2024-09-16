@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ncmfse/mailpoet-subscription-form",
+  "version": "0.1.0",
+  "title": "Ncmaz Mailpoet Subscription Form",
+  "category": "ncmfse",
+  "icon": "media-interactive",
+  "description": "An interactive block with the Interactivity API",
+  "example": {},
+  "supports": {
+    "interactivity": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "default": ""
+    },
+    "email": {
+      "type": "string",
+      "default": ""
+    },
+    "successMessage": {
+      "type": "string",
+      "default": ""
+    },
+    "mailpoetListId": {
+      "type": "string",
+      "default": ""
+    },
+    "showNameField": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "textdomain": "short-contact-form",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "viewScriptModule": "file:./view.js"
+}

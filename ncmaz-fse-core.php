@@ -48,6 +48,7 @@ function ncmaz_fse_core_register_blocks_init()
 	register_block_type(__DIR__ . '/build/snap-scroll-arrow-next-block');
 	register_block_type(__DIR__ . '/build/snap-scroll-arrow-previous-block');
 	register_block_type(__DIR__ . '/build/mega-menu-block');
+	register_block_type(__DIR__ . '/build/mailpoet-subscription-form');
 
 	//  SOME CUSTOM BLOCKS
 	register_block_type(__DIR__ . '/build/enable-linked-groups');

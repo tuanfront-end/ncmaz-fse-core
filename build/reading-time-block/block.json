@@ -30,7 +30,6 @@
     "align": false,
     "alignWide": false,
     "color": {
-      "__experimentalSkipSerialization": true,
       "gradients": true,
       "__experimentalDefaultControls": {
         "background": true,
@@ -52,11 +51,8 @@
       }
     },
     "reusable": false,
-    "shadow": {
-      "__experimentalSkipSerialization": true
-    },
+    "shadow": true,
     "spacing": {
-      "__experimentalSkipSerialization": true,
       "padding": [
         "horizontal",
         "vertical"
@@ -70,7 +66,6 @@
       "radius": true,
       "style": true,
       "width": true,
-      "__experimentalSkipSerialization": true,
       "__experimentalDefaultControls": {
         "color": true,
         "radius": true,
