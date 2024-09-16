@@ -12,13 +12,21 @@
 		"interactivity": true
 	},
 	"attributes": {
-		"name": {
+		"nameLabel": {
 			"type": "string",
-			"default": ""
+			"default": "Name"
 		},
-		"email": {
+		"namePlaceholder": {
 			"type": "string",
-			"default": ""
+			"default": "Enter your name"
+		},
+		"emailLabel": {
+			"type": "string",
+			"default": "Email"
+		},
+		"emailPlaceholder": {
+			"type": "string",
+			"default": "Enter your email"
 		},
 		"successMessage": {
 			"type": "string",
@@ -31,6 +39,14 @@
 		"showNameField": {
 			"type": "boolean",
 			"default": false
+		},
+		"showLabel": {
+			"type": "boolean",
+			"default": false
+		},
+		"submitButtonStyle": {
+			"type": "string",
+			"default": "default"
 		}
 	},
 	"textdomain": "short-contact-form",

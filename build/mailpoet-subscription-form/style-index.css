@@ -9,6 +9,9 @@
   /* Disabled state */
   /* Error state */
 }
+.wp-block-ncmfse-mailpoet-subscription-form .wp-block-outermost-icon-block {
+  position: absolute;
+}
 .wp-block-ncmfse-mailpoet-subscription-form input,
 .wp-block-ncmfse-mailpoet-subscription-form select,
 .wp-block-ncmfse-mailpoet-subscription-form textarea {

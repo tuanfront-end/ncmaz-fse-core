@@ -50,6 +50,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__);
+
+
 
 
 
@@ -57,16 +63,97 @@ __webpack_require__.r(__webpack_exports__);
 function Edit(props) {
   const {
     setAttributes,
-    attributes
+    attributes,
+    clientId
   } = props;
   const {
-    mailpoetListId
+    mailpoetListId,
+    submitButtonStyle,
+    showNameField,
+    successMessage,
+    showLabel,
+    emailLabel,
+    emailPlaceholder,
+    nameLabel,
+    namePlaceholder
   } = attributes;
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)();
   const mailpoetLists = window.mailpoetLists?.map(list => ({
     label: list.name,
     value: list.id
   })) || [];
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useEffect)(() => {
+    if (!mailpoetLists.length) {
+      return;
+    }
+    if (mailpoetListId) {
+      return;
+    }
+    setAttributes({
+      mailpoetListId: mailpoetLists[0]?.value
+    });
+  }, [mailpoetLists.length, mailpoetListId]);
+  const {
+    innerBlocks
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => {
+    const {
+      getBlocks
+    } = select(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.store);
+    return {
+      innerBlocks: getBlocks(clientId)
+    };
+  }, [clientId]);
+  const {
+    replaceInnerBlocks
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useDispatch)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.store);
+  const getInnerTemplate = type => {
+    switch (type) {
+      case "default":
+        return [["core/button", {
+          text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Subscribe", "ncmfse")
+        }]];
+      case "inline-email-input":
+        return [["outermost/icon-block", {
+          icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>',
+          iconColorValue: "#ffffff",
+          iconBackgroundColorValue: "#000000",
+          itemsJustification: "center",
+          width: "40px",
+          hasNoIconFill: true,
+          style: {
+            border: {
+              radius: "99px"
+            },
+            spacing: {
+              padding: "8px"
+            }
+          }
+        }]];
+      default:
+        return [];
+    }
+  };
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useEffect)(() => {
+    if (!innerBlocks?.length) {
+      return;
+    }
+    if (innerBlocks[0]?.name === "outermost/icon-block" && submitButtonStyle === "inline-email-input") {
+      return;
+    }
+    if (innerBlocks[0]?.name === "core/button" && submitButtonStyle === "default") {
+      return;
+    }
+    const newTemplate = getInnerTemplate(submitButtonStyle);
+    const newInnerBlocks = newTemplate.map(([name, attributes]) => window.wp.blocks.createBlock(name, attributes));
+    replaceInnerBlocks(clientId, newInnerBlocks, false);
+  }, [submitButtonStyle, innerBlocks, clientId, replaceInnerBlocks]);
+  const {
+    children,
+    ...innerBlocksProps
+  } = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useInnerBlocksProps)(blockProps, {
+    template: getInnerTemplate(submitButtonStyle),
+    templateLock: "insert"
+  });
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
@@ -79,44 +166,77 @@ function Edit(props) {
     onChange: value => setAttributes({
       mailpoetListId: value
     })
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextareaControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Success Message", "ncmfse"),
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This message will be displayed after the user submits the form.", "ncmfse"),
-    value: attributes.successMessage,
-    onChange: value => setAttributes({
-      successMessage: value
-    })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show Name Field", "ncmfse"),
-    checked: attributes.showNameField,
+    checked: showNameField,
     onChange: value => setAttributes({
       showNameField: value
     })
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
-    action: ""
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    htmlFor: "name"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Name")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "text",
-    id: "name",
-    name: "name",
-    value: attributes.name,
-    onChange: e => setAttributes({
-      name: e.target.value
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show Label", "ncmfse"),
+    checked: showLabel,
+    onChange: value => setAttributes({
+      showLabel: value
     })
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+  }), showNameField && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, showLabel && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Name Label", "ncmfse"),
+    value: nameLabel,
+    onChange: value => setAttributes({
+      nameLabel: value
+    })
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Name Placeholder", "ncmfse"),
+    value: namePlaceholder,
+    onChange: value => setAttributes({
+      namePlaceholder: value
+    })
+  })), showLabel && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Email Label", "ncmfse"),
+    value: emailLabel,
+    onChange: value => setAttributes({
+      emailLabel: value
+    })
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Email Placeholder", "ncmfse"),
+    value: emailPlaceholder,
+    onChange: value => setAttributes({
+      emailPlaceholder: value
+    })
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RadioControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Submit Button Style", "ncmfse"),
+    onChange: value => setAttributes({
+      submitButtonStyle: value
+    }),
+    options: [{
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Default", "ncmfse"),
+      value: "default"
+    }, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Inline Email Input", "ncmfse"),
+      value: "inline-email-input"
+    }],
+    selected: submitButtonStyle
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextareaControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Success Message", "ncmfse"),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This message will be displayed after the user submits the form.", "ncmfse"),
+    value: successMessage,
+    onChange: value => setAttributes({
+      successMessage: value
+    })
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    ...innerBlocksProps
+  }, !!showNameField && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, showLabel && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     htmlFor: "email"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Email")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+  }, emailLabel), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "email",
-    id: "email",
     name: "email",
-    value: attributes.email,
-    onChange: e => setAttributes({
-      email: e.target.value
-    })
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    type: "submit"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Submit"))));
+    placeholder: emailPlaceholder
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, showLabel && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    htmlFor: "name"
+  }, nameLabel), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "text",
+    name: "name",
+    placeholder: namePlaceholder
+  }), submitButtonStyle === "inline-email-input" ? children : "")), submitButtonStyle === "default" ? children : ""));
 }
 
 /***/ }),
@@ -130,11 +250,12 @@ function Edit(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/verse.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/verse.js");
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/mailpoet-subscription-form/style.scss");
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./editor.scss */ "./src/mailpoet-subscription-form/editor.scss");
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit */ "./src/mailpoet-subscription-form/edit.tsx");
 /* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./block.json */ "./src/mailpoet-subscription-form/block.json");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./save */ "./src/mailpoet-subscription-form/save.tsx");
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
@@ -160,6 +281,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /**
  * Every block starts by registering a new block type definition.
  *
@@ -170,8 +292,31 @@ __webpack_require__.r(__webpack_exports__);
    * @see ./edit.js
    */
   edit: _edit__WEBPACK_IMPORTED_MODULE_3__["default"],
-  icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["default"]
+  save: _save__WEBPACK_IMPORTED_MODULE_5__["default"],
+  icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__["default"]
 });
+
+/***/ }),
+
+/***/ "./src/mailpoet-subscription-form/save.tsx":
+/*!*************************************************!*\
+  !*** ./src/mailpoet-subscription-form/save.tsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ save)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function save() {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null);
+}
 
 /***/ }),
 
@@ -239,6 +384,26 @@ module.exports = window["wp"]["components"];
 
 /***/ }),
 
+/***/ "@wordpress/data":
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["data"];
+
+/***/ }),
+
+/***/ "@wordpress/element":
+/*!*********************************!*\
+  !*** external ["wp","element"] ***!
+  \*********************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["element"];
+
+/***/ }),
+
 /***/ "@wordpress/i18n":
 /*!******************************!*\
   !*** external ["wp","i18n"] ***!
@@ -265,7 +430,7 @@ module.exports = window["wp"]["primitives"];
   \***************************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/mailpoet-subscription-form","version":"0.1.0","title":"Ncmaz Mailpoet Subscription Form","category":"ncmfse","icon":"media-interactive","description":"An interactive block with the Interactivity API","example":{},"supports":{"interactivity":true},"attributes":{"name":{"type":"string","default":""},"email":{"type":"string","default":""},"successMessage":{"type":"string","default":""},"mailpoetListId":{"type":"string","default":""},"showNameField":{"type":"boolean","default":false}},"textdomain":"short-contact-form","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/mailpoet-subscription-form","version":"0.1.0","title":"Ncmaz Mailpoet Subscription Form","category":"ncmfse","icon":"media-interactive","description":"An interactive block with the Interactivity API","example":{},"supports":{"interactivity":true},"attributes":{"nameLabel":{"type":"string","default":"Name"},"namePlaceholder":{"type":"string","default":"Enter your name"},"emailLabel":{"type":"string","default":"Email"},"emailPlaceholder":{"type":"string","default":"Enter your email"},"successMessage":{"type":"string","default":""},"mailpoetListId":{"type":"string","default":""},"showNameField":{"type":"boolean","default":false},"showLabel":{"type":"boolean","default":false},"submitButtonStyle":{"type":"string","default":"default"}},"textdomain":"short-contact-form","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
 
 /***/ })
 
