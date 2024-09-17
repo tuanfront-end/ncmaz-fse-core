@@ -13,27 +13,52 @@
 
 // Generate unique id for aria-controls.
 $unique_id = wp_unique_id('p-');
+// my_var_export($attributes);
 ?>
 
-<div
-	<?php echo get_block_wrapper_attributes(); ?>
+<form
+	<?php echo get_block_wrapper_attributes([
+		"style"  => "--input-radius:" . $attributes['inputRadius'] . "px;--input-padding:" . $attributes['inputPadding'] . "px;",
+	]); ?>
 	data-wp-interactive="create-block"
 	<?php echo wp_interactivity_data_wp_context(array('isOpen' => false)); ?>
 	data-wp-watch="callbacks.logIsOpen">
 
+	<?php if ($attributes['showNameField']): ?>
+		<div class="form-item__name">
+			<?php if ($attributes['showLabel']): ?>
+				<label htmlFor="name">
+					<?php echo $attributes['nameLabel']; ?>
+				</label>
+			<?php endif; ?>
+			<input type="text" name="name" placeholder="<?php esc_attr_e($attributes['namePlaceholder']); ?>" />
+		</div>
+	<?php endif; ?>
 
-	<button
-		data-wp-on--click="actions.toggle"
-		data-wp-bind--aria-expanded="context.isOpen"
-		aria-controls="<?php echo esc_attr($unique_id); ?>">
-		<?php esc_html_e('Toggle', 'short-contact-form'); ?>
-	</button>
+	<div class="form-item__email">
 
-	<p
-		id="<?php echo esc_attr($unique_id); ?>"
-		data-wp-bind--hidden="!context.isOpen">
-		<?php
-		esc_html_e('Short Contact Form - hello from an interactive block!', 'short-contact-form');
-		?>
-	</p>
-</div>
+		<?php if ($attributes['showLabel']): ?>
+			<label htmlFor="email">
+				<?php echo $attributes['emailLabel']; ?>
+			</label>
+		<?php endif; ?>
+
+		<div class="form-item__email-content">
+			<input type="email" name="email" placeholder="<?php esc_attr_e($attributes['emailPlaceholder']); ?>" />
+
+			<?php if ($attributes['submitButtonStyle'] === "inline-email-input"): ?>
+				<button type="submit">
+					<?php echo $content; ?>
+				</button>
+			<?php endif; ?>
+
+		</div>
+	</div>
+
+
+	<?php if ($attributes['submitButtonStyle'] === "default"): ?>
+		<?php echo $content; ?>
+	<?php endif; ?>
+
+
+</form>

@@ -1,100 +1,28 @@
 .wp-block-ncmfse-mailpoet-subscription-form {
-	.wp-block-outermost-icon-block {
-		position: absolute;
+	.form-item__email-content {
+		position: relative;
+
+		button[type="submit"] {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			inset-inline-end: 0.25rem;
+			background: none;
+			border: none;
+			margin: 0;
+			padding: 0;
+			cursor: pointer;
+		}
 	}
 
 	input,
-	select,
-	textarea {
-		appearance: none;
-		border-color: #e2e8f0;
-		border-width: 1px;
-		border-radius: 0.25rem;
-		border-style: solid;
-		padding-top: 0.5rem;
-		padding-right: 0.75rem;
-		padding-bottom: 0.5rem;
-		padding-left: 0.75rem;
-		font-size: 1rem;
-		line-height: 1.5rem;
-		display: block;
-		width: 100%;
-	}
-
-	/* Focus styles */
-	input:focus,
-	select:focus,
-	textarea:focus {
-		outline: none;
-		border-color: #4299e1;
-		box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
-	}
-
-	/* Placeholder styles */
-	::placeholder {
-		color: #a0aec0;
-		opacity: 1;
-	}
-
-	/* Select styles */
+	textarea,
 	select {
-		background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-		background-position: right 0.5rem center;
-		background-repeat: no-repeat;
-		background-size: 1.5em 1.5em;
-		padding-right: 2.5rem;
-	}
-
-	/* Checkbox and Radio styles */
-	input[type="checkbox"],
-	input[type="radio"] {
-		appearance: none;
-		padding: 0;
-		color-adjust: exact;
-		display: inline-block;
-		vertical-align: middle;
-		background-origin: border-box;
-		user-select: none;
-		flex-shrink: 0;
-		height: 1rem;
-		width: 1rem;
-		border-color: #e2e8f0;
-		border-width: 1px;
-	}
-
-	input[type="checkbox"] {
-		border-radius: 0.25rem;
-	}
-
-	input[type="radio"] {
-		border-radius: 100%;
-	}
-
-	input[type="checkbox"]:checked,
-	input[type="radio"]:checked {
-		border-color: transparent;
-		background-color: currentColor;
-		background-size: 100% 100%;
-		background-position: center;
-		background-repeat: no-repeat;
-	}
-
-	input[type="checkbox"]:checked {
-		background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
-	}
-
-	input[type="radio"]:checked {
-		background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
-	}
-
-	/* Disabled state */
-	input:disabled,
-	select:disabled,
-	textarea:disabled {
-		background-color: #f7fafc;
-		border-color: #edf2f7;
-		color: #a0aec0;
-		cursor: not-allowed;
+		border-radius: var(--input-radius, 0.25rem);
+		padding-top: var(--input-padding, 0.5rem);
+		padding-right: var(--input-padding, 0.75rem);
+		padding-bottom: var(--input-padding, 0.5rem);
+		padding-left: var(--input-padding, 0.75rem);
 	}
 
 	/* Error state */

@@ -8,12 +8,14 @@ import {
 import { TAttrs, EditProps } from "../types";
 import metadata from "./block.json";
 import {
+	Notice,
 	PanelBody,
 	RadioControl,
 	SelectControl,
 	TextareaControl,
 	TextControl,
 	ToggleControl,
+	RangeControl,
 } from "@wordpress/components";
 import { useSelect, useDispatch } from "@wordpress/data";
 import { useEffect } from "@wordpress/element";
@@ -34,8 +36,9 @@ export default function Edit(props: EditProps<Attributes>) {
 		emailPlaceholder,
 		nameLabel,
 		namePlaceholder,
+		inputRadius,
+		inputPadding,
 	} = attributes;
-	const blockProps = useBlockProps();
 
 	const mailpoetLists =
 		window.mailpoetLists?.map((list) => ({
@@ -69,7 +72,31 @@ export default function Edit(props: EditProps<Attributes>) {
 	const getInnerTemplate = (type: TButtonStyle) => {
 		switch (type) {
 			case "default":
-				return [["core/button", { text: __("Subscribe", "ncmfse") }]];
+				return [
+					[
+						"core/buttons",
+						{},
+						[
+							[
+								"core/button",
+								{
+									text: __("Subscribe", "ncmfse"),
+									width: 100,
+									tagName: "button",
+									type: "submit",
+									style: {
+										spacing: {
+											padding: {
+												top: "0.65rem",
+												bottom: "0.65rem",
+											},
+										},
+									},
+								},
+							],
+						],
+					],
+				];
 			case "inline-email-input":
 				return [
 					[
@@ -79,7 +106,7 @@ export default function Edit(props: EditProps<Attributes>) {
 							iconColorValue: "#ffffff",
 							iconBackgroundColorValue: "#000000",
 							itemsJustification: "center",
-							width: "40px",
+							width: "36px",
 							hasNoIconFill: true,
 							style: {
 								border: {
@@ -109,7 +136,7 @@ export default function Edit(props: EditProps<Attributes>) {
 		}
 
 		if (
-			innerBlocks[0]?.name === "core/button" &&
+			innerBlocks[0]?.name === "core/buttons" &&
 			submitButtonStyle === "default"
 		) {
 			return;
@@ -117,20 +144,41 @@ export default function Edit(props: EditProps<Attributes>) {
 
 		const newTemplate = getInnerTemplate(submitButtonStyle as TButtonStyle);
 
-		const newInnerBlocks = newTemplate.map(([name, attributes]) =>
-			window.wp.blocks.createBlock(name, attributes),
+		const newInnerBlocks = newTemplate.map(([name, attributes, innerChilds]) =>
+			window.wp.blocks.createBlock(
+				name,
+				attributes,
+				// @ts-ignore
+				innerChilds?.map(([name, attributes]) =>
+					window.wp.blocks.createBlock(name, attributes),
+				),
+			),
 		);
 		replaceInnerBlocks(clientId, newInnerBlocks, false);
 	}, [submitButtonStyle, innerBlocks, clientId, replaceInnerBlocks]);
 
+	const blockProps = useBlockProps({
+		style: {
+			"--input-radius": `${inputRadius}px`,
+			"--input-padding": `${inputPadding}px`,
+		},
+	});
+
 	const { children, ...innerBlocksProps } = useInnerBlocksProps(blockProps, {
-		template: getInnerTemplate(submitButtonStyle as TButtonStyle),
+		template: getInnerTemplate(submitButtonStyle as TButtonStyle) as any[],
 		templateLock: "insert",
 	});
 
 	return (
+		// @ts-ignore
 		<div {...blockProps}>
 			<InspectorControls>
+				<Notice status="warning" isDismissible={false}>
+					{__(
+						"Please make sure you have the MailPoet plugin installed and configured. This block requires MailPoet to work.",
+						"ncmfse",
+					)}
+				</Notice>
 				<PanelBody title={__("Settings", "ncmfse")}>
 					<SelectControl
 						label={__("Select MailPoet List", "ncmfse")}
@@ -213,21 +261,43 @@ export default function Edit(props: EditProps<Attributes>) {
 						onChange={(value) => setAttributes({ successMessage: value })}
 					/>
 				</PanelBody>
+				<PanelBody title={__("Styles", "ncmfse")}>
+					<RangeControl
+						__nextHasNoMarginBottom
+						label={__("Input Radius (px)", "ncmfse")}
+						max={100}
+						min={0}
+						onChange={(value) => setAttributes({ inputRadius: value })}
+						value={inputRadius}
+					/>
+					<RangeControl
+						__nextHasNoMarginBottom
+						label={__("Input Padding (px)", "ncmfse")}
+						max={100}
+						min={0}
+						onChange={(value) => setAttributes({ inputPadding: value })}
+						value={inputPadding}
+					/>
+				</PanelBody>
 			</InspectorControls>
 
 			<div {...innerBlocksProps}>
 				{!!showNameField && (
-					<div>
-						{showLabel && <label htmlFor="email">{emailLabel}</label>}
-						<input type="email" name="email" placeholder={emailPlaceholder} />
+					<div className="form-item__name">
+						{showLabel && <label htmlFor="name">{nameLabel}</label>}
+						<input type="text" name="name" placeholder={namePlaceholder} />
 					</div>
 				)}
 
-				<div>
-					{showLabel && <label htmlFor="name">{nameLabel}</label>}
-					<div>
-						<input type="text" name="name" placeholder={namePlaceholder} />
-						{submitButtonStyle === "inline-email-input" ? children : ""}
+				<div className="form-item__email">
+					{showLabel && <label htmlFor="email">{emailLabel}</label>}
+					<div className="form-item__email-content">
+						<input type="email" name="email" placeholder={emailPlaceholder} />
+						{submitButtonStyle === "inline-email-input" ? (
+							<button type="submit">{children}</button>
+						) : (
+							""
+						)}
 					</div>
 				</div>
 

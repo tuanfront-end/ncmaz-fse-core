@@ -75,9 +75,10 @@ function Edit(props) {
     emailLabel,
     emailPlaceholder,
     nameLabel,
-    namePlaceholder
+    namePlaceholder,
+    inputRadius,
+    inputPadding
   } = attributes;
-  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)();
   const mailpoetLists = window.mailpoetLists?.map(list => ({
     label: list.name,
     value: list.id
@@ -109,16 +110,27 @@ function Edit(props) {
   const getInnerTemplate = type => {
     switch (type) {
       case "default":
-        return [["core/button", {
-          text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Subscribe", "ncmfse")
-        }]];
+        return [["core/buttons", {}, [["core/button", {
+          text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Subscribe", "ncmfse"),
+          width: 100,
+          tagName: "button",
+          type: "submit",
+          style: {
+            spacing: {
+              padding: {
+                top: "0.65rem",
+                bottom: "0.65rem"
+              }
+            }
+          }
+        }]]]];
       case "inline-email-input":
         return [["outermost/icon-block", {
           icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>',
           iconColorValue: "#ffffff",
           iconBackgroundColorValue: "#000000",
           itemsJustification: "center",
-          width: "40px",
+          width: "36px",
           hasNoIconFill: true,
           style: {
             border: {
@@ -140,13 +152,21 @@ function Edit(props) {
     if (innerBlocks[0]?.name === "outermost/icon-block" && submitButtonStyle === "inline-email-input") {
       return;
     }
-    if (innerBlocks[0]?.name === "core/button" && submitButtonStyle === "default") {
+    if (innerBlocks[0]?.name === "core/buttons" && submitButtonStyle === "default") {
       return;
     }
     const newTemplate = getInnerTemplate(submitButtonStyle);
-    const newInnerBlocks = newTemplate.map(([name, attributes]) => window.wp.blocks.createBlock(name, attributes));
+    const newInnerBlocks = newTemplate.map(([name, attributes, innerChilds]) => window.wp.blocks.createBlock(name, attributes,
+    // @ts-ignore
+    innerChilds?.map(([name, attributes]) => window.wp.blocks.createBlock(name, attributes))));
     replaceInnerBlocks(clientId, newInnerBlocks, false);
   }, [submitButtonStyle, innerBlocks, clientId, replaceInnerBlocks]);
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
+    style: {
+      "--input-radius": `${inputRadius}px`,
+      "--input-padding": `${inputPadding}px`
+    }
+  });
   const {
     children,
     ...innerBlocksProps
@@ -154,89 +174,123 @@ function Edit(props) {
     template: getInnerTemplate(submitButtonStyle),
     templateLock: "insert"
   });
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    ...blockProps
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Settings", "ncmfse")
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Select MailPoet List", "ncmfse"),
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This form adds the subscribers to these lists.", "ncmfse"),
-    value: mailpoetListId,
-    options: mailpoetLists,
-    onChange: value => setAttributes({
-      mailpoetListId: value
-    })
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show Name Field", "ncmfse"),
-    checked: showNameField,
-    onChange: value => setAttributes({
-      showNameField: value
-    })
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show Label", "ncmfse"),
-    checked: showLabel,
-    onChange: value => setAttributes({
-      showLabel: value
-    })
-  }), showNameField && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, showLabel && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Name Label", "ncmfse"),
-    value: nameLabel,
-    onChange: value => setAttributes({
-      nameLabel: value
-    })
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Name Placeholder", "ncmfse"),
-    value: namePlaceholder,
-    onChange: value => setAttributes({
-      namePlaceholder: value
-    })
-  })), showLabel && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Email Label", "ncmfse"),
-    value: emailLabel,
-    onChange: value => setAttributes({
-      emailLabel: value
-    })
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Email Placeholder", "ncmfse"),
-    value: emailPlaceholder,
-    onChange: value => setAttributes({
-      emailPlaceholder: value
-    })
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RadioControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Submit Button Style", "ncmfse"),
-    onChange: value => setAttributes({
-      submitButtonStyle: value
-    }),
-    options: [{
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Default", "ncmfse"),
-      value: "default"
-    }, {
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Inline Email Input", "ncmfse"),
-      value: "inline-email-input"
-    }],
-    selected: submitButtonStyle
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextareaControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Success Message", "ncmfse"),
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This message will be displayed after the user submits the form.", "ncmfse"),
-    value: successMessage,
-    onChange: value => setAttributes({
-      successMessage: value
-    })
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    ...innerBlocksProps
-  }, !!showNameField && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, showLabel && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    htmlFor: "email"
-  }, emailLabel), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "email",
-    name: "email",
-    placeholder: emailPlaceholder
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, showLabel && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    htmlFor: "name"
-  }, nameLabel), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "text",
-    name: "name",
-    placeholder: namePlaceholder
-  }), submitButtonStyle === "inline-email-input" ? children : "")), submitButtonStyle === "default" ? children : ""));
+  return (
+    // @ts-ignore
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      ...blockProps
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Notice, {
+      status: "warning",
+      isDismissible: false
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Please make sure you have the MailPoet plugin installed and configured. This block requires MailPoet to work.", "ncmfse")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Settings", "ncmfse")
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Select MailPoet List", "ncmfse"),
+      help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This form adds the subscribers to these lists.", "ncmfse"),
+      value: mailpoetListId,
+      options: mailpoetLists,
+      onChange: value => setAttributes({
+        mailpoetListId: value
+      })
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show Name Field", "ncmfse"),
+      checked: showNameField,
+      onChange: value => setAttributes({
+        showNameField: value
+      })
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show Label", "ncmfse"),
+      checked: showLabel,
+      onChange: value => setAttributes({
+        showLabel: value
+      })
+    }), showNameField && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, showLabel && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Name Label", "ncmfse"),
+      value: nameLabel,
+      onChange: value => setAttributes({
+        nameLabel: value
+      })
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Name Placeholder", "ncmfse"),
+      value: namePlaceholder,
+      onChange: value => setAttributes({
+        namePlaceholder: value
+      })
+    })), showLabel && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Email Label", "ncmfse"),
+      value: emailLabel,
+      onChange: value => setAttributes({
+        emailLabel: value
+      })
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Email Placeholder", "ncmfse"),
+      value: emailPlaceholder,
+      onChange: value => setAttributes({
+        emailPlaceholder: value
+      })
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RadioControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Submit Button Style", "ncmfse"),
+      onChange: value => setAttributes({
+        submitButtonStyle: value
+      }),
+      options: [{
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Default", "ncmfse"),
+        value: "default"
+      }, {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Inline Email Input", "ncmfse"),
+        value: "inline-email-input"
+      }],
+      selected: submitButtonStyle
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextareaControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Success Message", "ncmfse"),
+      help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This message will be displayed after the user submits the form.", "ncmfse"),
+      value: successMessage,
+      onChange: value => setAttributes({
+        successMessage: value
+      })
+    })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Styles", "ncmfse")
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+      __nextHasNoMarginBottom: true,
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Input Radius (px)", "ncmfse"),
+      max: 100,
+      min: 0,
+      onChange: value => setAttributes({
+        inputRadius: value
+      }),
+      value: inputRadius
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+      __nextHasNoMarginBottom: true,
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Input Padding (px)", "ncmfse"),
+      max: 100,
+      min: 0,
+      onChange: value => setAttributes({
+        inputPadding: value
+      }),
+      value: inputPadding
+    }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      ...innerBlocksProps
+    }, !!showNameField && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "form-item__name"
+    }, showLabel && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+      htmlFor: "name"
+    }, nameLabel), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+      type: "text",
+      name: "name",
+      placeholder: namePlaceholder
+    })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "form-item__email"
+    }, showLabel && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+      htmlFor: "email"
+    }, emailLabel), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "form-item__email-content"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+      type: "email",
+      name: "email",
+      placeholder: emailPlaceholder
+    }), submitButtonStyle === "inline-email-input" ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+      type: "submit"
+    }, children) : "")), submitButtonStyle === "default" ? children : ""))
+  );
 }
 
 /***/ }),
@@ -430,7 +484,7 @@ module.exports = window["wp"]["primitives"];
   \***************************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/mailpoet-subscription-form","version":"0.1.0","title":"Ncmaz Mailpoet Subscription Form","category":"ncmfse","icon":"media-interactive","description":"An interactive block with the Interactivity API","example":{},"supports":{"interactivity":true},"attributes":{"nameLabel":{"type":"string","default":"Name"},"namePlaceholder":{"type":"string","default":"Enter your name"},"emailLabel":{"type":"string","default":"Email"},"emailPlaceholder":{"type":"string","default":"Enter your email"},"successMessage":{"type":"string","default":""},"mailpoetListId":{"type":"string","default":""},"showNameField":{"type":"boolean","default":false},"showLabel":{"type":"boolean","default":false},"submitButtonStyle":{"type":"string","default":"default"}},"textdomain":"short-contact-form","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/mailpoet-subscription-form","version":"0.1.0","title":"Ncmaz Mailpoet Subscription Form","category":"ncmfse","icon":"media-interactive","description":"A newsletter signup form adds users to a MailPoet list","example":{},"attributes":{"nameLabel":{"type":"string","default":"Name"},"namePlaceholder":{"type":"string","default":"Enter your name"},"emailLabel":{"type":"string","default":"Email"},"emailPlaceholder":{"type":"string","default":"Enter your email"},"successMessage":{"type":"string","default":""},"mailpoetListId":{"type":"string","default":""},"showNameField":{"type":"boolean","default":false},"showLabel":{"type":"boolean","default":false},"submitButtonStyle":{"type":"string","default":"default"},"inputRadius":{"type":"number","default":8},"inputPadding":{"type":"number","default":10}},"supports":{"anchor":false,"html":false,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"shadow":true,"spacing":{"padding":true,"margin":true,"blockGap":true,"__experimentalDefaultControls":{"padding":true,"blockGap":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"layout":true,"interactivity":true},"textdomain":"short-contact-form","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
 
 /***/ })
 
