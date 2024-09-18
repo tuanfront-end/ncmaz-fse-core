@@ -27,7 +27,11 @@ function ncmazfse_core__add_subscriber_to_mailpoet_list()
 {
 	check_ajax_referer('nc_mailpoet_form_nonce', 'security');
 
-	if (! $_POST['email']) {
+	$email = sanitize_email(wp_unslash($_POST['email'] ?? ""));
+	$name = sanitize_text_field(wp_unslash($_POST['name'] ?? ""));
+	$list_id = sanitize_text_field(wp_unslash($_POST['mailpoet_list_id'] ?? ""));
+
+	if ($email) {
 		wp_send_json_error('Missing email address!');
 	} else if (!class_exists(\MailPoet\API\API::class)) {
 		wp_send_json_error('MailPoet plugin is not installed or activated!');
@@ -36,9 +40,9 @@ function ncmazfse_core__add_subscriber_to_mailpoet_list()
 			$mailpoet_api = \MailPoet\API\API::MP('v1');
 
 			$mailpoet_api->addSubscriber([
-				'email' => $_POST['email'],
-				'first_name' =>  $_POST['name'],
-			], [$_POST['mailpoet_list_id']]);
+				'email' => $email,
+				'first_name' =>  $name,
+			], [$list_id]);
 			wp_send_json_success('Success - Subscribed to the list!');
 		} catch (\Exception $e) {
 			wp_send_json_error($e->getMessage());

@@ -2,14 +2,14 @@
 
 /**
  * Plugin Name:       Ncmaz Fse Core
- * Description:        Ncmaz Fse Core is a plugin that provides some custom blocks for Full Site Editing.
- * Requires at least: 6.1
- * Requires PHP:      7.0
+ * Description:       Ncmaz Fse Core is a plugin that provides some custom blocks for Full Site Editing.
+ * Requires at least: 6.5
+ * Requires PHP:      7.4
  * Version:           0.1.0
  * Author:            The WordPress Contributors
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       ncmfse
+ * Text Domain:       ncmaz-fse-core
  *
  * @package CreateBlock
  */

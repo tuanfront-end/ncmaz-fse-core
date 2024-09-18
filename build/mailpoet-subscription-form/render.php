@@ -22,24 +22,24 @@ wp_interactivity_state(
 ?>
 
 <form
-	<?php echo get_block_wrapper_attributes([
+	<?php echo wp_kses_data(get_block_wrapper_attributes([
 		"style"  => "--input-radius:" . $attributes['inputRadius'] . "px;--input-padding:" . $attributes['inputPadding'] . "px;",
-	]); ?>
+	])); ?>
 	data-wp-interactive="ncmfse/mailpoet-subscription-form"
-	<?php echo wp_interactivity_data_wp_context([
+	<?php echo wp_kses_data(wp_interactivity_data_wp_context([
 		'showSuccessMessage' => false,
 		"showError" => false,
 		"loading" => false,
 		"errorMesssage" => "",
 		"mailpoetListId" => $attributes['mailpoetListId'],
-	]); ?>
+	])); ?>
 	data-wp-on--submit="actions.onSubmitForm">
 
 	<?php if ($attributes['showNameField']): ?>
 		<div class="form-item__name">
 			<?php if ($attributes['showLabel']): ?>
 				<label htmlFor="name">
-					<?php echo $attributes['nameLabel']; ?>
+					<?php esc_html_e($attributes['nameLabel']); ?>
 				</label>
 			<?php endif; ?>
 			<input type="text" autocomplete="name" name="name" placeholder="<?php esc_attr_e($attributes['namePlaceholder']); ?>" />
@@ -49,7 +49,7 @@ wp_interactivity_state(
 	<div class="form-item__email">
 		<?php if ($attributes['showLabel']): ?>
 			<label htmlFor="email">
-				<?php echo $attributes['emailLabel']; ?>
+				<?php esc_html_e($attributes['emailLabel']); ?>
 			</label>
 		<?php endif; ?>
 
@@ -61,7 +61,7 @@ wp_interactivity_state(
 
 			<?php if ($attributes['submitButtonStyle'] === "inline-email-input"): ?>
 				<button type="submit">
-					<?php echo $content; ?>
+					<?php esc_html_e($content); ?>
 				</button>
 			<?php endif; ?>
 
@@ -70,9 +70,9 @@ wp_interactivity_state(
 
 	<?php if ($attributes['submitButtonStyle'] === "default"): ?>
 		<div>
-			<?php echo $content; ?>
+			<?php esc_html_e($content); ?>
 			<p class="success-message" data-wp-bind--hidden="!context.showSuccessMessage">
-				<?php echo $attributes['successMessage']; ?>
+				<?php esc_html_e($attributes['successMessage']); ?>
 			</p>
 			<p class="error-message" data-wp-bind--hidden="!context.showError" data-wp-text="context.errorMesssage">
 			</p>
@@ -82,7 +82,7 @@ wp_interactivity_state(
 		</div>
 	<?php else: ?>
 		<p class="success-message" data-wp-bind--hidden="!context.showSuccessMessage">
-			<?php echo $attributes['successMessage']; ?>
+			<?php esc_html_e($attributes['successMessage']); ?>
 		</p>
 		<p class="error-message" data-wp-bind--hidden="!context.showError" data-wp-text="context.errorMesssage">
 		</p>
