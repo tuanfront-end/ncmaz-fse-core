@@ -9,10 +9,11 @@ type Attributes = TAttrs<typeof metadata.attributes>;
 function Edit(props: EditProps<Attributes>) {
 	return (
 		<>
-			<button
+			<a
 				{...useBlockProps({
 					className: "",
 				})}
+				role="button"
 			>
 				{/* insert Innerblock */}
 				<InnerBlocks
@@ -30,7 +31,7 @@ function Edit(props: EditProps<Attributes>) {
 					]}
 					templateLock="insert"
 				/>
-			</button>
+			</a>
 		</>
 	);
 

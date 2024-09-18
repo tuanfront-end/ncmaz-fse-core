@@ -147,6 +147,29 @@ function ncmazfse_enable_linked_groups_render_block($block_content, $block, $ins
 add_filter('render_block_core/group', 'ncmazfse_enable_linked_groups_render_block', 10, 3);
 
 
+/**
+ * Enable border for paragraph.
+ *
+ * @param array  $args       The block arguments for the registered block type.
+ * @param string $block_type The block type name, including namespace.
+ * @return array             The modified block arguments.
+ */
+function ncmazfse_enable_border_to_paragraph_blocks($args, $block_type)
+{
+
+	// Only add the filter to Media & Text blocks.
+	if ('core/paragraph' === $block_type) {
+		$args['supports'] ??= [];
+		$args['supports']['__experimentalBorder'] ??= [];
+		$args['supports']['__experimentalBorder']['color'] = true;
+		$args['supports']['__experimentalBorder']['radius'] = true;
+		$args['supports']['__experimentalBorder']['width'] = true;
+		$args['supports']['shadow'] = true;
+	}
+
+	return $args;
+}
+add_filter('register_block_type_args', 'ncmazfse_enable_border_to_paragraph_blocks', 10, 2);
 
 /**
  * Enqueue block styles 

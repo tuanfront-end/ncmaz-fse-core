@@ -3,7 +3,7 @@ input,
 select,
 textarea {
 	appearance: none;
-	border-color: #e2e8f0;
+	border-color: var(--wp--preset--color--shadcn-border);
 	border-width: 1px;
 	border-radius: 0.25rem;
 	border-style: solid;
@@ -25,19 +25,22 @@ textarea {
 }
 
 /* Focus styles */
-input:focus,
-select:focus,
-textarea:focus {
-	// outline: none;
-	border-color: #4299e1;
-	box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
-	outline: 2px solid transparent;
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
 	outline-offset: 2px;
+	--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 2px
+		var(--wp--preset--color--shadcn-background);
+	--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 4px
+		var(--wp--preset--color--shadcn-ring);
+	box-shadow:
+		var(--tw-ring-offset-shadow),
+		var(--tw-ring-shadow),
+		0 0 #0000;
 }
 
 /* Placeholder styles */
 ::placeholder {
-	// color: #a0aec0;
 	opacity: 1;
 }
 

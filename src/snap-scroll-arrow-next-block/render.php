@@ -2,7 +2,7 @@
 $queryId = $block->context["ncmazfse_termQueryId"] ?? $block->context["queryId"] ?? "";
 ?>
 
-<button type="button"
+<a role="button" tabindex="0"
 	<?php echo get_block_wrapper_attributes([
 		'class' => '',
 		'data-ncmfse-snap-scroll-arrow-next' => $queryId,
@@ -15,4 +15,4 @@ $queryId = $block->context["ncmazfse_termQueryId"] ?? $block->context["queryId"]
 
 	<?php echo $content; ?>
 
-</button>
+</a>

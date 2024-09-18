@@ -2,6 +2,7 @@
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/mailpoet-subscription-form/style.scss ***!
   \******************************************************************************************************************************************************************************************************************************************************************/
 .wp-block-ncmfse-mailpoet-subscription-form {
+  gap: 1rem;
   /* Error state */
 }
 .wp-block-ncmfse-mailpoet-subscription-form .form-item__email-content {
@@ -18,16 +19,17 @@
   padding: 0;
   cursor: pointer;
 }
-.wp-block-ncmfse-mailpoet-subscription-form .loading {
-  font-size: 14px;
+.wp-block-ncmfse-mailpoet-subscription-form .loading,
+.wp-block-ncmfse-mailpoet-subscription-form .success-message,
+.wp-block-ncmfse-mailpoet-subscription-form .error-message {
+  font-size: 12px;
+  margin-top: 0.5rem;
 }
 .wp-block-ncmfse-mailpoet-subscription-form .success-message {
   color: #2b9348;
-  font-size: 14px;
 }
 .wp-block-ncmfse-mailpoet-subscription-form .error-message {
   color: #f56565;
-  font-size: 14px;
 }
 .wp-block-ncmfse-mailpoet-subscription-form input,
 .wp-block-ncmfse-mailpoet-subscription-form textarea,

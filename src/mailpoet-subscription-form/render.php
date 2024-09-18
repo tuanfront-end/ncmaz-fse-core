@@ -29,6 +29,7 @@ wp_interactivity_state(
 	<?php echo wp_interactivity_data_wp_context([
 		'showSuccessMessage' => false,
 		"showError" => false,
+		"loading" => false,
 		"errorMesssage" => "",
 		"mailpoetListId" => $attributes['mailpoetListId'],
 	]); ?>
@@ -67,10 +68,19 @@ wp_interactivity_state(
 		</div>
 	</div>
 
-	<div>
-		<?php if ($attributes['submitButtonStyle'] === "default"): ?>
+	<?php if ($attributes['submitButtonStyle'] === "default"): ?>
+		<div>
 			<?php echo $content; ?>
-		<?php endif; ?>
+			<p class="success-message" data-wp-bind--hidden="!context.showSuccessMessage">
+				<?php echo $attributes['successMessage']; ?>
+			</p>
+			<p class="error-message" data-wp-bind--hidden="!context.showError" data-wp-text="context.errorMesssage">
+			</p>
+			<p class="loading" data-wp-bind--hidden="!context.loading">
+				<?php esc_html_e("Loading...", "ncmfse"); ?>
+			</p>
+		</div>
+	<?php else: ?>
 		<p class="success-message" data-wp-bind--hidden="!context.showSuccessMessage">
 			<?php echo $attributes['successMessage']; ?>
 		</p>
@@ -79,6 +89,7 @@ wp_interactivity_state(
 		<p class="loading" data-wp-bind--hidden="!context.loading">
 			<?php esc_html_e("Loading...", "ncmfse"); ?>
 		</p>
-	</div>
+	<?php endif; ?>
+
 
 </form>

@@ -1,6 +1,5 @@
 <?php
 
-
 // Hiển thị danh sách list của MailPoet trong trang Editor. Phục vụ cho block Ncmaz MailPoet Form
 add_action('admin_footer', 'ncmaz_fse_core_mailpoet_list_to_window');
 function ncmaz_fse_core_mailpoet_list_to_window()

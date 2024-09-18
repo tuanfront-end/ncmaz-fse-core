@@ -1,4 +1,6 @@
 .wp-block-ncmfse-mailpoet-subscription-form {
+	gap: 1rem;
+
 	.form-item__email-content {
 		position: relative;
 
@@ -15,17 +17,18 @@
 		}
 	}
 
-	.loading {
-		font-size: 14px;
+	.loading,
+	.success-message,
+	.error-message {
+		font-size: 12px;
+		margin-top: 0.5rem;
 	}
 
 	.success-message {
 		color: #2b9348;
-		font-size: 14px;
 	}
 	.error-message {
 		color: #f56565;
-		font-size: 14px;
 	}
 
 	input,
