@@ -124,9 +124,8 @@ foreach ($query as $term) {
 
 	$content .= '<li' . $inner_block_directives . ' class="' . esc_attr($term_classes) . '">' . $block_content . '</li>';
 }
-
 ?>
 
-<ul <?php echo ($wrapper_attributes); ?>>
-	<?php echo $content; ?>
+<ul <?php echo wp_kses_data($wrapper_attributes); ?>>
+	<?php echo ($content); ?>
 </ul>

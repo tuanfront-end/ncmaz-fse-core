@@ -22,6 +22,6 @@ $wrapper_attributes = get_block_wrapper_attributes(array('class' => implode(' ',
 $content               = '<p class="wp-block-ncmfse-term-count__count">' . $term->count . '</p>';
 ?>
 
-<div <?php echo  $wrapper_attributes; ?>>
-	<?php echo $content; ?>
+<div <?php echo wp_kses_data($wrapper_attributes); ?>>
+	<?php echo ($content); ?>
 </div>

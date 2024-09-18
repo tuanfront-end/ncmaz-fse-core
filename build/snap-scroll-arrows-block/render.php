@@ -8,15 +8,15 @@ wp_interactivity_state(
 ?>
 
 <div
-	<?php echo get_block_wrapper_attributes([
+	<?php echo wp_kses_data(get_block_wrapper_attributes([
 		'class' => !isset($attributes['style']['spacing']['blockGap']) ? 'gap-2' : ''
-	]); ?>
+	])); ?>
 	data-wp-interactive="ncmfse/snap-scroll-arrows"
-	<?php echo wp_interactivity_data_wp_context([
+	<?php echo wp_kses_data(wp_interactivity_data_wp_context([
 		"queryId" => $queryId,
-	]); ?>
+	])); ?>
 	data-wp-init="callbacks.handleInit">
 
-	<?php echo $content; ?>
+	<?php echo ($content); ?>
 
 </div>

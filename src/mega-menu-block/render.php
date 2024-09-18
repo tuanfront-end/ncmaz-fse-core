@@ -36,15 +36,15 @@ $menu_classes .= $justify_menu ? ' menu-justified-' . $justify_menu : '';
 ?>
 
 <li
-	<?php echo $wrapper_attributes; ?>
+	<?php echo wp_kses_data($wrapper_attributes); ?>
 	data-wp-interactive='{ "namespace": "outermost/mega-menu" }'
-	<?php echo wp_interactivity_data_wp_context([
+	<?php echo wp_kses_data(wp_interactivity_data_wp_context([
 		'width' => $menu_width,
-	]); ?>
+	])); ?>
 	data-wp-init="callbacks.initCallbacks">
 	<div
 		class="wp-block-outermost-mega-menu__toggle">
-		<?php echo $label; ?><span class="wp-block-outermost-mega-menu__toggle-icon">
+		<?php esc_html_e($label); ?><span class="wp-block-outermost-mega-menu__toggle-icon">
 			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
 				<path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path>
 			</svg>
@@ -52,14 +52,14 @@ $menu_classes .= $justify_menu ? ' menu-justified-' . $justify_menu : '';
 	</div>
 
 	<div
-		class="<?php echo $menu_classes; ?>"
+		class="<?php esc_attr_e($menu_classes); ?>"
 		tabindex="-1">
 		<?php echo block_template_part($menu_slug); ?>
 	</div>
 
 	<?php if ($disable_when_collapsed && $collapsed_url) { ?>
-		<a class="wp-block-outermost-mega-menu__collapsed-link wp-block-navigation-item__content" href="<?php echo $collapsed_url; ?>">
-			<span class="wp-block-navigation-item__label"><?php echo $label; ?></span>
+		<a class="wp-block-outermost-mega-menu__collapsed-link wp-block-navigation-item__content" href="<?php esc_url($collapsed_url); ?>">
+			<span class="wp-block-navigation-item__label"><?php esc_html_e($label); ?></span>
 		</a>
 	<?php } ?>
 </li>

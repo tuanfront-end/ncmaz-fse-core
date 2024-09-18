@@ -61,7 +61,7 @@ wp_interactivity_state(
 
 			<?php if ($attributes['submitButtonStyle'] === "inline-email-input"): ?>
 				<button type="submit">
-					<?php esc_html_e($content); ?>
+					<?php echo ($content); ?>
 				</button>
 			<?php endif; ?>
 
@@ -70,7 +70,7 @@ wp_interactivity_state(
 
 	<?php if ($attributes['submitButtonStyle'] === "default"): ?>
 		<div>
-			<?php esc_html_e($content); ?>
+			<?php echo ($content); ?>
 			<p class="success-message" data-wp-bind--hidden="!context.showSuccessMessage">
 				<?php esc_html_e($attributes['successMessage']); ?>
 			</p>

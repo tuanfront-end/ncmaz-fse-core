@@ -36,15 +36,15 @@ foreach ($colorCssVars as $key => $value) {
 
 <a
 	href="<?php echo esc_url($comment_link); ?>"
-	<?php echo get_block_wrapper_attributes([
+	<?php echo wp_kses_data(get_block_wrapper_attributes([
 		'class' => 'nc-post-reaction-button ' . (!isset($attributes['style']['spacing']['blockGap']) ? 'gap-1.5' : ''),
 		'style' => $colorStyle,
-	]); ?>>
+	])); ?>>
 
-	<?php echo $content; ?>
+	<?php echo ($content); ?>
 	<?php if ($attributes["showCountText"]): ?>
 		<span class="nc__count">
-			<?php echo $comment_count; ?>
+			<?php esc_html_e($comment_count); ?>
 		</span>
 	<?php endif; ?>
 
