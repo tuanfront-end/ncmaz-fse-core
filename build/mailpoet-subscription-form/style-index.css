@@ -18,6 +18,17 @@
   padding: 0;
   cursor: pointer;
 }
+.wp-block-ncmfse-mailpoet-subscription-form .loading {
+  font-size: 14px;
+}
+.wp-block-ncmfse-mailpoet-subscription-form .success-message {
+  color: #2b9348;
+  font-size: 14px;
+}
+.wp-block-ncmfse-mailpoet-subscription-form .error-message {
+  color: #f56565;
+  font-size: 14px;
+}
 .wp-block-ncmfse-mailpoet-subscription-form input,
 .wp-block-ncmfse-mailpoet-subscription-form textarea,
 .wp-block-ncmfse-mailpoet-subscription-form select {

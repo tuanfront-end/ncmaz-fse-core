@@ -66,6 +66,7 @@ require_once plugin_dir_path(__FILE__) . 'includes/like-handler.php';
 require_once plugin_dir_path(__FILE__) . 'includes/save-handler.php';
 require_once plugin_dir_path(__FILE__) . 'includes/view-handler.php';
 require_once plugin_dir_path(__FILE__) . 'includes/term-blocks-funcs.php';
+require_once plugin_dir_path(__FILE__) . 'includes/nc-mailpoet-form-handler.php';
 
 // enqueue scripts
 require_once plugin_dir_path(__FILE__) . 'includes/enqueue-scripts.php';

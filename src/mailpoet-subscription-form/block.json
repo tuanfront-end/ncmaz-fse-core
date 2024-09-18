@@ -27,7 +27,7 @@
 		},
 		"successMessage": {
 			"type": "string",
-			"default": ""
+			"default": "Thank you for subscribing!"
 		},
 		"mailpoetListId": {
 			"type": "string",

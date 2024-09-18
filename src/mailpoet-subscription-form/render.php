@@ -11,18 +11,28 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 
-// Generate unique id for aria-controls.
-$unique_id = wp_unique_id('p-');
-// my_var_export($attributes);
+// Set the interactivity state.
+wp_interactivity_state(
+	'ncmfse/mailpoet-subscription-form',
+	[
+		'ajaxUrl' 			=> admin_url('admin-ajax.php'),
+		'mailpoetFormNonce'   => wp_create_nonce('nc_mailpoet_form_nonce'),
+	]
+);
 ?>
 
 <form
 	<?php echo get_block_wrapper_attributes([
 		"style"  => "--input-radius:" . $attributes['inputRadius'] . "px;--input-padding:" . $attributes['inputPadding'] . "px;",
 	]); ?>
-	data-wp-interactive="create-block"
-	<?php echo wp_interactivity_data_wp_context(array('isOpen' => false)); ?>
-	data-wp-watch="callbacks.logIsOpen">
+	data-wp-interactive="ncmfse/mailpoet-subscription-form"
+	<?php echo wp_interactivity_data_wp_context([
+		'showSuccessMessage' => false,
+		"showError" => false,
+		"errorMesssage" => "",
+		"mailpoetListId" => $attributes['mailpoetListId'],
+	]); ?>
+	data-wp-on--submit="actions.onSubmitForm">
 
 	<?php if ($attributes['showNameField']): ?>
 		<div class="form-item__name">
@@ -31,12 +41,11 @@ $unique_id = wp_unique_id('p-');
 					<?php echo $attributes['nameLabel']; ?>
 				</label>
 			<?php endif; ?>
-			<input type="text" name="name" placeholder="<?php esc_attr_e($attributes['namePlaceholder']); ?>" />
+			<input type="text" autocomplete="name" name="name" placeholder="<?php esc_attr_e($attributes['namePlaceholder']); ?>" />
 		</div>
 	<?php endif; ?>
 
 	<div class="form-item__email">
-
 		<?php if ($attributes['showLabel']): ?>
 			<label htmlFor="email">
 				<?php echo $attributes['emailLabel']; ?>
@@ -44,7 +53,10 @@ $unique_id = wp_unique_id('p-');
 		<?php endif; ?>
 
 		<div class="form-item__email-content">
-			<input type="email" name="email" placeholder="<?php esc_attr_e($attributes['emailPlaceholder']); ?>" />
+			<input type="email" name="email"
+				required
+				autocomplete="email"
+				placeholder="<?php esc_attr_e($attributes['emailPlaceholder']); ?>" />
 
 			<?php if ($attributes['submitButtonStyle'] === "inline-email-input"): ?>
 				<button type="submit">
@@ -55,10 +67,18 @@ $unique_id = wp_unique_id('p-');
 		</div>
 	</div>
 
-
-	<?php if ($attributes['submitButtonStyle'] === "default"): ?>
-		<?php echo $content; ?>
-	<?php endif; ?>
-
+	<div>
+		<?php if ($attributes['submitButtonStyle'] === "default"): ?>
+			<?php echo $content; ?>
+		<?php endif; ?>
+		<p class="success-message" data-wp-bind--hidden="!context.showSuccessMessage">
+			<?php echo $attributes['successMessage']; ?>
+		</p>
+		<p class="error-message" data-wp-bind--hidden="!context.showError" data-wp-text="context.errorMesssage">
+		</p>
+		<p class="loading" data-wp-bind--hidden="!context.loading">
+			<?php esc_html_e("Loading...", "ncmfse"); ?>
+		</p>
+	</div>
 
 </form>
