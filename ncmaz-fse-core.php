@@ -171,6 +171,29 @@ function ncmazfse_enable_border_to_paragraph_blocks($args, $block_type)
 }
 add_filter('register_block_type_args', 'ncmazfse_enable_border_to_paragraph_blocks', 10, 2);
 
+
+/**
+ * Enable border for paragraph.
+ *
+ * @param array  $args       The block arguments for the registered block type.
+ * @param string $block_type The block type name, including namespace.
+ * @return array             The modified block arguments.
+ */
+function ncmazfse_core_enable_type_to_navigation_submenu_blocks($args, $block_type)
+{
+	if ('core/navigation-submenu' === $block_type) {
+		$args['supports'] ??= [];
+		$args['supports']['typography'] ??= [];
+		$args['supports']['typography']['fontSize'] = true;
+		$args['supports']['typography']['lineHeight'] = true;
+		$args['supports']['typography']['__experimentalFontWeight'] = true;
+	}
+	return $args;
+}
+add_filter('register_block_type_args', 'ncmazfse_core_enable_type_to_navigation_submenu_blocks', 10, 2);
+
+
+
 /**
  * Enqueue block styles 
  * (Applies to both frontend and Editor)

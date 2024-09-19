@@ -1,3 +1,29 @@
+// Input field
+input,
+select,
+textarea {
+	appearance: none;
+	border-color: var(--wp--preset--color--shadcn-border);
+	border-width: 1px;
+	border-radius: 0.25rem;
+	border-style: solid;
+	padding-top: 0.5rem;
+	padding-right: 0.75rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0.75rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	font-size: 14px;
+	font-family: inherit;
+	font-feature-settings: inherit;
+	font-variation-settings: inherit;
+	letter-spacing: inherit;
+	color: inherit;
+}
+
 /* Focus styles */
 input:focus-visible,
 select:focus-visible,

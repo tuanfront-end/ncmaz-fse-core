@@ -39,6 +39,34 @@
 		padding-right: var(--input-padding, 0.75rem);
 		padding-bottom: var(--input-padding, 0.5rem);
 		padding-left: var(--input-padding, 0.75rem);
+		display: block;
+		width: 100%;
+		appearance: none;
+		border-color: var(--wp--preset--color--shadcn-border);
+		border-width: 1px;
+		border-style: solid;
+		box-sizing: border-box;
+		font-size: 14px;
+		font-family: inherit;
+		font-feature-settings: inherit;
+		font-variation-settings: inherit;
+		letter-spacing: inherit;
+		color: inherit;
+	}
+
+	/* Focus styles */
+	input:focus-visible,
+	select:focus-visible,
+	textarea:focus-visible {
+		outline-offset: 2px;
+		--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 2px
+			var(--wp--preset--color--shadcn-background);
+		--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 4px
+			var(--wp--preset--color--shadcn-ring);
+		box-shadow:
+			var(--tw-ring-offset-shadow),
+			var(--tw-ring-shadow),
+			0 0 #0000;
 	}
 
 	/* Error state */

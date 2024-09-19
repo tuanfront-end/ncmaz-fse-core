@@ -3,6 +3,7 @@
   \******************************************************************************************************************************************************************************************************************************************************************/
 .wp-block-ncmfse-mailpoet-subscription-form {
   gap: 1rem;
+  /* Focus styles */
   /* Error state */
 }
 .wp-block-ncmfse-mailpoet-subscription-form .form-item__email-content {
@@ -39,6 +40,31 @@
   padding-right: var(--input-padding, 0.75rem);
   padding-bottom: var(--input-padding, 0.5rem);
   padding-left: var(--input-padding, 0.75rem);
+  display: block;
+  width: 100%;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-color: var(--wp--preset--color--shadcn-border);
+  border-width: 1px;
+  border-style: solid;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-family: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+.wp-block-ncmfse-mailpoet-subscription-form input:focus-visible,
+.wp-block-ncmfse-mailpoet-subscription-form select:focus-visible,
+.wp-block-ncmfse-mailpoet-subscription-form textarea:focus-visible {
+  outline-offset: 2px;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 2px
+  	var(--wp--preset--color--shadcn-background);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 4px
+  	var(--wp--preset--color--shadcn-ring);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), 0 0 rgba(0, 0, 0, 0);
 }
 .wp-block-ncmfse-mailpoet-subscription-form input.error,
 .wp-block-ncmfse-mailpoet-subscription-form select.error,
