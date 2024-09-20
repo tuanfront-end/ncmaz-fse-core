@@ -232,23 +232,49 @@ textarea:disabled {
   display: none;
 }
 
-.wp-block-template-part .wp-block-group.global-header {
+.nc-heading-section mark {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.global-header {
   padding-bottom: 20px;
   padding-top: 20px;
 }
-
-@media (min-width: 890px) {
-  .wp-block-template-part .wp-block-group.global-header {
+.global-header .wp-block-navigation a {
+  color: inherit;
+  text-decoration: none;
+}
+.global-header .wp-block-navigation a:hover {
+  text-decoration: underline;
+}
+.global-header .wp-block-navigation .wp-block-navigation__container > * > .wp-block-navigation-item__content,
+.global-header .wp-block-navigation .wp-block-navigation__container > * > .wp-block-outermost-mega-menu__toggle {
+  line-height: 4;
+}
+@media (min-width: 600px) {
+  .global-header .wp-block-navigation .wp-block-navigation__container > * > .wp-block-navigation-item__content,
+  .global-header .wp-block-navigation .wp-block-navigation__container > * > .wp-block-outermost-mega-menu__toggle {
+    line-height: 6;
+  }
+}
+.global-header .wp-block-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container > * > .wp-block-navigation-item__content,
+.global-header .wp-block-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container > * > .wp-block-outermost-mega-menu__toggle {
+  line-height: inherit;
+}
+.global-header .wp-block-navigation .wp-block-navigation__responsive-container-open.always-shown {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+@media (min-width: 600px) {
+  .global-header .wp-block-navigation .wp-block-navigation__responsive-container-open.always-shown {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+}
+@media (min-width: 600px) {
+  .global-header {
     padding-top: 0;
     padding-bottom: 0;
-  }
-  .wp-block-template-part .wp-block-group.global-header a {
-    color: inherit;
-    text-decoration: none;
-  }
-  .wp-block-template-part .wp-block-group.global-header .wp-block-navigation__container > * > .wp-block-navigation-item__content,
-  .wp-block-template-part .wp-block-group.global-header .wp-block-navigation__container > * > .wp-block-outermost-mega-menu__toggle {
-    line-height: 6;
   }
 }
 

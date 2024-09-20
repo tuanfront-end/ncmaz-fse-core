@@ -179,7 +179,7 @@ add_filter('register_block_type_args', 'ncmazfse_enable_border_to_paragraph_bloc
  * @param string $block_type The block type name, including namespace.
  * @return array             The modified block arguments.
  */
-function ncmazfse_core_enable_type_to_navigation_submenu_blocks($args, $block_type)
+function ncmazfse_core_enable_typography_to_navigation_submenu_blocks($args, $block_type)
 {
 	if ('core/navigation-submenu' === $block_type) {
 		$args['supports'] ??= [];
@@ -190,7 +190,7 @@ function ncmazfse_core_enable_type_to_navigation_submenu_blocks($args, $block_ty
 	}
 	return $args;
 }
-add_filter('register_block_type_args', 'ncmazfse_core_enable_type_to_navigation_submenu_blocks', 10, 2);
+add_filter('register_block_type_args', 'ncmazfse_core_enable_typography_to_navigation_submenu_blocks', 10, 2);
 
 
 
@@ -250,7 +250,6 @@ add_filter('render_block_ncmfse/term-template', 'ncmazfse_enable_snapping_templa
 add_filter('render_block_core/post-template', 'ncmazfse_enable_snapping_templates_render_block', 10, 3);
 
 
-
 /**
  * Adds a custom template part area for mega menus to the list of template part areas.
  *
@@ -277,3 +276,21 @@ function ncmfse_mega_menu_template_part_areas(array $areas)
 	return $areas;
 }
 add_filter('default_wp_template_part_areas', 'ncmfse_mega_menu_template_part_areas');
+
+
+/**
+ * Enable shadow for Group blocks.
+ */
+function ncmazfse_core_enable_shadow_to_group_blocks($args, $block_type)
+{
+	// Only apply the filter to Media & Text blocks.
+	if ('core/group' !== $block_type) {
+		return $args;
+	}
+
+	$args['supports'] ??= [];
+	$args['supports']['shadow']  = true;
+
+	return $args;
+}
+add_filter('register_block_type_args', 'ncmazfse_core_enable_shadow_to_group_blocks', 10, 2);
