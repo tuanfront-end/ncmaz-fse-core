@@ -48,7 +48,15 @@ function ncmaz_fse_core_register_blocks_init()
 	register_block_type(__DIR__ . '/build/snap-scroll-arrow-next-block');
 	register_block_type(__DIR__ . '/build/snap-scroll-arrow-previous-block');
 	register_block_type(__DIR__ . '/build/mega-menu-block');
-	register_block_type(__DIR__ . '/build/mailpoet-subscription-form');
+	register_block_type(__DIR__ . '/build/mailpoet-subscription-form-block');
+	register_block_type(__DIR__ . '/build/current-user-avatar-block');
+	register_block_type(__DIR__ . '/build/current-user-avatar-dropdown-block');
+
+	register_block_type(__DIR__ . '/build/dropdown-menu-block');
+	register_block_type(__DIR__ . '/build/dropdown-menu-trigger-block');
+	register_block_type(__DIR__ . '/build/dropdown-menu-content-block');
+	register_block_type(__DIR__ . '/build/dropdown-menu-item-block');
+
 
 	//  SOME CUSTOM BLOCKS
 	register_block_type(__DIR__ . '/build/enable-linked-groups');

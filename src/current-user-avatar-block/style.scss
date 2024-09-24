@@ -1,0 +1,33 @@
+.wp-block-ncmfse-current-user-avatar {
+	position: relative;
+
+	&.is-selected {
+		.wp-block-ncmfse-current-user-avatar-dropdown {
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+	.ncmfse-current-user-avatar__icon {
+		border-radius: inherit;
+		overflow: hidden;
+
+		svg,
+		img {
+			width: 100%;
+			height: 100%;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+	}
+
+	.ncmfse-current-user-avatar__button {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		visibility: visible;
+		cursor: pointer;
+	}
+}

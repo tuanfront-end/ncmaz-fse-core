@@ -1,0 +1,37 @@
+.wp-block-ncmfse-current-user-avatar-dropdown {
+	position: absolute;
+	top: 100%;
+	visibility: hidden;
+	opacity: 0;
+	min-width: 240px;
+
+	&.aligncenter {
+		left: 50%;
+		transform: translateX(-50%);
+		right: auto;
+	}
+	&.alignright {
+		right: 0;
+		left: auto;
+	}
+	&.alignleft {
+		left: 0;
+		right: auto;
+	}
+
+	a {
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.dropdown-menu-item {
+		border-radius: 6px;
+		&:hover {
+			background-color: var(--wp--preset--color--shadcn-accent);
+			color: var(--wp--preset--color--shadcn-accent-foreground);
+			text-decoration: none;
+		}
+	}
+}

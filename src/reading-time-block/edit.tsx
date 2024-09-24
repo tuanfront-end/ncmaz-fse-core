@@ -3,13 +3,10 @@ import { PanelBody, TextControl } from "@wordpress/components";
 import { useEntityRecord } from "@wordpress/core-data";
 import { useBlockProps, InspectorControls } from "@wordpress/block-editor";
 import "./editor.scss";
-import { EditProps } from "../types";
+import { EditProps, TAttrs } from "../types";
+import metadata from "./block.json";
 
-interface Attributes {
-	minReadText: string;
-	minReadTextOnMobile: string;
-	style: Record<string, any>;
-}
+type Attributes = TAttrs<typeof metadata.attributes>;
 
 export default function Edit(props: EditProps<Attributes>) {
 	const {

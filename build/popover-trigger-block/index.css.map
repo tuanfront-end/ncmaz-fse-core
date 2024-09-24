@@ -1,0 +1,1 @@
+{"version":3,"file":"popover-trigger-block/index.css","mappings":";;;AACC;EAEC;EACA;AADF,C","sources":["webpack://todo-list/./src/popover-trigger-block/editor.scss"],"sourcesContent":[".wp-block-ncmfse-popover-trigger {\n\t&.is-selected,\n\t&.has-child-selected {\n\t\topacity: 1;\n\t\tvisibility: visible;\n\t}\n}\n"],"names":[],"sourceRoot":""}

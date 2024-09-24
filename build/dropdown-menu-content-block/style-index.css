@@ -1,0 +1,33 @@
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/dropdown-menu-content-block/style.scss ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+.wp-block-ncmfse-dropdown-menu-content {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 100%;
+  transition: opacity 0.1s linear;
+  visibility: hidden;
+  width: 0;
+  z-index: 2;
+  background-color: var(--wp--preset--color--base-2);
+  border: 1px solid var(--wp--preset--color--shadcn-border);
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
+.wp-block-ncmfse-dropdown-menu-content:focus-visible, .wp-block-ncmfse-dropdown-menu-content:focus {
+  outline: none;
+}
+.alignleft .wp-block-ncmfse-dropdown-menu-content {
+  left: 0;
+}
+.alignright .wp-block-ncmfse-dropdown-menu-content {
+  right: 0;
+}
+.aligncenter .wp-block-ncmfse-dropdown-menu-content {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/*# sourceMappingURL=style-index.css.map*/

@@ -1,0 +1,9 @@
+.wp-block-ncmfse-current-user-avatar {
+	&.is-selected,
+	&.has-child-selected {
+		.wp-block-ncmfse-current-user-avatar-dropdown {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"popover-block/index.css","mappings":";;;AAGE;EACC;EACA;AAFH,C","sources":["webpack://todo-list/./src/popover-block/editor.scss"],"sourcesContent":[".wp-block-ncmfse-popover {\n\t&.is-selected,\n\t&.has-child-selected {\n\t\t.wp-block-ncmfse-popover-content {\n\t\t\tvisibility: visible;\n\t\t\topacity: 1;\n\t\t}\n\t}\n}\n"],"names":[],"sourceRoot":""}

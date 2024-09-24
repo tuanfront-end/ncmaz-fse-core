@@ -1,0 +1,13 @@
+/*!****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/dropdown-menu-item-block/style.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************************************/
+.wp-block-ncmfse-dropdown-menu-item.is-style-rounded {
+  border-radius: 6px;
+}
+.wp-block-ncmfse-dropdown-menu-item.is-style-rounded:hover {
+  background-color: var(--wp--preset--color--shadcn-accent);
+  color: var(--wp--preset--color--shadcn-accent-foreground);
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=style-index.css.map*/

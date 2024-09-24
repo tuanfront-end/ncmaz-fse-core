@@ -1,0 +1,10 @@
+.wp-block-ncmfse-dropdown-menu-item {
+	&.is-style-rounded {
+		border-radius: 6px;
+		&:hover {
+			background-color: var(--wp--preset--color--shadcn-accent);
+			color: var(--wp--preset--color--shadcn-accent-foreground);
+			text-decoration: none;
+		}
+	}
+}
