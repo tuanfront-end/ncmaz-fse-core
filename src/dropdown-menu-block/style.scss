@@ -4,11 +4,16 @@
 	&.is-selected {
 		.wp-block-ncmfse-dropdown-menu-content {
 			height: auto !important;
-			min-width: 210px !important;
+			min-width: 180px !important;
 			opacity: 1 !important;
 			overflow: visible !important;
 			visibility: visible !important;
 			width: auto !important;
 		}
+	}
+
+	hr {
+		width: 100%;
+		color: var(--wp--preset--color--shadcn-border);
 	}
 }

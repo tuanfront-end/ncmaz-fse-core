@@ -50,17 +50,47 @@ export default function Edit(props: EditProps<Attributes>) {
 				<InnerBlocks
 					template={[
 						[
-							"core/heading",
+							"core/paragraph",
 							{
 								content: "Label Menu",
-								level: 2,
+								style: {
+									typography: {
+										fontSize: "0.875rem",
+										fontWeight: "500",
+									},
+									spacing: {
+										padding: {
+											right: "0.5rem",
+											bottom: "0.5rem",
+											left: "0.5rem",
+										},
+									},
+								},
 							},
 						],
-						["core/separator", {}],
+						[
+							"core/separator",
+							{
+								style: {
+									spacing: {
+										margin: { top: "0.25rem", bottom: "0.25rem" },
+									},
+								},
+							},
+						],
 						["ncmfse/dropdown-menu-item", {}],
 						["ncmfse/dropdown-menu-item", {}],
 						["ncmfse/dropdown-menu-item", {}],
-						["core/separator", {}],
+						[
+							"core/separator",
+							{
+								style: {
+									spacing: {
+										margin: { top: "0.25rem", bottom: "0.25rem" },
+									},
+								},
+							},
+						],
 						["ncmfse/dropdown-menu-item", {}],
 						["ncmfse/dropdown-menu-item", {}],
 					]}

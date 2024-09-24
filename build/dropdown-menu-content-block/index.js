@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./node_modules/@wordpress/icons/build-module/library/comment-author-avatar.js":
-/*!*************************************************************************************!*\
-  !*** ./node_modules/@wordpress/icons/build-module/library/comment-author-avatar.js ***!
-  \*************************************************************************************/
+/***/ "./node_modules/@wordpress/icons/build-module/library/page.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@wordpress/icons/build-module/library/page.js ***!
+  \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -21,16 +21,16 @@ __webpack_require__.r(__webpack_exports__);
  * WordPress dependencies
  */
 
-const commentAuthorAvatar = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+const page = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24"
 }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  fillRule: "evenodd",
-  d: "M7.25 16.437a6.5 6.5 0 1 1 9.5 0V16A2.75 2.75 0 0 0 14 13.25h-4A2.75 2.75 0 0 0 7.25 16v.437Zm1.5 1.193a6.47 6.47 0 0 0 3.25.87 6.47 6.47 0 0 0 3.25-.87V16c0-.69-.56-1.25-1.25-1.25h-4c-.69 0-1.25.56-1.25 1.25v1.63ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm10-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z",
-  clipRule: "evenodd"
+  d: "M15.5 7.5h-7V9h7V7.5Zm-7 3.5h7v1.5h-7V11Zm7 3.5h-7V16h7v-1.5Z"
+}), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
+  d: "M17 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM7 5.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5Z"
 }));
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (commentAuthorAvatar);
-//# sourceMappingURL=comment-author-avatar.js.map
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (page);
+//# sourceMappingURL=page.js.map
 
 /***/ }),
 
@@ -71,10 +71,40 @@ function Edit(props) {
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InnerBlocks, {
-    template: [["core/heading", {
+    template: [["core/paragraph", {
       content: "Label Menu",
-      level: 2
-    }], ["core/separator", {}], ["ncmfse/dropdown-menu-item", {}], ["ncmfse/dropdown-menu-item", {}], ["ncmfse/dropdown-menu-item", {}], ["core/separator", {}], ["ncmfse/dropdown-menu-item", {}], ["ncmfse/dropdown-menu-item", {}]],
+      style: {
+        typography: {
+          fontSize: "0.875rem",
+          fontWeight: "500"
+        },
+        spacing: {
+          padding: {
+            right: "0.5rem",
+            bottom: "0.5rem",
+            left: "0.5rem"
+          }
+        }
+      }
+    }], ["core/separator", {
+      style: {
+        spacing: {
+          margin: {
+            top: "0.25rem",
+            bottom: "0.25rem"
+          }
+        }
+      }
+    }], ["ncmfse/dropdown-menu-item", {}], ["ncmfse/dropdown-menu-item", {}], ["ncmfse/dropdown-menu-item", {}], ["core/separator", {
+      style: {
+        spacing: {
+          margin: {
+            top: "0.25rem",
+            bottom: "0.25rem"
+          }
+        }
+      }
+    }], ["ncmfse/dropdown-menu-item", {}], ["ncmfse/dropdown-menu-item", {}]],
     templateLock: false
   })));
 }
@@ -93,7 +123,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/dropdown-menu-content-block/style.scss");
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/dropdown-menu-content-block/edit.tsx");
 /* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./src/dropdown-menu-content-block/block.json");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/comment-author-avatar.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/page.js");
 /* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./save */ "./src/dropdown-menu-content-block/save.tsx");
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
@@ -246,7 +276,7 @@ module.exports = window["wp"]["primitives"];
   \****************************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/dropdown-menu-content","version":"0.1.0","title":"Ncmaz Dropdown Menu Content","category":"ncmfse","description":"A block that creates a dropdown menu content.","parent":["ncmfse/dropdown-menu"],"usesContext":["dropdownMenuId"],"example":{},"attributes":{},"supports":{"align":true,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"reusable":false,"shadow":true,"spacing":{"padding":["horizontal","vertical"],"__experimentalDefaultControls":{"padding":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"interactivity":true},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/dropdown-menu-content","version":"0.1.0","title":"Ncmaz Dropdown Menu Content","category":"ncmfse","description":"A block that creates a dropdown menu content.","parent":["ncmfse/dropdown-menu"],"usesContext":["dropdownMenuId"],"example":{},"attributes":{},"supports":{"align":true,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"reusable":false,"shadow":true,"spacing":{"padding":["horizontal","vertical"],"margin":true,"blockGap":true,"__experimentalDefaultControls":{"margin":true,"blockGap":true,"padding":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"layout":{"default":{"type":"grid","columnCount":1}},"interactivity":true},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
 
 /***/ })
 

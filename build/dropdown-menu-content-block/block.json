@@ -44,7 +44,11 @@
         "horizontal",
         "vertical"
       ],
+      "margin": true,
+      "blockGap": true,
       "__experimentalDefaultControls": {
+        "margin": true,
+        "blockGap": true,
         "padding": true
       }
     },
@@ -58,6 +62,12 @@
         "radius": true,
         "style": true,
         "width": true
+      }
+    },
+    "layout": {
+      "default": {
+        "type": "grid",
+        "columnCount": 1
       }
     },
     "interactivity": true

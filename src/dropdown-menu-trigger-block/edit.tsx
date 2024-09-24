@@ -4,7 +4,6 @@ import {
 	useBlockProps,
 	InspectorControls,
 	InnerBlocks,
-	HeightControl,
 } from "@wordpress/block-editor";
 import "./editor.scss";
 import { EditProps, TAttrs } from "../types";
@@ -52,7 +51,7 @@ export default function Edit(props: EditProps<Attributes>) {
 						[
 							"core/button",
 							{
-								content: "This is trigger",
+								text: __("Open menu"),
 							},
 						],
 					]}

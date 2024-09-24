@@ -65,7 +65,16 @@ export default function Edit(props: EditProps<Attributes>) {
 				<InnerBlocks
 					template={[
 						["ncmfse/dropdown-menu-trigger", {}],
-						["ncmfse/dropdown-menu-content", {}],
+						[
+							"ncmfse/dropdown-menu-content",
+							{
+								style: {
+									spacing: {
+										blockGap: "1px",
+									},
+								},
+							},
+						],
 					]}
 					templateLock="all"
 				/>

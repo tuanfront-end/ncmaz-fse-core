@@ -18,7 +18,7 @@ import "./style.scss";
  */
 import Edit from "./edit";
 import metadata from "./block.json";
-import { commentAuthorAvatar as icon } from "@wordpress/icons";
+import { button as icon } from "@wordpress/icons";
 import save from "./save";
 
 /**

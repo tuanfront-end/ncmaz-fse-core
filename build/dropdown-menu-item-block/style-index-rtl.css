@@ -1,11 +1,23 @@
 /*!****************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/dropdown-menu-item-block/style.scss ***!
   \****************************************************************************************************************************************************************************************************************************************************************/
-.wp-block-ncmfse-dropdown-menu-item.is-style-rounded {
+.wp-block-ncmfse-dropdown-menu-item {
   border-radius: 6px;
-}
-.wp-block-ncmfse-dropdown-menu-item.is-style-rounded:hover {
-  background-color: var(--wp--preset--color--shadcn-accent);
-  color: var(--wp--preset--color--shadcn-accent-foreground);
   text-decoration: none;
+  transition: background-color 0.1s linear, color 0.1s linear;
+  padding: 0.5rem;
+  font-size: var(--wp--preset--font-size--sm);
+}
+.wp-block-ncmfse-dropdown-menu-item > *:first-child {
+  margin-block-end: 0;
+  margin-block-start: 0;
+}
+.wp-block-ncmfse-dropdown-menu-item:hover {
+  background-color: var(--wp--preset--color--shadcn-accent);
+}
+.wp-block-ncmfse-dropdown-menu-item.is-style-default {
+  border-radius: initial;
+}
+.wp-block-ncmfse-dropdown-menu-item.is-style-default:hover {
+  background-color: initial;
 }

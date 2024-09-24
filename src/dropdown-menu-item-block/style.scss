@@ -1,10 +1,26 @@
 .wp-block-ncmfse-dropdown-menu-item {
-	&.is-style-rounded {
-		border-radius: 6px;
+	border-radius: 6px;
+	text-decoration: none;
+	transition:
+		background-color 0.1s linear,
+		color 0.1s linear;
+
+	padding: 0.5rem;
+	font-size: var(--wp--preset--font-size--sm);
+
+	> *:first-child {
+		margin-block-end: 0;
+		margin-block-start: 0;
+	}
+
+	&:hover {
+		background-color: var(--wp--preset--color--shadcn-accent);
+	}
+
+	&.is-style-default {
+		border-radius: initial;
 		&:hover {
-			background-color: var(--wp--preset--color--shadcn-accent);
-			color: var(--wp--preset--color--shadcn-accent-foreground);
-			text-decoration: none;
+			background-color: initial;
 		}
 	}
 }

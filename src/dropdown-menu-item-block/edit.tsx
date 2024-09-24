@@ -52,7 +52,7 @@ export default function Edit(props: EditProps<Attributes>) {
 						[
 							"core/paragraph",
 							{
-								content: "Hello, World!",
+								content: "Menu Item",
 							},
 						],
 					]}
