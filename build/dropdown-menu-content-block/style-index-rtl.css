@@ -20,13 +20,13 @@
 .wp-block-ncmfse-dropdown-menu-content:focus-visible, .wp-block-ncmfse-dropdown-menu-content:focus {
   outline: none;
 }
-.alignleft .wp-block-ncmfse-dropdown-menu-content {
+.wp-block-ncmfse-dropdown-menu-content.alignleft {
   right: 0;
 }
-.alignright .wp-block-ncmfse-dropdown-menu-content {
+.wp-block-ncmfse-dropdown-menu-content.alignright {
   left: 0;
 }
-.aligncenter .wp-block-ncmfse-dropdown-menu-content {
+.wp-block-ncmfse-dropdown-menu-content.aligncenter {
   right: 50%;
   transform: translateX(50%);
 }

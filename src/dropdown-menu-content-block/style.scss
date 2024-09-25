@@ -19,13 +19,13 @@
 		outline: none;
 	}
 
-	.alignleft & {
+	&.alignleft {
 		left: 0;
 	}
-	.alignright & {
+	&.alignright {
 		right: 0;
 	}
-	.aligncenter & {
+	&.aligncenter {
 		left: 50%;
 		transform: translateX(-50%);
 	}

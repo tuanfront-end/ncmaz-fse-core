@@ -10,7 +10,8 @@
 	line-height: inherit;
 	text-align: left;
 	text-transform: inherit;
-
+	padding-inline: 0;
+	cursor: pointer;
 	&:focus {
 		outline: none;
 	}

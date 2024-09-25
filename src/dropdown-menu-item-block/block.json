@@ -51,7 +51,9 @@
 		"reusable": false,
 		"spacing": {
 			"padding": ["horizontal", "vertical"],
+			"blockGap": true,
 			"__experimentalDefaultControls": {
+				"blockGap": true,
 				"padding": true
 			}
 		},
@@ -65,6 +67,12 @@
 				"radius": true,
 				"style": true,
 				"width": true
+			}
+		},
+		"layout": {
+			"default": {
+				"type": "flex",
+				"flexWrap": "nowrap"
 			}
 		},
 		"interactivity": true
