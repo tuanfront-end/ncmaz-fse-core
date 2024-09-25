@@ -1,5 +1,5 @@
 import { __ } from "@wordpress/i18n";
-import { PanelBody, TextControl, ToggleControl } from "@wordpress/components";
+import { PanelBody } from "@wordpress/components";
 import {
 	useBlockProps,
 	InspectorControls,
@@ -13,7 +13,7 @@ import metadata from "./block.json";
 type Attributes = TAttrs<typeof metadata.attributes>;
 
 export default function Edit(props: EditProps<Attributes>) {
-	const { attributes, setAttributes, isSelected } = props;
+	const { attributes, setAttributes } = props;
 	const { minWidth } = attributes;
 
 	const blockProps = useBlockProps({

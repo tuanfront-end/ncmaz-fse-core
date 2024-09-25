@@ -12,6 +12,7 @@
 	text-transform: inherit;
 	padding-inline: 0;
 	cursor: pointer;
+	display: inline-flex;
 	&:focus {
 		outline: none;
 	}
