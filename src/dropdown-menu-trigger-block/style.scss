@@ -10,4 +10,8 @@
 	line-height: inherit;
 	text-align: left;
 	text-transform: inherit;
+
+	&:focus {
+		outline: none;
+	}
 }

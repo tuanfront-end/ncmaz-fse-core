@@ -14,5 +14,8 @@
   text-align: left;
   text-transform: inherit;
 }
+.wp-block-ncmfse-dropdown-menu-trigger:focus {
+  outline: none;
+}
 
 /*# sourceMappingURL=style-index.css.map*/

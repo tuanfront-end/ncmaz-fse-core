@@ -14,35 +14,23 @@ type Attributes = TAttrs<typeof metadata.attributes>;
 
 export default function Edit(props: EditProps<Attributes>) {
 	const { attributes, setAttributes, isSelected } = props;
-	const {} = attributes;
+	const { minWidth } = attributes;
 
-	const blockProps = useBlockProps({});
+	const blockProps = useBlockProps({
+		style: {
+			minWidth: minWidth || "180px",
+		},
+	});
 
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody title={__("Settings", "ncmfse")}>
-					{/* <HeightControl
-						label={"My Height Control"}
-						onChange={(value) => setAttributes({ imageHeight: value })}
-						value={imageHeight}
-					/> */}
-					{/* <TextControl
-						__nextHasNoMarginBottom
-						label={__("Text", "ncmfse")}
-						value={minReadText}
-						onChange={(value) => setAttributes({ minReadText: value })}
-					/> */}
-
-					{/* <ToggleControl
-						__nextHasNoMarginBottom
-						label={__("Show Count", "ncmfse")}
-						help={__("Show/Hide count number", "ncmfse")}
-						checked={showCountText}
-						onChange={(newValue) => {
-							setAttributes({ showCountText: newValue });
-						}}
-					/> */}
+					<HeightControl
+						label={__("Min Width", "ncmfse")}
+						onChange={(value) => setAttributes({ minWidth: value })}
+						value={minWidth}
+					/>
 				</PanelBody>
 			</InspectorControls>
 
@@ -60,6 +48,7 @@ export default function Edit(props: EditProps<Attributes>) {
 									},
 									spacing: {
 										padding: {
+											top: "0.25rem",
 											right: "0.5rem",
 											bottom: "0.5rem",
 											left: "0.5rem",
@@ -73,7 +62,7 @@ export default function Edit(props: EditProps<Attributes>) {
 							{
 								style: {
 									spacing: {
-										margin: { top: "0.25rem", bottom: "0.25rem" },
+										margin: { top: "0.125rem", bottom: "0.25rem" },
 									},
 								},
 							},

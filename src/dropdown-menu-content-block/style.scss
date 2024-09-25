@@ -11,9 +11,8 @@
 	background-color: var(--wp--preset--color--base-2);
 	border: 1px solid var(--wp--preset--color--shadcn-border);
 	border-radius: 12px;
-	padding: 1rem;
-	margin-top: 0.5rem;
-	gap: 1px;
+	padding: var(--wp--preset--spacing--2);
+	margin-top: var(--wp--preset--spacing--2);
 
 	&:focus-visible,
 	&:focus {

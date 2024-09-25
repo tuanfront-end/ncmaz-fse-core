@@ -14,3 +14,6 @@
   text-align: right;
   text-transform: inherit;
 }
+.wp-block-ncmfse-dropdown-menu-trigger:focus {
+  outline: none;
+}

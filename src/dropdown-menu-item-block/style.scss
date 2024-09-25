@@ -1,11 +1,12 @@
 .wp-block-ncmfse-dropdown-menu-item {
+	display: block;
 	border-radius: 6px;
 	text-decoration: none;
 	transition:
 		background-color 0.1s linear,
 		color 0.1s linear;
 
-	padding: 0.5rem;
+	padding: var(--wp--preset--spacing--2);
 	font-size: var(--wp--preset--font-size--sm);
 
 	> *:first-child {
@@ -17,7 +18,7 @@
 		background-color: var(--wp--preset--color--shadcn-accent);
 	}
 
-	&.is-style-default {
+	&.is-style-none-hover {
 		border-radius: initial;
 		&:hover {
 			background-color: initial;

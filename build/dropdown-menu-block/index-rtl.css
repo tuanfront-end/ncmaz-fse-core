@@ -3,7 +3,6 @@
   \************************************************************************************************************************************************************************************************************************************************************/
 .wp-block-ncmfse-dropdown-menu.is-selected .wp-block-ncmfse-dropdown-menu-content, .wp-block-ncmfse-dropdown-menu.has-child-selected .wp-block-ncmfse-dropdown-menu-content {
   height: auto !important;
-  min-width: 210px !important;
   opacity: 1 !important;
   overflow: visible !important;
   visibility: visible !important;

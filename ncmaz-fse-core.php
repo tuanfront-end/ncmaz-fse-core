@@ -56,11 +56,13 @@ function ncmaz_fse_core_register_blocks_init()
 	register_block_type(__DIR__ . '/build/dropdown-menu-trigger-block');
 	register_block_type(__DIR__ . '/build/dropdown-menu-content-block');
 	register_block_type(__DIR__ . '/build/dropdown-menu-item-block');
+	register_block_type(__DIR__ . '/build/current-user-name-block');
 
 
 	//  SOME CUSTOM BLOCKS
 	register_block_type(__DIR__ . '/build/enable-linked-groups');
 	register_block_type(__DIR__ . '/build/enable-snapping-templates');
+	register_block_type(__DIR__ . '/build/enable-logged-user-avatar');
 	// END SOME CUSTOM BLOCKS
 }
 add_action('init', 'ncmaz_fse_core_register_blocks_init');
@@ -302,3 +304,40 @@ function ncmazfse_core_enable_shadow_to_group_blocks($args, $block_type)
 	return $args;
 }
 add_filter('register_block_type_args', 'ncmazfse_core_enable_shadow_to_group_blocks', 10, 2);
+
+
+
+/**
+ * Enable Logged in User Avatar
+ */
+function ncmazfse_enable_logged_in_user_avatar_render_block($block_content, $block, $instance)
+{
+	if (! ($block['attrs']['isCurrentLogged'] ?? false) || isset($block->context['commentId']) || !is_user_logged_in()) {
+		return $block_content;
+	}
+
+	$attributes = $block['attrs'];
+	$block['attrs']['userId'] = get_current_user_id();
+	$author_id = $block['attrs']['userId'];
+
+	$size  = isset($attributes['size']) ? $attributes['size'] : 96;
+	$avatar_url = get_avatar_url(
+		$author_id,
+		['size' => $size],
+	);
+	$avatar_url_2x = get_avatar_url(
+		$author_id,
+		['size' => $size * 2],
+	);
+
+	// Modify the img attributes using the HTML API.
+	$processor = new WP_HTML_Tag_Processor($block_content);
+	if ($processor->next_tag(array('tag_name' => 'img', 'class_name' => 'wp-block-avatar__image'))) {
+		$processor->set_attribute('src', $avatar_url);
+		$processor->set_attribute('srcset', $avatar_url . ' 1x, ' . $avatar_url_2x . ' 2x');
+		$block_content = $processor->get_updated_html();
+	}
+
+	return $block_content;
+}
+add_filter('render_block_core/avatar', 'ncmazfse_enable_logged_in_user_avatar_render_block', 10, 3);

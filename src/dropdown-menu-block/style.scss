@@ -1,19 +1,24 @@
 .wp-block-ncmfse-dropdown-menu {
 	position: relative;
 
+	&:focus {
+		outline: none;
+	}
+
 	&.is-selected {
 		.wp-block-ncmfse-dropdown-menu-content {
-			height: auto !important;
-			min-width: 180px !important;
-			opacity: 1 !important;
-			overflow: visible !important;
-			visibility: visible !important;
-			width: auto !important;
+			height: auto;
+			opacity: 1;
+			overflow: visible;
+			visibility: visible;
+			width: auto;
 		}
 	}
 
 	hr {
 		width: 100%;
 		color: var(--wp--preset--color--shadcn-border);
+		margin-left: 0.25rem;
+		margin-right: 0.25rem;
 	}
 }

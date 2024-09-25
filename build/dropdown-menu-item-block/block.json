@@ -13,7 +13,22 @@
   "usesContext": [
     "dropdownMenuId"
   ],
-  "attributes": {},
+  "attributes": {
+    "textAlign": {
+      "type": "string"
+    },
+    "isLink": {
+      "type": "boolean",
+      "default": false
+    },
+    "href": {
+      "type": "string"
+    },
+    "linkTarget": {
+      "type": "string",
+      "default": "_self"
+    }
+  },
   "supports": {
     "color": {
       "gradients": true,
@@ -37,7 +52,6 @@
       }
     },
     "reusable": false,
-    "shadow": true,
     "spacing": {
       "padding": [
         "horizontal",
@@ -64,12 +78,12 @@
   "styles": [
     {
       "name": "default",
-      "label": "Default"
+      "label": "Default",
+      "isDefault": true
     },
     {
-      "name": "rounded",
-      "label": "Rounded",
-      "isDefault": true
+      "name": "none-hover",
+      "label": "None Hover"
     }
   ],
   "editorScript": "file:./index.js",

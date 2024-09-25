@@ -1,0 +1,10 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ncmazfse-block-not-use/enable-logged-user-avatar",
+	"version": "0.1.0",
+	"title": "enable-logged-user-avatar",
+	"textdomain": "ncmazfse-block",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

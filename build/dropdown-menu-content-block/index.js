@@ -64,11 +64,23 @@ function Edit(props) {
     setAttributes,
     isSelected
   } = props;
-  const {} = attributes;
-  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)({});
+  const {
+    minWidth
+  } = attributes;
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)({
+    style: {
+      minWidth: minWidth || "180px"
+    }
+  });
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Settings", "ncmfse")
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.HeightControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Min Width", "ncmfse"),
+    onChange: value => setAttributes({
+      minWidth: value
+    }),
+    value: minWidth
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InnerBlocks, {
     template: [["core/paragraph", {
@@ -80,6 +92,7 @@ function Edit(props) {
         },
         spacing: {
           padding: {
+            top: "0.25rem",
             right: "0.5rem",
             bottom: "0.5rem",
             left: "0.5rem"
@@ -90,7 +103,7 @@ function Edit(props) {
       style: {
         spacing: {
           margin: {
-            top: "0.25rem",
+            top: "0.125rem",
             bottom: "0.25rem"
           }
         }
@@ -276,7 +289,7 @@ module.exports = window["wp"]["primitives"];
   \****************************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/dropdown-menu-content","version":"0.1.0","title":"Ncmaz Dropdown Menu Content","category":"ncmfse","description":"A block that creates a dropdown menu content.","parent":["ncmfse/dropdown-menu"],"usesContext":["dropdownMenuId"],"example":{},"attributes":{},"supports":{"align":true,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"reusable":false,"shadow":true,"spacing":{"padding":["horizontal","vertical"],"margin":true,"blockGap":true,"__experimentalDefaultControls":{"margin":true,"blockGap":true,"padding":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"layout":{"default":{"type":"grid","columnCount":1}},"interactivity":true},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/dropdown-menu-content","version":"0.1.0","title":"Ncmaz Dropdown Menu Content","category":"ncmfse","description":"A block that creates a dropdown menu content.","parent":["ncmfse/dropdown-menu"],"usesContext":["dropdownMenuId"],"example":{},"attributes":{"minWidth":{"type":"string"}},"supports":{"align":true,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"reusable":false,"shadow":true,"spacing":{"padding":["horizontal","vertical"],"margin":true,"blockGap":true,"__experimentalDefaultControls":{"margin":true,"blockGap":true,"padding":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"layout":true,"interactivity":true},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
 
 /***/ })
 

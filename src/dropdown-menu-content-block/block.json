@@ -9,7 +9,11 @@
 	"parent": ["ncmfse/dropdown-menu"],
 	"usesContext": ["dropdownMenuId"],
 	"example": {},
-	"attributes": {},
+	"attributes": {
+		"minWidth": {
+			"type": "string"
+		}
+	},
 	"supports": {
 		"align": true,
 		"color": {
@@ -57,12 +61,7 @@
 				"width": true
 			}
 		},
-		"layout": {
-			"default": {
-				"type": "grid",
-				"columnCount": 1
-			}
-		},
+		"layout": true,
 		"interactivity": true
 	},
 	"editorScript": "file:./index.js",
