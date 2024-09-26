@@ -320,3 +320,17 @@ textarea:disabled {
 .nc-heading-section mark {
   background-color: rgba(0, 0, 0, 0);
 }
+
+.wp-block-group__link:focus {
+  outline: none;
+}
+
+.button-outline {
+  cursor: pointer;
+  border: 1px solid var(--wp--preset--color--shadcn-border);
+  transition: background-color 0.3s;
+  border-radius: 12px;
+}
+.button-outline:hover {
+  background-color: var(--wp--preset--color--shadcn-accent);
+}

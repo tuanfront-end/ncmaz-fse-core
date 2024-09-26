@@ -162,3 +162,21 @@
 		background-color: rgba(0, 0, 0, 0);
 	}
 }
+
+// LINK on GROUP BLOCK
+.wp-block-group__link {
+	&:focus {
+		outline: none;
+	}
+}
+
+// Hover for button/group have border
+.button-outline {
+	cursor: pointer;
+	border: 1px solid var(--wp--preset--color--shadcn-border);
+	transition: background-color 0.3s;
+	border-radius: 12px;
+	&:hover {
+		background-color: var(--wp--preset--color--shadcn-accent);
+	}
+}

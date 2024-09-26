@@ -38,6 +38,6 @@ if (isset($attributes['textAlign'])) {
 $wrapper_attributes = get_block_wrapper_attributes(array('class' => implode(' ', $classes)));
 ?>
 
-<<?php esc_attr_e($tag_name); ?> <?php echo wp_kses_data($wrapper_attributes); ?>>
-	<?php esc_html_e($title); ?>
-</<?php esc_attr_e($tag_name); ?>>
+<<?php esc_html_e($tag_name); ?> <?php echo wp_kses_data($wrapper_attributes); ?>>
+	<?php echo wp_kses_post($title); ?>
+</<?php esc_html_e($tag_name); ?>>
