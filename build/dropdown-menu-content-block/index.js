@@ -61,8 +61,7 @@ __webpack_require__.r(__webpack_exports__);
 function Edit(props) {
   const {
     attributes,
-    setAttributes,
-    isSelected
+    setAttributes
   } = props;
   const {
     minWidth

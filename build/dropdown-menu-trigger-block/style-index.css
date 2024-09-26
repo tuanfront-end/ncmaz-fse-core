@@ -15,6 +15,7 @@
   text-transform: inherit;
   padding-inline: 0;
   cursor: pointer;
+  display: flex;
 }
 .wp-block-ncmfse-dropdown-menu-trigger:focus {
   outline: none;

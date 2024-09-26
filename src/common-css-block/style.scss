@@ -1,4 +1,9 @@
 @import "./form.scss";
+@import "./header-nav.scss";
+
+:root {
+	--wp--style--modal--padding: min(2rem, 4vw);
+}
 
 .relative {
 	position: relative;
@@ -155,55 +160,5 @@
 .nc-heading-section {
 	mark {
 		background-color: rgba(0, 0, 0, 0);
-	}
-}
-
-// Header template block
-.global-header {
-	padding-bottom: 20px;
-	padding-top: 20px;
-
-	.wp-block-navigation {
-		a {
-			color: inherit;
-			text-decoration: none;
-			&:hover {
-				text-decoration: underline;
-			}
-		}
-
-		.wp-block-navigation__container > * {
-			> .wp-block-navigation-item__content,
-			> .wp-block-outermost-mega-menu__toggle {
-				line-height: 4;
-				@media (min-width: 600px) {
-					line-height: 6;
-				}
-			}
-		}
-
-		.wp-block-navigation__responsive-container.is-menu-open {
-			// In sidebar when click the bar icon
-			.wp-block-navigation__container > * {
-				> .wp-block-navigation-item__content,
-				> .wp-block-outermost-mega-menu__toggle {
-					line-height: inherit;
-				}
-			}
-		}
-
-		.wp-block-navigation__responsive-container-open.always-shown {
-			padding-top: 0;
-			padding-bottom: 0;
-			@media (min-width: 600px) {
-				padding-top: 28px;
-				padding-bottom: 28px;
-			}
-		}
-	}
-
-	@media (min-width: 600px) {
-		padding-top: 0;
-		padding-bottom: 0;
 	}
 }
