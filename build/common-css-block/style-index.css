@@ -46,7 +46,7 @@ input[type=radio] {
   flex-shrink: 0;
   height: 1rem;
   width: 1rem;
-  border-color: #e2e8f0;
+  border-color: var(--wp--preset--color--shadcn-input, #e2e8f0);
   border-width: 1px;
 }
 
