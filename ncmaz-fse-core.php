@@ -114,13 +114,6 @@ function ncmazfse_enable_linked_groups_render_block($block_content, $block, $ins
 
 	if ('custom' === $link_destination && $href) {
 		$link = $href;
-		if ($block['attrs']['linkWithCurrentSearch'] ?? '') {
-			$href_query = parse_url($href, PHP_URL_QUERY) ?? '';
-			$href_params =  [];
-			parse_str($href_query, $href_params);
-			$merged_params =  array_merge($_GET, $href_params);
-			$link = add_query_arg($merged_params, $href);
-		}
 	} elseif ('post' === $link_destination) {
 		if ($termId) {
 			$link =  get_term_link($termId);
@@ -131,6 +124,14 @@ function ncmazfse_enable_linked_groups_render_block($block_content, $block, $ins
 
 	if (! $link) {
 		return $block_content;
+	}
+
+	if ($block['attrs']['linkWithCurrentSearch'] ?? '') {
+		$_query = parse_url($link, PHP_URL_QUERY) ?? '';
+		$_params =  [];
+		parse_str($_query, $_params);
+		$merged_params =  array_merge($_GET, $_params);
+		$link = add_query_arg($merged_params, $link);
 	}
 
 	// Add the is-linked class to the group block.

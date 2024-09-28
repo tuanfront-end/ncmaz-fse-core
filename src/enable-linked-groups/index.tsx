@@ -136,19 +136,6 @@ function addInspectorControls(BlockEdit) {
 											})
 										}
 									/>
-									<div style={{ padding: 16, paddingTop: 0 }}>
-										<ToggleControl
-											__nextHasNoMarginBottom
-											label={__("User with current search params")}
-											help={__(
-												'Use with search parameters in the current url, this is useful for filters etc. This will add the current search parameters to the link. For example, if the current url is ".../?s=text" and the link is ".../?oder=desc", the final link will be ".../?s=text&oder=desc".',
-											)}
-											checked={linkWithCurrentSearch}
-											onChange={(newValue) => {
-												setAttributes({ linkWithCurrentSearch: newValue });
-											}}
-										/>
-									</div>
 								</>
 							)}
 							{!href && !linkDestination && (
@@ -199,6 +186,20 @@ function addInspectorControls(BlockEdit) {
 									/>
 								</div>
 							)}
+
+							<div style={{ padding: 16, paddingTop: 0 }}>
+								<ToggleControl
+									__nextHasNoMarginBottom
+									label={__("User with current search params")}
+									help={__(
+										'Use with search parameters in the current url, this is useful for filters etc. This will add the current search parameters to the link. For example, if the current url is ".../?s=text" and the link is ".../?oder=desc", the final link will be ".../?s=text&oder=desc".',
+									)}
+									checked={linkWithCurrentSearch}
+									onChange={(newValue) => {
+										setAttributes({ linkWithCurrentSearch: newValue });
+									}}
+								/>
+							</div>
 						</Popover>
 					)}
 				</BlockControls>

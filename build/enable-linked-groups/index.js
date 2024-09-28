@@ -284,22 +284,7 @@ function addInspectorControls(BlockEdit) {
         linkDestination: undefined,
         linkTarget: undefined
       })
-    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      style: {
-        padding: 16,
-        paddingTop: 0
-      }
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
-      __nextHasNoMarginBottom: true,
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("User with current search params"),
-      help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Use with search parameters in the current url, this is useful for filters etc. This will add the current search parameters to the link. For example, if the current url is ".../?s=text" and the link is ".../?oder=desc", the final link will be ".../?s=text&oder=desc".'),
-      checked: linkWithCurrentSearch,
-      onChange: newValue => {
-        setAttributes({
-          linkWithCurrentSearch: newValue
-        });
-      }
-    }))), !href && !linkDestination && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    })), !href && !linkDestination && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "enable-linked-groups__link-popover-menu"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.MenuGroup, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.MenuItem, {
       icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_10__["default"],
@@ -326,6 +311,21 @@ function addInspectorControls(BlockEdit) {
       onClick: () => setAttributes({
         linkDestination: undefined
       })
+    })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      style: {
+        padding: 16,
+        paddingTop: 0
+      }
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
+      __nextHasNoMarginBottom: true,
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("User with current search params"),
+      help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Use with search parameters in the current url, this is useful for filters etc. This will add the current search parameters to the link. For example, if the current url is ".../?s=text" and the link is ".../?oder=desc", the final link will be ".../?s=text&oder=desc".'),
+      checked: linkWithCurrentSearch,
+      onChange: newValue => {
+        setAttributes({
+          linkWithCurrentSearch: newValue
+        });
+      }
     })))));
   };
 }
