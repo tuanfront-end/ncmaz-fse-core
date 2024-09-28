@@ -179,4 +179,7 @@
 	&:hover {
 		background-color: var(--wp--preset--color--shadcn-accent);
 	}
+	&.is-active {
+		background-color: var(--wp--preset--color--shadcn-accent);
+	}
 }

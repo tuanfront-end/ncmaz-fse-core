@@ -334,3 +334,6 @@ textarea:disabled {
 .button-outline:hover {
   background-color: var(--wp--preset--color--shadcn-accent);
 }
+.button-outline.is-active {
+  background-color: var(--wp--preset--color--shadcn-accent);
+}

@@ -133,11 +133,15 @@ function ncmazfse_enable_linked_groups_render_block($block_content, $block, $ins
 		$merged_params =  array_merge($_GET, $_params);
 		$link = add_query_arg($merged_params, $link);
 	}
+	$is_active = ncmfse_core_check_href_is_active_with_current_url($link);
 
 	// Add the is-linked class to the group block.
 	$p = new WP_HTML_Tag_Processor($block_content);
 	if ($p->next_tag()) {
 		$p->add_class('is-linked');
+		if ($is_active) {
+			$p->add_class('is-active');
+		}
 	}
 	$block_content = $p->get_updated_html();
 
