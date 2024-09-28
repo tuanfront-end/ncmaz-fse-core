@@ -201,6 +201,10 @@ function addAttributes(settings) {
     },
     linkTarget: {
       type: "string"
+    },
+    linkWithCurrentSearch: {
+      type: "boolean",
+      default: false
     }
   };
   const newSettings = {
@@ -239,7 +243,8 @@ function addInspectorControls(BlockEdit) {
     const {
       href,
       linkDestination,
-      linkTarget
+      linkTarget,
+      linkWithCurrentSearch
     } = attributes;
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(BlockEdit, {
       ...props
@@ -259,7 +264,7 @@ function addInspectorControls(BlockEdit) {
       offset: 10,
       className: "enable-linked-groups__link-popover",
       variant: "alternate"
-    }, linkDestination !== "post" && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.__experimentalLinkControl, {
+    }, linkDestination !== "post" && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.__experimentalLinkControl, {
       value: {
         url: href,
         opensInNewTab: linkTarget === "_blank"
@@ -279,7 +284,22 @@ function addInspectorControls(BlockEdit) {
         linkDestination: undefined,
         linkTarget: undefined
       })
-    }), !href && !linkDestination && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      style: {
+        padding: 16,
+        paddingTop: 0
+      }
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
+      __nextHasNoMarginBottom: true,
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("User with current search params"),
+      help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Use with search parameters in the current url, this is useful for filters etc. This will add the current search parameters to the link. For example, if the current url is ".../?s=text" and the link is "/path/?oderby=title&oder=desc", the final link will be "/path/?s=text&oder=desc&orderby=title"'),
+      checked: linkWithCurrentSearch,
+      onChange: newValue => {
+        setAttributes({
+          linkWithCurrentSearch: newValue
+        });
+      }
+    }))), !href && !linkDestination && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "enable-linked-groups__link-popover-menu"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.MenuGroup, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.MenuItem, {
       icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_10__["default"],

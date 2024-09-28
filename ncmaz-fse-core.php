@@ -78,7 +78,6 @@ require_once plugin_dir_path(__FILE__) . 'includes/nc-mailpoet-form-handler.php'
 // enqueue scripts
 require_once plugin_dir_path(__FILE__) . 'includes/enqueue-scripts.php';
 
-
 /**
  * Enqueue block styles 
  * (Applies to both frontend and Editor)
@@ -109,12 +108,19 @@ function ncmazfse_enable_linked_groups_render_block($block_content, $block, $ins
 	$link_destination = $block['attrs']['linkDestination'] ?? '';
 	$link_target      = $block['attrs']['linkTarget'] ?? '_self';
 	$link_rel         = '_blank' === $link_target ? 'noopener noreferrer' : 'follow';
-	$termId 		= $instance->context['termId'] ?? '';
+	$termId 		 = $instance->context['termId'] ?? '';
 
 	$link = '';
 
 	if ('custom' === $link_destination && $href) {
 		$link = $href;
+		if ($block['attrs']['linkWithCurrentSearch'] ?? '') {
+			$href_query = parse_url($href, PHP_URL_QUERY) ?? '';
+			$href_params =  [];
+			parse_str($href_query, $href_params);
+			$merged_params =  array_merge($_GET, $href_params);
+			$link = add_query_arg($merged_params, $href);
+		}
 	} elseif ('post' === $link_destination) {
 		if ($termId) {
 			$link =  get_term_link($termId);
@@ -301,6 +307,26 @@ function ncmazfse_core_enable_shadow_to_group_blocks($args, $block_type)
 	return $args;
 }
 add_filter('register_block_type_args', 'ncmazfse_core_enable_shadow_to_group_blocks', 10, 2);
+
+
+
+/**
+ * Enable spacing for core/query-pagination blocks.
+ */
+function ncmazfse_core_enable_spacing_to_loop_pagination_blocks($args, $block_type)
+{
+	// Only apply the filter to core/query-pagination.
+	if ('core/query-pagination' !== $block_type) {
+		return $args;
+	}
+	$args['supports'] ??= [];
+	$args['supports']['spacing'] ??= [];
+	$args['supports']['spacing']['padding'] = true;
+	$args['supports']['spacing']['margin'] = true;
+	$args['supports']['spacing']['blockGap'] = true;
+	return $args;
+}
+add_filter('register_block_type_args', 'ncmazfse_core_enable_spacing_to_loop_pagination_blocks', 10, 2);
 
 
 

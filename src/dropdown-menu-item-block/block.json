@@ -5,7 +5,7 @@
 	"version": "0.1.0",
 	"title": "Ncmaz Dropdown Menu Item",
 	"category": "ncmfse",
-	"parent": ["ncmfse/popover"],
+	"parent": ["ncmfse/dropdown-menu-content"],
 	"description": "A block that creates a dropdown menu item.",
 	"example": {},
 	"usesContext": ["dropdownMenuId"],
@@ -17,7 +17,10 @@
 			"type": "boolean",
 			"default": false
 		},
-
+		"linkWithCurrentSearch": {
+			"type": "boolean",
+			"default": false
+		},
 		"href": {
 			"type": "string"
 		},

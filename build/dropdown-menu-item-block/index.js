@@ -101,7 +101,8 @@ function Edit(props) {
   const {
     linkTarget,
     textAlign,
-    href
+    href,
+    linkWithCurrentSearch
   } = attributes;
   const [isEditingURL, setIsEditingURL] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useState)(false);
   const [popoverAnchor, setPopoverAnchor] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useState)(null);
@@ -151,7 +152,22 @@ function Edit(props) {
       href: undefined,
       linkTarget: undefined
     })
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    style: {
+      padding: 16,
+      paddingTop: 0
+    }
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    __nextHasNoMarginBottom: true,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("User with current search params"),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Use with search parameters in the current url, this is useful for filters etc. This will add the current search parameters to the link. For example, if the current url is ".../?s=text" and the link is "/path/?oderby=title&oder=desc", the final link will be "/path/?s=text&oder=desc&orderby=title"'),
+    checked: linkWithCurrentSearch,
+    onChange: newValue => {
+      setAttributes({
+        linkWithCurrentSearch: newValue
+      });
+    }
+  })))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Settings")
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps
@@ -354,7 +370,7 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
   \*************************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/dropdown-menu-item","version":"0.1.0","title":"Ncmaz Dropdown Menu Item","category":"ncmfse","parent":["ncmfse/popover"],"description":"A block that creates a dropdown menu item.","example":{},"usesContext":["dropdownMenuId"],"attributes":{"textAlign":{"type":"string"},"isLink":{"type":"boolean","default":false},"href":{"type":"string"},"linkTarget":{"type":"string","default":"_self"}},"supports":{"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"reusable":false,"spacing":{"padding":["horizontal","vertical"],"blockGap":true,"__experimentalDefaultControls":{"blockGap":true,"padding":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"layout":{"default":{"type":"flex","flexWrap":"nowrap"}},"interactivity":true},"styles":[{"name":"default","label":"Default","isDefault":true},{"name":"none-hover","label":"None Hover"}],"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/dropdown-menu-item","version":"0.1.0","title":"Ncmaz Dropdown Menu Item","category":"ncmfse","parent":["ncmfse/dropdown-menu-content"],"description":"A block that creates a dropdown menu item.","example":{},"usesContext":["dropdownMenuId"],"attributes":{"textAlign":{"type":"string"},"isLink":{"type":"boolean","default":false},"linkWithCurrentSearch":{"type":"boolean","default":false},"href":{"type":"string"},"linkTarget":{"type":"string","default":"_self"}},"supports":{"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"reusable":false,"spacing":{"padding":["horizontal","vertical"],"blockGap":true,"__experimentalDefaultControls":{"blockGap":true,"padding":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"layout":{"default":{"type":"flex","flexWrap":"nowrap"}},"interactivity":true},"styles":[{"name":"default","label":"Default","isDefault":true},{"name":"none-hover","label":"None Hover"}],"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
 
 /***/ })
 

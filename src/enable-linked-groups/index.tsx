@@ -15,6 +15,7 @@ import {
 	MenuGroup,
 	MenuItem,
 	Popover,
+	ToggleControl,
 } from "@wordpress/components";
 import { link, linkOff, page, Icon } from "@wordpress/icons";
 import { useState } from "@wordpress/element";
@@ -42,6 +43,10 @@ function addAttributes(settings: Record<string, any>) {
 		},
 		linkTarget: {
 			type: "string",
+		},
+		linkWithCurrentSearch: {
+			type: "boolean",
+			default: false,
 		},
 	};
 
@@ -85,7 +90,8 @@ function addInspectorControls(BlockEdit) {
 		const [isEditingURL, setIsEditingURL] = useState(false);
 		const [popoverAnchor, setPopoverAnchor] = useState(null);
 		const { attributes, setAttributes } = props;
-		const { href, linkDestination, linkTarget } = attributes;
+		const { href, linkDestination, linkTarget, linkWithCurrentSearch } =
+			attributes;
 
 		return (
 			<>
@@ -109,26 +115,41 @@ function addInspectorControls(BlockEdit) {
 							variant="alternate"
 						>
 							{linkDestination !== "post" && (
-								<LinkControl
-									value={{
-										url: href,
-										opensInNewTab: linkTarget === "_blank",
-									}}
-									onChange={({ url: newURL = "", opensInNewTab }) => {
-										setAttributes({
-											href: newURL,
-											linkDestination: newURL ? "custom" : undefined,
-											linkTarget: opensInNewTab ? "_blank" : undefined,
-										});
-									}}
-									onRemove={() =>
-										setAttributes({
-											href: undefined,
-											linkDestination: undefined,
-											linkTarget: undefined,
-										})
-									}
-								/>
+								<>
+									<LinkControl
+										value={{
+											url: href,
+											opensInNewTab: linkTarget === "_blank",
+										}}
+										onChange={({ url: newURL = "", opensInNewTab }) => {
+											setAttributes({
+												href: newURL,
+												linkDestination: newURL ? "custom" : undefined,
+												linkTarget: opensInNewTab ? "_blank" : undefined,
+											});
+										}}
+										onRemove={() =>
+											setAttributes({
+												href: undefined,
+												linkDestination: undefined,
+												linkTarget: undefined,
+											})
+										}
+									/>
+									<div style={{ padding: 16, paddingTop: 0 }}>
+										<ToggleControl
+											__nextHasNoMarginBottom
+											label={__("User with current search params")}
+											help={__(
+												'Use with search parameters in the current url, this is useful for filters etc. This will add the current search parameters to the link. For example, if the current url is ".../?s=text" and the link is "/path/?oderby=title&oder=desc", the final link will be "/path/?s=text&oder=desc&orderby=title"',
+											)}
+											checked={linkWithCurrentSearch}
+											onChange={(newValue) => {
+												setAttributes({ linkWithCurrentSearch: newValue });
+											}}
+										/>
+									</div>
+								</>
 							)}
 							{!href && !linkDestination && (
 								<div className="enable-linked-groups__link-popover-menu">

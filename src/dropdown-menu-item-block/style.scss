@@ -24,4 +24,9 @@
 			background-color: initial;
 		}
 	}
+
+	&.is-active {
+		background-color: var(--wp--preset--color--shadcn-accent);
+		color: var(--wp--preset--color--shadcn-accent-text);
+	}
 }

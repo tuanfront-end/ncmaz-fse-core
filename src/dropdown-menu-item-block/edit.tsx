@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { __ } from "@wordpress/i18n";
 import {
-	MenuGroup,
 	PanelBody,
 	Popover,
 	ToggleControl,
@@ -19,13 +18,13 @@ import "./editor.scss";
 import { EditProps, TAttrs } from "../types";
 import { useState } from "@wordpress/element";
 import metadata from "./block.json";
-import { link, linkOff, page, Icon } from "@wordpress/icons";
+import { link } from "@wordpress/icons";
 
 type Attributes = TAttrs<typeof metadata.attributes>;
 
 export default function Edit(props: EditProps<Attributes>) {
 	const { attributes, setAttributes } = props;
-	const { linkTarget, textAlign, href } = attributes;
+	const { linkTarget, textAlign, href, linkWithCurrentSearch } = attributes;
 
 	const [isEditingURL, setIsEditingURL] = useState(false);
 	const [popoverAnchor, setPopoverAnchor] = useState(null);
@@ -81,6 +80,21 @@ export default function Edit(props: EditProps<Attributes>) {
 								})
 							}
 						/>
+
+						{/* This control allow use the current url + new */}
+						<div style={{ padding: 16, paddingTop: 0 }}>
+							<ToggleControl
+								__nextHasNoMarginBottom
+								label={__("User with current search params")}
+								help={__(
+									'Use with search parameters in the current url, this is useful for filters etc. This will add the current search parameters to the link. For example, if the current url is ".../?s=text" and the link is "/path/?oderby=title&oder=desc", the final link will be "/path/?s=text&oder=desc&orderby=title"',
+								)}
+								checked={linkWithCurrentSearch}
+								onChange={(newValue) => {
+									setAttributes({ linkWithCurrentSearch: newValue });
+								}}
+							/>
+						</div>
 					</Popover>
 				)}
 			</BlockControls>

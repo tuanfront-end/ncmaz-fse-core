@@ -22,5 +22,9 @@
 .wp-block-ncmfse-dropdown-menu-item.is-style-none-hover:hover {
   background-color: initial;
 }
+.wp-block-ncmfse-dropdown-menu-item.is-active {
+  background-color: var(--wp--preset--color--shadcn-accent);
+  color: var(--wp--preset--color--shadcn-accent-text);
+}
 
 /*# sourceMappingURL=style-index.css.map*/
