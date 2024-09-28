@@ -160,7 +160,7 @@ function Edit(props) {
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
     __nextHasNoMarginBottom: true,
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("User with current search params"),
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Use with search parameters in the current url, this is useful for filters etc. This will add the current search parameters to the link. For example, if the current url is ".../?s=text" and the link is "/path/?oderby=title&oder=desc", the final link will be "/path/?s=text&oder=desc&orderby=title"'),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Use with search parameters in the current url, this is useful for filters etc. This will add the current search parameters to the link. For example, if the current url is ".../?s=text" and the link is ".../?oder=desc", the final link will be ".../?s=text&oder=desc".'),
     checked: linkWithCurrentSearch,
     onChange: newValue => {
       setAttributes({
