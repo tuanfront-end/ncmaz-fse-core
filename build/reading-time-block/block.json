@@ -5,9 +5,6 @@
   "version": "0.1.0",
   "title": "Ncmaz Post Reading Time",
   "category": "ncmfse",
-  "ancestor": [
-    "core/post-template"
-  ],
   "usesContext": [
     "postId",
     "postType"

@@ -28,6 +28,15 @@ if (!empty($attributes['href'] ?? "")) {
 		$atts['href'] = add_query_arg($merged_params, $atts['href']);
 	}
 
+	// check href include the text {CURRENT_URL} or not, if yes, replace it with the current url
+	if (strpos($atts['href'], '{CURRENT_URL}') !== false) {
+		$atts['href'] = str_replace(
+			'{CURRENT_URL}',
+			home_url($_SERVER['REQUEST_URI']),
+			$atts['href']
+		);
+	}
+
 	// --- KIEM TRA XEM ITEM CO ACTIVE HAY KHONG
 	$is_active = ncmfse_core_check_href_is_active_with_current_url($atts['href']);
 	if ($is_active) {

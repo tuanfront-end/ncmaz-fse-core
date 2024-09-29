@@ -54,6 +54,7 @@ function ncmaz_fse_core_register_blocks_init()
 	register_block_type(__DIR__ . '/build/dropdown-menu-content-block');
 	register_block_type(__DIR__ . '/build/dropdown-menu-item-block');
 	register_block_type(__DIR__ . '/build/current-user-name-block');
+	register_block_type(__DIR__ . '/build/reading-progress-block');
 
 
 	//  SOME CUSTOM BLOCKS
@@ -314,7 +315,6 @@ function ncmazfse_core_enable_shadow_to_group_blocks($args, $block_type)
 add_filter('register_block_type_args', 'ncmazfse_core_enable_shadow_to_group_blocks', 10, 2);
 
 
-
 /**
  * Enable spacing for core/query-pagination blocks.
  */
@@ -333,6 +333,24 @@ function ncmazfse_core_enable_spacing_to_loop_pagination_blocks($args, $block_ty
 }
 add_filter('register_block_type_args', 'ncmazfse_core_enable_spacing_to_loop_pagination_blocks', 10, 2);
 
+
+/**
+ * Enable Typo for outermost/social-sharing blocks.
+ */
+function ncmazfse_core_enable_typo_to_outermost_social_sharing_blocks($args, $block_type)
+{
+	// Only apply the filter to outermost/social-sharing.
+	if ('outermost/social-sharing' !== $block_type) {
+		return $args;
+	}
+	$args['supports'] ??= [];
+	$args['supports']['typography'] ??= [];
+	$args['supports']['typography']['fontSize'] = true;
+	$args['supports']['typography']['lineHeight'] = true;
+	$args['supports']['typography']['__experimentalFontWeight'] = true;
+	return $args;
+}
+add_filter('register_block_type_args', 'ncmazfse_core_enable_typo_to_outermost_social_sharing_blocks', 10, 2);
 
 
 /**

@@ -30,3 +30,11 @@
   right: 50%;
   transform: translateX(50%);
 }
+.wp-block-ncmfse-dropdown-menu-content .wp-block-outermost-social-sharing.is-style-logos-only .outermost-social-sharing-link {
+  padding: var(--wp--preset--spacing--2);
+  border-radius: 6px;
+}
+.wp-block-ncmfse-dropdown-menu-content .wp-block-outermost-social-sharing.is-style-logos-only .outermost-social-sharing-link:hover {
+  background-color: var(--wp--preset--color--shadcn-accent);
+  transform: initial;
+}

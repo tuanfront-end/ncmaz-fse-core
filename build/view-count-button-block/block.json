@@ -4,9 +4,6 @@
   "name": "ncmfse/view-count-btn",
   "version": "0.1.0",
   "title": "Ncmaz Post View Count",
-  "ancestor": [
-    "core/post-template"
-  ],
   "category": "ncmfse",
   "usesContext": [
     "postId",
