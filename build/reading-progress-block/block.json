@@ -7,56 +7,49 @@
   "category": "ncmfse",
   "description": "A block that displays a reading progress section.",
   "example": {},
-  "attributes": {},
+  "attributes": {
+    "selector": {
+      "type": "string",
+      "default": ".single__content"
+    }
+  },
   "supports": {
-    "html": false,
+    "splitting": true,
+    "anchor": true,
+    "__experimentalBorder": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
     "color": {
       "gradients": true,
+      "link": true,
       "__experimentalDefaultControls": {
         "background": true,
         "text": true
+      }
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "__experimentalDefaultControls": {
+        "margin": false,
+        "padding": false
       }
     },
     "typography": {
       "fontSize": true,
       "lineHeight": true,
       "__experimentalFontFamily": true,
-      "__experimentalFontWeight": true,
-      "__experimentalFontStyle": true,
-      "__experimentalTextTransform": true,
       "__experimentalTextDecoration": true,
+      "__experimentalFontStyle": true,
+      "__experimentalFontWeight": true,
       "__experimentalLetterSpacing": true,
+      "__experimentalTextTransform": true,
       "__experimentalWritingMode": true,
       "__experimentalDefaultControls": {
         "fontSize": true
-      }
-    },
-    "shadow": true,
-    "spacing": {
-      "padding": true,
-      "margin": true,
-      "blockGap": true,
-      "__experimentalDefaultControls": {
-        "padding": true,
-        "blockGap": true
-      }
-    },
-    "__experimentalBorder": {
-      "color": true,
-      "radius": true,
-      "style": true,
-      "width": true,
-      "__experimentalDefaultControls": {
-        "color": true,
-        "radius": true,
-        "style": true,
-        "width": true
-      }
-    },
-    "layout": {
-      "default": {
-        "type": "flex",
-        "flexWrap": "nowrap"
       }
     },
     "interactivity": true

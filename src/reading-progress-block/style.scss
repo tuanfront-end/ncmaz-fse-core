@@ -1,0 +1,26 @@
+.wp-block-ncmfse-reading-progress {
+	cursor: pointer;
+	text-decoration: none;
+	display: flex;
+	&:focus {
+		outline: none;
+	}
+
+	.hidden {
+		display: none !important;
+	}
+
+	.wp-block-ncmfse-reading-progress__number {
+		min-width: 34px;
+		display: block;
+	}
+
+	.wp-block-ncmfse-reading-progress__totopicon {
+		display: flex;
+		padding-right: 0.5em;
+		svg {
+			width: 1.5em;
+			height: 1.5em;
+		}
+	}
+}

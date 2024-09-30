@@ -1,4 +1,26 @@
 /*!**************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/reading-progress-block/style.scss ***!
   \**************************************************************************************************************************************************************************************************************************************************************/
-
+.wp-block-ncmfse-reading-progress {
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+}
+.wp-block-ncmfse-reading-progress:focus {
+  outline: none;
+}
+.wp-block-ncmfse-reading-progress .hidden {
+  display: none !important;
+}
+.wp-block-ncmfse-reading-progress .wp-block-ncmfse-reading-progress__number {
+  min-width: 34px;
+  display: block;
+}
+.wp-block-ncmfse-reading-progress .wp-block-ncmfse-reading-progress__totopicon {
+  display: flex;
+  padding-left: 0.5em;
+}
+.wp-block-ncmfse-reading-progress .wp-block-ncmfse-reading-progress__totopicon svg {
+  width: 1.5em;
+  height: 1.5em;
+}

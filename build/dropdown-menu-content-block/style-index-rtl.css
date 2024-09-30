@@ -30,6 +30,12 @@
   right: 50%;
   transform: translateX(50%);
 }
+.wp-block-ncmfse-dropdown-menu-content.is-style-anchor-top {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: var(--wp--preset--spacing--2);
+}
 .wp-block-ncmfse-dropdown-menu-content .wp-block-outermost-social-sharing.is-style-logos-only .outermost-social-sharing-link {
   padding: var(--wp--preset--spacing--2);
   border-radius: 6px;

@@ -71,6 +71,17 @@
     "layout": true,
     "interactivity": true
   },
+  "styles": [
+    {
+      "name": "anchor-bottom",
+      "label": "Anchor Bottom",
+      "isDefault": true
+    },
+    {
+      "name": "anchor-top",
+      "label": "Anchor Top"
+    }
+  ],
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",

@@ -60,17 +60,46 @@ __webpack_require__.r(__webpack_exports__);
 const {
   state
 } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("ncmfse/reading-progress", {
-  state: {
-    get progressText() {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-      return "xx0%";
+  state: {},
+  actions: {
+    handleScrollToTop: () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
     }
   },
-  actions: {},
   callbacks: {
     handleInit: () => {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-      console.log(1, context);
+      const selector = context.selector;
+      const target = document.querySelector(selector);
+      if (!selector || !target) {
+        console.log("Selector not found!");
+        return;
+      }
+
+      // --------------------
+      const handleProgressIndicator = () => {
+        const entryContent = target;
+        const totalEntryH = entryContent.offsetTop + entryContent.offsetHeight;
+        let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        let scrolled = totalEntryH ? winScroll / totalEntryH * 100 : 0;
+        context.progressText = scrolled.toFixed(0) + "%";
+        if (scrolled >= 100) {
+          context.isShowScrollToTop = true;
+        } else {
+          context.isShowScrollToTop = false;
+        }
+      };
+
+      //
+      handleProgressIndicator();
+      const handleProgressIndicatorHeadeEvent = () => {
+        window?.requestAnimationFrame(handleProgressIndicator);
+      };
+      window?.addEventListener("scroll", handleProgressIndicatorHeadeEvent);
+      // --------------------
     }
   }
 });

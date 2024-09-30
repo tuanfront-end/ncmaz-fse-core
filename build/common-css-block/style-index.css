@@ -224,6 +224,20 @@ textarea:disabled {
   bottom: 0;
 }
 
+.bottom-4 {
+  bottom: 1rem;
+}
+
+@media (min-width: 640px) {
+  .sm\:bottom-8 {
+    bottom: 2rem;
+  }
+}
+
+.top-auto {
+  top: auto;
+}
+
 .absolute {
   position: absolute;
 }
@@ -301,7 +315,7 @@ textarea:disabled {
   color: var(--active-color, inherit);
 }
 .nc-post-reaction-button .nc__count {
-  min-width: 1rem;
+  min-width: 0.5rem;
   text-align: start;
 }
 
