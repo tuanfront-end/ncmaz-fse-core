@@ -101,5 +101,5 @@ $termId = $term->term_taxonomy_id;
 		$wrapper_attributes = get_block_wrapper_attributes(array('style' => $aspect_ratio . $width . $height));
 	}
 
-	echo "<figure {$wrapper_attributes}>{$featured_image}</figure>";
+	echo wp_kses_post("<figure {$wrapper_attributes}>{$featured_image}</figure>");
 })($attributes, $content, $block, $term);

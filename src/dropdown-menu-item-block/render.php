@@ -48,9 +48,9 @@ if (!empty($attributes['href'] ?? "")) {
 
 ?>
 
-<<?php echo $tag; ?>
+<<?php echo wp_kses_post($tag); ?>
 	<?php echo wp_kses_data(get_block_wrapper_attributes($atts)); ?>
 	data-wp-interactive="ncmfse/dropdown-menu"
 	data-wp-on--click="actions.toggleMenuOnClick">
 	<?php echo $content; ?>
-</<?php echo $tag; ?>>
+</<?php echo wp_kses_post($tag); ?>>
