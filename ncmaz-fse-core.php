@@ -55,6 +55,7 @@ function ncmaz_fse_core_register_blocks_init()
 	register_block_type(__DIR__ . '/build/dropdown-menu-item-block');
 	register_block_type(__DIR__ . '/build/current-user-name-block');
 	register_block_type(__DIR__ . '/build/reading-progress-block');
+	register_block_type(__DIR__ . '/build/post-format-icon-block');
 
 
 	//  SOME CUSTOM BLOCKS
