@@ -3,46 +3,34 @@
 	padding-bottom: 20px;
 	padding-top: 20px;
 
-	.wp-block-navigation {
-		a {
-			color: inherit;
-			text-decoration: none;
-			&:hover {
-				text-decoration: underline;
-			}
-		}
+	@media (min-width: 600px) {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+}
 
-		.wp-block-navigation__container > * {
-			> .wp-block-navigation-item__content,
-			> .wp-block-outermost-mega-menu__toggle {
-				line-height: 4;
-				@media (min-width: 600px) {
-					line-height: 6;
-				}
-			}
+.wp-block-navigation.is-style-global-header {
+	a {
+		color: inherit;
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
 		}
+	}
 
-		.wp-block-navigation__responsive-container.is-menu-open {
-			// In sidebar when click the bar icon
-			.wp-block-navigation__container > * {
-				> .wp-block-navigation-item__content,
-				> .wp-block-outermost-mega-menu__toggle {
-					line-height: inherit;
-				}
-			}
-		}
-
-		.wp-block-navigation__responsive-container-open.always-shown {
-			padding-top: 0;
-			padding-bottom: 0;
+	.wp-block-outermost-mega-menu,
+	.wp-block-navigation-item {
+		.wp-block-navigation-item__content,
+		.wp-block-outermost-mega-menu__toggle {
+			line-height: 4;
 			@media (min-width: 600px) {
-				padding-top: 28px;
-				padding-bottom: 28px;
+				line-height: 6;
 			}
 		}
 
-		.wp-block-navigation__container
-			.wp-block-outermost-mega-menu__menu-container {
+		// remove line-height for submenu
+		.wp-block-navigation-submenu,
+		.wp-block-outermost-mega-menu__menu-container {
 			.wp-block-navigation-item__content,
 			.wp-block-outermost-mega-menu__toggle {
 				line-height: inherit;
@@ -50,9 +38,23 @@
 		}
 	}
 
-	@media (min-width: 600px) {
+	.wp-block-navigation__responsive-container.is-menu-open {
+		// In sidebar when click the bar icon
+		.wp-block-navigation__container {
+			.wp-block-navigation-item__content,
+			.wp-block-outermost-mega-menu__toggle {
+				line-height: inherit;
+			}
+		}
+	}
+
+	.wp-block-navigation__responsive-container-open.always-shown {
 		padding-top: 0;
 		padding-bottom: 0;
+		@media (min-width: 600px) {
+			padding-top: 28px;
+			padding-bottom: 28px;
+		}
 	}
 }
 
