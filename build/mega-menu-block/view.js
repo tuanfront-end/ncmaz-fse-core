@@ -1,1 +1,148 @@
-import*as t from"@wordpress/interactivity";var e={d:(t,n)=>{for(var o in n)e.o(n,o)&&!e.o(t,o)&&Object.defineProperty(t,o,{enumerable:!0,get:n[o]})},o:(t,e)=>Object.prototype.hasOwnProperty.call(t,e)};const n=(o={getContext:()=>t.getContext,getElement:()=>t.getElement,store:()=>t.store},i={},e.d(i,o),i);var o,i;const{}=(0,n.store)("outermost/mega-menu",{state:{},actions:{},callbacks:{initCallbacks(){const t=(0,n.getContext)(),{width:e}=t,{ref:o}=(0,n.getElement)();"content"!==e&&(setTimeout((()=>{r(o)}),100),window.addEventListener("resize",function(t,e,n=!1){let o;return function(){const i=this,r=arguments,s=n&&!o;clearTimeout(o),o=setTimeout((function(){o=null,n||t.apply(i,r)}),e),s&&t.apply(i,r)}}((()=>{r(o)}),500)))}}}),r=t=>{const e=t?.querySelector(".wp-block-outermost-mega-menu__menu-container"),n=t?.closest(".wp-block-navigation");if(!n||!e)return;const o=n.getBoundingClientRect(),i=e.getBoundingClientRect(),r=-o.left+(window.innerWidth-i.width)/2;e.style.left=`${r}px`};
+import * as __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__ from "@wordpress/interactivity";
+/******/ var __webpack_modules__ = ({
+
+/***/ "./src/utils/utils.ts":
+/*!****************************!*\
+  !*** ./src/utils/utils.ts ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   debounce: () => (/* binding */ debounce)
+/* harmony export */ });
+// Make a debounce typescript function
+function debounce(func, wait, immediate = false) {
+  let timeout;
+  return function () {
+    const context = this;
+    const args = arguments;
+    const later = function () {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    const callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+}
+
+/***/ }),
+
+/***/ "@wordpress/interactivity":
+/*!*******************************************!*\
+  !*** external "@wordpress/interactivity" ***!
+  \*******************************************/
+/***/ ((module) => {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__;
+
+/***/ })
+
+/******/ });
+/************************************************************************/
+/******/ // The module cache
+/******/ var __webpack_module_cache__ = {};
+/******/ 
+/******/ // The require function
+/******/ function __webpack_require__(moduleId) {
+/******/ 	// Check if module is in cache
+/******/ 	var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 	if (cachedModule !== undefined) {
+/******/ 		return cachedModule.exports;
+/******/ 	}
+/******/ 	// Create a new module (and put it into the cache)
+/******/ 	var module = __webpack_module_cache__[moduleId] = {
+/******/ 		// no module.id needed
+/******/ 		// no module.loaded needed
+/******/ 		exports: {}
+/******/ 	};
+/******/ 
+/******/ 	// Execute the module function
+/******/ 	__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 
+/******/ 	// Return the exports of the module
+/******/ 	return module.exports;
+/******/ }
+/******/ 
+/************************************************************************/
+/******/ /* webpack/runtime/define property getters */
+/******/ (() => {
+/******/ 	// define getter functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 			}
+/******/ 		}
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ (() => {
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/make namespace object */
+/******/ (() => {
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = (exports) => {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/ })();
+/******/ 
+/************************************************************************/
+var __webpack_exports__ = {};
+/*!*************************************!*\
+  !*** ./src/mega-menu-block/view.ts ***!
+  \*************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/interactivity */ "@wordpress/interactivity");
+/* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/utils */ "./src/utils/utils.ts");
+
+
+const {} = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("outermost/mega-menu", {
+  state: {},
+  actions: {},
+  callbacks: {
+    initCallbacks() {
+      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      const {
+        width
+      } = context;
+      const {
+        ref: menuRef
+      } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
+
+      // Do not update the position of the mega menu if the width is set to "content".
+      // if break the layout of the menu, so we need to custom with css to fix it.
+      if (width === "content") {
+        return;
+      }
+      // Update the position of the mega menu to center the window. This is necessary for wide and full-width menus.
+      setTimeout(() => {
+        updatePositionMegaMenuToCenterWindow(menuRef);
+      }, 100);
+      window.addEventListener("resize", (0,_utils_utils__WEBPACK_IMPORTED_MODULE_1__.debounce)(() => {
+        updatePositionMegaMenuToCenterWindow(menuRef);
+      }, 500));
+    }
+  }
+});
+const updatePositionMegaMenuToCenterWindow = menuRef => {
+  const megaMenuRef = menuRef?.querySelector(".wp-block-outermost-mega-menu__menu-container");
+  const navRef = menuRef?.closest(".wp-block-navigation");
+  if (!navRef || !megaMenuRef) {
+    return;
+  }
+  const navRect = navRef.getBoundingClientRect();
+  const megaMenuRect = megaMenuRef.getBoundingClientRect();
+  const left = -navRect.left + (window.innerWidth - megaMenuRect.width) / 2;
+  megaMenuRef.style.left = `${left}px`;
+};
+
+//# sourceMappingURL=view.js.map

@@ -1,1 +1,23 @@
-.wp-block-ncmfse-dropdown-menu{display:flex;position:relative}.wp-block-ncmfse-dropdown-menu:focus{outline:none}.wp-block-ncmfse-dropdown-menu.is-selected .wp-block-ncmfse-dropdown-menu-content{height:auto;opacity:1;overflow:visible;visibility:visible;width:auto}.wp-block-ncmfse-dropdown-menu hr{color:var(--wp--preset--color--shadcn-border);margin-right:.25rem;margin-left:.25rem;width:100%}
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/dropdown-menu-block/style.scss ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+.wp-block-ncmfse-dropdown-menu {
+  position: relative;
+  display: flex;
+}
+.wp-block-ncmfse-dropdown-menu:focus {
+  outline: none;
+}
+.wp-block-ncmfse-dropdown-menu.is-selected .wp-block-ncmfse-dropdown-menu-content {
+  height: auto;
+  opacity: 1;
+  overflow: visible;
+  visibility: visible;
+  width: auto;
+}
+.wp-block-ncmfse-dropdown-menu hr {
+  width: 100%;
+  color: var(--wp--preset--color--shadcn-border);
+  margin-right: 0.25rem;
+  margin-left: 0.25rem;
+}

@@ -1,1 +1,26 @@
-.wp-block-ncmfse-term-template{list-style:none;margin-bottom:0;margin-top:0;max-width:100%;padding:0}.wp-block-ncmfse-term-template.is-flex-container{display:flex;flex-direction:row;flex-wrap:wrap;gap:1.25em}.wp-block-ncmfse-term-template.is-flex-container>li{margin:0;width:100%}@media(max-width:600px){.wp-block-term-template-is-layout-grid.wp-block-term-template-is-layout-grid.wp-block-term-template-is-layout-grid.wp-block-term-template-is-layout-grid{grid-template-columns:1fr}}
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/term-template-block/style.scss ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+.wp-block-ncmfse-term-template {
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: 100%;
+  list-style: none;
+  padding: 0;
+}
+.wp-block-ncmfse-term-template.is-flex-container {
+  flex-direction: row;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25em;
+}
+.wp-block-ncmfse-term-template.is-flex-container > li {
+  margin: 0;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .wp-block-term-template-is-layout-grid.wp-block-term-template-is-layout-grid.wp-block-term-template-is-layout-grid.wp-block-term-template-is-layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
