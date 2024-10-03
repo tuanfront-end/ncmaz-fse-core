@@ -62,6 +62,7 @@ function ncmaz_fse_core_register_blocks_init()
 		'enable-linked-groups',
 		'enable-snapping-templates',
 		'enable-logged-user-avatar',
+		'enable-saved-liked-post-query-loop',
 	];
 	foreach ($ncmfse_blocks as $block) {
 		register_block_type(__DIR__ . '/build/' . $block);
