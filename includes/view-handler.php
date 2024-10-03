@@ -16,6 +16,7 @@ function ncmazfse_core__handle_views()
 			array(
 				'view_count' => $view_count,
 				'post_id'    => $post_id,
+				'post_type' => get_post_type($post_id),
 			)
 		);
 	}
@@ -63,6 +64,7 @@ function ncmazfse_core__update_post_view($post_id)
 				'meta_input'  => array(
 					'post_id'    => $post_id,
 					'view_count' => 1,
+					'post_type' => get_post_type($post_id),
 				),
 			)
 		);

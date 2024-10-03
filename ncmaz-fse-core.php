@@ -32,37 +32,40 @@ define('NCMAZ_FSE_CORE_STORE',  'ncmfse');
 
 function ncmaz_fse_core_register_blocks_init()
 {
-	register_block_type(__DIR__ . '/build/common-css-block');
-	register_block_type(__DIR__ . '/build/like-button-block');
-	register_block_type(__DIR__ . '/build/save-button-block');
-	register_block_type(__DIR__ . '/build/comment-count-button-block');
-	register_block_type(__DIR__ . '/build/reading-time-block');
-	register_block_type(__DIR__ . '/build/view-count-button-block');
-	register_block_type(__DIR__ . '/build/term-query-loop-block');
-	register_block_type(__DIR__ . '/build/term-template-block');
-	register_block_type(__DIR__ . '/build/term-name-block');
-	register_block_type(__DIR__ . '/build/term-description-block');
-	register_block_type(__DIR__ . '/build/term-count-block');
-	register_block_type(__DIR__ . '/build/term-featured-image-block');
-	register_block_type(__DIR__ . '/build/snap-scroll-arrows-block');
-	register_block_type(__DIR__ . '/build/snap-scroll-arrow-next-block');
-	register_block_type(__DIR__ . '/build/snap-scroll-arrow-previous-block');
-	register_block_type(__DIR__ . '/build/mega-menu-block');
-	register_block_type(__DIR__ . '/build/mailpoet-subscription-form-block');
-	register_block_type(__DIR__ . '/build/dropdown-menu-block');
-	register_block_type(__DIR__ . '/build/dropdown-menu-trigger-block');
-	register_block_type(__DIR__ . '/build/dropdown-menu-content-block');
-	register_block_type(__DIR__ . '/build/dropdown-menu-item-block');
-	register_block_type(__DIR__ . '/build/current-user-name-block');
-	register_block_type(__DIR__ . '/build/reading-progress-block');
-	register_block_type(__DIR__ . '/build/post-format-icon-block');
-
-
-	//  SOME CUSTOM BLOCKS
-	register_block_type(__DIR__ . '/build/enable-linked-groups');
-	register_block_type(__DIR__ . '/build/enable-snapping-templates');
-	register_block_type(__DIR__ . '/build/enable-logged-user-avatar');
-	// END SOME CUSTOM BLOCKS
+	$ncmfse_blocks = [
+		'common-css-block',
+		'like-button-block',
+		'save-button-block',
+		'comment-count-button-block',
+		'reading-time-block',
+		'view-count-button-block',
+		'term-query-loop-block',
+		'term-template-block',
+		'term-name-block',
+		'term-description-block',
+		'term-count-block',
+		'term-featured-image-block',
+		'snap-scroll-arrows-block',
+		'snap-scroll-arrow-next-block',
+		'snap-scroll-arrow-previous-block',
+		'mega-menu-block',
+		'mailpoet-subscription-form-block',
+		'dropdown-menu-block',
+		'dropdown-menu-trigger-block',
+		'dropdown-menu-content-block',
+		'dropdown-menu-item-block',
+		'current-user-name-block',
+		'reading-progress-block',
+		'post-format-icon-block',
+		'saved-post-template-block',
+		//  SOME CUSTOM BLOCKS
+		'enable-linked-groups',
+		'enable-snapping-templates',
+		'enable-logged-user-avatar',
+	];
+	foreach ($ncmfse_blocks as $block) {
+		register_block_type(__DIR__ . '/build/' . $block);
+	}
 }
 add_action('init', 'ncmaz_fse_core_register_blocks_init');
 

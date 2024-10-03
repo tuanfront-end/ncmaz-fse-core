@@ -23,6 +23,7 @@ function ncmazfse_core__handle_save()
 				'is_saved' => $saved,
 				'user_id'  => $user_id,
 				'post_id'  => $post_id,
+				'post_type' => get_post_type($post_id),
 			)
 		);
 	}
@@ -71,6 +72,7 @@ function ncmazfse_core__update_post_save($post_id, $user_id, $handle)
 					'meta_input'  => array(
 						'user_id' => $user_id,
 						'post_id' => $post_id,
+						'post_type' => get_post_type($post_id),
 					),
 				)
 			);
@@ -95,6 +97,7 @@ function ncmazfse_core__update_post_save($post_id, $user_id, $handle)
 				'meta_input'  => array(
 					'user_id' => $user_id,
 					'post_id' => $post_id,
+					'post_type' => get_post_type($post_id),
 				),
 			)
 		);

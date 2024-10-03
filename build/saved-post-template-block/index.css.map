@@ -1,0 +1,1 @@
+{"version":3,"file":"saved-post-template-block/index.css","mappings":";;;AACC;EACC;EACA;EACA;AAAF,C","sources":["webpack://todo-list/./src/saved-post-template-block/editor.scss"],"sourcesContent":[".editor-styles-wrapper {\n\tul.wp-block-ncmfse-saved-post-template {\n\t\tpadding-left: 0;\n\t\tmargin-left: 0;\n\t\tlist-style: none;\n\t}\n}\n"],"names":[],"sourceRoot":""}

@@ -23,6 +23,7 @@ function ncmazfse_core__handle_like()
 				'is_liked' => $liked,
 				'user_id'  => $user_id,
 				'post_id'  => $post_id,
+				'post_type' => get_post_type($post_id),
 			)
 		);
 	}
@@ -35,6 +36,8 @@ add_action('wp_ajax_nopriv_handle_like', 'ncmazfse_core__handle_like'); // Đăn
 
 
 function ncmazfse_core__update_post_like($post_id, $user_id, $handle)
+
+
 {
 	// Lấy danh sách lượt like là danh sách post-type "post like", có author là user_id, và title là post_id
 	$post_likes = get_posts(
@@ -71,6 +74,7 @@ function ncmazfse_core__update_post_like($post_id, $user_id, $handle)
 					'meta_input'  => array(
 						'user_id' => $user_id,
 						'post_id' => $post_id,
+						'post_type' => get_post_type($post_id),
 					),
 				)
 			);
@@ -94,6 +98,7 @@ function ncmazfse_core__update_post_like($post_id, $user_id, $handle)
 				'meta_input'  => array(
 					'user_id' => $user_id,
 					'post_id' => $post_id,
+					'post_type' => get_post_type($post_id),
 				),
 			)
 		);
