@@ -110,8 +110,19 @@ function ncmazfse_core__update_post_like($post_id, $user_id, $handle)
 
 function ncmazfse_core__check_user_like($post_id, $user_id)
 {
-	if (! $user_id || ! $post_id) {
+	if (! $post_id) {
 		return false;
+	}
+
+	if (! $user_id) {
+		$user_id = '_anonymous';
+		// check cookie
+		$liked_posts = ncmazfse_core__get_liked_posts_from_cookie();
+		if (in_array($post_id, $liked_posts)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	$post_likes = get_posts(

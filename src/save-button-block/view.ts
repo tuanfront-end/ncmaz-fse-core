@@ -93,25 +93,6 @@ const { state } = store("ncmazfse-core", {
 								saveCount,
 							},
 						};
-
-						if (!state.userId) {
-							// Update local storage
-							const postId = context.postId;
-							const savedPosts = localStorage.getItem("savedPosts");
-							const savedPostsArray = savedPosts ? JSON.parse(savedPosts) : [];
-							if (isSaved) {
-								savedPostsArray.push(postId);
-							} else {
-								const index = savedPostsArray.indexOf(postId);
-								if (index > -1) {
-									savedPostsArray.splice(index, 1);
-								}
-							}
-							localStorage.setItem(
-								"savedPosts",
-								JSON.stringify(savedPostsArray),
-							);
-						}
 					})
 					.finally(() => {
 						state.loadingList = state.loadingList.filter((id) => id !== postId);
@@ -124,17 +105,6 @@ const { state } = store("ncmazfse-core", {
 		},
 	},
 	callbacks: {
-		logHandleSaveInit: () => {
-			const context = getContext<TContext>();
-
-			// if user is not logged in
-			if (!state.userId) {
-				// check from local storage
-				const postId = context.postId;
-				const savedPosts = localStorage.getItem("savedPosts");
-				const savedPostsArray = savedPosts ? JSON.parse(savedPosts) : [];
-				context.contextIsSaved = savedPostsArray.includes(postId);
-			}
-		},
+		logHandleSaveInit: () => {},
 	},
 });

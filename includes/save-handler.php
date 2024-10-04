@@ -114,8 +114,19 @@ function ncmazfse_core__update_post_save($post_id, $user_id, $handle)
 
 function ncmazfse_core__check_user_save($post_id, $user_id)
 {
-	if (! $user_id || ! $post_id) {
+	if (! $post_id) {
 		return false;
+	}
+
+	if (! $user_id) {
+		$user_id = '_anonymous';
+		// check cookie
+		$saved_posts = ncmazfse_core__get_saved_posts_from_cookie();
+		if (in_array($post_id, $saved_posts)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	$post_saves = get_posts(

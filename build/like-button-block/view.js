@@ -133,20 +133,6 @@ const {
               isLiked
             }
           };
-          if (!state.userId) {
-            // Update local storage
-            const likedPosts = localStorage.getItem("likedPosts");
-            const likedPostsArray = likedPosts ? JSON.parse(likedPosts) : [];
-            if (isLiked) {
-              likedPostsArray.push(postId);
-            } else {
-              const index = likedPostsArray.indexOf(postId);
-              if (index > -1) {
-                likedPostsArray.splice(index, 1);
-              }
-            }
-            localStorage.setItem("likedPosts", JSON.stringify(likedPostsArray));
-          }
         }).finally(() => {
           state.loadingList = state.loadingList.filter(id => id !== postId);
         });
@@ -158,17 +144,7 @@ const {
     }
   },
   callbacks: {
-    logHandleLikeInit: () => {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-
-      // if user is not logged in
-      if (!state.userId) {
-        // check from local storage
-        const likedPosts = localStorage.getItem("likedPosts");
-        const likedPostsArray = likedPosts ? JSON.parse(likedPosts) : [];
-        context.contextIsLiked = likedPostsArray.includes(context.postId);
-      }
-    }
+    logHandleLikeInit: () => {}
   }
 });
 
