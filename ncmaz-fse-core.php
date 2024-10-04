@@ -431,47 +431,53 @@ function ncmaz_fse_core_register_more_context_to_all_query_blocks($args, $block_
 }
 add_filter('register_block_type_args', 'ncmaz_fse_core_register_more_context_to_all_query_blocks', 10, 2);
 
+
 function ncmaz_fse_core_modify_query_vars_for_query_blocks(array $query, WP_Block $block)
 {
 	$all_query_blocks = ['core/post-template', 'core/query-pagination', 'core/query-pagination-next', 'core/query-pagination-numbers', 'core/query-no-results'];
 	// Not to need to modify with 'core/query-pagination-previous'. Because it is use query.
-
 	if (!in_array($block->name, $all_query_blocks)) {
 		return $query;
 	}
-	$context = $block->context;
 
+	$context = $block->context;
 	if (!($context['showUserLikedPosts'] ?? false) && !($context['showUserSavedPosts'] ?? false)) {
 		return $query;
 	}
 
 	// Get user ids
 	$user_ids = [];
-	if (!empty($context['query']['author'] ?? false)) {
+	if (!empty($context['query']['author'] ?? '')) {
 		$user_ids = explode(',', $context['query']['author']);
-	} else {
-		$user_ids = [get_the_author_meta('ID')];
-	}
-
-	if (empty($user_ids)) {
-		return $query;
+	} else if (is_user_logged_in()) {
+		$user_ids = [get_current_user_id()];
 	}
 
 	// Get post ids by context showUserSavedPosts / showUserLikedPosts
 	$post_ids = [];
 	if ($context['showUserSavedPosts'] ?? false) {
-		foreach ($user_ids as $user_id) {
-			$post_ids = array_merge($post_ids, ncmazfse_core_get_all_post_saved_post_id_by_user($user_id));
+		if (!empty($user_ids)) {
+			foreach ($user_ids as $user_id) {
+				$post_ids = array_merge($post_ids, ncmazfse_core_get_all_post_saved_post_id_by_user($user_id));
+			}
+		} else {
+			// _anonymous user. Get post ids by cookie
+			$post_ids = ncmazfse_core__get_saved_posts_from_cookie();
 		}
 	}
 	if ($context['showUserLikedPosts'] ?? false) {
-		foreach ($user_ids as $user_id) {
-			$post_ids = array_merge($post_ids, ncmazfse_core_get_all_post_liked_post_id_by_user($user_id));
+		if (!empty($user_ids)) {
+			foreach ($user_ids as $user_id) {
+				$post_ids = array_merge($post_ids, ncmazfse_core_get_all_post_liked_post_id_by_user($user_id));
+			}
+		} else {
+			// _anonymous user. Get post ids by cookie
+			$post_ids = ncmazfse_core__get_liked_posts_from_cookie();
 		}
 	}
 
 	$new_query = array_merge($query, [
-		'post__in' => $post_ids,
+		'post__in' => empty($post_ids) ? [0] : $post_ids,
 		'post_status' => 'publish',
 		'ignore_sticky_posts' => true,
 		'exclude' => [],
@@ -481,6 +487,10 @@ function ncmaz_fse_core_modify_query_vars_for_query_blocks(array $query, WP_Bloc
 	if (isset($new_query['post__not_in'])) {
 		unset($new_query['post__not_in']);
 	}
+	if (isset($new_query['author__in'])) {
+		unset($new_query['author__in']);
+	}
+
 	return $new_query;
 }
 add_filter('query_loop_block_query_vars', 'ncmaz_fse_core_modify_query_vars_for_query_blocks', 10, 2);

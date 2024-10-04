@@ -61,6 +61,8 @@ function ncmazfse_core__update_post_like($post_id, $user_id, $handle)
 		// Nếu đã like, thì bỏ like
 		if ($handle === 'remove') {
 			wp_delete_post($post_likes[0]->ID, true);
+			// remove from cookie
+			ncmazfse_core__update_liked_posts_cookie($post_id, 'remove');
 			return false;
 		} elseif ($handle === 'add') {
 			// Nếu chưa save, thì thêm save
@@ -76,6 +78,8 @@ function ncmazfse_core__update_post_like($post_id, $user_id, $handle)
 					),
 				)
 			);
+			// add to cookie
+			ncmazfse_core__update_liked_posts_cookie($post_id, 'add');
 			return true;
 		}
 
@@ -178,4 +182,22 @@ function ncmazfse_core_get_all_post_liked_post_id_by_user($user_id)
 	}
 
 	return $post_ids;
+}
+
+
+function ncmazfse_core__update_liked_posts_cookie($post_id, $handle)
+{
+	$liked_posts = ncmazfse_core__get_liked_posts_from_cookie();
+
+	if ($handle === 'remove') {
+		$liked_posts = array_diff($liked_posts, array($post_id));
+	} elseif ($handle === 'add') {
+		$liked_posts[] = $post_id;
+	}
+	setcookie('liked_posts', json_encode($liked_posts), time() + 3600 * 24 * 30, '/');
+}
+
+function ncmazfse_core__get_liked_posts_from_cookie()
+{
+	return json_decode(stripslashes($_COOKIE['liked_posts'] ?? '[]'));
 }

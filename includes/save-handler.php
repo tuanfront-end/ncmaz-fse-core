@@ -61,6 +61,9 @@ function ncmazfse_core__update_post_save($post_id, $user_id, $handle)
 		// Nếu đã save, thì bỏ save
 		if ($handle === 'remove') {
 			wp_delete_post($post_saves[0]->ID, true);
+			// remove from cookie
+			ncmazfse_core__update_saved_posts_cookie($post_id, 'remove');
+
 			return false;
 		} elseif ($handle === 'add') {
 			// Nếu chưa save, thì thêm save
@@ -76,6 +79,9 @@ function ncmazfse_core__update_post_save($post_id, $user_id, $handle)
 					),
 				)
 			);
+			// add to cookie
+			ncmazfse_core__update_saved_posts_cookie($post_id, 'add');
+
 			return true;
 		} else {
 			return false;
@@ -181,4 +187,23 @@ function ncmazfse_core_get_all_post_saved_post_id_by_user($user_id)
 		$post_ids[] = $post_save->post_title;
 	}
 	return $post_ids;
+}
+
+
+function ncmazfse_core__update_saved_posts_cookie($post_id, $handle)
+{
+	$saved_posts = ncmazfse_core__get_saved_posts_from_cookie();
+	if ($handle === 'remove') {
+		// remove from cookie
+		$saved_posts = array_diff($saved_posts, array($post_id));
+	} elseif ($handle === 'add') {
+		// add to cookie
+		$saved_posts[] = $post_id;
+	}
+	setcookie('saved_posts', json_encode($saved_posts), time() + 3600 * 24 * 30, '/');
+}
+
+function ncmazfse_core__get_saved_posts_from_cookie()
+{
+	return json_decode(stripslashes($_COOKIE['saved_posts'] ?? '[]'));
 }

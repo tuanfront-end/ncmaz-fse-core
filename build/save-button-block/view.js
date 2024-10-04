@@ -1,1 +1,177 @@
-import*as t from"@wordpress/interactivity";var e={d:(t,a)=>{for(var o in a)e.o(a,o)&&!e.o(t,o)&&Object.defineProperty(t,o,{enumerable:!0,get:a[o]})},o:(t,e)=>Object.prototype.hasOwnProperty.call(t,e)};const a=(s={getContext:()=>t.getContext,store:()=>t.store},n={},e.d(n,s),n),{state:o}=(0,a.store)("ncmazfse-core",{state:{get isSaved(){const{contextIsSaved:t,postId:e}=(0,a.getContext)();return o.saveData?.[e]?o.saveData[e].isSaved:t},get saveCount(){const{contextSaveCount:t,postId:e}=(0,a.getContext)();return o.saveData?.[e]?o.saveData[e].saveCount:t},get isLoading(){const{postId:t}=(0,a.getContext)();return o.loadingList.includes(t)}},actions:{handleSave:()=>{const t=(0,a.getContext)(),{postId:e}=t;try{o.loadingList.push(e);const a=new FormData;a.append("action","handle_save"),a.append("_ajax_nonce",o.saveButtonNonce),a.append("post_id",e.toString()),a.append("user_id",o.userId.toString()),a.append("handle",o.isSaved?"remove":"add"),fetch(o.ajaxUrl,{method:"POST",body:a}).then((t=>t.json())).then((({data:a,success:s})=>{if(!s)throw new Error("Server error");const n=Boolean(a.is_saved);let r=0;if(n?r=t.contextSaveCount+1:t.contextSaveCount>0&&(r=t.contextSaveCount-1),t.contextSaveCount=r,t.contextIsSaved=n,o.saveData={...o.saveData,[e]:{isSaved:n,saveCount:r}},!o.userId){const e=t.postId,a=localStorage.getItem("savedPosts"),o=a?JSON.parse(a):[];if(n)o.push(e);else{const t=o.indexOf(e);t>-1&&o.splice(t,1)}localStorage.setItem("savedPosts",JSON.stringify(o))}})).finally((()=>{o.loadingList=o.loadingList.filter((t=>t!==e))}))}catch(t){console.log("Error Server data!",t),o.loadingList=o.loadingList.filter((t=>t!==e))}}},callbacks:{logHandleSaveInit:()=>{const t=(0,a.getContext)();if(!o.userId){const e=t.postId,a=localStorage.getItem("savedPosts"),o=a?JSON.parse(a):[];t.contextIsSaved=o.includes(e)}}}});var s,n;
+import * as __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__ from "@wordpress/interactivity";
+/******/ var __webpack_modules__ = ({
+
+/***/ "@wordpress/interactivity":
+/*!*******************************************!*\
+  !*** external "@wordpress/interactivity" ***!
+  \*******************************************/
+/***/ ((module) => {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__;
+
+/***/ })
+
+/******/ });
+/************************************************************************/
+/******/ // The module cache
+/******/ var __webpack_module_cache__ = {};
+/******/ 
+/******/ // The require function
+/******/ function __webpack_require__(moduleId) {
+/******/ 	// Check if module is in cache
+/******/ 	var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 	if (cachedModule !== undefined) {
+/******/ 		return cachedModule.exports;
+/******/ 	}
+/******/ 	// Create a new module (and put it into the cache)
+/******/ 	var module = __webpack_module_cache__[moduleId] = {
+/******/ 		// no module.id needed
+/******/ 		// no module.loaded needed
+/******/ 		exports: {}
+/******/ 	};
+/******/ 
+/******/ 	// Execute the module function
+/******/ 	__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 
+/******/ 	// Return the exports of the module
+/******/ 	return module.exports;
+/******/ }
+/******/ 
+/************************************************************************/
+/******/ /* webpack/runtime/make namespace object */
+/******/ (() => {
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = (exports) => {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/ })();
+/******/ 
+/************************************************************************/
+var __webpack_exports__ = {};
+/*!***************************************!*\
+  !*** ./src/save-button-block/view.ts ***!
+  \***************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/interactivity */ "@wordpress/interactivity");
+/**
+ * WordPress dependencies
+ */
+
+
+// view.js
+
+const {
+  state
+} = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("ncmazfse-core", {
+  state: {
+    get isSaved() {
+      const {
+        contextIsSaved,
+        postId
+      } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      return state.saveData?.[postId] ? state.saveData[postId].isSaved : contextIsSaved;
+    },
+    get saveCount() {
+      const {
+        contextSaveCount,
+        postId
+      } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      return state.saveData?.[postId] ? state.saveData[postId].saveCount : contextSaveCount;
+    },
+    get isLoading() {
+      const {
+        postId
+      } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      return state.loadingList.includes(postId);
+    }
+  },
+  actions: {
+    handleSave: () => {
+      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      const {
+        postId
+      } = context;
+      try {
+        // Update the state
+        state.loadingList.push(postId);
+
+        // Send the data to the server
+        const formData = new FormData();
+        formData.append("action", "handle_save");
+        formData.append("_ajax_nonce", state.saveButtonNonce);
+        formData.append("post_id", postId.toString());
+        formData.append("user_id", state.userId.toString());
+        formData.append("handle", state.isSaved ? "remove" : "add");
+        fetch(state.ajaxUrl, {
+          method: "POST",
+          body: formData
+        }).then(response => response.json()).then(({
+          data,
+          success
+        }) => {
+          if (!success) {
+            throw new Error("Server error");
+          }
+          const isSaved = Boolean(data.is_saved);
+          let saveCount = 0;
+          if (isSaved) {
+            saveCount = context.contextSaveCount + 1;
+          } else if (context.contextSaveCount > 0) {
+            saveCount = context.contextSaveCount - 1;
+          }
+
+          // Update the local-context
+          context.contextSaveCount = saveCount;
+          context.contextIsSaved = isSaved;
+          state.saveData = {
+            ...state.saveData,
+            [postId]: {
+              isSaved,
+              saveCount
+            }
+          };
+          if (!state.userId) {
+            // Update local storage
+            const postId = context.postId;
+            const savedPosts = localStorage.getItem("savedPosts");
+            const savedPostsArray = savedPosts ? JSON.parse(savedPosts) : [];
+            if (isSaved) {
+              savedPostsArray.push(postId);
+            } else {
+              const index = savedPostsArray.indexOf(postId);
+              if (index > -1) {
+                savedPostsArray.splice(index, 1);
+              }
+            }
+            localStorage.setItem("savedPosts", JSON.stringify(savedPostsArray));
+          }
+        }).finally(() => {
+          state.loadingList = state.loadingList.filter(id => id !== postId);
+        });
+      } catch (e) {
+        // Something went wrong!
+        console.log("Error Server data!", e);
+        state.loadingList = state.loadingList.filter(id => id !== postId);
+      }
+    }
+  },
+  callbacks: {
+    logHandleSaveInit: () => {
+      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+
+      // if user is not logged in
+      if (!state.userId) {
+        // check from local storage
+        const postId = context.postId;
+        const savedPosts = localStorage.getItem("savedPosts");
+        const savedPostsArray = savedPosts ? JSON.parse(savedPosts) : [];
+        context.contextIsSaved = savedPostsArray.includes(postId);
+      }
+    }
+  }
+});
+
+//# sourceMappingURL=view.js.map

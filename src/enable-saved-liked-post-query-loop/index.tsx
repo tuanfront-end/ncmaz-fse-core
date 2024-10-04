@@ -42,7 +42,7 @@ function addInspectorControls(BlockEdit) {
 								__nextHasNoMarginBottom
 								label={__("Show user's saved posts")}
 								help={__(
-									"Show saved posts of the user. Note: Leave the Author filter blank to get the posts based on the current template's user. If Author has a value, the posts will be filtered based on that user.",
+									"Show saved posts of the user. Note: Leave the Author filter blank to get the posts based on the current user (viewer). If Author has a value, the posts will be filtered based on that user.",
 								)}
 								checked={showUserSavedPosts}
 								onChange={onChangeToggleSavedPost}
@@ -51,7 +51,7 @@ function addInspectorControls(BlockEdit) {
 								__nextHasNoMarginBottom
 								label={__("Show user's liked posts")}
 								help={__(
-									"Show liked posts of the user. Note: Leave the Author filter blank to get the posts based on the current template's user. If Author has a value, the posts will be filtered based on that user.",
+									"Show liked posts of the user. Note: Leave the Author filter blank to get the posts based on the current user (viewer). If Author has a value, the posts will be filtered based on that user.",
 								)}
 								checked={showUserLikedPosts}
 								onChange={onChangeToggleLikedPost}
