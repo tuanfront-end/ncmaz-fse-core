@@ -157,3 +157,28 @@ function ncmazfse_core__get_post_save_count($post_id)
 {
 	return count(ncmazfse_core__get_post_saves($post_id));
 }
+
+function ncmazfse_core_get_all_post_saved_post_id_by_user($user_id)
+{
+	if (! $user_id) {
+		return array();
+	}
+	$post_saves = get_posts(
+		array(
+			'post_type'   => 'post_save',
+			'numberposts' => -1,
+			'meta_query'  => array(
+				array(
+					'key'   => 'user_id',
+					'value' => $user_id,
+				),
+			),
+		)
+	);
+
+	$post_ids = array();
+	foreach ($post_saves as $post_save) {
+		$post_ids[] = $post_save->post_title;
+	}
+	return $post_ids;
+}

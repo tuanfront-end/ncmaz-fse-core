@@ -1,1 +1,0 @@
-{"version":3,"file":"current-user-name-block/style-index.css","mappings":";;;AAAA;EAEC;AAAD,C","sources":["webpack://todo-list/./src/current-user-name-block/style.scss"],"sourcesContent":[".wp-block-ncmfse-current-user-name {\n\t// This block has customizable padding, border-box makes that more predictable.\n\tbox-sizing: border-box;\n}\n"],"names":[],"sourceRoot":""}

@@ -57,7 +57,6 @@ function ncmaz_fse_core_register_blocks_init()
 		'current-user-name-block',
 		'reading-progress-block',
 		'post-format-icon-block',
-		'saved-post-template-block',
 		//  SOME CUSTOM BLOCKS
 		'enable-linked-groups',
 		'enable-snapping-templates',
@@ -392,3 +391,96 @@ function ncmazfse_enable_logged_in_user_avatar_render_block($block_content, $blo
 	return $block_content;
 }
 add_filter('render_block_core/avatar', 'ncmazfse_enable_logged_in_user_avatar_render_block', 10, 3);
+
+
+/**
+ *  Enable Saved Liked Post Query Loop
+ *  Change context query args and query vars for query blocks
+ */
+function ncmaz_fse_core_register_more_context_to_all_query_blocks($args, $block_type)
+{
+	// add providesContext to only core/query block
+	if ($block_type === 'core/query') {
+		$args['attributes']['showUserSavedPosts'] = [
+			'type' => 'boolean',
+			'default' => false,
+		];
+		$args['attributes']['showUserLikedPosts'] = [
+			'type' => 'boolean',
+			'default' => false,
+		];
+		$args['provides_context']['showUserSavedPosts'] = 'showUserSavedPosts';
+		$args['provides_context']['showUserLikedPosts'] = 'showUserLikedPosts';
+		return $args;
+	}
+
+	// check $block_type is not in $all_query_blocks
+	$all_query_blocks = ['core/post-template', 'core/query-pagination', 'core/query-pagination-next', 'core/query-pagination-numbers', 'core/query-no-results'];
+	// Not to need to modify with 'core/query-pagination-previous'. Because it is use query.
+	if (!in_array($block_type, $all_query_blocks)) {
+		return $args;
+	}
+
+	if (! isset($args['uses_context'])) {
+		$args['uses_context'] = array();
+	}
+	$args['uses_context'][] = "showUserLikedPosts";
+	$args['uses_context'][] = "showUserSavedPosts";
+
+	return $args;
+}
+add_filter('register_block_type_args', 'ncmaz_fse_core_register_more_context_to_all_query_blocks', 10, 2);
+
+function ncmaz_fse_core_modify_query_vars_for_query_blocks(array $query, WP_Block $block)
+{
+	$all_query_blocks = ['core/post-template', 'core/query-pagination', 'core/query-pagination-next', 'core/query-pagination-numbers', 'core/query-no-results'];
+	// Not to need to modify with 'core/query-pagination-previous'. Because it is use query.
+
+	if (!in_array($block->name, $all_query_blocks)) {
+		return $query;
+	}
+	$context = $block->context;
+
+	if (!($context['showUserLikedPosts'] ?? false) && !($context['showUserSavedPosts'] ?? false)) {
+		return $query;
+	}
+
+	// Get user ids
+	$user_ids = [];
+	if (!empty($context['query']['author'] ?? false)) {
+		$user_ids = explode(',', $context['query']['author']);
+	} else {
+		$user_ids = [get_the_author_meta('ID')];
+	}
+
+	if (empty($user_ids)) {
+		return $query;
+	}
+
+	// Get post ids by context showUserSavedPosts / showUserLikedPosts
+	$post_ids = [];
+	if ($context['showUserSavedPosts'] ?? false) {
+		foreach ($user_ids as $user_id) {
+			$post_ids = array_merge($post_ids, ncmazfse_core_get_all_post_saved_post_id_by_user($user_id));
+		}
+	}
+	if ($context['showUserLikedPosts'] ?? false) {
+		foreach ($user_ids as $user_id) {
+			$post_ids = array_merge($post_ids, ncmazfse_core_get_all_post_liked_post_id_by_user($user_id));
+		}
+	}
+
+	$new_query = array_merge($query, [
+		'post__in' => $post_ids,
+		'post_status' => 'publish',
+		'ignore_sticky_posts' => true,
+		'exclude' => [],
+	]);
+
+	// unset post__not_in
+	if (isset($new_query['post__not_in'])) {
+		unset($new_query['post__not_in']);
+	}
+	return $new_query;
+}
+add_filter('query_loop_block_query_vars', 'ncmaz_fse_core_modify_query_vars_for_query_blocks', 10, 2);

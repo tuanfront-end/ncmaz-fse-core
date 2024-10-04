@@ -1,48 +1,10 @@
 import { __ } from "@wordpress/i18n";
 import { addFilter } from "@wordpress/hooks";
-import {
-	InspectorControls,
-	// @ts-ignore
-	__experimentalLinkControl as LinkControl,
-} from "@wordpress/block-editor";
+import { InspectorControls } from "@wordpress/block-editor";
 import { ToggleControl, PanelBody } from "@wordpress/components";
+
 import "./style.scss";
 import "./editor.scss";
-
-function addAttributes(settings: Record<string, any>) {
-	if ("core/query" !== settings.name) {
-		return settings;
-	}
-
-	// Add the link attributes.
-	const myQuery = {};
-
-	const newSettings = {
-		...settings,
-		attributes: {
-			...settings.attributes,
-			showSavedPostOfCurrentUser: {
-				type: "boolean",
-				default: false,
-			},
-			showLikedPostOfCurrentUser: {
-				type: "boolean",
-				default: false,
-			},
-			query: {
-				...(settings.attributes.query || {}),
-				...myQuery,
-			},
-		},
-	};
-
-	return newSettings;
-}
-addFilter(
-	"blocks.registerBlockType",
-	"enable-saved-liked-post-query-loop/add-attributes",
-	addAttributes,
-);
 
 function addInspectorControls(BlockEdit) {
 	return (props: Record<string, any>) => {
@@ -51,20 +13,19 @@ function addInspectorControls(BlockEdit) {
 		}
 
 		const { attributes, setAttributes } = props;
-		const { showSavedPostOfCurrentUser, showLikedPostOfCurrentUser, query } =
-			attributes;
+		const { showUserSavedPosts, showUserLikedPosts, query } = attributes;
 
 		const onChangeToggleSavedPost = (value: boolean) => {
 			setAttributes({
-				showSavedPostOfCurrentUser: value,
-				showLikedPostOfCurrentUser: value ? false : showLikedPostOfCurrentUser,
+				showUserSavedPosts: value,
+				showUserLikedPosts: value ? false : showUserLikedPosts,
 			});
 		};
 
 		const onChangeToggleLikedPost = (value: boolean) => {
 			setAttributes({
-				showLikedPostOfCurrentUser: value,
-				showSavedPostOfCurrentUser: value ? false : showSavedPostOfCurrentUser,
+				showUserLikedPosts: value,
+				showUserSavedPosts: value ? false : showUserSavedPosts,
 			});
 		};
 
@@ -72,25 +33,31 @@ function addInspectorControls(BlockEdit) {
 			<>
 				<BlockEdit {...props} />
 				<InspectorControls>
-					<PanelBody
-						title={__("Ncmaz saved/liked post setting")}
-						initialOpen={false}
-					>
-						<ToggleControl
-							__nextHasNoMarginBottom
-							label={__("Show saved posts")}
-							help={__("Only Show saved posts of the current logged in user.")}
-							checked={showSavedPostOfCurrentUser}
-							onChange={onChangeToggleSavedPost}
-						/>
-						<ToggleControl
-							__nextHasNoMarginBottom
-							label={__("Show liked posts")}
-							help={__("Only Show liked posts of the current logged in user.")}
-							checked={showLikedPostOfCurrentUser}
-							onChange={onChangeToggleLikedPost}
-						/>
-					</PanelBody>
+					{!query?.inherit && (
+						<PanelBody
+							title={__("Saved & Liked posts setting")}
+							initialOpen={false}
+						>
+							<ToggleControl
+								__nextHasNoMarginBottom
+								label={__("Show user's saved posts")}
+								help={__(
+									"Show saved posts of the user. Note: Leave the Author filter blank to get the posts based on the current template's user. If Author has a value, the posts will be filtered based on that user.",
+								)}
+								checked={showUserSavedPosts}
+								onChange={onChangeToggleSavedPost}
+							/>
+							<ToggleControl
+								__nextHasNoMarginBottom
+								label={__("Show user's liked posts")}
+								help={__(
+									"Show liked posts of the user. Note: Leave the Author filter blank to get the posts based on the current template's user. If Author has a value, the posts will be filtered based on that user.",
+								)}
+								checked={showUserLikedPosts}
+								onChange={onChangeToggleLikedPost}
+							/>
+						</PanelBody>
+					)}
 				</InspectorControls>
 			</>
 		);
