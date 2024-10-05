@@ -190,8 +190,10 @@ function Edit(props) {
   } = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useInnerBlocksProps)(blockProps, {
     template: [["outermost/icon-block", {
       icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" /></svg>',
-      iconColorValue: "#334155",
-      iconBackgroundColorValue: "#f3f4f6",
+      iconColor: "contrast-2",
+      iconColorValue: "var:preset|color|contrast-2",
+      iconBackgroundColor: "shadcn-accent",
+      iconBackgroundColorValue: "var:preset|color|shadcn-accent",
       itemsJustification: "center",
       width: "34px",
       hasNoIconFill: true,
