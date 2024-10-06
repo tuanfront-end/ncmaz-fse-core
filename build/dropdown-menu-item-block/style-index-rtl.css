@@ -8,8 +8,9 @@
   transition: background-color 0.1s linear, color 0.1s linear;
   padding: var(--wp--preset--spacing--2);
   font-size: var(--wp--preset--font-size--sm);
+  text-transform: capitalize;
 }
-.wp-block-ncmfse-dropdown-menu-item > *:first-child {
+.wp-block-ncmfse-dropdown-menu-item * {
   margin-block-end: 0;
   margin-block-start: 0;
 }
@@ -25,4 +26,7 @@
 .wp-block-ncmfse-dropdown-menu-item.is-active {
   background-color: var(--wp--preset--color--shadcn-accent);
   color: var(--wp--preset--color--shadcn-accent-text);
+}
+.wp-block-ncmfse-dropdown-menu-item a {
+  text-decoration: none;
 }

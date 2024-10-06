@@ -37,10 +37,13 @@ if (!empty($attributes['href'] ?? "")) {
 		);
 	}
 
-	// --- KIEM TRA XEM ITEM CO ACTIVE HAY KHONG
-	$is_active = ncmfse_core_check_href_is_active_with_current_url($atts['href']);
-	if ($is_active) {
-		$atts['class'] = $atts['class'] . ' is-active';
+	// check Menu type from block-Context
+	if (($block->context['menuType'] ?? "") !== 'popover') {
+		// --- KIEM TRA XEM ITEM CO ACTIVE HAY KHONG
+		$is_active = ncmfse_core_check_href_is_active_with_current_url($atts['href']);
+		if ($is_active) {
+			$atts['class'] = $atts['class'] . ' is-active';
+		}
 	}
 } else {
 	$atts['role'] = 'button';

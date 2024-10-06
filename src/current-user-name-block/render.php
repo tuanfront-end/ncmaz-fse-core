@@ -33,5 +33,5 @@ $wrapper_attributes = get_block_wrapper_attributes(array('class' => implode(' ',
 ?>
 
 <div <?php echo wp_kses_data($wrapper_attributes); ?>>
-	<?php esc_html_e($author_name); ?>
+	<?php echo wp_kses_post($author_name); ?>
 </div>

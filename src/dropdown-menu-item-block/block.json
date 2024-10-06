@@ -8,7 +8,7 @@
 	"parent": ["ncmfse/dropdown-menu-content"],
 	"description": "A block that creates a dropdown menu item.",
 	"example": {},
-	"usesContext": ["dropdownMenuId"],
+	"usesContext": ["dropdownMenuId", "menuType"],
 	"attributes": {
 		"textAlign": {
 			"type": "string"
@@ -60,6 +60,17 @@
 				"padding": true
 			}
 		},
+		"dimensions": {
+			"width": true,
+			"height": true,
+			"minHeight": true,
+			"maxHeight": true,
+			"minWidth": true,
+			"maxWidth": true,
+			"__experimentalDefaultControls": {
+				"width": true
+			}
+		},
 		"__experimentalBorder": {
 			"color": true,
 			"radius": true,
@@ -73,6 +84,7 @@
 			}
 		},
 		"layout": {
+			"allowSizingOnChildren": true,
 			"default": {
 				"type": "flex",
 				"flexWrap": "nowrap"

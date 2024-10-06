@@ -10,15 +10,21 @@
 		"ncmfse/dropdown-menu-trigger",
 		"ncmfse/dropdown-menu-content"
 	],
-	"providesContext": {
-		"dropdownMenuId": "dropdownMenuId"
-	},
+
 	"example": {},
 	"attributes": {
 		"dropdownMenuId": {
 			"type": "number",
 			"default": 0
+		},
+		"menuType": {
+			"type": "string",
+			"default": "dropdown"
 		}
+	},
+	"providesContext": {
+		"dropdownMenuId": "dropdownMenuId",
+		"menuType": "menuType"
 	},
 	"supports": {
 		"color": {

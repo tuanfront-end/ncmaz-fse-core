@@ -6,17 +6,23 @@ import {
 	useBlockProps,
 	InnerBlocks,
 	store as blockEditorStore,
+	InspectorControls,
 } from "@wordpress/block-editor";
 import "./editor.scss";
 import { EditProps, TAttrs } from "../types";
 import metadata from "./block.json";
+import {
+	PanelBody,
+	__experimentalToggleGroupControl as ToggleGroupControl,
+	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
+} from "@wordpress/components";
 
 type Attributes = TAttrs<typeof metadata.attributes>;
 
 export default function Edit(props: EditProps<Attributes>) {
 	const { attributes, setAttributes } = props;
 	const instanceId = useInstanceId(Edit);
-	const { dropdownMenuId } = attributes;
+	const { dropdownMenuId, menuType } = attributes;
 
 	const { __unstableMarkNextChangeAsNotPersistent } =
 		useDispatch(blockEditorStore);
@@ -32,6 +38,21 @@ export default function Edit(props: EditProps<Attributes>) {
 
 	return (
 		<>
+			<InspectorControls>
+				<PanelBody title={__("Settings", "ncmfse")}>
+					<ToggleGroupControl
+						__nextHasNoMarginBottom
+						isBlock
+						label="Menu type"
+						onChange={(value) => setAttributes({ menuType: value as string })}
+						value={menuType}
+					>
+						<ToggleGroupControlOption label={__("Dropdown")} value="dropdown" />
+						<ToggleGroupControlOption label={__("Popover")} value="popover" />
+					</ToggleGroupControl>
+				</PanelBody>
+			</InspectorControls>
+
 			<div {...blockProps}>
 				<InnerBlocks
 					template={[

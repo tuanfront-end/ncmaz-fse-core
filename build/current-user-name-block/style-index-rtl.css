@@ -4,3 +4,7 @@
 .wp-block-ncmfse-current-user-name {
   box-sizing: border-box;
 }
+.wp-block-ncmfse-current-user-name a {
+  width: 100%;
+  display: inline-block;
+}
