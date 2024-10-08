@@ -15,5 +15,6 @@ $min_width = empty($attributes['minWidth']) ? '180px' : $attributes['minWidth'];
 	data-wp-interactive="ncmfse/dropdown-menu"
 	data-wp-on-async--focus="actions.openMenuOnFocus"
 	tabindex="-1">
-	<?php echo $content; ?>
+	<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $content; ?>
 </div>

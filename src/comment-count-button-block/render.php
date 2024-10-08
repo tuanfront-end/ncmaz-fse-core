@@ -41,7 +41,8 @@ foreach ($colorCssVars as $key => $value) {
 		'style' => $colorStyle,
 	])); ?>>
 
-	<?php echo ($content); ?>
+	<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $content; ?>
 	<?php if ($attributes["showCountText"]): ?>
 		<span class="nc__count">
 			<?php echo esc_html($comment_count); ?>

@@ -7,5 +7,6 @@
 	data-wp-on--click="actions.toggleMenuOnClick"
 	tabindex="0"
 	role="button">
-	<?php echo $content; ?>
+	<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $content; ?>
 </button>

@@ -61,7 +61,8 @@ wp_interactivity_state(
 
 			<?php if ($attributes['submitButtonStyle'] === "inline-email-input"): ?>
 				<button type="submit">
-					<?php echo ($content); ?>
+					<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo $content; ?>
 				</button>
 			<?php endif; ?>
 
@@ -70,7 +71,8 @@ wp_interactivity_state(
 
 	<?php if ($attributes['submitButtonStyle'] === "default"): ?>
 		<div>
-			<?php echo ($content); ?>
+			<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $content; ?>
 			<p class="success-message" data-wp-bind--hidden="!context.showSuccessMessage">
 				<?php echo esc_html($attributes['successMessage']); ?>
 			</p>

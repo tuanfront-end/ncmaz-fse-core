@@ -13,6 +13,7 @@ $queryId = $block->context["ncmazfse_termQueryId"] ?? $block->context["queryId"]
 	])); ?>
 	data-wp-on--click="actions.handleClick">
 
-	<?php echo ($content); ?>
+	<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $content; ?>
 
 </a>

@@ -17,6 +17,6 @@ wp_interactivity_state(
 	])); ?>
 	data-wp-init="callbacks.handleInit">
 
-	<?php echo ($content); ?>
-
+	<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $content; ?>
 </div>

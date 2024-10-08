@@ -127,5 +127,6 @@ foreach ($query as $term) {
 ?>
 
 <ul <?php echo wp_kses_data($wrapper_attributes); ?>>
-	<?php echo ($content); ?>
+	<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $content; ?>
 </ul>

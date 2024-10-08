@@ -13,5 +13,6 @@
 	data-wp-watch="callbacks.onWatchMenu"
 	data-wp-class--is-selected="state.isMenuOpen">
 
-	<?php echo $content; ?>
+	<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $content; ?>
 </div>

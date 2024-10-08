@@ -75,7 +75,8 @@ foreach ($colorCssVars as $key => $value) {
 	data-wp-class--is-loading="state.isLoading"
 	data-wp-bind--disabled="state.isLoading">
 
-	<?php echo ($content); ?>
+	<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $content; ?>
 	<?php if ($attributes["showCountText"]): ?>
 		<span class="nc__count" data-wp-text="state.saveCount"></span>
 	<?php endif; ?>

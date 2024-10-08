@@ -18,21 +18,25 @@ if (!empty($attributes['href'] ?? "")) {
 	$tag = 'a';
 	$atts['href'] = $attributes['href'];
 	$atts['target'] = $attributes['linkTarget'] ?? '_self';
-	$href_query = parse_url($atts['href'], PHP_URL_QUERY) ?? '';
+	$href_query = wp_parse_url($atts['href'], PHP_URL_QUERY) ?? '';
 
 	// if linkWithCurrentSearch is true, merge the current search params with the href
 	if ($attributes['linkWithCurrentSearch'] ?? false) {
 		$href_params =  [];
 		parse_str($href_query, $href_params);
-		$merged_params =  array_merge($_GET, $href_params);
-		$atts['href'] = add_query_arg($merged_params, $atts['href']);
+
+		// Sanitize $_GET data
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$sanitized_get = array_map('sanitize_text_field', $_GET);
+		$atts['href'] = add_query_arg(array_merge($sanitized_get, $href_params), $atts['href']);
 	}
 
 	// check href include the text {CURRENT_URL} or not, if yes, replace it with the current url
 	if (strpos($atts['href'], '{CURRENT_URL}') !== false) {
+		$REQUEST_URI = sanitize_text_field(wp_unslash($_SERVER['REQUEST_URI'] ?? ''));
 		$atts['href'] = str_replace(
 			'{CURRENT_URL}',
-			home_url($_SERVER['REQUEST_URI']),
+			home_url($REQUEST_URI),
 			$atts['href']
 		);
 	}
@@ -55,5 +59,6 @@ if (!empty($attributes['href'] ?? "")) {
 	<?php echo wp_kses_data(get_block_wrapper_attributes($atts)); ?>
 	data-wp-interactive="ncmfse/dropdown-menu"
 	data-wp-on--click="actions.toggleMenuOnClick">
-	<?php echo $content; ?>
+	<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $content; ?>
 </<?php echo wp_kses_post($tag); ?>>

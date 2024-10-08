@@ -205,10 +205,10 @@ function ncmazfse_core__update_liked_posts_cookie($post_id, $handle)
 	} elseif ($handle === 'add') {
 		$liked_posts[] = $post_id;
 	}
-	setcookie('liked_posts', json_encode($liked_posts), time() + 3600 * 24 * 30, '/');
+	setcookie('liked_posts', wp_json_encode($liked_posts), time() + 3600 * 24 * 30, '/');
 }
 
 function ncmazfse_core__get_liked_posts_from_cookie()
 {
-	return json_decode(stripslashes($_COOKIE['liked_posts'] ?? '[]'));
+	return json_decode(sanitize_text_field(wp_unslash($_COOKIE['liked_posts'] ?? '[]')));
 }

@@ -211,10 +211,10 @@ function ncmazfse_core__update_saved_posts_cookie($post_id, $handle)
 		// add to cookie
 		$saved_posts[] = $post_id;
 	}
-	setcookie('saved_posts', json_encode($saved_posts), time() + 3600 * 24 * 30, '/');
+	setcookie('saved_posts', wp_json_encode($saved_posts), time() + 3600 * 24 * 30, '/');
 }
 
 function ncmazfse_core__get_saved_posts_from_cookie()
 {
-	return json_decode(stripslashes($_COOKIE['saved_posts'] ?? '[]'));
+	return json_decode(sanitize_text_field(wp_unslash($_COOKIE['saved_posts'] ?? '[]')));
 }

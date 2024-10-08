@@ -132,11 +132,14 @@ function ncmazfse_enable_linked_groups_render_block($block_content, $block, $ins
 	}
 
 	if ($block['attrs']['linkWithCurrentSearch'] ?? '') {
-		$_query = parse_url($link, PHP_URL_QUERY) ?? '';
+		$_query = wp_parse_url($link, PHP_URL_QUERY) ?? '';
 		$_params =  [];
 		parse_str($_query, $_params);
-		$merged_params =  array_merge($_GET, $_params);
-		$link = add_query_arg($merged_params, $link);
+
+		// Sanitize $_GET data
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$sanitized_get = array_map('sanitize_text_field', $_GET);
+		$link = add_query_arg(array_merge($sanitized_get, $_params), $link);
 	}
 
 
