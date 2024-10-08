@@ -65,11 +65,11 @@ if ($inherit_query) {
 $query = get_terms($term_query);
 
 if (is_wp_error($query)) {
-	return  esc_html_e('No terms found.', 'ncmaz-fse');
+	return  esc_html_e('No terms found.', 'ncmaz-fse-core');
 }
 
 if (empty($query)) {
-	return  esc_html_e('No terms found.', 'ncmaz-fse');
+	return  esc_html_e('No terms found.', 'ncmaz-fse-core');
 }
 
 

@@ -105,7 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/utils */ "./src/utils/utils.ts");
 
 
-const {} = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("outermost/mega-menu", {
+const {} = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("ncmfse/mega-menu", {
   state: {},
   actions: {},
   callbacks: {

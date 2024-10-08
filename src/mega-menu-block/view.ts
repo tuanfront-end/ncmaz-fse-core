@@ -6,7 +6,7 @@ interface TContext {
 	width: "full" | "wide" | "content";
 }
 
-const {} = store("outermost/mega-menu", {
+const {} = store("ncmfse/mega-menu", {
 	state: {} as TState,
 	actions: {},
 	callbacks: {

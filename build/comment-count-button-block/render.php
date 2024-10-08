@@ -44,7 +44,7 @@ foreach ($colorCssVars as $key => $value) {
 	<?php echo ($content); ?>
 	<?php if ($attributes["showCountText"]): ?>
 		<span class="nc__count">
-			<?php esc_html_e($comment_count); ?>
+			<?php echo esc_html($comment_count); ?>
 		</span>
 	<?php endif; ?>
 

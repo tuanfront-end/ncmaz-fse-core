@@ -13,7 +13,7 @@ function ncmazfse_core__handle_save()
 	}
 
 	if (! $post_id || ! $user_id) {
-		wp_send_json_error('Invalid post ID or user ID');
+		wp_send_json_error(__('Invalid post ID or user ID', 'ncmaz-fse-core'));
 	} else {
 		// Cập nhật thông tin lượt like
 		$saved = ncmazfse_core__update_post_save($post_id, $user_id, $handle);

@@ -7,7 +7,7 @@ function ncmazfse_core__handle_views()
 	$post_id = sanitize_text_field(wp_unslash($_POST['post_id'] ?? ""));
 
 	if (! $post_id) {
-		wp_send_json_error('Invalid post ID or user ID');
+		wp_send_json_error(__('Invalid post ID or user ID', 'ncmaz-fse-core'));
 	} else {
 		// Cập nhật thông tin lượt view
 		$view_count = ncmazfse_core__update_post_view($post_id,);

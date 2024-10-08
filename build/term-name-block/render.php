@@ -34,10 +34,9 @@ $classes = array();
 if (isset($attributes['textAlign'])) {
 	$classes[] = 'has-text-align-' . $attributes['textAlign'];
 }
-
 $wrapper_attributes = get_block_wrapper_attributes(array('class' => implode(' ', $classes)));
 ?>
 
-<<?php esc_html_e($tag_name); ?> <?php echo wp_kses_data($wrapper_attributes); ?>>
+<<?php echo esc_html($tag_name); ?> <?php echo wp_kses_data($wrapper_attributes); ?>>
 	<?php echo wp_kses_post($title); ?>
-</<?php esc_html_e($tag_name); ?>>
+</<?php echo esc_html($tag_name); ?>>

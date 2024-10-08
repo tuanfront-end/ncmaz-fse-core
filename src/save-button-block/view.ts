@@ -28,7 +28,7 @@ interface TState {
 	loadingList: number[];
 }
 
-const { state } = store("ncmazfse-core", {
+const { state } = store("ncmfse/save-button-btn", {
 	state: {
 		get isSaved() {
 			const { contextIsSaved, postId } = getContext<TContext>();

@@ -31,10 +31,10 @@ function ncmazfse_core__add_subscriber_to_mailpoet_list()
 	$name = sanitize_text_field(wp_unslash($_POST['name'] ?? ""));
 	$list_id = sanitize_text_field(wp_unslash($_POST['mailpoet_list_id'] ?? ""));
 
-	if ($email) {
-		wp_send_json_error('Missing email address!');
+	if (empty($email)) {
+		wp_send_json_error(__('Missing email address!', "ncmaz-fse-core"));
 	} else if (!class_exists(\MailPoet\API\API::class)) {
-		wp_send_json_error('MailPoet plugin is not installed or activated!');
+		wp_send_json_error(__('MailPoet plugin is not installed or activated!', 'ncmaz-fse-core'));
 	} else {
 		try {
 			$mailpoet_api = \MailPoet\API\API::MP('v1');
@@ -43,7 +43,7 @@ function ncmazfse_core__add_subscriber_to_mailpoet_list()
 				'email' => $email,
 				'first_name' =>  $name,
 			], [$list_id]);
-			wp_send_json_success('Success - Subscribed to the list!');
+			wp_send_json_success(__('Success - Subscribed to the list!', 'ncmaz-fse-core'));
 		} catch (\Exception $e) {
 			wp_send_json_error($e->getMessage());
 		}

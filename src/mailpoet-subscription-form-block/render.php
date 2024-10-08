@@ -39,17 +39,17 @@ wp_interactivity_state(
 		<div class="form-item__name">
 			<?php if ($attributes['showLabel']): ?>
 				<label htmlFor="name">
-					<?php esc_html_e($attributes['nameLabel']); ?>
+					<?php echo esc_html($attributes['nameLabel']); ?>
 				</label>
 			<?php endif; ?>
-			<input type="text" autocomplete="name" name="name" placeholder="<?php esc_attr_e($attributes['namePlaceholder']); ?>" />
+			<input type="text" autocomplete="name" name="name" placeholder="<?php echo esc_attr($attributes['namePlaceholder']); ?>" />
 		</div>
 	<?php endif; ?>
 
 	<div class="form-item__email">
 		<?php if ($attributes['showLabel']): ?>
 			<label htmlFor="email">
-				<?php esc_html_e($attributes['emailLabel']); ?>
+				<?php echo esc_html($attributes['emailLabel']); ?>
 			</label>
 		<?php endif; ?>
 
@@ -57,7 +57,7 @@ wp_interactivity_state(
 			<input type="email" name="email"
 				required
 				autocomplete="email"
-				placeholder="<?php esc_attr_e($attributes['emailPlaceholder']); ?>" />
+				placeholder="<?php echo esc_attr($attributes['emailPlaceholder']); ?>" />
 
 			<?php if ($attributes['submitButtonStyle'] === "inline-email-input"): ?>
 				<button type="submit">
@@ -72,22 +72,22 @@ wp_interactivity_state(
 		<div>
 			<?php echo ($content); ?>
 			<p class="success-message" data-wp-bind--hidden="!context.showSuccessMessage">
-				<?php esc_html_e($attributes['successMessage']); ?>
+				<?php echo esc_html($attributes['successMessage']); ?>
 			</p>
 			<p class="error-message" data-wp-bind--hidden="!context.showError" data-wp-text="context.errorMesssage">
 			</p>
 			<p class="loading" data-wp-bind--hidden="!context.loading">
-				<?php esc_html_e("Loading...", "ncmfse"); ?>
+				<?php esc_html_e("Loading...", "ncmaz-fse-core"); ?>
 			</p>
 		</div>
 	<?php else: ?>
 		<p class="success-message" data-wp-bind--hidden="!context.showSuccessMessage">
-			<?php esc_html_e($attributes['successMessage']); ?>
+			<?php echo esc_html($attributes['successMessage']); ?>
 		</p>
 		<p class="error-message" data-wp-bind--hidden="!context.showError" data-wp-text="context.errorMesssage">
 		</p>
 		<p class="loading" data-wp-bind--hidden="!context.loading">
-			<?php esc_html_e("Loading...", "ncmfse"); ?>
+			<?php esc_html_e("Loading...", "ncmaz-fse-core"); ?>
 		</p>
 	<?php endif; ?>
 

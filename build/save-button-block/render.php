@@ -7,7 +7,7 @@ $user_id = get_current_user_id();
 
 // Set the interactivity state.
 wp_interactivity_state(
-	'ncmazfse-core',
+	'ncmfse/save-button-btn',
 	[
 		'ajaxUrl' => admin_url('admin-ajax.php'),
 		'saveButtonNonce'   => wp_create_nonce('save_button_nonce'),
@@ -63,7 +63,7 @@ foreach ($colorCssVars as $key => $value) {
 		'class' => 'nc-post-reaction-button ' . (!isset($attributes['style']['spacing']['blockGap']) ? 'gap-1.5' : ''),
 		'style' => $colorStyle,
 	])); ?>
-	data-wp-interactive="ncmazfse-core"
+	data-wp-interactive="ncmfse/save-button-btn"
 	<?php echo wp_kses_data(wp_interactivity_data_wp_context([
 		"postId" => $current_post_id,
 		'contextIsSaved' 	=> $isSaved,
