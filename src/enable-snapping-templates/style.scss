@@ -5,7 +5,6 @@
 		flex-wrap: nowrap !important;
 		justify-content: flex-start;
 		vertical-align: top;
-
 		position: relative;
 		overflow-x: auto;
 		overflow-y: hidden;
@@ -29,23 +28,5 @@
 		&:not(.block-editor-block-list__block) > :nth-child(2) {
 			margin-block-start: 0;
 		}
-
-		// // Ensure the overlay is above everything else.
-		// a.wp-block-group__link {
-		// 	position: absolute;
-		// 	bottom: 0;
-		// 	left: 0;
-		// 	width: 100%;
-		// 	height: 100%;
-		// 	z-index: 3;
-		// 	text-decoration: none !important;
-		// }
-
-		// // Ensure buttons and links are above the overlay.
-		// .wp-block-button,
-		// a {
-		// 	position: relative;
-		// 	z-index: 4;
-		// }
 	}
 }
