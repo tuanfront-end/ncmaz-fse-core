@@ -4,6 +4,9 @@
 	a {
 		display: block;
 		height: 100%;
+		&:focus {
+			outline: none;
+		}
 	}
 	:where(img) {
 		max-width: 100%;

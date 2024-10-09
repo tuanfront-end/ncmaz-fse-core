@@ -9,6 +9,9 @@
   display: block;
   height: 100%;
 }
+.wp-block-ncmfse-term-featured-img a:focus {
+  outline: none;
+}
 .wp-block-ncmfse-term-featured-img :where(img) {
   max-width: 100%;
   width: 100%;
