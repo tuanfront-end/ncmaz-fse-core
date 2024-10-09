@@ -16,7 +16,7 @@
 // $page                = empty($_GET[$page_key]) ? 1 : (int) $_GET[$page_key];
 
 $contextQuery   = $block->context['ncmazfse_termQuery'] ?? array();
-$contextQueryId = $block->context['ncmazfse_termQueryId'];
+$contextQueryId = $block->context['ncmazfse_termQueryId'] ?? '';
 
 // Use global query if needed.
 $inherit_query = (isset($block->context['ncmazfse_termQuery']['inherit']) && $block->context['ncmazfse_termQuery']['inherit']);
