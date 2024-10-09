@@ -81,7 +81,6 @@ function Edit(props) {
     customActiveBorderColor,
     customActiveColor,
     customActiveIconBgColor,
-    style,
     showCountText
   } = attributes;
   const {
@@ -91,12 +90,10 @@ function Edit(props) {
     post: postId
   });
   const commentCount = records?.length || 0;
-  const gapCSSValue = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.getSpacingPresetCssVar)(attributes.style?.spacing?.blockGap);
-
   //
   const colorGradientSettings = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.__experimentalUseMultipleOriginColorsAndGradients)();
   const colorSettings = [{
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Color", "ncmaz-fse-core"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Text/Icon ", "ncmfse"),
     value: activeColor.color || customActiveColor,
     onChange: value => {
       setActiveColor(value);
@@ -111,7 +108,7 @@ function Edit(props) {
       });
     }
   }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Background Color", "ncmaz-fse-core"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Background ", "ncmfse"),
     value: activeBgColor.color || customActiveBgColor,
     onChange: value => {
       setActiveBgColor(value);
@@ -126,7 +123,7 @@ function Edit(props) {
       });
     }
   }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Border Color", "ncmaz-fse-core"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Border ", "ncmfse"),
     value: activeBorderColor.color || customActiveBorderColor,
     onChange: value => {
       setActiveBorderColor(value);
@@ -141,7 +138,7 @@ function Edit(props) {
       });
     }
   }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Icon Background Color", "ncmaz-fse-core"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Icon Background ", "ncmfse"),
     value: activeIconBgColor.color || customActiveIconBgColor,
     onChange: value => {
       setActiveIconBgColor(value);
@@ -156,12 +153,45 @@ function Edit(props) {
       });
     }
   }];
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)({
+    className: "nc-post-reaction-button",
+    style: {
+      "--active-color": activeColor.slug ? `var( --wp--preset--color--${activeColor.slug} )` : customActiveColor,
+      "--active-background-color": activeBgColor.slug ? `var( --wp--preset--color--${activeBgColor.slug} )` : customActiveBgColor,
+      "--active-border-color": activeBorderColor.slug ? `var( --wp--preset--color--${activeBorderColor.slug} )` : customActiveBorderColor,
+      "--active-icon-background-color": activeIconBgColor.slug ? `var( --wp--preset--color--${activeIconBgColor.slug} )` : customActiveIconBgColor
+    }
+  });
+  const {
+    children,
+    ...innerBlocksProps
+  } = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useInnerBlocksProps)(blockProps, {
+    template: [["outermost/icon-block", {
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#000000" fill="none"><path d="M8 13.5H16M8 8.5H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M6.09881 19C4.7987 18.8721 3.82475 18.4816 3.17157 17.8284C2 16.6569 2 14.7712 2 11V10.5C2 6.72876 2 4.84315 3.17157 3.67157C4.34315 2.5 6.22876 2.5 10 2.5H14C17.7712 2.5 19.6569 2.5 20.8284 3.67157C22 4.84315 22 6.72876 22 10.5V11C22 14.7712 22 16.6569 20.8284 17.8284C19.6569 19 17.7712 19 14 19C13.4395 19.0125 12.9931 19.0551 12.5546 19.155C11.3562 19.4309 10.2465 20.0441 9.14987 20.5789C7.58729 21.3408 6.806 21.7218 6.31569 21.3651C5.37769 20.6665 6.29454 18.5019 6.5 17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>',
+      iconColor: "contrast-2",
+      iconColorValue: "var:preset|color|contrast-2",
+      iconBackgroundColor: "shadcn-accent",
+      iconBackgroundColorValue: "var:preset|color|shadcn-accent",
+      itemsJustification: "center",
+      width: "34px",
+      hasNoIconFill: true,
+      style: {
+        border: {
+          radius: "99px"
+        },
+        spacing: {
+          padding: "8px"
+        }
+      }
+    }]],
+    templateLock: "insert"
+  });
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Post Comment Count Button", "ncmaz-fse-core")
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Post Comment Count Button", "ncmfse")
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
     __nextHasNoMarginBottom: true,
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show Count", "ncmaz-fse-core"),
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show/Hide count number", "ncmaz-fse-core"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show Count", "ncmfse"),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show/Hide count number", "ncmfse"),
     checked: showCountText,
     onChange: newValue => {
       setAttributes({
@@ -192,40 +222,13 @@ function Edit(props) {
     ...colorGradientSettings
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "outermost-icon-block__color-settings__help"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active: ", "ncmaz-fse-core")), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)(" Set the color for the active state (liked/saved/hovering) of the button.", "ncmaz-fse-core"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)({
-      className: "nc-post-reaction-button",
-      style: {
-        ...style,
-        gap: gapCSSValue,
-        "--active-color": activeColor.slug ? `var( --wp--preset--color--${activeColor.slug} )` : customActiveColor,
-        "--active-background-color": activeBgColor.slug ? `var( --wp--preset--color--${activeBgColor.slug} )` : customActiveBgColor,
-        "--active-border-color": activeBorderColor.slug ? `var( --wp--preset--color--${activeBorderColor.slug} )` : customActiveBorderColor,
-        "--active-icon-background-color": activeIconBgColor.slug ? `var( --wp--preset--color--${activeIconBgColor.slug} )` : customActiveIconBgColor
-      }
-    })
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InnerBlocks, {
-    allowedBlocks: ["outermost/icon-block"],
-    template: [["outermost/icon-block", {
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#000000" fill="none"><path d="M8 13.5H16M8 8.5H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M6.09881 19C4.7987 18.8721 3.82475 18.4816 3.17157 17.8284C2 16.6569 2 14.7712 2 11V10.5C2 6.72876 2 4.84315 3.17157 3.67157C4.34315 2.5 6.22876 2.5 10 2.5H14C17.7712 2.5 19.6569 2.5 20.8284 3.67157C22 4.84315 22 6.72876 22 10.5V11C22 14.7712 22 16.6569 20.8284 17.8284C19.6569 19 17.7712 19 14 19C13.4395 19.0125 12.9931 19.0551 12.5546 19.155C11.3562 19.4309 10.2465 20.0441 9.14987 20.5789C7.58729 21.3408 6.806 21.7218 6.31569 21.3651C5.37769 20.6665 6.29454 18.5019 6.5 17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>',
-      iconColorValue: "#334155",
-      iconBackgroundColorValue: "#f3f4f6",
-      itemsJustification: "center",
-      width: "34px",
-      hasNoIconFill: true,
-      style: {
-        border: {
-          radius: "99px"
-        },
-        spacing: {
-          padding: "8px"
-        }
-      }
-    }]],
-    templateLock: "insert"
-  }), showCountText ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active: ", "ncmfse")), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)(" Set the color for the active state (liked/saved/hovering) of the button.", "ncmfse"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    ...blockProps
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    ...innerBlocksProps
+  }, children, showCountText ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "nc__count"
-  }, commentCount) : null));
+  }, commentCount) : null)));
 
   // Other code will go here, don't forget or delete the closing curly brace!
 }
@@ -413,7 +416,7 @@ module.exports = window["wp"]["primitives"];
   \***************************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/comment-count-button-block","version":"0.1.0","title":"Comment Count Button","category":"ncmazfse","ancestor":["core/post-template"],"usesContext":["postId","postType"],"description":"Example block scaffolded with Create Block tool.","allowedBlocks":["outermost/icon-block"],"example":{},"attributes":{"showCountText":{"type":"boolean","default":true},"activeColor":{"type":"string"},"customActiveColor":{"type":"string","default":"#16a34a"},"activeBgColor":{"type":"string"},"customActiveBgColor":{"type":"string"},"activeIconBgColor":{"type":"string"},"customActiveIconBgColor":{"type":"string","default":"#00ba7c1a"},"activeBorderColor":{"type":"string"},"customActiveBorderColor":{"type":"string"}},"supports":{"anchor":false,"html":false,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"shadow":true,"spacing":{"padding":true,"margin":true,"blockGap":true,"__experimentalDefaultControls":{"padding":true,"blockGap":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}}},"textdomain":"like-button-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/comment-count-btn","version":"0.1.0","title":"Ncmaz Post Comment Count","category":"ncmfse","usesContext":["postId","postType"],"description":"Example block scaffolded with Create Block tool.","allowedBlocks":["outermost/icon-block"],"example":{},"attributes":{"showCountText":{"type":"boolean","default":true},"activeColor":{"type":"string"},"customActiveColor":{"type":"string","default":"#16a34a"},"activeBgColor":{"type":"string"},"customActiveBgColor":{"type":"string"},"activeIconBgColor":{"type":"string"},"customActiveIconBgColor":{"type":"string","default":"#00ba7c1a"},"activeBorderColor":{"type":"string"},"customActiveBorderColor":{"type":"string"}},"supports":{"anchor":false,"html":false,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"shadow":true,"spacing":{"padding":true,"margin":true,"blockGap":true,"__experimentalDefaultControls":{"padding":true,"blockGap":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"layout":{"default":{"type":"flex","flexWrap":"nowrap"}}},"textdomain":"like-button-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
 
 /***/ })
 

@@ -1,0 +1,84 @@
+.wp-block-ncmfse-mailpoet-subscription-form {
+	gap: 1rem;
+
+	.form-item__email-content {
+		position: relative;
+
+		button[type="submit"] {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			inset-inline-end: 0.25rem;
+			background: none;
+			border: none;
+			margin: 0;
+			padding: 0;
+			cursor: pointer;
+		}
+	}
+
+	.loading,
+	.success-message,
+	.error-message {
+		font-size: 12px;
+		margin-top: 0.5rem;
+	}
+
+	.success-message {
+		color: #2b9348;
+	}
+	.error-message {
+		color: #f56565;
+	}
+
+	input,
+	textarea,
+	select {
+		border-radius: var(--input-radius, 0.25rem);
+		padding-top: var(--input-padding, 0.5rem);
+		padding-right: var(--input-padding, 0.75rem);
+		padding-bottom: var(--input-padding, 0.5rem);
+		padding-left: var(--input-padding, 0.75rem);
+		display: block;
+		width: 100%;
+		appearance: none;
+		border-color: var(--wp--preset--color--shadcn-input);
+		border-width: 1px;
+		border-style: solid;
+		box-sizing: border-box;
+		font-size: 14px;
+		font-family: inherit;
+		font-feature-settings: inherit;
+		font-variation-settings: inherit;
+		letter-spacing: inherit;
+		color: inherit;
+	}
+
+	/* Focus styles */
+	input:focus-visible,
+	select:focus-visible,
+	textarea:focus-visible {
+		outline-offset: 2px;
+		--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 2px
+			var(--wp--preset--color--shadcn-background);
+		--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 4px
+			var(--wp--preset--color--shadcn-ring);
+		box-shadow:
+			var(--tw-ring-offset-shadow),
+			var(--tw-ring-shadow),
+			0 0 #0000;
+	}
+
+	/* Error state */
+	input.error,
+	select.error,
+	textarea.error {
+		border-color: #f56565;
+	}
+
+	input.error:focus,
+	select.error:focus,
+	textarea.error:focus {
+		box-shadow: 0 0 0 3px rgba(245, 101, 101, 0.5);
+	}
+}

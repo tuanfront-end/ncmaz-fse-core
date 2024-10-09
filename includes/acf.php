@@ -40,8 +40,9 @@ add_action(
 				),
 				'public'              => false,
 				'publicly_queryable'  => true,
-				'show_ui'             => true,
-				'show_in_nav_menus'   => true,
+				'show_ui'             => false,
+				'show_in_nav_menus'   => false,
+				"show_in_menu" => false, // hide from menu
 				'exclude_from_search' => true,
 				'show_in_rest'        => true,
 				'menu_icon'           => 'dashicons-admin-post',
@@ -59,7 +60,7 @@ add_action(
 add_action(
 	'acf/include_fields',
 	function () {
-		if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+		if (! function_exists('acf_add_local_field_group')) {
 			return;
 		}
 
@@ -108,6 +109,26 @@ add_action(
 						'prepend'           => '',
 						'append'            => '',
 					),
+					array(
+						'key'               => 'field_66c5b03aea7e7',
+						'label'             => 'Post Type',
+						'name'              => 'post_type',
+						'aria-label'        => '',
+						'type'              => 'text',
+						'instructions'      => '',
+						'required'          => 0,
+						'conditional_logic' => 0,
+						'wrapper'           => array(
+							'width' => '',
+							'class' => '',
+							'id'    => '',
+						),
+						'default_value'     => '',
+						'maxlength'         => '',
+						'placeholder'       => '',
+						'prepend'           => '',
+						'append'            => '',
+					),
 				),
 				'location'              => array(
 					array(
@@ -137,7 +158,7 @@ add_action(
 add_action(
 	'acf/include_fields',
 	function () {
-		if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+		if (! function_exists('acf_add_local_field_group')) {
 			return;
 		}
 
@@ -170,6 +191,26 @@ add_action(
 						'key'               => 'field_66c8014d7b78b',
 						'label'             => 'User ID',
 						'name'              => 'user_id',
+						'aria-label'        => '',
+						'type'              => 'text',
+						'instructions'      => '',
+						'required'          => 0,
+						'conditional_logic' => 0,
+						'wrapper'           => array(
+							'width' => '',
+							'class' => '',
+							'id'    => '',
+						),
+						'default_value'     => '',
+						'maxlength'         => '',
+						'placeholder'       => '',
+						'prepend'           => '',
+						'append'            => '',
+					),
+					array(
+						'key'               => 'field_66c8014d7b79b',
+						'label'             => 'Post Type',
+						'name'              => 'post_type',
 						'aria-label'        => '',
 						'type'              => 'text',
 						'instructions'      => '',
@@ -249,8 +290,9 @@ add_action(
 				),
 				'public'              => false,
 				'publicly_queryable'  => true,
-				'show_ui'             => true,
-				'show_in_nav_menus'   => true,
+				'show_ui'             => false,
+				'show_in_nav_menus'   => false,
+				"show_in_menu" => false, // hide from menu
 				'show_in_rest'        => true,
 				'exclude_from_search' => true,
 				'menu_icon'           => 'dashicons-admin-post',
@@ -270,7 +312,7 @@ add_action(
 add_action(
 	'acf/include_fields',
 	function () {
-		if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+		if (! function_exists('acf_add_local_field_group')) {
 			return;
 		}
 
@@ -303,6 +345,26 @@ add_action(
 						'key'               => 'field_66cda913711cd',
 						'label'             => 'View Count',
 						'name'              => 'view_count',
+						'aria-label'        => '',
+						'type'              => 'text',
+						'instructions'      => '',
+						'required'          => 0,
+						'conditional_logic' => 0,
+						'wrapper'           => array(
+							'width' => '',
+							'class' => '',
+							'id'    => '',
+						),
+						'default_value'     => '',
+						'maxlength'         => '',
+						'placeholder'       => '',
+						'prepend'           => '',
+						'append'            => '',
+					),
+					array(
+						'key'               => 'field_66cda913712cd',
+						'label'             => 'Post Type',
+						'name'              => 'post_type',
 						'aria-label'        => '',
 						'type'              => 'text',
 						'instructions'      => '',
@@ -382,8 +444,9 @@ add_action(
 				),
 				'public'              => false,
 				'publicly_queryable'  => true,
-				'show_ui'             => true,
-				'show_in_nav_menus'   => true,
+				'show_ui'             => false,
+				'show_in_nav_menus'   => false,
+				"show_in_menu" => false, // hide from menu
 				'exclude_from_search' => true,
 				'show_in_rest'        => true,
 				'menu_icon'           => 'dashicons-admin-post',
@@ -396,3 +459,62 @@ add_action(
 		);
 	}
 );
+
+
+// TAXONOMY FIELDS --------------------------
+add_action('acf/include_fields', function () {
+	if (! function_exists('acf_add_local_field_group')) {
+		return;
+	}
+
+	acf_add_local_field_group(array(
+		'key' => 'group_66d97cc798252',
+		'title' => 'Taxanomy fields',
+		'fields' => array(
+			array(
+				'key' => 'field_66d97cc7ea3e9',
+				'label' => 'Featured Image',
+				'name' => 'featured_image',
+				'aria-label' => '',
+				'type' => 'image',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'return_format' => 'id',
+				'library' => 'all',
+				'min_width' => '',
+				'min_height' => '',
+				'min_size' => '',
+				'max_width' => '',
+				'max_height' => '',
+				'max_size' => '',
+				'mime_types' => '',
+				'preview_size' => 'medium',
+			),
+
+		),
+		'location' => array(
+			array(
+				array(
+					'param' => 'taxonomy',
+					'operator' => '==',
+					'value' => 'all',
+				),
+			),
+		),
+		'menu_order' => 0,
+		'position' => 'normal',
+		'style' => 'default',
+		'label_placement' => 'top',
+		'instruction_placement' => 'label',
+		'hide_on_screen' => '',
+		'active' => true,
+		'description' => '',
+		'show_in_rest' => 1,
+	));
+});

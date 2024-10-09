@@ -1,0 +1,32 @@
+.wp-block-ncmfse-term-template,
+.wp-block-post-template {
+	&.is-h-scroll-snapping {
+		display: flex !important;
+		flex-wrap: nowrap !important;
+		justify-content: flex-start;
+		vertical-align: top;
+		position: relative;
+		overflow-x: auto;
+		overflow-y: hidden;
+		scroll-snap-type: x mandatory;
+		padding-top: 2px;
+		padding-bottom: 2px;
+
+		> * {
+			scroll-snap-align: start;
+			flex-shrink: 0;
+			width: var(--child-width);
+			max-width: 100%;
+
+			// scale width at mobile
+			@media (max-width: 600px) {
+				width: 90%;
+			}
+		}
+
+		// Ensure the first real element inside the group is not affected by the overlay.
+		&:not(.block-editor-block-list__block) > :nth-child(2) {
+			margin-block-start: 0;
+		}
+	}
+}

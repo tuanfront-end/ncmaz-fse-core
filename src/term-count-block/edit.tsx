@@ -11,6 +11,7 @@ import {
 import { __, _x } from "@wordpress/i18n";
 import metadata from "./block.json";
 import { EditProps, TAttrs } from "../types";
+import "./editor.scss";
 
 type Attributes = TAttrs<typeof metadata.attributes>;
 type Props = EditProps<Attributes> & { name: string };
@@ -43,7 +44,7 @@ export default function TermDescriptionEdit({
 					/>
 				</BlockControls>
 				<div {...blockProps}>
-					<p>{__("Number of published posts for the term.")}</p>
+					<p>{__("Count (99)")}</p>
 				</div>
 			</>
 		);
@@ -59,7 +60,7 @@ export default function TermDescriptionEdit({
 			</BlockControls>
 
 			<div {...blockProps}>
-				<p className={"wp-block-ncmazfse-block-term-count__count"}>
+				<p className={"wp-block-ncmfse-term-count__count"}>
 					{record?.count ?? 99}
 				</p>
 			</div>

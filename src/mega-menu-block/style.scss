@@ -1,0 +1,41 @@
+// Styles for both the Editor and the front end.
+.wp-block-outermost-mega-menu {
+	overflow: hidden;
+	position: relative;
+
+	&:hover {
+		overflow: visible;
+		position: initial;
+		.wp-block-outermost-mega-menu__menu-container {
+			opacity: 1;
+			overflow: visible;
+			visibility: visible;
+		}
+	}
+
+	.wp-block-outermost-mega-menu__toggle {
+		cursor: pointer;
+		align-items: center;
+		display: flex;
+
+		.wp-block-outermost-mega-menu__toggle-icon {
+			align-self: center;
+			display: inline-block;
+			font-size: inherit;
+			height: 0.6em;
+			line-height: 0;
+			margin-left: 0.25em;
+			padding: 0;
+			width: 0.6em;
+
+			svg {
+				stroke: currentColor;
+				display: inline-block;
+				height: inherit;
+				margin-top: 0.075em;
+				width: inherit;
+				transition: all 0.1s linear;
+			}
+		}
+	}
+}

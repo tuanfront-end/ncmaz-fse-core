@@ -1,13 +1,10 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "ncmazfse-block/view-count-button-block",
+  "name": "ncmfse/view-count-btn",
   "version": "0.1.0",
-  "title": "View Count Button",
-  "ancestor": [
-    "core/post-template"
-  ],
-  "category": "ncmazfse",
+  "title": "Ncmaz Post View Count",
+  "category": "ncmfse",
   "usesContext": [
     "postId",
     "postType"
@@ -93,6 +90,12 @@
         "radius": true,
         "style": true,
         "width": true
+      }
+    },
+    "layout": {
+      "default": {
+        "type": "flex",
+        "flexWrap": "nowrap"
       }
     }
   },

@@ -1,13 +1,10 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "ncmazfse-block/term-name",
+  "name": "ncmfse/term-name",
   "title": "Ncmaz Term Name",
-  "category": "ncmazfse",
+  "category": "ncmfse",
   "description": "Displays the title of a term.",
-  "ancestor": [
-    "ncmazfse-block/term-template"
-  ],
   "textdomain": "default",
   "usesContext": [
     "termId",
@@ -49,12 +46,9 @@
     ],
     "html": false,
     "color": {
-      "gradients": true,
-      "link": true,
       "__experimentalDefaultControls": {
         "background": true,
-        "text": true,
-        "link": true
+        "text": true
       }
     },
     "spacing": {

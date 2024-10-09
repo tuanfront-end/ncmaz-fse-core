@@ -1,17 +1,26 @@
-export interface EditProps<T> {
-	attributes: T & {
-		style?: Record<string, any>;
-	};
-	setAttributes: (attrs: Partial<T>) => void;
-	context: Record<string, any>;
-	clientId: string;
+import { BlockEditProps } from "@wordpress/blocks";
+
+// export interface EditProps<T> {
+// 	attributes: T & {
+// 		style?: Record<string, any>;
+// 	};
+// 	setAttributes: (attrs: Partial<T>) => void;
+// 	context: Record<string, any>;
+// 	clientId: string;
+// 	name: string;
+// 	[key: string]: any;
+// }
+
+export type EditProps<T extends Record<string, any>> = BlockEditProps<T> & {
 	[key: string]: any;
-}
+	name: string;
+};
 
 // declare wp window object declare global
 declare global {
 	interface Window {
 		wp: Record<string, any>;
+		mailpoetLists: Record<string, any>[] | undefined;
 	}
 }
 

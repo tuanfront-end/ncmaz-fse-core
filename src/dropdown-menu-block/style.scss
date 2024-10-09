@@ -1,0 +1,25 @@
+.wp-block-ncmfse-dropdown-menu {
+	position: relative;
+	display: flex;
+
+	&:focus {
+		outline: none;
+	}
+
+	&.is-selected {
+		.wp-block-ncmfse-dropdown-menu-content {
+			height: auto;
+			opacity: 1;
+			overflow: visible;
+			visibility: visible;
+			width: auto;
+		}
+	}
+
+	hr {
+		width: 100%;
+		color: var(--wp--preset--color--shadcn-border);
+		margin-left: 0.25rem;
+		margin-right: 0.25rem;
+	}
+}

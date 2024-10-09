@@ -1,0 +1,10 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ncmazfse-block-not-use/enable-saved-liked-post-query-loop",
+	"version": "0.1.0",
+	"title": "enable-saved-liked-post-query-loop",
+	"textdomain": "ncmazfse-block",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

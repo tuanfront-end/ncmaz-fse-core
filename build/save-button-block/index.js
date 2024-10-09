@@ -81,7 +81,6 @@ function Edit(props) {
     customActiveBorderColor,
     customActiveColor,
     customActiveIconBgColor,
-    style,
     showCountText
   } = attributes;
   const currentUserId = window.wp.data.select("core").getCurrentUser()?.id || 0;
@@ -112,12 +111,11 @@ function Edit(props) {
     }]
   });
   const isSaved = (isSavedRecords?.length || 0) > 0;
-  const gapCSSValue = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.getSpacingPresetCssVar)(attributes.style?.spacing?.blockGap);
 
   //
   const colorGradientSettings = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.__experimentalUseMultipleOriginColorsAndGradients)();
   const colorSettings = [{
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Color", "ncmaz-fse-core"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Text/Icon", "ncmfse"),
     value: activeColor.color || customActiveColor,
     onChange: value => {
       setActiveColor(value);
@@ -132,7 +130,7 @@ function Edit(props) {
       });
     }
   }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Background Color", "ncmaz-fse-core"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Background", "ncmfse"),
     value: activeBgColor.color || customActiveBgColor,
     onChange: value => {
       setActiveBgColor(value);
@@ -147,7 +145,7 @@ function Edit(props) {
       });
     }
   }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Border Color", "ncmaz-fse-core"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Border", "ncmfse"),
     value: activeBorderColor.color || customActiveBorderColor,
     onChange: value => {
       setActiveBorderColor(value);
@@ -162,7 +160,7 @@ function Edit(props) {
       });
     }
   }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Icon Background Color", "ncmaz-fse-core"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active Icon Background", "ncmfse"),
     value: activeIconBgColor.color || customActiveIconBgColor,
     onChange: value => {
       setActiveIconBgColor(value);
@@ -177,12 +175,45 @@ function Edit(props) {
       });
     }
   }];
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)({
+    className: "nc-post-reaction-button" + (isSaved ? " is-actived" : ""),
+    style: {
+      "--active-color": activeColor.slug ? `var( --wp--preset--color--${activeColor.slug} )` : customActiveColor,
+      "--active-background-color": activeBgColor.slug ? `var( --wp--preset--color--${activeBgColor.slug} )` : customActiveBgColor,
+      "--active-border-color": activeBorderColor.slug ? `var( --wp--preset--color--${activeBorderColor.slug} )` : customActiveBorderColor,
+      "--active-icon-background-color": activeIconBgColor.slug ? `var( --wp--preset--color--${activeIconBgColor.slug} )` : customActiveIconBgColor
+    }
+  });
+  const {
+    children,
+    ...innerBlocksProps
+  } = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useInnerBlocksProps)(blockProps, {
+    template: [["outermost/icon-block", {
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" /></svg>',
+      iconColor: "contrast-2",
+      iconColorValue: "var:preset|color|contrast-2",
+      iconBackgroundColor: "shadcn-accent",
+      iconBackgroundColorValue: "var:preset|color|shadcn-accent",
+      itemsJustification: "center",
+      width: "34px",
+      hasNoIconFill: true,
+      style: {
+        border: {
+          radius: "99px"
+        },
+        spacing: {
+          padding: "8px"
+        }
+      }
+    }]],
+    templateLock: "insert"
+  });
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Post Save Button", "ncmaz-fse-core")
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Post Save Button", "ncmfse")
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
     __nextHasNoMarginBottom: true,
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show Count", "ncmaz-fse-core"),
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show/Hide count number", "ncmaz-fse-core"),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show Count", "ncmfse"),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Show/Hide count number", "ncmfse"),
     checked: showCountText,
     onChange: newValue => {
       setAttributes({
@@ -213,42 +244,13 @@ function Edit(props) {
     ...colorGradientSettings
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "outermost-icon-block__color-settings__help"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active: ", "ncmaz-fse-core")), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)(" Set the color for the active state (liked/saved/hovering) of the button.", "ncmaz-fse-core"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)({
-      className: "nc-post-reaction-button" + (isSaved ? " is-actived" : ""),
-      style: {
-        ...style,
-        gap: gapCSSValue,
-        "--active-color": activeColor.slug ? `var( --wp--preset--color--${activeColor.slug} )` : customActiveColor,
-        "--active-background-color": activeBgColor.slug ? `var( --wp--preset--color--${activeBgColor.slug} )` : customActiveBgColor,
-        "--active-border-color": activeBorderColor.slug ? `var( --wp--preset--color--${activeBorderColor.slug} )` : customActiveBorderColor,
-        "--active-icon-background-color": activeIconBgColor.slug ? `var( --wp--preset--color--${activeIconBgColor.slug} )` : customActiveIconBgColor
-      }
-    })
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InnerBlocks, {
-    allowedBlocks: ["outermost/icon-block"],
-    template: [["outermost/icon-block", {
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" /></svg>',
-      iconColorValue: "#334155",
-      iconBackgroundColorValue: "#f3f4f6",
-      itemsJustification: "center",
-      width: "34px",
-      hasNoIconFill: true,
-      style: {
-        border: {
-          radius: "99px"
-        },
-        spacing: {
-          padding: "8px"
-        }
-      }
-    }]],
-    templateLock: "insert"
-  }), showCountText ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Active: ", "ncmfse")), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)(" Set the color for the active state (liked/saved/hovering) of the button.", "ncmfse"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    ...blockProps
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    ...innerBlocksProps
+  }, children, showCountText ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "nc__count"
-  }, postSavesCount) : null));
-
-  // Other code will go here, don't forget or delete the closing curly brace!
+  }, postSavesCount) : null)));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.withColors)({
   activeColor: "active-color",
@@ -434,7 +436,7 @@ module.exports = window["wp"]["primitives"];
   \******************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/save-button-block","version":"0.1.0","title":"Save Button","category":"ncmazfse","ancestor":["core/post-template"],"usesContext":["postId","postType"],"description":"Example block scaffolded with Create Block tool.","allowedBlocks":["outermost/icon-block"],"example":{},"attributes":{"showCountText":{"type":"boolean","default":false},"activeColor":{"type":"string"},"customActiveColor":{"type":"string","default":"#27272a"},"activeBgColor":{"type":"string"},"customActiveBgColor":{"type":"string"},"activeIconBgColor":{"type":"string"},"customActiveIconBgColor":{"type":"string","default":"#e4e4e794"},"activeBorderColor":{"type":"string"},"customActiveBorderColor":{"type":"string"}},"supports":{"anchor":false,"html":false,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"shadow":true,"spacing":{"padding":true,"margin":true,"blockGap":true,"__experimentalDefaultControls":{"padding":true,"blockGap":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"interactivity":true},"textdomain":"like-button-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/save-button-btn","version":"0.1.0","title":"Ncmaz Post Bookmark","category":"ncmfse","usesContext":["postId","postType"],"description":"Example block scaffolded with Create Block tool.","allowedBlocks":["outermost/icon-block"],"example":{},"attributes":{"showCountText":{"type":"boolean","default":false},"activeColor":{"type":"string"},"customActiveColor":{"type":"string","default":"#27272a"},"activeBgColor":{"type":"string"},"customActiveBgColor":{"type":"string"},"activeIconBgColor":{"type":"string"},"customActiveIconBgColor":{"type":"string","default":"#e4e4e794"},"activeBorderColor":{"type":"string"},"customActiveBorderColor":{"type":"string"}},"supports":{"anchor":false,"html":false,"color":{"gradients":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalWritingMode":true,"__experimentalDefaultControls":{"fontSize":true}},"shadow":true,"spacing":{"padding":true,"margin":true,"blockGap":true,"__experimentalDefaultControls":{"padding":true,"blockGap":true}},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"layout":{"default":{"type":"flex","flexWrap":"nowrap"}},"interactivity":true},"textdomain":"like-button-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js"}');
 
 /***/ })
 

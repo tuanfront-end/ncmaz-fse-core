@@ -1,10 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "ncmazfse-block/term-count",
+	"name": "ncmfse/term-count",
 	"title": "Ncmaz Term Count",
-	"category": "ncmazfse",
-	"ancestor": ["ncmazfse-block/term-template"],
+	"category": "ncmfse",
 	"description": "Display the description.",
 	"textdomain": "default",
 	"attributes": {
@@ -19,7 +18,6 @@
 	"supports": {
 		"html": false,
 		"color": {
-			"gradients": true,
 			"__experimentalDefaultControls": {
 				"background": true,
 				"text": true

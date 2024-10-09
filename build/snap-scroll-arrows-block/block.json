@@ -1,0 +1,76 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ncmfse/snap-scroll-arrows",
+  "version": "0.1.0",
+  "title": "Ncmaz Snap Scroll Arrows",
+  "category": "ncmfse",
+  "ancestor": [
+    "core/query",
+    "ncmfse/term-query-loop"
+  ],
+  "description": "Example block scaffolded with Create Block tool.",
+  "allowedBlocks": [
+    "outermost/icon-block",
+    "core/paragraph"
+  ],
+  "example": {},
+  "usesContext": [
+    "ncmazfse_termQueryId",
+    "queryId"
+  ],
+  "attributes": {
+    "layout": {
+      "type": "object",
+      "myType": {}
+    }
+  },
+  "supports": {
+    "reusable": false,
+    "anchor": false,
+    "html": false,
+    "color": {
+      "gradients": true,
+      "__experimentalDefaultControls": {
+        "background": true,
+        "text": true
+      }
+    },
+    "shadow": true,
+    "spacing": {
+      "padding": true,
+      "margin": true,
+      "blockGap": true,
+      "__experimentalDefaultControls": {
+        "padding": true,
+        "blockGap": true
+      }
+    },
+    "__experimentalBorder": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true,
+      "__experimentalDefaultControls": {
+        "color": true,
+        "radius": true,
+        "style": true,
+        "width": true
+      }
+    },
+    "layout": {
+      "default": {
+        "type": "flex",
+        "justifyContent": "center",
+        "flexWrap": "nowrap"
+      }
+    },
+    "interactivity": true
+  },
+  "textdomain": "like-button-block",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "viewScriptModule": "file:./view.js"
+}

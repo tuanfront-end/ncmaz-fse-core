@@ -1,0 +1,113 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ncmfse/mailpoet-subscription-form",
+	"version": "0.1.0",
+	"title": "Ncmaz Mailpoet Subscription Form",
+	"category": "ncmfse",
+	"icon": "media-interactive",
+	"description": "A newsletter signup form adds users to a MailPoet list",
+	"example": {},
+	"attributes": {
+		"nameLabel": {
+			"type": "string",
+			"default": "Name"
+		},
+		"namePlaceholder": {
+			"type": "string",
+			"default": "Enter your name"
+		},
+		"emailLabel": {
+			"type": "string",
+			"default": "Email"
+		},
+		"emailPlaceholder": {
+			"type": "string",
+			"default": "Enter your email"
+		},
+		"successMessage": {
+			"type": "string",
+			"default": "Thank you for subscribing!"
+		},
+		"mailpoetListId": {
+			"type": "string",
+			"default": ""
+		},
+		"showNameField": {
+			"type": "boolean",
+			"default": false
+		},
+		"showLabel": {
+			"type": "boolean",
+			"default": false
+		},
+		"submitButtonStyle": {
+			"type": "string",
+			"default": "default"
+		},
+		"inputRadius": {
+			"type": "number",
+			"default": 8
+		},
+		"inputPadding": {
+			"type": "number",
+			"default": 10
+		}
+	},
+	"supports": {
+		"anchor": false,
+		"html": false,
+		"color": {
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalWritingMode": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"shadow": true,
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"blockGap": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		},
+		"layout": true,
+		"interactivity": true
+	},
+
+	"textdomain": "short-contact-form",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScriptModule": "file:./view.js"
+}

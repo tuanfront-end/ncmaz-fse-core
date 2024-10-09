@@ -3,11 +3,10 @@ import { useEntityRecords } from "@wordpress/core-data";
 import {
 	InspectorControls,
 	useBlockProps,
-	InnerBlocks,
-	getSpacingPresetCssVar,
 	withColors,
 	__experimentalColorGradientSettingsDropdown as ColorGradientSettingsDropdown,
 	__experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
+	useInnerBlocksProps,
 } from "@wordpress/block-editor";
 import "./editor.scss";
 import { TAttrs, EditProps } from "../types";
@@ -37,7 +36,6 @@ function Edit(props: EditProps<Attributes>) {
 		customActiveBorderColor,
 		customActiveColor,
 		customActiveIconBgColor,
-		style,
 		showCountText,
 	} = attributes;
 
@@ -66,15 +64,11 @@ function Edit(props: EditProps<Attributes>) {
 	);
 	const isSaved = (isSavedRecords?.length || 0) > 0;
 
-	const gapCSSValue = getSpacingPresetCssVar(
-		attributes.style?.spacing?.blockGap,
-	);
-
 	//
 	const colorGradientSettings = useMultipleOriginColorsAndGradients() as any;
 	const colorSettings = [
 		{
-			label: __("Active Color", "ncmaz-fse-core"),
+			label: __("Active Text/Icon", "ncmfse"),
 			value: activeColor.color || customActiveColor,
 			onChange: (value: string) => {
 				setActiveColor(value);
@@ -86,7 +80,7 @@ function Edit(props: EditProps<Attributes>) {
 			},
 		},
 		{
-			label: __("Active Background Color", "ncmaz-fse-core"),
+			label: __("Active Background", "ncmfse"),
 			value: activeBgColor.color || customActiveBgColor,
 			onChange: (value: string) => {
 				setActiveBgColor(value);
@@ -98,7 +92,7 @@ function Edit(props: EditProps<Attributes>) {
 			},
 		},
 		{
-			label: __("Active Border Color", "ncmaz-fse-core"),
+			label: __("Active Border", "ncmfse"),
 			value: activeBorderColor.color || customActiveBorderColor,
 			onChange: (value: string) => {
 				setActiveBorderColor(value);
@@ -110,7 +104,7 @@ function Edit(props: EditProps<Attributes>) {
 			},
 		},
 		{
-			label: __("Active Icon Background Color", "ncmaz-fse-core"),
+			label: __("Active Icon Background", "ncmfse"),
 			value: activeIconBgColor.color || customActiveIconBgColor,
 			onChange: (value: string) => {
 				setActiveIconBgColor(value);
@@ -123,14 +117,58 @@ function Edit(props: EditProps<Attributes>) {
 		},
 	];
 
+	const blockProps = useBlockProps({
+		className: "nc-post-reaction-button" + (isSaved ? " is-actived" : ""),
+		style: {
+			"--active-color": activeColor.slug
+				? `var( --wp--preset--color--${activeColor.slug} )`
+				: customActiveColor,
+			"--active-background-color": activeBgColor.slug
+				? `var( --wp--preset--color--${activeBgColor.slug} )`
+				: customActiveBgColor,
+			"--active-border-color": activeBorderColor.slug
+				? `var( --wp--preset--color--${activeBorderColor.slug} )`
+				: customActiveBorderColor,
+			"--active-icon-background-color": activeIconBgColor.slug
+				? `var( --wp--preset--color--${activeIconBgColor.slug} )`
+				: customActiveIconBgColor,
+		},
+	});
+	const { children, ...innerBlocksProps } = useInnerBlocksProps(blockProps, {
+		template: [
+			[
+				"outermost/icon-block",
+				{
+					icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" /></svg>',
+					iconColor: "contrast-2",
+					iconColorValue: "var:preset|color|contrast-2",
+					iconBackgroundColor: "shadcn-accent",
+					iconBackgroundColorValue: "var:preset|color|shadcn-accent",
+					itemsJustification: "center",
+					width: "34px",
+					hasNoIconFill: true,
+					style: {
+						border: {
+							radius: "99px",
+						},
+						spacing: {
+							padding: "8px",
+						},
+					},
+				},
+			],
+		],
+		templateLock: "insert",
+	});
+
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__("Post Save Button", "ncmaz-fse-core")}>
+				<PanelBody title={__("Post Save Button", "ncmfse")}>
 					<ToggleControl
 						__nextHasNoMarginBottom
-						label={__("Show Count", "ncmaz-fse-core")}
-						help={__("Show/Hide count number", "ncmaz-fse-core")}
+						label={__("Show Count", "ncmfse")}
+						help={__("Show/Hide count number", "ncmfse")}
 						checked={showCountText}
 						onChange={(newValue) => {
 							setAttributes({ showCountText: newValue });
@@ -160,70 +198,24 @@ function Edit(props: EditProps<Attributes>) {
 					/>
 				))}
 				<p className="outermost-icon-block__color-settings__help">
-					<strong>{__("Active: ", "ncmaz-fse-core")}</strong>
+					<strong>{__("Active: ", "ncmfse")}</strong>
 					{__(
 						" Set the color for the active state (liked/saved/hovering) of the button.",
-						"ncmaz-fse-core",
+						"ncmfse",
 					)}
 				</p>
 			</InspectorControls>
 
-			<div
-				{...useBlockProps({
-					className: "nc-post-reaction-button" + (isSaved ? " is-actived" : ""),
-					style: {
-						...style,
-						gap: gapCSSValue,
-						"--active-color": activeColor.slug
-							? `var( --wp--preset--color--${activeColor.slug} )`
-							: customActiveColor,
-						"--active-background-color": activeBgColor.slug
-							? `var( --wp--preset--color--${activeBgColor.slug} )`
-							: customActiveBgColor,
-						"--active-border-color": activeBorderColor.slug
-							? `var( --wp--preset--color--${activeBorderColor.slug} )`
-							: customActiveBorderColor,
-						"--active-icon-background-color": activeIconBgColor.slug
-							? `var( --wp--preset--color--${activeIconBgColor.slug} )`
-							: customActiveIconBgColor,
-					},
-				})}
-			>
-				{/* insert Innerblock */}
-				<InnerBlocks
-					allowedBlocks={["outermost/icon-block"]}
-					template={[
-						[
-							"outermost/icon-block",
-							{
-								icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" /></svg>',
-								iconColorValue: "#334155",
-								iconBackgroundColorValue: "#f3f4f6",
-								itemsJustification: "center",
-								width: "34px",
-								hasNoIconFill: true,
-								style: {
-									border: {
-										radius: "99px",
-									},
-									spacing: {
-										padding: "8px",
-									},
-								},
-							},
-						],
-					]}
-					templateLock="insert"
-				/>
-
-				{showCountText ? (
-					<span className="nc__count">{postSavesCount}</span>
-				) : null}
+			<div {...blockProps}>
+				<div {...innerBlocksProps}>
+					{children}
+					{showCountText ? (
+						<span className="nc__count">{postSavesCount}</span>
+					) : null}
+				</div>
 			</div>
 		</>
 	);
-
-	// Other code will go here, don't forget or delete the closing curly brace!
 }
 
 export default withColors({

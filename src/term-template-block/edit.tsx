@@ -17,11 +17,20 @@ import { store as coreStore } from "@wordpress/core-data";
 import { list, grid } from "@wordpress/icons";
 import { EditProps, TAttrs } from "../types";
 import metadata from "./block.json";
+import "./editor.scss";
 
 const TEMPLATE = [
-	["ncmazfse-block/term-name"],
-	["ncmazfse-block/term-description"],
-	["ncmazfse-block/term-count"],
+	[
+		"core/group",
+		{},
+		[
+			// ["ncmfse/term-cover-img"],
+			["ncmfse/term-featured-img"],
+			["ncmfse/term-name"],
+			["ncmfse/term-description"],
+			["ncmfse/term-count"],
+		],
+	],
 ];
 
 function PostTemplateInnerBlocks({ classList }: { classList: string }) {

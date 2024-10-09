@@ -53,10 +53,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
 /* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./src/term-name-block/editor.scss");
 
 /**
  * External dependencies
  */
+
 
 
 
@@ -88,7 +90,7 @@ function TermNameEdit({
   const blockEditingMode = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockEditingMode)();
   let titleElement = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(TagName, {
     ...blockProps
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Title"));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Archive Title"));
   if (termTaxonomy && termId) {
     titleElement = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(TagName, {
       ...blockProps,
@@ -204,6 +206,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/term-name-block/editor.scss":
+/*!*****************************************!*\
+  !*** ./src/term-name-block/editor.scss ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./src/term-name-block/style.scss":
 /*!****************************************!*\
   !*** ./src/term-name-block/style.scss ***!
@@ -307,7 +321,7 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
   \****************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmazfse-block/term-name","title":"Ncmaz Term Name","category":"ncmazfse","description":"Displays the title of a term.","ancestor":["ncmazfse-block/term-template"],"textdomain":"default","usesContext":["termId","termTaxonomy","ncmazfse_termQueryId"],"attributes":{"textAlign":{"type":"string"},"level":{"type":"number","default":2},"levelOptions":{"type":"array"},"isLink":{"type":"boolean","default":false},"rel":{"type":"string","attribute":"rel","default":""},"linkTarget":{"type":"string","default":"_self"}},"example":{"viewportWidth":350},"supports":{"align":["wide","full"],"html":false,"color":{"gradients":true,"link":true,"__experimentalDefaultControls":{"background":true,"text":true,"link":true}},"spacing":{"margin":true,"padding":true},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalDefaultControls":{"fontSize":true}},"interactivity":{"clientNavigation":true},"__experimentalBorder":{"radius":true,"color":true,"width":true,"style":true,"__experimentalDefaultControls":{"radius":true,"color":true,"width":true,"style":true}}},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"ncmfse/term-name","title":"Ncmaz Term Name","category":"ncmfse","description":"Displays the title of a term.","textdomain":"default","usesContext":["termId","termTaxonomy","ncmazfse_termQueryId"],"attributes":{"textAlign":{"type":"string"},"level":{"type":"number","default":2},"levelOptions":{"type":"array"},"isLink":{"type":"boolean","default":false},"rel":{"type":"string","attribute":"rel","default":""},"linkTarget":{"type":"string","default":"_self"}},"example":{"viewportWidth":350},"supports":{"align":["wide","full"],"html":false,"color":{"__experimentalDefaultControls":{"background":true,"text":true}},"spacing":{"margin":true,"padding":true},"typography":{"fontSize":true,"lineHeight":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalTextDecoration":true,"__experimentalLetterSpacing":true,"__experimentalDefaultControls":{"fontSize":true}},"interactivity":{"clientNavigation":true},"__experimentalBorder":{"radius":true,"color":true,"width":true,"style":true,"__experimentalDefaultControls":{"radius":true,"color":true,"width":true,"style":true}}},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
 
 /***/ })
 

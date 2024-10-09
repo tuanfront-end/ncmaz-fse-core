@@ -1,0 +1,100 @@
+// Header template block
+.global-header {
+	padding-bottom: 20px;
+	padding-top: 20px;
+
+	@media (min-width: 600px) {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+}
+
+.wp-block-navigation.is-style-global-header {
+	a {
+		color: inherit;
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.wp-block-outermost-mega-menu,
+	.wp-block-navigation-item {
+		.wp-block-navigation-item__content,
+		.wp-block-outermost-mega-menu__toggle {
+			line-height: 4;
+			@media (min-width: 600px) {
+				line-height: 6;
+			}
+		}
+
+		// remove line-height for submenu
+		.wp-block-navigation-submenu,
+		.wp-block-outermost-mega-menu__menu-container {
+			.wp-block-navigation-item__content,
+			.wp-block-outermost-mega-menu__toggle {
+				line-height: inherit;
+			}
+		}
+	}
+
+	.wp-block-navigation__responsive-container.is-menu-open {
+		// In sidebar when click the bar icon
+		.wp-block-navigation__container {
+			.wp-block-navigation-item__content,
+			.wp-block-outermost-mega-menu__toggle {
+				line-height: inherit;
+			}
+		}
+	}
+
+	.wp-block-navigation__responsive-container-open.always-shown {
+		padding-top: 0;
+		padding-bottom: 0;
+		@media (min-width: 600px) {
+			padding-top: 28px;
+			padding-bottom: 28px;
+		}
+	}
+}
+
+// FOR RESPONSIVE SIDE MENU
+.wp-block-navigation__responsive-container {
+	&.is-menu-open {
+		gap: max(var(--wp--preset--spacing--7, 1.5rem), 1rem);
+		.wp-block-navigation__responsive-container-content {
+			a:hover {
+				text-decoration: underline;
+			}
+
+			.wp-block-navigation__submenu-container {
+				padding-top: max(var(--wp--preset--spacing--7, 1.5rem), 1rem);
+				padding-bottom: var(--wp--preset--spacing--1-5, 0.5em);
+				gap: var(--wp--preset--spacing--4, 0.5rem);
+			}
+
+			.has-child .wp-block-navigation__submenu-container {
+				border: 2px solid transparent;
+				border-bottom-left-radius: 16px;
+				border-bottom-right-radius: 16px;
+				border-left-color: var(--wp--preset--color--shadcn-border);
+			}
+
+			.wp-block-navigation.items-justified-right {
+				.wp-block-navigation__submenu-container {
+					border-right-color: var(--wp--preset--color--shadcn-border);
+					border-left-color: transparent;
+				}
+			}
+
+			.wp-block-navigation-item {
+				&.has-child {
+					> .wp-block-navigation-item__content {
+						font-weight: 500;
+						// padding-bottom: 0.375rem;
+					}
+				}
+			}
+		}
+	}
+}

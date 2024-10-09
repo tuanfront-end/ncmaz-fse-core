@@ -13,6 +13,7 @@ import { PanelBody, RangeControl } from "@wordpress/components";
 import { __, _x } from "@wordpress/i18n";
 import metadata from "./block.json";
 import { EditProps, TAttrs } from "../types";
+import "./editor.scss";
 
 type Attributes = TAttrs<typeof metadata.attributes>;
 type Props = EditProps<Attributes> & { name: string };
@@ -55,14 +56,13 @@ export default function TermDescriptionEdit({
 					/>
 				</BlockControls>
 				<div {...blockProps}>
-					<p>{__("This block will display the excerpt.")}</p>
+					<p>{__("This block will display the Term Description.")}</p>
 				</div>
 			</>
 		);
 	}
 
-	const excerptClassName =
-		"wp-block-ncmazfse-block-term-description__description";
+	const excerptClassName = "wp-block-ncmfse-term-description__description";
 
 	/**
 	 * The excerpt length setting needs to be applied to both

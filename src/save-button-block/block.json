@@ -1,11 +1,10 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "ncmazfse-block/save-button-block",
+	"name": "ncmfse/save-button-btn",
 	"version": "0.1.0",
-	"title": "Save Button",
-	"category": "ncmazfse",
-	"ancestor": ["core/post-template"],
+	"title": "Ncmaz Post Bookmark",
+	"category": "ncmfse",
 	"usesContext": ["postId", "postType"],
 	"description": "Example block scaffolded with Create Block tool.",
 	"allowedBlocks": ["outermost/icon-block"],
@@ -90,6 +89,12 @@
 				"radius": true,
 				"style": true,
 				"width": true
+			}
+		},
+		"layout": {
+			"default": {
+				"type": "flex",
+				"flexWrap": "nowrap"
 			}
 		},
 		"interactivity": true

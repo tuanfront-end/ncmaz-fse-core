@@ -1,0 +1,74 @@
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/mega-menu-block/view.scss ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
+.wp-block-outermost-mega-menu__menu-container {
+  height: auto;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 100%;
+  transition: opacity 0.1s linear;
+  visibility: hidden;
+  z-index: 10;
+}
+.wp-block-outermost-mega-menu__menu-container.menu-width-content {
+  max-width: min(var(--wp--style--global--content-size), 100vw);
+  width: var(--wp--style--global--content-size);
+}
+.wp-block-outermost-mega-menu__menu-container.menu-width-wide {
+  max-width: min(var(--wp--style--global--wide-size), 100vw);
+  width: var(--wp--style--global--wide-size);
+}
+.wp-block-outermost-mega-menu__menu-container.menu-width-full {
+  max-width: 100vw;
+  width: 100vw;
+}
+.wp-block-outermost-mega-menu__menu-container:hover .menu-container__close-button {
+  opacity: 1;
+}
+.wp-block-outermost-mega-menu__menu-container .is-responsive {
+  display: flex;
+}
+.wp-block-outermost-mega-menu__menu-container.menu-width-content.menu-justified-left {
+  right: 0;
+  left: unset;
+}
+.wp-block-outermost-mega-menu__menu-container.menu-width-content.menu-justified-right {
+  right: unset;
+  left: 0;
+}
+.wp-block-outermost-mega-menu__menu-container.menu-width-content.menu-justified-center {
+  left: unset;
+  right: calc(-1 * var(--wp--style--global--content-size) / 2 + 50%);
+}
+
+.wp-block-outermost-mega-menu__collapsed-link {
+  display: none !important;
+}
+
+html.has-modal-open .wp-block-outermost-mega-menu.disable-menu-when-collapsed:not(.has-collapsed-link) {
+  display: none;
+}
+html.has-modal-open .wp-block-outermost-mega-menu.disable-menu-when-collapsed .wp-block-outermost-mega-menu__collapsed-link {
+  display: block !important;
+}
+html.has-modal-open .wp-block-outermost-mega-menu.disable-menu-when-collapsed .wp-block-outermost-mega-menu__toggle,
+html.has-modal-open .wp-block-outermost-mega-menu.disable-menu-when-collapsed .wp-block-outermost-mega-menu__menu-container {
+  display: none;
+}
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/mega-menu-block/edit.scss ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
+.outermost-mega-menu__settings-panel .settings-panel__description {
+  margin-top: 24px;
+}
+.outermost-mega-menu__settings-panel .components-notice {
+  margin: 10px 0 0;
+}
+.outermost-mega-menu__settings-panel .components-notice__content {
+  margin-left: 0;
+}
+
+.outermost-mega-menu__layout-panel .components-h-stack > .components-base-control {
+  margin-bottom: 0;
+}

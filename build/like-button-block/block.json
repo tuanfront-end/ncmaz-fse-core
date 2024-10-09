@@ -1,16 +1,16 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "ncmazfse-block/like-button-block",
+  "name": "ncmfse/like-button-btn",
   "version": "0.1.0",
-  "title": "Like Button",
-  "category": "ncmazfse",
+  "title": "Ncmaz Like Button",
+  "category": "ncmfse",
   "usesContext": [
     "postId",
     "postType",
     "commentId"
   ],
-  "description": "Example block scaffolded with Create Block tool.",
+  "description": "Like button block for posts and comments.",
   "allowedBlocks": [
     "outermost/icon-block"
   ],
@@ -91,6 +91,12 @@
         "radius": true,
         "style": true,
         "width": true
+      }
+    },
+    "layout": {
+      "default": {
+        "type": "flex",
+        "flexWrap": "nowrap"
       }
     },
     "interactivity": true

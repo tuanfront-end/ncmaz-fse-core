@@ -96,12 +96,12 @@ export function useBlockNameForPatterns(
 	const activeVariationName = useSelect(
 		(select) =>
 			(select(blocksStore) as any).getActiveBlockVariation(
-				"ncmazfse-block/term-query-loop",
+				"ncmfse/term-query-loop",
 				attributes,
 			)?.name,
 		[attributes],
 	);
-	const blockName = `ncmazfse-block/term-query-loop/${activeVariationName}`;
+	const blockName = `ncmfse/term-query-loop/${activeVariationName}`;
 	const hasActiveVariationPatterns = useSelect(
 		(select) => {
 			if (!activeVariationName) {
@@ -116,9 +116,7 @@ export function useBlockNameForPatterns(
 		},
 		[clientId, activeVariationName, blockName],
 	);
-	return hasActiveVariationPatterns
-		? blockName
-		: "ncmazfse-block/term-query-loop";
+	return hasActiveVariationPatterns ? blockName : "ncmfse/term-query-loop";
 }
 
 /**
@@ -152,13 +150,10 @@ export function useScopedBlockVariations(attributes: Record<string, any>) {
 			) as Record<string, any>;
 			return {
 				activeVariationName: getActiveBlockVariation(
-					"ncmazfse-block/term-query-loop",
+					"ncmfse/term-query-loop",
 					attributes,
 				)?.name,
-				blockVariations: getBlockVariations(
-					"ncmazfse-block/term-query-loop",
-					"block",
-				),
+				blockVariations: getBlockVariations("ncmfse/term-query-loop", "block"),
 			};
 		},
 		[attributes],

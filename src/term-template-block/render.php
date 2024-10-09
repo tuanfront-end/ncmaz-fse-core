@@ -16,7 +16,7 @@
 // $page                = empty($_GET[$page_key]) ? 1 : (int) $_GET[$page_key];
 
 $contextQuery   = $block->context['ncmazfse_termQuery'] ?? array();
-$contextQueryId = $block->context['ncmazfse_termQueryId'];
+$contextQueryId = $block->context['ncmazfse_termQueryId'] ?? '';
 
 // Use global query if needed.
 $inherit_query = (isset($block->context['ncmazfse_termQuery']['inherit']) && $block->context['ncmazfse_termQuery']['inherit']);
@@ -64,6 +64,14 @@ if ($inherit_query) {
 
 $query = get_terms($term_query);
 
+if (is_wp_error($query)) {
+	return  esc_html_e('No terms found.', 'ncmaz-fse-core');
+}
+
+if (empty($query)) {
+	return  esc_html_e('No terms found.', 'ncmaz-fse-core');
+}
+
 
 $classnames = '';
 if (isset($block->context['displayLayout']) && isset($block->context['ncmazfse_termQuery'])) {
@@ -109,16 +117,16 @@ foreach ($query as $term) {
 
 	// Wrap the render inner blocks in a `li` element with the appropriate post classes.
 	// $post_classes = implode(' ', get_post_class('wp-block-post'));
-	$term_classes = 'ncmazfse-block-term-item';
+	$term_classes = 'ncmfse-term-item';
 
 	// $inner_block_directives = $enhanced_pagination ? ' data-wp-key="term-template-item-' . $term_id . '"' : '';
 	$inner_block_directives = '';
 
 	$content .= '<li' . $inner_block_directives . ' class="' . esc_attr($term_classes) . '">' . $block_content . '</li>';
 }
-
 ?>
 
-<ul <?php echo ($wrapper_attributes); ?>>
-	<?php echo $content; ?>
+<ul <?php echo wp_kses_data($wrapper_attributes); ?>>
+	<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $content; ?>
 </ul>

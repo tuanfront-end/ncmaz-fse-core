@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "ncmazfse-block/term-query-loop",
+	"name": "ncmfse/term-query-loop",
 	"title": "Ncmaz Terms Query Loop",
-	"category": "ncmazfse",
+	"category": "ncmfse",
 	"description": "An advanced block that allows displaying post types based on different query parameters and visual configurations.",
 	"textdomain": "default",
 	"attributes": {

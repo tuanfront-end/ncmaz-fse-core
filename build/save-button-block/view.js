@@ -65,7 +65,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const {
   state
-} = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("ncmazfse-core", {
+} = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("ncmfse/save-button-btn", {
   state: {
     get isSaved() {
       const {
@@ -133,21 +133,6 @@ const {
               saveCount
             }
           };
-          if (!state.userId) {
-            // Update local storage
-            const postId = context.postId;
-            const savedPosts = localStorage.getItem("savedPosts");
-            const savedPostsArray = savedPosts ? JSON.parse(savedPosts) : [];
-            if (isSaved) {
-              savedPostsArray.push(postId);
-            } else {
-              const index = savedPostsArray.indexOf(postId);
-              if (index > -1) {
-                savedPostsArray.splice(index, 1);
-              }
-            }
-            localStorage.setItem("savedPosts", JSON.stringify(savedPostsArray));
-          }
         }).finally(() => {
           state.loadingList = state.loadingList.filter(id => id !== postId);
         });
@@ -159,18 +144,7 @@ const {
     }
   },
   callbacks: {
-    logHandleSaveInit: () => {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-
-      // if user is not logged in
-      if (!state.userId) {
-        // check from local storage
-        const postId = context.postId;
-        const savedPosts = localStorage.getItem("savedPosts");
-        const savedPostsArray = savedPosts ? JSON.parse(savedPosts) : [];
-        context.contextIsSaved = savedPostsArray.includes(postId);
-      }
-    }
+    logHandleSaveInit: () => {}
   }
 });
 

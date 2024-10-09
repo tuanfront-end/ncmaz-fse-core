@@ -1,0 +1,10 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ncmazfse-block-not-use/enable-snapping-templates",
+	"version": "0.1.0",
+	"title": "enable-snapping-templates",
+	"textdomain": "ncmazfse-block",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

@@ -7,7 +7,7 @@ $user_id = get_current_user_id();
 
 // Set the interactivity state.
 wp_interactivity_state(
-	'ncmazfse-core',
+	'ncmfse/save-button-btn',
 	[
 		'ajaxUrl' => admin_url('admin-ajax.php'),
 		'saveButtonNonce'   => wp_create_nonce('save_button_nonce'),
@@ -49,6 +49,8 @@ $colorCssVars = [
 		? 'var( --wp--preset--color--' . $attributes['activeIconBgColor'] . ' )'
 		: $attributes['customActiveIconBgColor'] ?? null,
 ];
+// remove null values from the array.
+$colorCssVars =  array_filter($colorCssVars);
 // convert the colorCssVars array to style string.
 $colorStyle = '';
 foreach ($colorCssVars as $key => $value) {
@@ -56,26 +58,27 @@ foreach ($colorCssVars as $key => $value) {
 };
 ?>
 
-<button
-	<?php echo get_block_wrapper_attributes([
-		'class' => 'nc-post-reaction-button',
+<a role="button" tabindex="0"
+	<?php echo wp_kses_data(get_block_wrapper_attributes([
+		'class' => 'nc-post-reaction-button ' . (!isset($attributes['style']['spacing']['blockGap']) ? 'gap-1.5' : ''),
 		'style' => $colorStyle,
-	]); ?>
-	data-wp-interactive="ncmazfse-core"
-	<?php echo wp_interactivity_data_wp_context([
+	])); ?>
+	data-wp-interactive="ncmfse/save-button-btn"
+	<?php echo wp_kses_data(wp_interactivity_data_wp_context([
 		"postId" => $current_post_id,
 		'contextIsSaved' 	=> $isSaved,
 		'contextSaveCount' 	=> $saveCount,
-	]); ?>
+	])); ?>
 	data-wp-init="callbacks.logHandleSaveInit"
 	data-wp-on--click="actions.handleSave"
 	data-wp-class--is-actived="state.isSaved"
 	data-wp-class--is-loading="state.isLoading"
 	data-wp-bind--disabled="state.isLoading">
 
-	<?php echo $content; ?>
+	<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $content; ?>
 	<?php if ($attributes["showCountText"]): ?>
 		<span class="nc__count" data-wp-text="state.saveCount"></span>
 	<?php endif; ?>
 
-</button>
+</a>

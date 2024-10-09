@@ -1,13 +1,10 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "ncmazfse-block/reading-time-block",
+  "name": "ncmfse/reading-time",
   "version": "0.1.0",
-  "title": "Reading time",
-  "category": "ncmazfse",
-  "ancestor": [
-    "core/post-template"
-  ],
+  "title": "Ncmaz Post Reading Time",
+  "category": "ncmfse",
   "usesContext": [
     "postId",
     "postType"
@@ -30,7 +27,6 @@
     "align": false,
     "alignWide": false,
     "color": {
-      "__experimentalSkipSerialization": true,
       "gradients": true,
       "__experimentalDefaultControls": {
         "background": true,
@@ -52,11 +48,8 @@
       }
     },
     "reusable": false,
-    "shadow": {
-      "__experimentalSkipSerialization": true
-    },
+    "shadow": true,
     "spacing": {
-      "__experimentalSkipSerialization": true,
       "padding": [
         "horizontal",
         "vertical"
@@ -70,7 +63,6 @@
       "radius": true,
       "style": true,
       "width": true,
-      "__experimentalSkipSerialization": true,
       "__experimentalDefaultControls": {
         "color": true,
         "radius": true,

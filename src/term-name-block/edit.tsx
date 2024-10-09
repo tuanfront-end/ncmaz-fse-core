@@ -18,6 +18,7 @@ import { __ } from "@wordpress/i18n";
 import { useEntityProp } from "@wordpress/core-data";
 import metadata from "./block.json";
 import { EditProps, TAttrs } from "../types";
+import "./editor.scss";
 
 type Attributes = TAttrs<typeof metadata.attributes>;
 type Props = EditProps<Attributes> & { name: string };
@@ -40,7 +41,7 @@ export default function TermNameEdit({
 	});
 	const blockEditingMode = useBlockEditingMode();
 
-	let titleElement = <TagName {...blockProps}>{__("Title")}</TagName>;
+	let titleElement = <TagName {...blockProps}>{__("Archive Title")}</TagName>;
 
 	if (termTaxonomy && termId) {
 		titleElement = (

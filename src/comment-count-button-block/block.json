@@ -1,11 +1,10 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "ncmazfse-block/comment-count-button-block",
+	"name": "ncmfse/comment-count-btn",
 	"version": "0.1.0",
-	"title": "Comment Count Button",
-	"category": "ncmazfse",
-	"ancestor": ["core/post-template"],
+	"title": "Ncmaz Post Comment Count",
+	"category": "ncmfse",
 	"usesContext": ["postId", "postType"],
 	"description": "Example block scaffolded with Create Block tool.",
 	"allowedBlocks": ["outermost/icon-block"],
@@ -15,7 +14,6 @@
 			"type": "boolean",
 			"default": true
 		},
-
 		"activeColor": {
 			"type": "string"
 		},
@@ -23,14 +21,12 @@
 			"type": "string",
 			"default": "#16a34a"
 		},
-
 		"activeBgColor": {
 			"type": "string"
 		},
 		"customActiveBgColor": {
 			"type": "string"
 		},
-
 		"activeIconBgColor": {
 			"type": "string"
 		},
@@ -38,7 +34,6 @@
 			"type": "string",
 			"default": "#00ba7c1a"
 		},
-
 		"activeBorderColor": {
 			"type": "string"
 		},
@@ -90,6 +85,12 @@
 				"radius": true,
 				"style": true,
 				"width": true
+			}
+		},
+		"layout": {
+			"default": {
+				"type": "flex",
+				"flexWrap": "nowrap"
 			}
 		}
 	},

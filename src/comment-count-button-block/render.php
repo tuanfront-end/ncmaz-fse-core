@@ -25,6 +25,8 @@ $colorCssVars = [
 		? 'var( --wp--preset--color--' . $attributes['activeIconBgColor'] . ' )'
 		: $attributes['customActiveIconBgColor'] ?? null,
 ];
+// remove null values from the array.
+$colorCssVars =  array_filter($colorCssVars);
 // convert the colorCssVars array to style string.
 $colorStyle = '';
 foreach ($colorCssVars as $key => $value) {
@@ -34,15 +36,16 @@ foreach ($colorCssVars as $key => $value) {
 
 <a
 	href="<?php echo esc_url($comment_link); ?>"
-	<?php echo get_block_wrapper_attributes([
-		'class' => 'nc-post-reaction-button',
+	<?php echo wp_kses_data(get_block_wrapper_attributes([
+		'class' => 'nc-post-reaction-button ' . (!isset($attributes['style']['spacing']['blockGap']) ? 'gap-1.5' : ''),
 		'style' => $colorStyle,
-	]); ?>>
+	])); ?>>
 
-	<?php echo $content; ?>
+	<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $content; ?>
 	<?php if ($attributes["showCountText"]): ?>
 		<span class="nc__count">
-			<?php echo $comment_count; ?>
+			<?php echo esc_html($comment_count); ?>
 		</span>
 	<?php endif; ?>
 
