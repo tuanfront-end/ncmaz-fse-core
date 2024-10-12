@@ -7,7 +7,7 @@
 	top: 100%;
 	transition: opacity 0.1s linear;
 	visibility: hidden;
-	z-index: 10;
+	z-index: 25;
 
 	&.menu-width-content {
 		max-width: min(var(--wp--style--global--content-size), 100vw);
