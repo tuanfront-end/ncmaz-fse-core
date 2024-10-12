@@ -1,10 +1,1 @@
-/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/dropdown-menu-item-block/editor.scss ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************/
-.wp-block-ncmfse-dropdown-menu-item > .block-editor-inner-blocks {
-  width: 100%;
-}
-.wp-block-ncmfse-dropdown-menu-item > .block-editor-inner-blocks > .block-editor-block-list__layout * {
-  margin-block-end: 0;
-  margin-block-start: 0;
-}
+.wp-block-ncmfse-dropdown-menu-item>.block-editor-inner-blocks{width:100%}.wp-block-ncmfse-dropdown-menu-item>.block-editor-inner-blocks>.block-editor-block-list__layout *{margin-block-end:0;margin-block-start:0}
