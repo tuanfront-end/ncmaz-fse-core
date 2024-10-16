@@ -1,6 +1,10 @@
 .wp-block-ncmfse-toggle-dark-mode {
 	display: inline-block;
 	position: relative;
+	cursor: pointer;
+	&:focus {
+		outline: none;
+	}
 }
 
 .wp-block-ncmfse-toggle-dark-mode__icon {
