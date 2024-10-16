@@ -67,6 +67,7 @@ function ncmaz_fse_core_register_blocks_init()
 		'current-user-name-block',
 		'reading-progress-block',
 		'post-format-icon-block',
+		'toggle-dark-mode-block',
 		//  SOME CUSTOM BLOCKS
 		'enable-linked-groups',
 		'enable-snapping-templates',

@@ -88,3 +88,39 @@ if (!function_exists('ncmfse_core_check_href_is_active_with_current_url')):
         return false;
     }
 endif;
+
+
+if (!function_exists('ncmazfse_core_get_allowed_tags_with_svg')):
+    function ncmazfse_core_get_allowed_tags_with_svg()
+    {
+        $kses_defaults = wp_kses_allowed_html('post');
+        $svg_args = array(
+            'svg'   => array(
+                'class'           => true,
+                'aria-hidden'     => true,
+                'aria-labelledby' => true,
+                'role'            => true,
+                'xmlns'           => true,
+                'width'           => true,
+                'height'          => true,
+                'fill'              => true,
+                'color'          => true,
+                'viewbox'         => true,
+                'view-box'         => true,
+                "stroke"          => true,
+                "stroke-width"    => true,
+            ),
+            'g'     => array('fill' => true),
+            'title' => array('title' => true),
+            'path'  => array(
+                'd'               => true,
+                'fill'            => true,
+                "stroke"          => true,
+                "stroke-width"    => true,
+                "stroke-linecap"  => true,
+                "stroke-linejoin" => true,
+            )
+        );
+        return array_merge($kses_defaults, $svg_args);
+    }
+endif;
