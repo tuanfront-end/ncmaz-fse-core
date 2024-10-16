@@ -131,13 +131,9 @@
 	&.is-actived,
 	&:hover {
 		color: var(--active-color, inherit) !important;
-		border-color: var(--active-border-color, inherit) !important;
-		background-color: var(--active-background-color, inherit) !important;
+		border-color: var(--active-border-color, initial) !important;
+		background-color: var(--active-background-color, initial) !important;
 		.wp-block-outermost-icon-block .icon-container {
-			background-color: var(
-				--active-icon-background-color,
-				transparent
-			) !important;
 			color: var(--active-color, inherit) !important;
 			transition-duration: 0.3s;
 		}

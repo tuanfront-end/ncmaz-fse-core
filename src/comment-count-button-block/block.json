@@ -27,13 +27,7 @@
 		"customActiveBgColor": {
 			"type": "string"
 		},
-		"activeIconBgColor": {
-			"type": "string"
-		},
-		"customActiveIconBgColor": {
-			"type": "string",
-			"default": "#00ba7c1a"
-		},
+
 		"activeBorderColor": {
 			"type": "string"
 		},

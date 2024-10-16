@@ -21,24 +21,18 @@
       "default": true
     },
     "activeColor": {
-      "type": "string"
+      "type": "string",
+      "default": "favorite"
     },
     "customActiveColor": {
       "type": "string",
-      "default": "#dc2626"
+      "default": "hsl(349.7 89.2% 60.2%)"
     },
     "activeBgColor": {
       "type": "string"
     },
     "customActiveBgColor": {
       "type": "string"
-    },
-    "activeIconBgColor": {
-      "type": "string"
-    },
-    "customActiveIconBgColor": {
-      "type": "string",
-      "default": "#fee2e2b5"
     },
     "activeBorderColor": {
       "type": "string"

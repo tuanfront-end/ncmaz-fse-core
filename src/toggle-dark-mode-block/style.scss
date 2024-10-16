@@ -25,6 +25,7 @@
 	}
 }
 
+// ----------------------------------------
 html.dark,
 html .dark {
 	--wp--preset--color--black: #000000;
@@ -58,7 +59,7 @@ html .dark {
 	--wp--preset--color--shadcn-destructive: hsl(0 62.8% 30.6%);
 	--wp--preset--color--shadcn-destructive-foreground: hsl(210 40% 98%);
 	--wp--preset--color--shadcn-border: hsl(217.2 32.6% 17.5%);
-	--wp--preset--color--shadcn-border-darker: hsl(217.2 32.6% 17.5%);
+	--wp--preset--color--shadcn-border-darker: hsl(215.3 25% 26.7%);
 	--wp--preset--color--shadcn-input: hsl(217.2 32.6% 17.5%);
 	--wp--preset--color--shadcn-ring: hsl(224.3 76.3% 48%);
 	--wp--preset--color--base: hsl(222.2 84% 4.9%);
@@ -67,6 +68,7 @@ html .dark {
 	--wp--preset--color--contrast-2: hsl(215 20.2% 65.1%);
 	--wp--preset--color--contrast-3: hsl(215 20.2% 65.1%);
 	--wp--preset--color--price: #22c55e;
+	--wp--preset--color--favorite: hsl(349.7 89.2% 60.2%);
 	--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(
 		135deg,
 		rgba(6, 147, 227, 1) 0%,
@@ -207,22 +209,49 @@ html .dark {
 	--wp--preset--duotone--duotone-3: url("#wp-duotone-duotone-3");
 	--wp--preset--duotone--duotone-4: url("#wp-duotone-duotone-4");
 	--wp--preset--duotone--duotone-5: url("#wp-duotone-duotone-5");
-	--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);
-	--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);
-	--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);
-	--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1),
-		6px 6px rgba(0, 0, 0, 1);
-	--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);
-	--wp--preset--shadow--sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-	--wp--preset--shadow--normal: 0 1px 3px 0 rgb(0 0 0 / 0.1),
-		0 1px 2px -1px rgb(0 0 0 / 0.1);
-	--wp--preset--shadow--md: 0 4px 6px -1px rgb(0 0 0 / 0.1),
-		0 2px 4px -2px rgb(0 0 0 / 0.1);
-	--wp--preset--shadow--lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-		0 4px 6px -4px rgb(0 0 0 / 0.1);
-	--wp--preset--shadow--xl: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-		0 8px 10px -6px rgb(0 0 0 / 0.1);
-	--wp--preset--shadow--2-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-	--wp--preset--shadow--inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+	--wp--preset--shadow--natural: 6px 6px 9px rgba(107 114 128 / 0.2);
+	--wp--preset--shadow--deep: 12px 12px 50px rgba(107 114 128 / 0.4);
+	--wp--preset--shadow--sharp: 6px 6px 0px rgba(107 114 128 / 0.2);
+	--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(107 114 128 / 1),
+		6px 6px rgba(107 114 128 / 1);
+	--wp--preset--shadow--crisp: 6px 6px 0px rgba(107 114 128 / 1);
+	--wp--preset--shadow--sm: 0 1px 2px 0 rgb(107 114 128 / 0.05);
+	--wp--preset--shadow--normal: 0 1px 3px 0 rgb(107 114 128 / 0.1),
+		0 1px 2px -1px rgb(107 114 128 / 0.1);
+	--wp--preset--shadow--md: 0 4px 6px -1px rgb(107 114 128 / 0.1),
+		0 2px 4px -2px rgb(107 114 128 / 0.1);
+	--wp--preset--shadow--lg: 0 10px 15px -3px rgb(107 114 128 / 0.1),
+		0 4px 6px -4px rgb(107 114 128 / 0.1);
+	--wp--preset--shadow--xl: 0 20px 25px -5px rgb(107 114 128 / 0.1),
+		0 8px 10px -6px rgb(107 114 128 / 0.1);
+	--wp--preset--shadow--2-xl: 0 25px 50px -12px rgb(107 114 128 / 0.25);
+	--wp--preset--shadow--inner: inset 0 2px 4px 0 rgb(107 114 128 / 0.05);
 	--wp--preset--shadow--none: none;
+}
+
+// ----------------------------------------
+.dark .wp-block-outermost-social-sharing.is-style-logos-only {
+	.outermost-social-sharing-link-x,
+	.outermost-social-sharing-link-threads,
+	.outermost-social-sharing-link-tumblr {
+		color: var(--wp--preset--color--shadcn-foreground);
+	}
+}
+
+.dark :where(.wp-block-social-links.is-style-logos-only) {
+	.wp-social-link-x,
+	.wp-social-link-threads,
+	.wp-social-link-tiktok,
+	.wp-social-link-tumblr,
+	.wp-social-link-patreon,
+	.wp-social-link-medium,
+	.wp-social-link-fivehundredpx {
+		color: var(--wp--preset--color--shadcn-foreground);
+	}
+
+	.wp-social-link-github,
+	.wp-social-link-goodreads,
+	.wp-social-link-codepen {
+		color: var(--wp--preset--color--contrast-2);
+	}
 }

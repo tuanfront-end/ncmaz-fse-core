@@ -34,9 +34,6 @@ $colorCssVars = [
 	"--active-border-color" => ($attributes['activeBorderColor'] ?? null)
 		? 'var( --wp--preset--color--' . $attributes['activeBorderColor'] . ' )'
 		: $attributes['customActiveBorderColor'] ?? null,
-	"--active-icon-background-color" => ($attributes['activeIconBgColor'] ?? null)
-		? 'var( --wp--preset--color--' . $attributes['activeIconBgColor'] . ' )'
-		: $attributes['customActiveIconBgColor'] ?? null,
 ];
 // remove null values from the array.
 $colorCssVars =  array_filter($colorCssVars);
