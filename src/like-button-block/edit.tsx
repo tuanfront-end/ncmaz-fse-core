@@ -25,18 +25,15 @@ function Edit(props: EditProps<Attributes>) {
 		activeColor,
 		activeBgColor,
 		activeBorderColor,
-		activeIconBgColor,
 		setActiveColor,
 		setActiveBgColor,
 		setActiveBorderColor,
-		setActiveIconBgColor,
 	} = props;
 
 	const {
 		customActiveBgColor,
 		customActiveBorderColor,
 		customActiveColor,
-		customActiveIconBgColor,
 		showCountText,
 	} = attributes;
 
@@ -110,18 +107,6 @@ function Edit(props: EditProps<Attributes>) {
 				setAttributes({ customActiveBorderColor: undefined });
 			},
 		},
-		{
-			label: __("Active Icon Background", "ncmfse"),
-			value: activeIconBgColor.color || customActiveIconBgColor,
-			onChange: (value: string) => {
-				setActiveIconBgColor(value);
-				setAttributes({ customActiveIconBgColor: value });
-			},
-			resetAllFilter: () => {
-				setActiveIconBgColor(undefined);
-				setAttributes({ customActiveIconBgColor: "#fee2e2b5" });
-			},
-		},
 	];
 
 	const blockProps = useBlockProps({
@@ -136,9 +121,6 @@ function Edit(props: EditProps<Attributes>) {
 			"--active-border-color": activeBorderColor.slug
 				? `var( --wp--preset--color--${activeBorderColor.slug} )`
 				: customActiveBorderColor,
-			"--active-icon-background-color": activeIconBgColor.slug
-				? `var( --wp--preset--color--${activeIconBgColor.slug} )`
-				: customActiveIconBgColor,
 		},
 	});
 	const { children, ...innerBlocksProps } = useInnerBlocksProps(blockProps, {
@@ -229,5 +211,4 @@ export default withColors({
 	activeColor: "active-color",
 	activeBgColor: "active-background-color",
 	activeBorderColor: "active-border-color",
-	activeIconBgColor: "active-icon-background-color",
 })(Edit);

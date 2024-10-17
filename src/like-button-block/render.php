@@ -6,7 +6,9 @@ $current_post_id = $block->context['postId'] ?? null;
 $comment_id = $block->context['commentId'] ?? null;
 $user_id = get_current_user_id();
 
-if ($comment_id && !$current_post_id) {
+
+// If the block is used in the comments section, set the current post id to the comment id.
+if ($comment_id) {
 	$current_post_id = $comment_id;
 }
 
@@ -49,9 +51,6 @@ $colorCssVars = [
 	"--active-border-color" => ($attributes['activeBorderColor'] ?? null)
 		? 'var( --wp--preset--color--' . $attributes['activeBorderColor'] . ' )'
 		: $attributes['customActiveBorderColor'] ?? null,
-	"--active-icon-background-color" => ($attributes['activeIconBgColor'] ?? null)
-		? 'var( --wp--preset--color--' . $attributes['activeIconBgColor'] . ' )'
-		: $attributes['customActiveIconBgColor'] ?? null,
 ];
 // remove null values from the array.
 $colorCssVars =  array_filter($colorCssVars);

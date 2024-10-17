@@ -30,14 +30,6 @@
 			"type": "string"
 		},
 
-		"activeIconBgColor": {
-			"type": "string"
-		},
-		"customActiveIconBgColor": {
-			"type": "string",
-			"default": "#2563eb1a"
-		},
-
 		"activeBorderColor": {
 			"type": "string"
 		},

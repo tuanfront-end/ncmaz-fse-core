@@ -51,38 +51,9 @@ if ($post_format === 'video') {
 if (empty($post_format) || $post_format === 'standard') {
     return null;
 }
-
-$kses_defaults = wp_kses_allowed_html('post');
-$svg_args = array(
-    'svg'   => array(
-        'class'           => true,
-        'aria-hidden'     => true,
-        'aria-labelledby' => true,
-        'role'            => true,
-        'xmlns'           => true,
-        'width'           => true,
-        'height'          => true,
-        'fill'              => true,
-        'color'          => true,
-        'viewbox'         => true,
-        'view-box'         => true,
-    ),
-    'g'     => array('fill' => true),
-    'title' => array('title' => true),
-    'path'  => array(
-        'd'               => true,
-        'fill'            => true,
-        "stroke"          => true,
-        "stroke-width"    => true,
-        "stroke-linecap"  => true,
-        "stroke-linejoin" => true,
-
-    )
-);
-$allowed_tags = array_merge($kses_defaults, $svg_args);
 ?>
 
 <div
     <?php echo wp_kses_data(get_block_wrapper_attributes([])); ?>>
-    <?php echo wp_kses($icon, $allowed_tags); ?>
+    <?php echo wp_kses($icon, ncmazfse_core_get_allowed_tags_with_svg()); ?>
 </div>
