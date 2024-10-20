@@ -518,3 +518,97 @@ add_action('acf/include_fields', function () {
 		'show_in_rest' => 1,
 	));
 });
+
+
+// AUDIO, VIDEO FIELDS --------------------------
+add_action('acf/include_fields', function () {
+	if (! function_exists('acf_add_local_field_group')) {
+		return;
+	}
+
+	acf_add_local_field_group(array(
+		'key' => 'group_6714b909b6cd7',
+		'title' => 'Post Audio fields',
+		'fields' => array(
+			array(
+				'key' => 'field_6714b909b8ec0',
+				'label' => 'Audio URL',
+				'name' => 'audio_url',
+				'aria-label' => '',
+				'type' => 'url',
+				'instructions' => 'Enter the audio URL of the post.',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'allow_in_bindings' => 1,
+				'placeholder' => 'https://',
+			),
+		),
+		'location' => array(
+			array(
+				array(
+					'param' => 'post_format',
+					'operator' => '==',
+					'value' => 'audio',
+				),
+			),
+		),
+		'menu_order' => 0,
+		'position' => 'normal',
+		'style' => 'default',
+		'label_placement' => 'top',
+		'instruction_placement' => 'label',
+		'hide_on_screen' => '',
+		'active' => true,
+		'description' => '',
+		'show_in_rest' => 1,
+	));
+
+	acf_add_local_field_group(array(
+		'key' => 'group_6714b7b2abdb5',
+		'title' => 'Post Video fields',
+		'fields' => array(
+			array(
+				'key' => 'field_6714b7b20f9f3',
+				'label' => 'Video URL',
+				'name' => 'video_url',
+				'aria-label' => '',
+				'type' => 'url',
+				'instructions' => 'Enter the video URL of the post.',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'allow_in_bindings' => 1,
+				'placeholder' => 'https://',
+			),
+		),
+		'location' => array(
+			array(
+				array(
+					'param' => 'post_format',
+					'operator' => '==',
+					'value' => 'video',
+				),
+			),
+		),
+		'menu_order' => 0,
+		'position' => 'normal',
+		'style' => 'default',
+		'label_placement' => 'top',
+		'instruction_placement' => 'label',
+		'hide_on_screen' => '',
+		'active' => true,
+		'description' => '',
+		'show_in_rest' => 1,
+	));
+});

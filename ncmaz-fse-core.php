@@ -68,6 +68,8 @@ function ncmaz_fse_core_register_blocks_init()
 		'reading-progress-block',
 		'post-format-icon-block',
 		'toggle-dark-mode-block',
+		'post-media-play-button-block',
+		'post-media-player-block',
 		//  SOME CUSTOM BLOCKS
 		'enable-linked-groups',
 		'enable-snapping-templates',

@@ -1,1 +1,0 @@
-{"version":3,"file":"common-css-block/index.css","mappings":";;;AAAA;EACC;AACD,C","sources":["webpack://todo-list/./src/common-css-block/editor.scss"],"sourcesContent":[".nc-post-reaction-button.is-layout-flex {\n\tgap: var(--wp--preset--spacing--1-5);\n}\n"],"names":[],"sourceRoot":""}

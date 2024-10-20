@@ -35,7 +35,7 @@ function Edit(props: EditProps<Attributes>) {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>DEMO</div>
+			<div {...blockProps}>THIS IS THE MEDIA PLAYER</div>
 		</>
 	);
 }
