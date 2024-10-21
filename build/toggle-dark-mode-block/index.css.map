@@ -1,0 +1,1 @@
+{"version":3,"file":"toggle-dark-mode-block/index.css","mappings":";;;AAEC;EACC;AADF,C","sources":["webpack://ncmaz-fse-core/./src/toggle-dark-mode-block/editor.scss"],"sourcesContent":[".wp-block-ncmfse-toggle-dark-mode-PanelBody__settings\n\t.components-toggle-group-control {\n\tsvg {\n\t\tcolor: currentColor;\n\t}\n}\n"],"names":[],"sourceRoot":""}

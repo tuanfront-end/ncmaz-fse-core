@@ -1,0 +1,24 @@
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/dropdown-menu-trigger-block/style.scss ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+.wp-block-ncmfse-dropdown-menu-trigger {
+  background-color: initial;
+  border: none;
+  color: currentColor;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-align: left;
+  text-transform: inherit;
+  padding-inline: 0;
+  cursor: pointer;
+  display: flex;
+}
+.wp-block-ncmfse-dropdown-menu-trigger:focus {
+  outline: none;
+}
+
+/*# sourceMappingURL=style-index.css.map*/

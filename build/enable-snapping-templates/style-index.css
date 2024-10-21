@@ -1,0 +1,35 @@
+/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/enable-snapping-templates/style.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************/
+.wp-block-ncmfse-term-template.is-h-scroll-snapping,
+.wp-block-post-template.is-h-scroll-snapping {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  justify-content: flex-start;
+  vertical-align: top;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.wp-block-ncmfse-term-template.is-h-scroll-snapping > *,
+.wp-block-post-template.is-h-scroll-snapping > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  width: var(--child-width);
+  max-width: 100%;
+}
+@media (max-width: 600px) {
+  .wp-block-ncmfse-term-template.is-h-scroll-snapping > *,
+  .wp-block-post-template.is-h-scroll-snapping > * {
+    width: 90%;
+  }
+}
+.wp-block-ncmfse-term-template.is-h-scroll-snapping:not(.block-editor-block-list__block) > :nth-child(2),
+.wp-block-post-template.is-h-scroll-snapping:not(.block-editor-block-list__block) > :nth-child(2) {
+  margin-block-start: 0;
+}
+
+/*# sourceMappingURL=style-index.css.map*/

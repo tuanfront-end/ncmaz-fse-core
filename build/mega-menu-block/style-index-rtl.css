@@ -1,0 +1,39 @@
+/*!*******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/mega-menu-block/style.scss ***!
+  \*******************************************************************************************************************************************************************************************************************************************************/
+.wp-block-outermost-mega-menu {
+  overflow: hidden;
+  position: relative;
+}
+.wp-block-outermost-mega-menu:hover {
+  overflow: visible;
+  position: initial;
+}
+.wp-block-outermost-mega-menu:hover .wp-block-outermost-mega-menu__menu-container {
+  opacity: 1;
+  overflow: visible;
+  visibility: visible;
+}
+.wp-block-outermost-mega-menu .wp-block-outermost-mega-menu__toggle {
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+}
+.wp-block-outermost-mega-menu .wp-block-outermost-mega-menu__toggle .wp-block-outermost-mega-menu__toggle-icon {
+  align-self: center;
+  display: inline-block;
+  font-size: inherit;
+  height: 0.6em;
+  line-height: 0;
+  margin-right: 0.25em;
+  padding: 0;
+  width: 0.6em;
+}
+.wp-block-outermost-mega-menu .wp-block-outermost-mega-menu__toggle .wp-block-outermost-mega-menu__toggle-icon svg {
+  stroke: currentColor;
+  display: inline-block;
+  height: inherit;
+  margin-top: 0.075em;
+  width: inherit;
+  transition: all 0.1s linear;
+}

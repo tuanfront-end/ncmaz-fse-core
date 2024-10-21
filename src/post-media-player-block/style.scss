@@ -1,9 +1,21 @@
 .z-20 {
 	z-index: 20;
 }
+
 .inset-x-0 {
 	left: 0px;
 	right: 0px;
+}
+.inset-0 {
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+}
+
+.bg-red-700 {
+	--tw-bg-opacity: 1;
+	background-color: rgb(185 28 28 / var(--tw-bg-opacity));
 }
 
 .wp-block-ncmfse-post-media-player {
@@ -645,4 +657,18 @@
 			text-align: left;
 		}
 	}
+
+	// Custom CSS
+	.post-media-player__slider-input {
+		opacity: 0;
+	}
+
+	// .post-media-player__slider-width {
+	// 	transition: width 0.5s linear;
+	// 	transition-delay: 0;
+	// }
+	// .post-media-player__slider-thumb {
+	// 	transition: left 0.5s linear;
+	// 	transition-delay: 0;
+	// }
 }
