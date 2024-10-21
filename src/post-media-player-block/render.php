@@ -20,6 +20,8 @@ if (defined('IS_NCMFSE_POST_MEDIA_PLAYER_BLOCK_INSERTED')) {
 wp_interactivity_state(
 	'ncmfse/post-media-player-block',
 	[
+		"isShowPlayer" 	=> true,
+		// 
 		"playing" 		=> false,
 		"muted" 		=> false,
 		"duration" 		=> 0,
@@ -63,20 +65,21 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 	<?php echo wp_kses_data(get_block_wrapper_attributes([])); ?>
 	data-wp-interactive="ncmfse/post-media-player-block"
 	<?php echo wp_kses_data(wp_interactivity_data_wp_context([])); ?>
-	data-wp-init="callbacks.onInit">
+	data-wp-init="callbacks.onInit"
+	data-wp-bind--hidden="!state.isShowPlayer">
 
 	<audio
 		class="post-media-player__audio"
-		controls
 		data-wp-on-async--play="actions.dispatchPlay"
 		data-wp-on-async--pause="actions.dispatchPause"
 		data-wp-on-async--durationchange="actions.dispatchDurationChange"
 		data-wp-on-async--timeupdate="actions.dispatchCurrentTimeChange"
 		data-wp-bind--muted="state.muted"></audio>
 
-	<div class="fixed inset-x-0 bottom-0 z-20">
-		<div class="flex items-center gap-6 bg-white/90 px-4 py-4 shadow shadow-slate-200/80 ring-1 ring-slate-900/5 backdrop-blur-sm md:px-6">
-			<div class="hidden md:block">
+	<div class="wp-block-ncmfse-post-media-player__wrap"
+		data-wp-bind--hidden="!state.isShowPlayer">
+		<div class="wp-block-ncmfse-post-media-player__container">
+			<div class="wp-block-ncmfse-post-media-player__desktop-playbtn">
 
 				<!-- Play button on desktop-->
 				<button type="button" class="group relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-slate-700 hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:ring-offset-2 md:h-14 md:w-14" aria-label="Play"
@@ -90,9 +93,16 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 					</span>
 				</button>
 			</div>
-			<div class="mb-[env(safe-area-inset-bottom)] flex flex-1 flex-col gap-3 overflow-hidden p-1">
-				<a class="truncate text-center text-sm font-bold leading-6 md:text-left" title="5: Bill Lumbergh" href="/5">5: Bill Lumbergh</a>
-				<div class="flex justify-between gap-6">
+			<div class="wp-block-ncmfse-post-media-player__content">
+				<div class="wp-block-ncmfse-post-media-player__title">
+					<a title="5: Bill Lumbergh" href="/5">5: Bill Lumbergh</a>
+					<button data-wp-on-async--click="actions.handleClosePlayer">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#000000" fill="none">
+							<path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+					</button>
+				</div>
+				<div class="wp-block-ncmfse-post-media-player__content-slider">
 					<div class="flex items-center md:hidden">
 
 						<!-- Muted button on mobile -->
@@ -156,7 +166,7 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 							<div class="post-media-player__slider-width h-2 md:rounded-l-xl md:rounded-r-md bg-slate-700"
 								data-wp-style--width="state.playedWidth"></div>
 
-							<input class="post-media-player__slider-input absolute inset-0" tabindex="0"
+							<input class="post-media-player__slider-input" tabindex="0"
 								aria-labelledby="react-aria1697384229-:r1:"
 								type="range"
 								min="0"

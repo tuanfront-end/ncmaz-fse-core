@@ -33,6 +33,8 @@ interface TState {
 	thumbLeft: string;
 	currentTimeHuman: string;
 	durationHuman: string;
+	//
+	isShowPlayer: boolean;
 }
 
 const { state, actions } = store("ncmfse/post-media-player-block", {
@@ -166,6 +168,11 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			const context = getContext<TContext>();
 			const { playerRef } = context;
 			playerRef?.play();
+		},
+
+		//
+		handleClosePlayer() {
+			state.isShowPlayer = false;
 		},
 	},
 	callbacks: {

@@ -217,6 +217,10 @@ const {
         playerRef
       } = context;
       playerRef?.play();
+    },
+    //
+    handleClosePlayer() {
+      state.isShowPlayer = false;
     }
   },
   callbacks: {
