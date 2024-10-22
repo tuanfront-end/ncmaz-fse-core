@@ -1,11 +1,18 @@
 <?php
-global $post;
+
+if (! isset($block->context['postId'])) {
+    return '';
+}
 
 // Generate unique id for aria-controls.
 $current_post_id =  $block->context['postId'] ?? 0;
 
 // Get post format.
 $post_format = get_post_format($current_post_id);
+
+if (empty($post_format) || $post_format === 'standard') {
+    return null;
+}
 
 $icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000000" fill="none">
     <path d="M17.0235 3.03358L16.0689 2.77924C13.369 2.05986 12.019 1.70018 10.9555 2.31074C9.89196 2.9213 9.53023 4.26367 8.80678 6.94841L7.78366 10.7452C7.0602 13.4299 6.69848 14.7723 7.3125 15.8298C7.92652 16.8874 9.27651 17.247 11.9765 17.9664L12.9311 18.2208C15.631 18.9401 16.981 19.2998 18.0445 18.6893C19.108 18.0787 19.4698 16.7363 20.1932 14.0516L21.2163 10.2548C21.9398 7.57005 22.3015 6.22768 21.6875 5.17016C21.0735 4.11264 19.7235 3.75295 17.0235 3.03358Z" stroke="currentColor" stroke-width="1.5" />
@@ -48,9 +55,6 @@ if ($post_format === 'video') {
 </svg>';
 }
 
-if (empty($post_format) || $post_format === 'standard') {
-    return null;
-}
 ?>
 
 <div

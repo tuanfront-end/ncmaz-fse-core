@@ -7,18 +7,21 @@ interface TPost {
 	id: number;
 	title: string;
 	href: string;
-	audio: {
-		src: string;
+	media?: {
+		src?: string;
+		type?: string;
 	};
 }
 
 // view.js
 interface TContext {
-	playerRef: HTMLAudioElement | null;
-	sliderRef: HTMLInputElement | null;
+	episodeContext?: null | TPost;
 }
 
 interface TState {
+	playerRef: HTMLAudioElement | null;
+	sliderRef: HTMLInputElement | null;
+	//  Audio player state
 	playing: boolean;
 	muted: boolean;
 	duration: number;
@@ -28,12 +31,12 @@ interface TState {
 	isPlaybackRate1x: boolean;
 	isPlaybackRate1_5x: boolean;
 	isPlaybackRate2x: boolean;
-	//
+	// Audio player - slider
 	playedWidth: string;
 	thumbLeft: string;
 	currentTimeHuman: string;
 	durationHuman: string;
-	//
+	// other player state
 	isShowPlayer: boolean;
 }
 
@@ -65,7 +68,7 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 		},
 	} as TState,
 	actions: {
-		// dispatchers
+		// audio player dispatchers
 		dispatchPlay() {
 			state.playing = true;
 		},
@@ -73,38 +76,33 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			state.playing = false;
 		},
 		dispatchDurationChange() {
-			const context = getContext<TContext>();
-			const { playerRef } = context;
+			const { playerRef } = state;
 			state.duration = Math.floor(playerRef?.duration || 0);
 		},
 		dispatchCurrentTimeChange() {
-			const context = getContext<TContext>();
-			const { playerRef } = context;
+			const { playerRef } = state;
 			state.currentTime = Math.floor(playerRef?.currentTime || 0);
 		},
 
-		// actions
+		// Audio player actions
 		play() {
-			const context = getContext<TContext>();
-			const { playerRef } = context;
-			const { episode } = state;
+			const { episode, playerRef } = state;
 			if (episode) {
 				state.playing = true;
-
-				if (playerRef && playerRef.currentSrc !== episode.audio.src) {
+				if (playerRef && playerRef.currentSrc !== episode.media?.src) {
 					let playbackRate = playerRef.playbackRate;
-					playerRef.src = episode.audio.src;
+					playerRef.src = episode.media?.src || "";
 					playerRef.load();
 					playerRef.pause();
 					playerRef.playbackRate = playbackRate;
 					playerRef.currentTime = 0;
 				}
 			}
+			state.isShowPlayer = true;
 			playerRef?.play();
 		},
 		pause() {
-			const context = getContext<TContext>();
-			const { playerRef } = context;
+			const { playerRef } = state;
 			playerRef?.pause();
 		},
 		toggle() {
@@ -114,28 +112,24 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			state.muted = !state.muted;
 		},
 		isPlaying() {
-			const context = getContext<TContext>();
-			const { playerRef } = context;
+			const { playerRef } = state;
 			const { episode } = state;
 			return episode
-				? state.playing && playerRef?.currentSrc === episode.audio.src
+				? state.playing && playerRef?.currentSrc === episode.media?.src
 				: state.playing;
 		},
 		rewind10s() {
-			const context = getContext<TContext>();
-			const { playerRef } = context;
+			const { playerRef } = state;
 			if (!playerRef) return;
 			playerRef.currentTime += -10;
 		},
 		forward10s() {
-			const context = getContext<TContext>();
-			const { playerRef } = context;
+			const { playerRef } = state;
 			if (!playerRef) return;
 			playerRef.currentTime += 10;
 		},
 		togglePlaybackRate() {
-			const context = getContext<TContext>();
-			const { playerRef } = context;
+			const { playerRef } = state;
 			if (!playerRef) return;
 
 			if (state.playbackRate === 1) {
@@ -147,16 +141,21 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			}
 			playerRef.playbackRate = state.playbackRate;
 		},
+		ended() {
+			const { playerRef } = state;
+			if (!playerRef) return;
+			playerRef.currentTime = 0;
+			playerRef.pause();
+			state.playing = false;
+		},
 
-		// Slider
+		// Audio player - slider
 		handleSeekMouseDown() {
-			const context = getContext<TContext>();
-			const { playerRef } = context;
+			const { playerRef } = state;
 			playerRef?.pause();
 		},
 		handleSeekChange() {
-			const context = getContext<TContext>();
-			const { playerRef, sliderRef } = context;
+			const { playerRef, sliderRef } = state;
 			if (!playerRef?.currentSrc || !sliderRef) return;
 			const currentTime = playerRef.duration * parseFloat(sliderRef.value);
 			// update the state current time
@@ -165,26 +164,35 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			playerRef.currentTime = Math.floor(currentTime);
 		},
 		handleSeekMouseUp() {
-			const context = getContext<TContext>();
-			const { playerRef } = context;
+			const { playerRef } = state;
 			playerRef?.play();
 		},
 
-		//
+		// other player actions ---
 		handleClosePlayer() {
 			state.isShowPlayer = false;
+			actions.ended();
+		},
+		handleClickPostMediaPlayBtn() {
+			const context = getContext<TContext>();
+			if (
+				context.episodeContext?.media?.src &&
+				context.episodeContext?.media?.type === "AUDIO"
+			) {
+				state.episode = context.episodeContext;
+				actions.play();
+			}
 		},
 	},
 	callbacks: {
 		onInit: () => {
-			const context = getContext<TContext>();
 			const { ref } = getElement();
 
-			context.playerRef = ref?.querySelector(
+			state.playerRef = ref?.querySelector(
 				"audio.post-media-player__audio",
 			) as HTMLAudioElement;
 
-			context.sliderRef = ref?.querySelector(
+			state.sliderRef = ref?.querySelector(
 				"input.post-media-player__slider-input",
 			) as HTMLInputElement;
 		},

@@ -5,7 +5,11 @@
   "version": "0.1.0",
   "title": "Ncmaz Post Media Play Button",
   "category": "ncmfse",
-  "usesContext": [],
+  "usesContext": [
+    "postId",
+    "postType",
+    "queryId"
+  ],
   "description": "A block that displays a play button over a post media.",
   "example": {},
   "attributes": {},

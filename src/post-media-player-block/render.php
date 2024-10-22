@@ -16,6 +16,8 @@ if (defined('IS_NCMFSE_POST_MEDIA_PLAYER_BLOCK_INSERTED')) {
 	return '';
 }
 
+
+
 // Set the interactivity state.
 wp_interactivity_state(
 	'ncmfse/post-media-player-block',
@@ -31,12 +33,9 @@ wp_interactivity_state(
 		"isPlaybackRate1_5x" 	=> false,
 		"isPlaybackRate2x" 		=> false,
 		'episode'				=> [
-			'title'	=> '5: Bill Lumbergh',
-			'url'	=> '/5',
-			'audio'	=> [
-				'src'	=> 'https://their-side-feed.vercel.app/episode-004.mp3',
-				'type'	=> 'audio/mpeg',
-			],
+			'title'	=> '',
+			'url'	=> '',
+			'media'	=> [],
 		],
 		'thumbLeft' => '0%',
 		'playedWidth'	=> '0%',
@@ -74,8 +73,11 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 		data-wp-on-async--pause="actions.dispatchPause"
 		data-wp-on-async--durationchange="actions.dispatchDurationChange"
 		data-wp-on-async--timeupdate="actions.dispatchCurrentTimeChange"
+		data-wp-on-async--onended="actions.dispatchEnded"
 		data-wp-bind--muted="state.muted"></audio>
 
+
+	<!-- PLAYER -->
 	<div class="wp-block-ncmfse-post-media-player__wrap"
 		data-wp-bind--hidden="!state.isShowPlayer">
 		<div class="wp-block-ncmfse-post-media-player__container">
@@ -95,7 +97,11 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 			</div>
 			<div class="wp-block-ncmfse-post-media-player__content">
 				<div class="wp-block-ncmfse-post-media-player__title">
-					<a title="5: Bill Lumbergh" href="/5">5: Bill Lumbergh</a>
+
+					<!-- Title -->
+					<a data-wp-bind--href="state.episode.href" data-wp-text="state.episode.title">
+					</a>
+
 					<button data-wp-on-async--click="actions.handleClosePlayer">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#000000" fill="none">
 							<path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />

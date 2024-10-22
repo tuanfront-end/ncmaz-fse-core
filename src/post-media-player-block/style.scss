@@ -52,7 +52,7 @@
 		white-space: nowrap;
 		text-align: center;
 		font-size: 0.875rem;
-		font-weight: 700;
+		font-weight: 600;
 		line-height: 1.5rem;
 		@media (min-width: 768px) {
 			text-align: left;
@@ -104,33 +104,11 @@
 		cursor: pointer;
 	}
 
-	:disabled {
-		cursor: default;
-	}
-
-	img,
 	svg {
 		display: block;
-		/* 1 */
 		vertical-align: middle;
-		/* 2 */
 	}
 
-	/* Make elements with the HTML hidden attribute stay hidden by default */
-	[hidden]:where(:not([hidden="until-found"])) {
-		display: none;
-	}
-	.sr-only {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		padding: 0;
-		margin: -1px;
-		overflow: hidden;
-		clip: rect(0, 0, 0, 0);
-		white-space: nowrap;
-		border-width: 0;
-	}
 	.-inset-3 {
 		inset: -0.75rem;
 	}

@@ -93,7 +93,7 @@ const {
     }
   },
   actions: {
-    // dispatchers
+    // audio player dispatchers
     dispatchPlay() {
       state.playing = true;
     },
@@ -101,46 +101,41 @@ const {
       state.playing = false;
     },
     dispatchDurationChange() {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const {
         playerRef
-      } = context;
+      } = state;
       state.duration = Math.floor(playerRef?.duration || 0);
     },
     dispatchCurrentTimeChange() {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const {
         playerRef
-      } = context;
+      } = state;
       state.currentTime = Math.floor(playerRef?.currentTime || 0);
     },
-    // actions
+    // Audio player actions
     play() {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const {
+        episode,
         playerRef
-      } = context;
-      const {
-        episode
       } = state;
       if (episode) {
         state.playing = true;
-        if (playerRef && playerRef.currentSrc !== episode.audio.src) {
+        if (playerRef && playerRef.currentSrc !== episode.media?.src) {
           let playbackRate = playerRef.playbackRate;
-          playerRef.src = episode.audio.src;
+          playerRef.src = episode.media?.src || "";
           playerRef.load();
           playerRef.pause();
           playerRef.playbackRate = playbackRate;
           playerRef.currentTime = 0;
         }
       }
+      state.isShowPlayer = true;
       playerRef?.play();
     },
     pause() {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const {
         playerRef
-      } = context;
+      } = state;
       playerRef?.pause();
     },
     toggle() {
@@ -150,36 +145,32 @@ const {
       state.muted = !state.muted;
     },
     isPlaying() {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const {
         playerRef
-      } = context;
+      } = state;
       const {
         episode
       } = state;
-      return episode ? state.playing && playerRef?.currentSrc === episode.audio.src : state.playing;
+      return episode ? state.playing && playerRef?.currentSrc === episode.media?.src : state.playing;
     },
     rewind10s() {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const {
         playerRef
-      } = context;
+      } = state;
       if (!playerRef) return;
       playerRef.currentTime += -10;
     },
     forward10s() {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const {
         playerRef
-      } = context;
+      } = state;
       if (!playerRef) return;
       playerRef.currentTime += 10;
     },
     togglePlaybackRate() {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const {
         playerRef
-      } = context;
+      } = state;
       if (!playerRef) return;
       if (state.playbackRate === 1) {
         state.playbackRate = 1.5;
@@ -190,20 +181,27 @@ const {
       }
       playerRef.playbackRate = state.playbackRate;
     },
-    // Slider
-    handleSeekMouseDown() {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+    ended() {
       const {
         playerRef
-      } = context;
+      } = state;
+      if (!playerRef) return;
+      playerRef.currentTime = 0;
+      playerRef.pause();
+      state.playing = false;
+    },
+    // Audio player - slider
+    handleSeekMouseDown() {
+      const {
+        playerRef
+      } = state;
       playerRef?.pause();
     },
     handleSeekChange() {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const {
         playerRef,
         sliderRef
-      } = context;
+      } = state;
       if (!playerRef?.currentSrc || !sliderRef) return;
       const currentTime = playerRef.duration * parseFloat(sliderRef.value);
       // update the state current time
@@ -212,25 +210,31 @@ const {
       playerRef.currentTime = Math.floor(currentTime);
     },
     handleSeekMouseUp() {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const {
         playerRef
-      } = context;
+      } = state;
       playerRef?.play();
     },
-    //
+    // other player actions ---
     handleClosePlayer() {
       state.isShowPlayer = false;
+      actions.ended();
+    },
+    handleClickPostMediaPlayBtn() {
+      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      if (context.episodeContext?.media?.src && context.episodeContext?.media?.type === "AUDIO") {
+        state.episode = context.episodeContext;
+        actions.play();
+      }
     }
   },
   callbacks: {
     onInit: () => {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const {
         ref
       } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
-      context.playerRef = ref?.querySelector("audio.post-media-player__audio");
-      context.sliderRef = ref?.querySelector("input.post-media-player__slider-input");
+      state.playerRef = ref?.querySelector("audio.post-media-player__audio");
+      state.sliderRef = ref?.querySelector("input.post-media-player__slider-input");
     }
   }
 });
