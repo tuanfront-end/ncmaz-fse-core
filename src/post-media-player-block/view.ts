@@ -11,6 +11,10 @@ interface TPost {
 		src?: string;
 		type?: string;
 	};
+	author?: {
+		name: string;
+		href: string;
+	};
 }
 
 // view.js
@@ -21,12 +25,17 @@ interface TContext {
 interface TState {
 	playerRef: HTMLAudioElement | null;
 	sliderRef: HTMLInputElement | null;
+	//
+	videoPlayerRef: HTMLVideoElement | null;
 	//  Audio player state
 	playing: boolean;
 	muted: boolean;
 	duration: number;
 	currentTime: number;
-	episode: null | TPost;
+	initEpisode: null | TPost;
+	audioEpisode: null | TPost;
+	videoEpisode: null | TPost;
+	iframeEpisode: null | TPost;
 	playbackRate: number;
 	isPlaybackRate1x: boolean;
 	isPlaybackRate1_5x: boolean;
@@ -37,11 +46,41 @@ interface TState {
 	currentTimeHuman: string;
 	durationHuman: string;
 	// other player state
-	isShowPlayer: boolean;
+	isShowAudioPlayer: boolean;
+	isShowVideoPlayer: boolean;
+	//
+	mediaIsVideo: boolean;
+	mediaIsYoutube: boolean;
 }
 
 const { state, actions } = store("ncmfse/post-media-player-block", {
 	state: {
+		get audioEpisode() {
+			if (state.initEpisode?.media?.type !== "AUDIO") {
+				return null;
+			}
+			return state.initEpisode;
+		},
+		get videoEpisode() {
+			if (state.initEpisode?.media?.type !== "VIDEO") {
+				return null;
+			}
+			return state.initEpisode;
+		},
+		get iframeEpisode() {
+			if (state.initEpisode?.media?.type !== "YOUTUBE") {
+				return null;
+			}
+			return state.initEpisode;
+		},
+
+		get mediaIsYoutube() {
+			return state.initEpisode?.media?.type === "YOUTUBE";
+		},
+		get mediaIsVideo() {
+			return state.initEpisode?.media?.type === "VIDEO";
+		},
+
 		get playedWidth() {
 			return `calc(${(state.currentTime / state.duration) * 100}% -  0.25rem)`;
 		},
@@ -86,19 +125,19 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 
 		// Audio player actions
 		play() {
-			const { episode, playerRef } = state;
-			if (episode) {
+			const { audioEpisode, playerRef } = state;
+			if (audioEpisode) {
 				state.playing = true;
-				if (playerRef && playerRef.currentSrc !== episode.media?.src) {
+				if (playerRef && playerRef.currentSrc !== audioEpisode.media?.src) {
 					let playbackRate = playerRef.playbackRate;
-					playerRef.src = episode.media?.src || "";
 					playerRef.load();
 					playerRef.pause();
 					playerRef.playbackRate = playbackRate;
 					playerRef.currentTime = 0;
 				}
 			}
-			state.isShowPlayer = true;
+			state.isShowAudioPlayer = true;
+			state.isShowVideoPlayer = false;
 			playerRef?.play();
 		},
 		pause() {
@@ -112,10 +151,9 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			state.muted = !state.muted;
 		},
 		isPlaying() {
-			const { playerRef } = state;
-			const { episode } = state;
-			return episode
-				? state.playing && playerRef?.currentSrc === episode.media?.src
+			const { playerRef, audioEpisode } = state;
+			return audioEpisode
+				? state.playing && playerRef?.currentSrc === audioEpisode.media?.src
 				: state.playing;
 		},
 		rewind10s() {
@@ -143,10 +181,11 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 		},
 		ended() {
 			const { playerRef } = state;
+			state.initEpisode = null;
+			state.playing = false;
 			if (!playerRef) return;
 			playerRef.currentTime = 0;
 			playerRef.pause();
-			state.playing = false;
 		},
 
 		// Audio player - slider
@@ -167,20 +206,87 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			const { playerRef } = state;
 			playerRef?.play();
 		},
+		handleCloseAudioPlayer() {
+			state.isShowAudioPlayer = false;
+			actions.ended();
+		},
+
+		// Video player actions
+		videoPlay() {
+			const { videoEpisode, videoPlayerRef } = state;
+			if (videoEpisode) {
+				if (
+					videoPlayerRef &&
+					videoPlayerRef.currentSrc !== videoEpisode.media?.src
+				) {
+					let playbackRate = videoPlayerRef.playbackRate;
+					videoPlayerRef.load();
+					videoPlayerRef.pause();
+					videoPlayerRef.playbackRate = playbackRate;
+					videoPlayerRef.currentTime = 0;
+				}
+			}
+			state.isShowVideoPlayer = true;
+			state.isShowAudioPlayer = false;
+			videoPlayerRef?.play();
+		},
+		videoPause() {
+			const { videoPlayerRef } = state;
+			videoPlayerRef?.pause();
+		},
+		videoToggle() {
+			actions.isVideoPlaying() ? actions.videoPause() : actions.videoPlay();
+		},
+		isVideoPlaying() {
+			const { videoPlayerRef, videoEpisode } = state;
+			return videoEpisode
+				? !videoPlayerRef?.paused &&
+						videoPlayerRef?.currentSrc === videoEpisode.media?.src
+				: !videoPlayerRef?.paused;
+		},
+		videoEnded() {
+			state.initEpisode = null;
+
+			if (state.videoPlayerRef) {
+				state.videoPlayerRef.currentTime = 0;
+				state.videoPlayerRef.pause();
+			}
+		},
+
+		// Video Iframe
+		videoIframePlay() {
+			state.isShowAudioPlayer = false;
+			state.isShowVideoPlayer = true;
+		},
 
 		// other player actions ---
-		handleClosePlayer() {
-			state.isShowPlayer = false;
-			actions.ended();
+		handleCloseVideoPlayer() {
+			actions.videoEnded();
+			state.isShowVideoPlayer = false;
 		},
 		handleClickPostMediaPlayBtn() {
 			const context = getContext<TContext>();
-			if (
-				context.episodeContext?.media?.src &&
-				context.episodeContext?.media?.type === "AUDIO"
-			) {
-				state.episode = context.episodeContext;
+			if (!context.episodeContext?.media?.src) {
+				return;
+			}
+			//
+			actions.ended();
+			actions.videoEnded();
+			state.initEpisode = context.episodeContext;
+
+			// play audio
+			if (context.episodeContext?.media?.type === "AUDIO") {
 				actions.play();
+			}
+
+			// play video
+			if (context.episodeContext?.media?.type === "VIDEO") {
+				actions.videoPlay();
+			}
+
+			// play video youtube
+			if (context.episodeContext?.media?.type === "YOUTUBE") {
+				actions.videoIframePlay();
 			}
 		},
 	},
@@ -195,6 +301,10 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			state.sliderRef = ref?.querySelector(
 				"input.post-media-player__slider-input",
 			) as HTMLInputElement;
+
+			state.videoPlayerRef = ref?.querySelector(
+				"video.post-media-player__video",
+			) as HTMLVideoElement;
 		},
 	},
 });

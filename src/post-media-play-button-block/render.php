@@ -74,6 +74,10 @@ if (preg_match('/\.(mp4|webm|ogg)$/i', $media_url)) {
 // Check if media - YouTube
 if (preg_match('/youtube.com/i', $media_url)) {
 	$media_type = 'YOUTUBE';
+	// convert youtube link to embed link 
+	$media_url = preg_replace('/watch\?v=/i', 'embed/', $media_url);
+	//  add autoplay=1
+	$media_url = $media_url . '?autoplay=1';
 }
 
 // Check if media - Vimeo
@@ -125,6 +129,10 @@ wp_interactivity_state(
 				'src' => $media_url,
 				'type' => $media_type,
 			],
+			'author' => [
+				'name' => get_the_author_meta('display_name', get_post_field('post_author', $post_id)),
+				'href' => get_author_posts_url(get_post_field('post_author', $post_id)),
+			]
 		]
 	])); ?>
 

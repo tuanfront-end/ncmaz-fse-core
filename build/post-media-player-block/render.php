@@ -22,7 +22,6 @@ if (defined('IS_NCMFSE_POST_MEDIA_PLAYER_BLOCK_INSERTED')) {
 wp_interactivity_state(
 	'ncmfse/post-media-player-block',
 	[
-		"isShowPlayer" 	=> true,
 		// 
 		"playing" 		=> false,
 		"muted" 		=> false,
@@ -41,6 +40,13 @@ wp_interactivity_state(
 		'playedWidth'	=> '0%',
 		'currentTimeHuman' => '00:00',
 		'durationHuman' => '00:00',
+
+		// video player
+		"isShowAudioPlayer" 	=> false,
+		"isShowVideoPlayer" 	=> false,
+		"mediaIsYoutube" 		=> false,
+		"mediaIsVideo" 			=> false,
+
 	]
 );
 
@@ -64,22 +70,23 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 	<?php echo wp_kses_data(get_block_wrapper_attributes([])); ?>
 	data-wp-interactive="ncmfse/post-media-player-block"
 	<?php echo wp_kses_data(wp_interactivity_data_wp_context([])); ?>
-	data-wp-init="callbacks.onInit"
-	data-wp-bind--hidden="!state.isShowPlayer">
+	data-wp-init="callbacks.onInit">
 
 	<audio
+		data-wp-bind--hidden="!state.isShowAudioPlayer"
 		class="post-media-player__audio"
 		data-wp-on-async--play="actions.dispatchPlay"
 		data-wp-on-async--pause="actions.dispatchPause"
 		data-wp-on-async--durationchange="actions.dispatchDurationChange"
 		data-wp-on-async--timeupdate="actions.dispatchCurrentTimeChange"
 		data-wp-on-async--onended="actions.dispatchEnded"
-		data-wp-bind--muted="state.muted"></audio>
+		data-wp-bind--muted="state.muted">
+		<source data-wp-bind--src="state.audioEpisode.media.src">
+	</audio>
 
 
-	<!-- PLAYER -->
-	<div class="wp-block-ncmfse-post-media-player__wrap"
-		data-wp-bind--hidden="!state.isShowPlayer">
+	<!-- AUDIO PLAYER -->
+	<div class="wp-block-ncmfse-post-media-player__wrap" id="ncmazfse-audio-player" data-wp-bind--hidden="!state.isShowAudioPlayer">
 		<div class="wp-block-ncmfse-post-media-player__container">
 			<div class="wp-block-ncmfse-post-media-player__desktop-playbtn">
 
@@ -99,11 +106,11 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 				<div class="wp-block-ncmfse-post-media-player__title">
 
 					<!-- Title -->
-					<a data-wp-bind--href="state.episode.href" data-wp-text="state.episode.title">
+					<a data-wp-bind--href="state.initEpisode.href" data-wp-text="state.initEpisode.title">
 					</a>
 
-					<button data-wp-on-async--click="actions.handleClosePlayer">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#000000" fill="none">
+					<button class="wp-block-ncmfse-post-media-player__audio-close" data-wp-on-async--click="actions.handleCloseAudioPlayer">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="currentColor" fill="none">
 							<path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 						</svg>
 					</button>
@@ -239,6 +246,39 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 			</div>
 		</div>
 	</div>
+
+
+	<!-- VIDEO PLAYER -->
+	<div class="wp-block-ncmfse-post-media-player__video-wrap" id="ncmazfse-video-player" data-wp-bind--hidden="!state.isShowVideoPlayer">
+		<button class="wp-block-ncmfse-post-media-player__video-close" data-wp-on-async--click="actions.handleCloseVideoPlayer">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none">
+				<path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+			</svg>
+		</button>
+
+		<!-- VIDEO -  MP4, WebM, Ogg -->
+		<video
+			data-wp-bind--hidden="!state.mediaIsVideo"
+			class="post-media-player__video" controls width="400" height="225">
+			<source data-wp-bind--src="state.videoEpisode.media.src">
+		</video>
+
+		<!-- IFRAME YouTube -->
+		<iframe
+			data-wp-bind--hidden="!state.mediaIsYoutube"
+			class="post-media-player__other" data-wp-bind--src="state.iframeEpisode.media.src" width="400" height="225" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+		<div class="wp-block-ncmfse-post-media-player__video-info">
+			<!-- Title -->
+			<a data-wp-bind--href="state.initEpisode.href" data-wp-text="state.initEpisode.title">
+			</a>
+			<a class="wp-block-ncmfse-post-media-player__video-author" data-wp-bind--href="state.initEpisode.author.href" data-wp-text="state.initEpisode.author.name">
+			</a>
+		</div>
+	</div>
+
+
+
 
 </div>
 

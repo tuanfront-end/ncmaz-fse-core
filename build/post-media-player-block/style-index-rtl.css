@@ -6,7 +6,7 @@
   right: 0px;
   left: 0px;
   bottom: 0px;
-  z-index: 20;
+  z-index: 50;
 }
 
 .wp-block-ncmfse-post-media-player__container {
@@ -25,6 +25,10 @@
     padding-right: 1.5rem;
     padding-left: 1.5rem;
   }
+}
+
+.wp-block-ncmfse-post-media-player__audio-close {
+  color: var(--wp--preset--color--shadcn-muted-foreground);
 }
 
 .wp-block-ncmfse-post-media-player__desktop-playbtn {
@@ -63,6 +67,9 @@
   .wp-block-ncmfse-post-media-player__title a {
     text-align: right;
   }
+}
+.wp-block-ncmfse-post-media-player__title a:focus {
+  outline: none;
 }
 
 .wp-block-ncmfse-post-media-player__content-slider {
@@ -394,4 +401,57 @@
   width: 100%;
   height: 100%;
   z-index: 1;
+}
+
+.wp-block-ncmfse-post-media-player__video-wrap {
+  bottom: 0px;
+  position: fixed;
+  left: 12px;
+  z-index: 50;
+  background-color: var(--wp--preset--color--shadcn-background);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+}
+.wp-block-ncmfse-post-media-player__video-wrap:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+}
+.wp-block-ncmfse-post-media-player__video-wrap:hover .wp-block-ncmfse-post-media-player__video-close {
+  display: block;
+}
+
+.dark .wp-block-ncmfse-post-media-player__video-wrap {
+  border: 1px solid var(--wp--preset--color--shadcn-border-darker);
+}
+
+.wp-block-ncmfse-post-media-player__video-close {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 2;
+  color: white;
+  display: none;
+}
+
+.wp-block-ncmfse-post-media-player__video-info {
+  background-color: var(--wp--preset--color--shadcn-background);
+  color: var(--wp--preset--color--shadcn-foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 12px 16px;
+}
+.wp-block-ncmfse-post-media-player__video-info a {
+  display: block;
+}
+.wp-block-ncmfse-post-media-player__video-info a:focus {
+  outline: none;
+}
+
+.wp-block-ncmfse-post-media-player__video-author {
+  color: var(--wp--preset--color--shadcn-muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-transform: capitalize;
+  margin-top: 2px;
 }
