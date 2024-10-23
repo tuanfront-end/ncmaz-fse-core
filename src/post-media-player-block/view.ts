@@ -8,7 +8,21 @@ interface TPost {
 	title: string;
 	href: string;
 	media?: {
-		src?: string;
+		// src?: string;
+		urls?: {
+			// iframe
+			media_url_iframe: string;
+			// Audio
+			audio_url_mp3: string;
+			audio_url_ogg: string;
+			audio_url_wav: string;
+			audio_url_aac: string;
+			audio_url_webm: string;
+			// Video
+			video_url_mp4: string;
+			video_url_webm: string;
+			video_url_ogv: string;
+		};
 		type?: string;
 	};
 	author?: {
@@ -25,8 +39,6 @@ interface TContext {
 interface TState {
 	playerRef: HTMLAudioElement | null;
 	sliderRef: HTMLInputElement | null;
-	//
-	videoPlayerRef: HTMLVideoElement | null;
 	//  Audio player state
 	playing: boolean;
 	muted: boolean;
@@ -46,11 +58,13 @@ interface TState {
 	currentTimeHuman: string;
 	durationHuman: string;
 	// other player state
+	videoPlayerRef: HTMLVideoElement | null;
 	isShowAudioPlayer: boolean;
 	isShowVideoPlayer: boolean;
 	//
 	mediaIsVideo: boolean;
-	mediaIsYoutube: boolean;
+	mediaIsIframe: boolean;
+	mediaIsAudio: boolean;
 }
 
 const { state, actions } = store("ncmfse/post-media-player-block", {
@@ -68,19 +82,22 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			return state.initEpisode;
 		},
 		get iframeEpisode() {
-			if (state.initEpisode?.media?.type !== "YOUTUBE") {
+			if (state.initEpisode?.media?.type !== "IFRAME") {
 				return null;
 			}
 			return state.initEpisode;
 		},
-
-		get mediaIsYoutube() {
-			return state.initEpisode?.media?.type === "YOUTUBE";
+		// Media type
+		get mediaIsIframe() {
+			return state.initEpisode?.media?.type === "IFRAME";
 		},
 		get mediaIsVideo() {
 			return state.initEpisode?.media?.type === "VIDEO";
 		},
-
+		get mediaIsAudio() {
+			return state.initEpisode?.media?.type === "AUDIO";
+		},
+		// Audio player state
 		get playedWidth() {
 			return `calc(${(state.currentTime / state.duration) * 100}% -  0.25rem)`;
 		},
@@ -126,9 +143,14 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 		// Audio player actions
 		play() {
 			const { audioEpisode, playerRef } = state;
+
 			if (audioEpisode) {
 				state.playing = true;
-				if (playerRef && playerRef.currentSrc !== audioEpisode.media?.src) {
+
+				if (
+					playerRef &&
+					playerRef.getAttribute("current-play") !== audioEpisode?.id.toString()
+				) {
 					let playbackRate = playerRef.playbackRate;
 					playerRef.load();
 					playerRef.pause();
@@ -139,6 +161,11 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			state.isShowAudioPlayer = true;
 			state.isShowVideoPlayer = false;
 			playerRef?.play();
+			// add a attribute to the player
+			playerRef?.setAttribute(
+				"current-play",
+				audioEpisode?.id.toString() || "",
+			);
 		},
 		pause() {
 			const { playerRef } = state;
@@ -153,7 +180,10 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 		isPlaying() {
 			const { playerRef, audioEpisode } = state;
 			return audioEpisode
-				? state.playing && playerRef?.currentSrc === audioEpisode.media?.src
+				? state.playing &&
+						playerRef?.currentSrc &&
+						playerRef.getAttribute("current-play") ===
+							audioEpisode?.id.toString()
 				: state.playing;
 		},
 		rewind10s() {
@@ -179,13 +209,14 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			}
 			playerRef.playbackRate = state.playbackRate;
 		},
-		ended() {
+		forceEnd() {
 			const { playerRef } = state;
 			state.initEpisode = null;
 			state.playing = false;
 			if (!playerRef) return;
 			playerRef.currentTime = 0;
 			playerRef.pause();
+			playerRef.setAttribute("current-play", "");
 		},
 
 		// Audio player - slider
@@ -206,18 +237,16 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			const { playerRef } = state;
 			playerRef?.play();
 		},
-		handleCloseAudioPlayer() {
-			state.isShowAudioPlayer = false;
-			actions.ended();
-		},
 
-		// Video player actions
+		// Video <video> player actions
 		videoPlay() {
 			const { videoEpisode, videoPlayerRef } = state;
 			if (videoEpisode) {
+				console.log(111, videoPlayerRef?.currentSrc, videoEpisode.media);
 				if (
 					videoPlayerRef &&
-					videoPlayerRef.currentSrc !== videoEpisode.media?.src
+					videoPlayerRef.getAttribute("current-play") !==
+						videoEpisode?.id.toString()
 				) {
 					let playbackRate = videoPlayerRef.playbackRate;
 					videoPlayerRef.load();
@@ -229,6 +258,11 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			state.isShowVideoPlayer = true;
 			state.isShowAudioPlayer = false;
 			videoPlayerRef?.play();
+			// add a attribute to the player
+			videoPlayerRef?.setAttribute(
+				"current-play",
+				videoEpisode?.id.toString() || "",
+			);
 		},
 		videoPause() {
 			const { videoPlayerRef } = state;
@@ -241,53 +275,90 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			const { videoPlayerRef, videoEpisode } = state;
 			return videoEpisode
 				? !videoPlayerRef?.paused &&
-						videoPlayerRef?.currentSrc === videoEpisode.media?.src
+						videoPlayerRef?.currentSrc &&
+						videoPlayerRef.getAttribute("current-play") ===
+							videoEpisode?.id.toString()
 				: !videoPlayerRef?.paused;
 		},
-		videoEnded() {
+		forceVideoEnd() {
 			state.initEpisode = null;
 
 			if (state.videoPlayerRef) {
 				state.videoPlayerRef.currentTime = 0;
 				state.videoPlayerRef.pause();
+				state.videoPlayerRef.setAttribute("current-play", "");
 			}
 		},
 
-		// Video Iframe
+		// Video Iframe <iframe> player actions
 		videoIframePlay() {
 			state.isShowAudioPlayer = false;
 			state.isShowVideoPlayer = true;
 		},
+		forceVideoIframeEnd() {
+			state.initEpisode = null;
+		},
 
 		// other player actions ---
-		handleCloseVideoPlayer() {
-			actions.videoEnded();
-			state.isShowVideoPlayer = false;
-		},
 		handleClickPostMediaPlayBtn() {
 			const context = getContext<TContext>();
-			if (!context.episodeContext?.media?.src) {
+			console.log("click - episodeContext", context.episodeContext);
+
+			// check if urls is empty
+			if (
+				Object.values(context.episodeContext?.media?.urls || {}).every(
+					(x) => !x,
+				)
+			) {
+				console.log("urls is empty");
 				return;
 			}
+
+			if (context.episodeContext?.id === state.initEpisode?.id) {
+				// if the same episode, toggle the player
+				if (state.mediaIsVideo) {
+					actions.videoToggle();
+				} else if (state.mediaIsIframe) {
+					actions.videoIframePlay();
+				} else if (state.mediaIsAudio) {
+					actions.toggle();
+				}
+				return;
+			}
+
 			//
-			actions.ended();
-			actions.videoEnded();
-			state.initEpisode = context.episodeContext;
+			actions.forceEnd();
+			actions.forceVideoEnd();
+			actions.forceVideoIframeEnd();
+			//
+			state.initEpisode = context.episodeContext || null;
+			//
+			const mediaType = context.episodeContext?.media?.type;
 
-			// play audio
-			if (context.episodeContext?.media?.type === "AUDIO") {
+			// play audio <audio>
+			if (mediaType === "AUDIO") {
 				actions.play();
+				return;
 			}
 
-			// play video
-			if (context.episodeContext?.media?.type === "VIDEO") {
+			// play video <video>
+			if (mediaType === "VIDEO") {
 				actions.videoPlay();
+				return;
 			}
 
-			// play video youtube
-			if (context.episodeContext?.media?.type === "YOUTUBE") {
+			// play video Iframe <iframe>
+			if (mediaType === "IFRAME") {
 				actions.videoIframePlay();
+				return;
 			}
+		},
+		handleCloseAllPlayer() {
+			state.isShowAudioPlayer = false;
+			state.isShowVideoPlayer = false;
+			actions.forceEnd();
+			actions.forceVideoEnd();
+			actions.forceVideoIframeEnd();
 		},
 	},
 	callbacks: {
@@ -295,15 +366,15 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			const { ref } = getElement();
 
 			state.playerRef = ref?.querySelector(
-				"audio.post-media-player__audio",
+				"audio#ncmazfse-media-player-audio",
 			) as HTMLAudioElement;
 
 			state.sliderRef = ref?.querySelector(
-				"input.post-media-player__slider-input",
+				"input#ncmazfse-media-player-audio-slider-input",
 			) as HTMLInputElement;
 
 			state.videoPlayerRef = ref?.querySelector(
-				"video.post-media-player__video",
+				"video#ncmazfse-media-player-video",
 			) as HTMLVideoElement;
 		},
 	},

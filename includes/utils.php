@@ -124,3 +124,17 @@ if (!function_exists('ncmazfse_core_get_allowed_tags_with_svg')):
         return array_merge($kses_defaults, $svg_args);
     }
 endif;
+
+
+if (!function_exists('ncmazfse_core_get_src_using_DOM')):
+    function ncmazfse_core_get_src_using_DOM($html)
+    {
+        $doc = new DOMDocument();
+        @$doc->loadHTML($html); // Sử dụng @ để tránh cảnh báo về HTML không hợp lệ
+        $iframe = $doc->getElementsByTagName('iframe')->item(0);
+        if ($iframe) {
+            return $iframe->getAttribute('src');
+        }
+        return null;
+    }
+endif;

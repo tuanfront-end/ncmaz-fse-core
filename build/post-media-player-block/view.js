@@ -83,17 +83,22 @@ const {
       return state.initEpisode;
     },
     get iframeEpisode() {
-      if (state.initEpisode?.media?.type !== "YOUTUBE") {
+      if (state.initEpisode?.media?.type !== "IFRAME") {
         return null;
       }
       return state.initEpisode;
     },
-    get mediaIsYoutube() {
-      return state.initEpisode?.media?.type === "YOUTUBE";
+    // Media type
+    get mediaIsIframe() {
+      return state.initEpisode?.media?.type === "IFRAME";
     },
     get mediaIsVideo() {
       return state.initEpisode?.media?.type === "VIDEO";
     },
+    get mediaIsAudio() {
+      return state.initEpisode?.media?.type === "AUDIO";
+    },
+    // Audio player state
     get playedWidth() {
       return `calc(${state.currentTime / state.duration * 100}% -  0.25rem)`;
     },
@@ -144,7 +149,7 @@ const {
       } = state;
       if (audioEpisode) {
         state.playing = true;
-        if (playerRef && playerRef.currentSrc !== audioEpisode.media?.src) {
+        if (playerRef && playerRef.getAttribute("current-play") !== audioEpisode?.id.toString()) {
           let playbackRate = playerRef.playbackRate;
           playerRef.load();
           playerRef.pause();
@@ -155,6 +160,8 @@ const {
       state.isShowAudioPlayer = true;
       state.isShowVideoPlayer = false;
       playerRef?.play();
+      // add a attribute to the player
+      playerRef?.setAttribute("current-play", audioEpisode?.id.toString() || "");
     },
     pause() {
       const {
@@ -173,7 +180,7 @@ const {
         playerRef,
         audioEpisode
       } = state;
-      return audioEpisode ? state.playing && playerRef?.currentSrc === audioEpisode.media?.src : state.playing;
+      return audioEpisode ? state.playing && playerRef?.currentSrc && playerRef.getAttribute("current-play") === audioEpisode?.id.toString() : state.playing;
     },
     rewind10s() {
       const {
@@ -203,7 +210,7 @@ const {
       }
       playerRef.playbackRate = state.playbackRate;
     },
-    ended() {
+    forceEnd() {
       const {
         playerRef
       } = state;
@@ -212,6 +219,7 @@ const {
       if (!playerRef) return;
       playerRef.currentTime = 0;
       playerRef.pause();
+      playerRef.setAttribute("current-play", "");
     },
     // Audio player - slider
     handleSeekMouseDown() {
@@ -238,18 +246,15 @@ const {
       } = state;
       playerRef?.play();
     },
-    handleCloseAudioPlayer() {
-      state.isShowAudioPlayer = false;
-      actions.ended();
-    },
-    // Video player actions
+    // Video <video> player actions
     videoPlay() {
       const {
         videoEpisode,
         videoPlayerRef
       } = state;
       if (videoEpisode) {
-        if (videoPlayerRef && videoPlayerRef.currentSrc !== videoEpisode.media?.src) {
+        console.log(111, videoPlayerRef?.currentSrc, videoEpisode.media);
+        if (videoPlayerRef && videoPlayerRef.getAttribute("current-play") !== videoEpisode?.id.toString()) {
           let playbackRate = videoPlayerRef.playbackRate;
           videoPlayerRef.load();
           videoPlayerRef.pause();
@@ -260,6 +265,8 @@ const {
       state.isShowVideoPlayer = true;
       state.isShowAudioPlayer = false;
       videoPlayerRef?.play();
+      // add a attribute to the player
+      videoPlayerRef?.setAttribute("current-play", videoEpisode?.id.toString() || "");
     },
     videoPause() {
       const {
@@ -275,49 +282,79 @@ const {
         videoPlayerRef,
         videoEpisode
       } = state;
-      return videoEpisode ? !videoPlayerRef?.paused && videoPlayerRef?.currentSrc === videoEpisode.media?.src : !videoPlayerRef?.paused;
+      return videoEpisode ? !videoPlayerRef?.paused && videoPlayerRef?.currentSrc && videoPlayerRef.getAttribute("current-play") === videoEpisode?.id.toString() : !videoPlayerRef?.paused;
     },
-    videoEnded() {
+    forceVideoEnd() {
       state.initEpisode = null;
       if (state.videoPlayerRef) {
         state.videoPlayerRef.currentTime = 0;
         state.videoPlayerRef.pause();
+        state.videoPlayerRef.setAttribute("current-play", "");
       }
     },
-    // Video Iframe
+    // Video Iframe <iframe> player actions
     videoIframePlay() {
       state.isShowAudioPlayer = false;
       state.isShowVideoPlayer = true;
     },
-    // other player actions ---
-    handleCloseVideoPlayer() {
-      actions.videoEnded();
-      state.isShowVideoPlayer = false;
+    forceVideoIframeEnd() {
+      state.initEpisode = null;
     },
+    // other player actions ---
     handleClickPostMediaPlayBtn() {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-      if (!context.episodeContext?.media?.src) {
+      console.log("click - episodeContext", context.episodeContext);
+
+      // check if urls is empty
+      if (Object.values(context.episodeContext?.media?.urls || {}).every(x => !x)) {
+        console.log("urls is empty");
         return;
       }
+      if (context.episodeContext?.id === state.initEpisode?.id) {
+        // if the same episode, toggle the player
+        if (state.mediaIsVideo) {
+          actions.videoToggle();
+        } else if (state.mediaIsIframe) {
+          actions.videoIframePlay();
+        } else if (state.mediaIsAudio) {
+          actions.toggle();
+        }
+        return;
+      }
+
       //
-      actions.ended();
-      actions.videoEnded();
-      state.initEpisode = context.episodeContext;
+      actions.forceEnd();
+      actions.forceVideoEnd();
+      actions.forceVideoIframeEnd();
+      //
+      state.initEpisode = context.episodeContext || null;
+      //
+      const mediaType = context.episodeContext?.media?.type;
 
-      // play audio
-      if (context.episodeContext?.media?.type === "AUDIO") {
+      // play audio <audio>
+      if (mediaType === "AUDIO") {
         actions.play();
+        return;
       }
 
-      // play video
-      if (context.episodeContext?.media?.type === "VIDEO") {
+      // play video <video>
+      if (mediaType === "VIDEO") {
         actions.videoPlay();
+        return;
       }
 
-      // play video youtube
-      if (context.episodeContext?.media?.type === "YOUTUBE") {
+      // play video Iframe <iframe>
+      if (mediaType === "IFRAME") {
         actions.videoIframePlay();
+        return;
       }
+    },
+    handleCloseAllPlayer() {
+      state.isShowAudioPlayer = false;
+      state.isShowVideoPlayer = false;
+      actions.forceEnd();
+      actions.forceVideoEnd();
+      actions.forceVideoIframeEnd();
     }
   },
   callbacks: {
@@ -325,9 +362,9 @@ const {
       const {
         ref
       } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
-      state.playerRef = ref?.querySelector("audio.post-media-player__audio");
-      state.sliderRef = ref?.querySelector("input.post-media-player__slider-input");
-      state.videoPlayerRef = ref?.querySelector("video.post-media-player__video");
+      state.playerRef = ref?.querySelector("audio#ncmazfse-media-player-audio");
+      state.sliderRef = ref?.querySelector("input#ncmazfse-media-player-audio-slider-input");
+      state.videoPlayerRef = ref?.querySelector("video#ncmazfse-media-player-video");
     }
   }
 });

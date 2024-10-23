@@ -16,13 +16,10 @@ if (defined('IS_NCMFSE_POST_MEDIA_PLAYER_BLOCK_INSERTED')) {
 	return '';
 }
 
-
-
 // Set the interactivity state.
 wp_interactivity_state(
 	'ncmfse/post-media-player-block',
 	[
-		// 
 		"playing" 		=> false,
 		"muted" 		=> false,
 		"duration" 		=> 0,
@@ -40,11 +37,10 @@ wp_interactivity_state(
 		'playedWidth'	=> '0%',
 		'currentTimeHuman' => '00:00',
 		'durationHuman' => '00:00',
-
 		// video player
 		"isShowAudioPlayer" 	=> false,
 		"isShowVideoPlayer" 	=> false,
-		"mediaIsYoutube" 		=> false,
+		"mediaIsIframe" 		=> false,
 		"mediaIsVideo" 			=> false,
 
 	]
@@ -72,19 +68,6 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 	<?php echo wp_kses_data(wp_interactivity_data_wp_context([])); ?>
 	data-wp-init="callbacks.onInit">
 
-	<audio
-		data-wp-bind--hidden="!state.isShowAudioPlayer"
-		class="post-media-player__audio"
-		data-wp-on-async--play="actions.dispatchPlay"
-		data-wp-on-async--pause="actions.dispatchPause"
-		data-wp-on-async--durationchange="actions.dispatchDurationChange"
-		data-wp-on-async--timeupdate="actions.dispatchCurrentTimeChange"
-		data-wp-on-async--onended="actions.dispatchEnded"
-		data-wp-bind--muted="state.muted">
-		<source data-wp-bind--src="state.audioEpisode.media.src">
-	</audio>
-
-
 	<!-- AUDIO PLAYER -->
 	<div class="wp-block-ncmfse-post-media-player__wrap" id="ncmazfse-audio-player" data-wp-bind--hidden="!state.isShowAudioPlayer">
 		<div class="wp-block-ncmfse-post-media-player__container">
@@ -109,7 +92,7 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 					<a data-wp-bind--href="state.initEpisode.href" data-wp-text="state.initEpisode.title">
 					</a>
 
-					<button class="wp-block-ncmfse-post-media-player__audio-close" data-wp-on-async--click="actions.handleCloseAudioPlayer">
+					<button class="wp-block-ncmfse-post-media-player__audio-close" data-wp-on-async--click="actions.handleCloseAllPlayer">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="currentColor" fill="none">
 							<path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 						</svg>
@@ -170,17 +153,16 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 						</button>
 					</div>
 
-
-					<div role="group" id="react-aria1697384229-:r0:" aria-labelledby="react-aria1697384229-:r1:" class="absolute inset-x-0 bottom-full flex flex-auto touch-none items-center gap-6 md:relative">
-						<label class="sr-only" id="react-aria1697384229-:r1:">Current time</label>
+					<div role="group" aria-labelledby="ncmaz-aria1697384229-:r1:" class="absolute inset-x-0 bottom-full flex flex-auto touch-none items-center gap-6 md:relative">
+						<label class="sr-only" id="ncmaz-aria1697384229-:r1:">Current time</label>
 
 						<!-- Slider -->
-						<div class="post-media-player__slider relative w-full bg-slate-100 md:rounded-full" style="position: relative; touch-action: none;">
-							<div class="post-media-player__slider-width h-2 md:rounded-l-xl md:rounded-r-md bg-slate-700"
+						<div class="relative w-full bg-slate-100 md:rounded-full" style="position: relative; touch-action: none;">
+							<div class="h-2 md:rounded-l-xl md:rounded-r-md bg-slate-700"
 								data-wp-style--width="state.playedWidth"></div>
 
-							<input class="post-media-player__slider-input" tabindex="0"
-								aria-labelledby="react-aria1697384229-:r1:"
+							<input id="ncmazfse-media-player-audio-slider-input" tabindex="0"
+								aria-labelledby="ncmaz-aria1697384229-:r1:"
 								type="range"
 								min="0"
 								max="0.9999999999999999"
@@ -193,7 +175,7 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 								data-wp-on-async--touchend="actions.handleSeekMouseUp"
 								aria-orientation="horizontal">
 
-							<div class="post-media-player__slider-thumb absolute top-1/2 -translate-x-1/2" data-wp-style--left="state.thumbLeft">
+							<div class="absolute top-1/2 -translate-x-1/2" data-wp-style--left="state.thumbLeft">
 								<div class="h-4 rounded-full w-1 bg-slate-700" style="position: absolute; transform: translate(-50%, -50%); touch-action: none; left: 10%;">
 									<div style="border: 0px; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;">
 									</div>
@@ -202,7 +184,7 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 						</div>
 
 						<div class="hidden items-center gap-2 md:flex">
-							<output for="react-aria1697384229-:r1:-0" aria-live="off" class="hidden rounded-md px-1 py-0.5 font-mono text-sm leading-6 md:block text-slate-500" data-wp-text="state.currentTimeHuman"></output>
+							<output for="ncmaz-aria1697384229-:r1:-0" aria-live="off" class="hidden rounded-md px-1 py-0.5 font-mono text-sm leading-6 md:block text-slate-500" data-wp-text="state.currentTimeHuman"></output>
 							<span class="text-sm leading-6 text-slate-300" aria-hidden="true">/</span>
 							<span class="hidden rounded-md px-1 py-0.5 font-mono text-sm leading-6 text-slate-500 md:block" data-wp-text="state.durationHuman"></span>
 						</div>
@@ -245,28 +227,49 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 				</div>
 			</div>
 		</div>
+
+		<audio
+			id="ncmazfse-media-player-audio"
+			data-wp-on-async--play="actions.dispatchPlay"
+			data-wp-on-async--pause="actions.dispatchPause"
+			data-wp-on-async--durationchange="actions.dispatchDurationChange"
+			data-wp-on-async--timeupdate="actions.dispatchCurrentTimeChange"
+			data-wp-on-async--onended="actions.dispatchEnded"
+			data-wp-bind--muted="state.muted">
+
+			<source data-wp-bind--src="state.audioEpisode.media.urls.audio_url_mp3" type="audio/mpeg">
+			<source data-wp-bind--src="state.audioEpisode.media.urls.audio_url_ogg" type="audio/ogg">
+			<source data-wp-bind--src="state.audioEpisode.media.urls.audio_url_wav" type="audio/wav">
+			<source data-wp-bind--src="state.audioEpisode.media.urls.audio_url_webm" type="audio/webm">
+			<source data-wp-bind--src="state.audioEpisode.media.urls.audio_url_acc" type="audio/aac">
+			<?php _e("Sorry, your browser doesn't support embedded audios"); ?>
+
+		</audio>
 	</div>
 
 
 	<!-- VIDEO PLAYER -->
 	<div class="wp-block-ncmfse-post-media-player__video-wrap" id="ncmazfse-video-player" data-wp-bind--hidden="!state.isShowVideoPlayer">
-		<button class="wp-block-ncmfse-post-media-player__video-close" data-wp-on-async--click="actions.handleCloseVideoPlayer">
+		<button class="wp-block-ncmfse-post-media-player__video-close" data-wp-on-async--click="actions.handleCloseAllPlayer">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none">
 				<path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 			</svg>
 		</button>
 
 		<!-- VIDEO -  MP4, WebM, Ogg -->
-		<video
-			data-wp-bind--hidden="!state.mediaIsVideo"
-			class="post-media-player__video" controls width="400" height="225">
-			<source data-wp-bind--src="state.videoEpisode.media.src">
+		<video id="ncmazfse-media-player-video" controls width="400" height="225" data-wp-bind--hidden="!state.mediaIsVideo">
+			<source data-wp-bind--src="state.videoEpisode.media.urls.video_url_mp4" type="video/mp4">
+			<source data-wp-bind--src="state.videoEpisode.media.urls.video_url_webm" type="video/webm">
+			<source data-wp-bind--src="state.videoEpisode.media.urls.video_url_ogv" type="video/ogg">
+			<?php _e("Sorry, your browser doesn't support embedded videos"); ?>
 		</video>
 
-		<!-- IFRAME YouTube -->
+		<!-- IFRAME mediaIsIframe -->
 		<iframe
-			data-wp-bind--hidden="!state.mediaIsYoutube"
-			class="post-media-player__other" data-wp-bind--src="state.iframeEpisode.media.src" width="400" height="225" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			data-wp-bind--hidden="!state.mediaIsIframe"
+			id="ncmazfse-media-player-iframe" data-wp-bind--src="state.iframeEpisode.media.urls.media_url_iframe" width="400" height="225" frameborder="0" allow="autoplay" allowfullscreen>
+		</iframe>
+
 
 		<div class="wp-block-ncmfse-post-media-player__video-info">
 			<!-- Title -->
@@ -276,10 +279,6 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 			</a>
 		</div>
 	</div>
-
-
-
-
 </div>
 
 <?php

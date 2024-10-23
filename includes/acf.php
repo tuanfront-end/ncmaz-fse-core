@@ -521,22 +521,115 @@ add_action('acf/include_fields', function () {
 
 
 // AUDIO, VIDEO FIELDS --------------------------
+// add_action('acf/include_fields', function () {
+// 	if (! function_exists('acf_add_local_field_group')) {
+// 		return;
+// 	}
+
+// 	acf_add_local_field_group(array(
+// 		'key' => 'group_6714b909b6cd7',
+// 		'title' => 'Post Audio fields',
+// 		'fields' => array(
+// 			array(
+// 				'key' => 'field_6714b909b8ec0',
+// 				'label' => 'Audio URL',
+// 				'name' => 'audio_url',
+// 				'aria-label' => '',
+// 				'type' => 'url',
+// 				'instructions' => 'Enter the audio URL of the post.',
+// 				'required' => 0,
+// 				'conditional_logic' => 0,
+// 				'wrapper' => array(
+// 					'width' => '',
+// 					'class' => '',
+// 					'id' => '',
+// 				),
+// 				'default_value' => '',
+// 				'allow_in_bindings' => 1,
+// 				'placeholder' => 'https://',
+// 			),
+// 		),
+// 		'location' => array(
+// 			array(
+// 				array(
+// 					'param' => 'post_format',
+// 					'operator' => '==',
+// 					'value' => 'audio',
+// 				),
+// 			),
+// 		),
+// 		'menu_order' => 0,
+// 		'position' => 'normal',
+// 		'style' => 'default',
+// 		'label_placement' => 'top',
+// 		'instruction_placement' => 'label',
+// 		'hide_on_screen' => '',
+// 		'active' => true,
+// 		'description' => '',
+// 		'show_in_rest' => 1,
+// 	));
+
+// 	acf_add_local_field_group(array(
+// 		'key' => 'group_6714b7b2abdb5',
+// 		'title' => 'Post Video fields',
+// 		'fields' => array(
+// 			array(
+// 				'key' => 'field_6714b7b20f9f3',
+// 				'label' => 'Video URL',
+// 				'name' => 'video_url',
+// 				'aria-label' => '',
+// 				'type' => 'url',
+// 				'instructions' => 'Enter the video URL of the post.',
+// 				'required' => 0,
+// 				'conditional_logic' => 0,
+// 				'wrapper' => array(
+// 					'width' => '',
+// 					'class' => '',
+// 					'id' => '',
+// 				),
+// 				'default_value' => '',
+// 				'allow_in_bindings' => 1,
+// 				'placeholder' => 'https://',
+// 			),
+// 		),
+// 		'location' => array(
+// 			array(
+// 				array(
+// 					'param' => 'post_format',
+// 					'operator' => '==',
+// 					'value' => 'video',
+// 				),
+// 			),
+// 		),
+// 		'menu_order' => 0,
+// 		'position' => 'normal',
+// 		'style' => 'default',
+// 		'label_placement' => 'top',
+// 		'instruction_placement' => 'label',
+// 		'hide_on_screen' => '',
+// 		'active' => true,
+// 		'description' => '',
+// 		'show_in_rest' => 1,
+// 	));
+// });
+
+
 add_action('acf/include_fields', function () {
 	if (! function_exists('acf_add_local_field_group')) {
 		return;
 	}
 
 	acf_add_local_field_group(array(
-		'key' => 'group_6714b909b6cd7',
+		'key' => 'group_67185ab0364bd',
 		'title' => 'Post Audio fields',
 		'fields' => array(
 			array(
-				'key' => 'field_6714b909b8ec0',
-				'label' => 'Audio URL',
-				'name' => 'audio_url',
+				'key' => 'field_67185ab06e576',
+				'label' => 'Media type',
+				'name' => 'media_type',
 				'aria-label' => '',
-				'type' => 'url',
-				'instructions' => 'Enter the audio URL of the post.',
+				'type' => 'button_group',
+				'instructions' => 'HTML: Offering more different sources for the media; this allows the media to be loaded regardless of which media codecs are supported by the browser. IFRAME: You can enter URLs from 3rd parties and they will be embedded.',
 				'required' => 0,
 				'conditional_logic' => 0,
 				'wrapper' => array(
@@ -544,9 +637,171 @@ add_action('acf/include_fields', function () {
 					'class' => '',
 					'id' => '',
 				),
+				'choices' => array(
+					'html' => 'HTML(Mp3, Mp4, WebM,...)',
+					'iframe' => 'Iframe(Youtube, Vimeo, SoundCloud,...)',
+				),
+				'default_value' => 'html',
+				'return_format' => 'value',
+				'allow_null' => 0,
+				'allow_in_bindings' => 1,
+				'layout' => 'horizontal',
+			),
+			array(
+				'key' => 'field_67185af36e577',
+				'label' => 'Audio URL Iframe',
+				'name' => 'audio_url_iframe',
+				'aria-label' => '',
+				'type' => 'url',
+				'instructions' => 'Enter the URL to embed.',
+				'required' => 0,
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'field_67185ab06e576',
+							'operator' => '==',
+							'value' => 'iframe',
+						),
+					),
+				),
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
 				'default_value' => '',
 				'allow_in_bindings' => 1,
-				'placeholder' => 'https://',
+				'placeholder' => 'Youtube url, Vimeo url, SoundCloud url,...',
+			),
+			array(
+				'key' => 'field_67185b786e578',
+				'label' => 'Audio URL .MP3',
+				'name' => 'audio_url_mp3',
+				'aria-label' => '',
+				'type' => 'url',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'field_67185ab06e576',
+							'operator' => '==',
+							'value' => 'html',
+						),
+					),
+				),
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'allow_in_bindings' => 1,
+				'placeholder' => 'https://your_audio_url.mp3',
+			),
+			array(
+				'key' => 'field_67185beb6e57a',
+				'label' => 'Audio URL .WebM',
+				'name' => 'audio_url_webm',
+				'aria-label' => '',
+				'type' => 'url',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'field_67185ab06e576',
+							'operator' => '==',
+							'value' => 'html',
+						),
+					),
+				),
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'allow_in_bindings' => 1,
+				'placeholder' => 'https://your_audio_url.webm',
+			),
+			array(
+				'key' => 'field_67185bae6e579',
+				'label' => 'Audio URL .OGG',
+				'name' => 'audio_url_ogg',
+				'aria-label' => '',
+				'type' => 'url',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'field_67185ab06e576',
+							'operator' => '==',
+							'value' => 'html',
+						),
+					),
+				),
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'allow_in_bindings' => 1,
+				'placeholder' => 'https://your_audio_url.ogg',
+			),
+			array(
+				'key' => 'field_67185c326e57b',
+				'label' => 'Audio URL .AAC',
+				'name' => 'audio_url_aac',
+				'aria-label' => '',
+				'type' => 'url',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'field_67185ab06e576',
+							'operator' => '==',
+							'value' => 'html',
+						),
+					),
+				),
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'allow_in_bindings' => 1,
+				'placeholder' => 'https://your_audio_url.aac',
+			),
+			array(
+				'key' => 'field_67185c6f6e57c',
+				'label' => 'Audio URL .WAV',
+				'name' => 'audio_url_wav',
+				'aria-label' => '',
+				'type' => 'url',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'field_67185ab06e576',
+							'operator' => '==',
+							'value' => 'html',
+						),
+					),
+				),
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'allow_in_bindings' => 1,
+				'placeholder' => 'https://your_audio_url.wav',
 			),
 		),
 		'location' => array(
@@ -566,20 +821,20 @@ add_action('acf/include_fields', function () {
 		'hide_on_screen' => '',
 		'active' => true,
 		'description' => '',
-		'show_in_rest' => 1,
+		'show_in_rest' => 0,
 	));
 
 	acf_add_local_field_group(array(
-		'key' => 'group_6714b7b2abdb5',
+		'key' => 'group_6718536e11790',
 		'title' => 'Post Video fields',
 		'fields' => array(
 			array(
-				'key' => 'field_6714b7b20f9f3',
-				'label' => 'Video URL',
-				'name' => 'video_url',
+				'key' => 'field_6718536ec8031',
+				'label' => 'Media type',
+				'name' => 'media_type',
 				'aria-label' => '',
-				'type' => 'url',
-				'instructions' => 'Enter the video URL of the post.',
+				'type' => 'button_group',
+				'instructions' => 'HTML: Offering more different sources for the media; this allows the video to be watched regardless of which video codecs are supported by the browser. IFRAME: You can enter URLs from 3rd parties and they will be embedded.',
 				'required' => 0,
 				'conditional_logic' => 0,
 				'wrapper' => array(
@@ -587,9 +842,119 @@ add_action('acf/include_fields', function () {
 					'class' => '',
 					'id' => '',
 				),
+				'choices' => array(
+					'html' => 'HTML(Mp3, Mp4, WebM,...)',
+					'iframe' => 'Iframe(Youtube, Vimeo, SoundCloud,...)',
+				),
+				'default_value' => 'html',
+				'return_format' => 'value',
+				'allow_null' => 0,
+				'allow_in_bindings' => 1,
+				'layout' => 'horizontal',
+			),
+			array(
+				'key' => 'field_6718558f5c711',
+				'label' => 'Video URL Iframe',
+				'name' => 'video_url_iframe',
+				'aria-label' => '',
+				'type' => 'url',
+				'instructions' => 'Enter the URL to embed.',
+				'required' => 0,
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'field_6718536ec8031',
+							'operator' => '==',
+							'value' => 'iframe',
+						),
+					),
+				),
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
 				'default_value' => '',
 				'allow_in_bindings' => 1,
-				'placeholder' => 'https://',
+				'placeholder' => 'Youtube url, Vimeo url, SoundCloud url,...',
+			),
+			array(
+				'key' => 'field_671857d0a7e80',
+				'label' => 'Video URL .MP4',
+				'name' => 'video_url_mp4',
+				'aria-label' => '',
+				'type' => 'url',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'field_6718536ec8031',
+							'operator' => '==',
+							'value' => 'html',
+						),
+					),
+				),
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'allow_in_bindings' => 1,
+				'placeholder' => 'https://your_video_url.mp4',
+			),
+			array(
+				'key' => 'field_6718583ea7e81',
+				'label' => 'Video URL .WebM',
+				'name' => 'video_url_webm',
+				'aria-label' => '',
+				'type' => 'url',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'field_6718536ec8031',
+							'operator' => '==',
+							'value' => 'html',
+						),
+					),
+				),
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'allow_in_bindings' => 1,
+				'placeholder' => 'https://your_video_url.webm',
+			),
+			array(
+				'key' => 'field_6718585ca7e82',
+				'label' => 'Video URL .ogv',
+				'name' => 'video_url_ogv',
+				'aria-label' => '',
+				'type' => 'url',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'field_6718536ec8031',
+							'operator' => '==',
+							'value' => 'html',
+						),
+					),
+				),
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'allow_in_bindings' => 1,
+				'placeholder' => 'https://your_video_url.ogv',
 			),
 		),
 		'location' => array(
