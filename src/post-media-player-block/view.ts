@@ -40,6 +40,7 @@ interface TContext {
 interface TState {
 	playerRef: HTMLAudioElement | null;
 	sliderRef: HTMLInputElement | null;
+	currentPlayingId: null | number;
 	//  Audio player state
 	playing: boolean;
 	muted: boolean;
@@ -143,15 +144,11 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 
 		// Audio player actions
 		play() {
-			const { audioEpisode, playerRef } = state;
+			const { audioEpisode, playerRef, currentPlayingId } = state;
 
 			if (audioEpisode) {
 				state.playing = true;
-
-				if (
-					playerRef &&
-					playerRef.getAttribute("current-play") !== audioEpisode?.id.toString()
-				) {
+				if (playerRef && currentPlayingId !== audioEpisode?.id) {
 					let playbackRate = playerRef.playbackRate;
 					playerRef.load();
 					playerRef.pause();
@@ -162,11 +159,8 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			state.isShowAudioPlayer = true;
 			state.isShowVideoPlayer = false;
 			playerRef?.play();
-			// add a attribute to the player
-			playerRef?.setAttribute(
-				"current-play",
-				audioEpisode?.id.toString() || "",
-			);
+			// add currentPlayingId
+			state.currentPlayingId = audioEpisode?.id || null;
 		},
 		pause() {
 			const { playerRef } = state;
@@ -179,12 +173,11 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			state.muted = !state.muted;
 		},
 		isPlaying() {
-			const { playerRef, audioEpisode } = state;
+			const { playerRef, audioEpisode, currentPlayingId } = state;
 			return audioEpisode
 				? state.playing &&
 						playerRef?.currentSrc &&
-						playerRef.getAttribute("current-play") ===
-							audioEpisode?.id.toString()
+						currentPlayingId === audioEpisode?.id
 				: state.playing;
 		},
 		rewind10s() {
@@ -217,7 +210,7 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			if (!playerRef) return;
 			playerRef.currentTime = 0;
 			playerRef.pause();
-			playerRef.setAttribute("current-play", "");
+			state.currentPlayingId = null;
 		},
 
 		// Audio player - slider
@@ -241,14 +234,9 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 
 		// Video <video> player actions
 		videoPlay() {
-			const { videoEpisode, videoPlayerRef } = state;
+			const { videoEpisode, videoPlayerRef, currentPlayingId } = state;
 			if (videoEpisode) {
-				console.log(111, videoPlayerRef?.currentSrc, videoEpisode.media);
-				if (
-					videoPlayerRef &&
-					videoPlayerRef.getAttribute("current-play") !==
-						videoEpisode?.id.toString()
-				) {
+				if (videoPlayerRef && currentPlayingId !== videoEpisode?.id) {
 					let playbackRate = videoPlayerRef.playbackRate;
 					videoPlayerRef.load();
 					videoPlayerRef.pause();
@@ -259,11 +247,8 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			state.isShowVideoPlayer = true;
 			state.isShowAudioPlayer = false;
 			videoPlayerRef?.play();
-			// add a attribute to the player
-			videoPlayerRef?.setAttribute(
-				"current-play",
-				videoEpisode?.id.toString() || "",
-			);
+			// add currentPlayingId
+			state.currentPlayingId = videoEpisode?.id || null;
 		},
 		videoPause() {
 			const { videoPlayerRef } = state;
@@ -273,12 +258,11 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			actions.isVideoPlaying() ? actions.videoPause() : actions.videoPlay();
 		},
 		isVideoPlaying() {
-			const { videoPlayerRef, videoEpisode } = state;
+			const { videoPlayerRef, videoEpisode, currentPlayingId } = state;
 			return videoEpisode
 				? !videoPlayerRef?.paused &&
 						videoPlayerRef?.currentSrc &&
-						videoPlayerRef.getAttribute("current-play") ===
-							videoEpisode?.id.toString()
+						currentPlayingId === videoEpisode?.id
 				: !videoPlayerRef?.paused;
 		},
 		forceVideoEnd() {
@@ -287,7 +271,7 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			if (state.videoPlayerRef) {
 				state.videoPlayerRef.currentTime = 0;
 				state.videoPlayerRef.pause();
-				state.videoPlayerRef.setAttribute("current-play", "");
+				state.currentPlayingId = null;
 			}
 		},
 
@@ -360,23 +344,73 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			actions.forceEnd();
 			actions.forceVideoEnd();
 			actions.forceVideoIframeEnd();
+			// reset state
+			state.initEpisode = null;
+			state.currentPlayingId = null;
+			state.duration = 0;
+			state.currentTime = 0;
+			state.playing = false;
+			state.muted = false;
+			state.playbackRate = 1;
 		},
+
+		//
 	},
 	callbacks: {
 		onInit: () => {
 			const { ref } = getElement();
-
 			state.playerRef = ref?.querySelector(
 				"audio#ncmazfse-media-player-audio",
 			) as HTMLAudioElement;
-
 			state.sliderRef = ref?.querySelector(
 				"input#ncmazfse-media-player-audio-slider-input",
 			) as HTMLInputElement;
-
 			state.videoPlayerRef = ref?.querySelector(
 				"video#ncmazfse-media-player-video",
 			) as HTMLVideoElement;
+
+			// update state from the local storage
+			const localStorageState = JSON.parse(
+				localStorage.getItem("ncmazfse_media_player_current_state") || "",
+			) as TState;
+
+			if (localStorageState?.initEpisode?.id) {
+				state.initEpisode = localStorageState.initEpisode;
+				state.isShowAudioPlayer = localStorageState.isShowAudioPlayer;
+				state.isShowVideoPlayer = localStorageState.isShowVideoPlayer;
+
+				// update audio player state
+				if (
+					localStorageState.initEpisode?.media?.type === "AUDIO" &&
+					state.playerRef
+				) {
+					state.muted = localStorageState.muted;
+					state.duration = localStorageState.duration;
+					state.currentTime = localStorageState.currentTime;
+					state.playbackRate = localStorageState.playbackRate;
+					state.currentPlayingId = localStorageState.currentPlayingId;
+					// load and seek the audio player to the last time
+					state.playerRef.load();
+					state.playerRef.currentTime = localStorageState.currentTime;
+					state.playerRef.playbackRate = localStorageState.playbackRate;
+					state.playerRef.muted = localStorageState.muted;
+				} else if (
+					localStorageState.initEpisode?.media?.type === "VIDEO" &&
+					state.videoPlayerRef
+				) {
+					// load video player
+					state.videoPlayerRef.load();
+				}
+			}
+
+			// catch when window is beforeunload to save the current state
+			window.addEventListener("beforeunload", () => {
+				// save the current state to the local storage
+				localStorage.setItem(
+					"ncmazfse_media_player_current_state",
+					JSON.stringify(state),
+				);
+			});
 		},
 	},
 });

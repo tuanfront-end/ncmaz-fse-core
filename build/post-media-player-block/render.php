@@ -28,7 +28,7 @@ wp_interactivity_state(
 		"isPlaybackRate1x" 		=> true,
 		"isPlaybackRate1_5x" 	=> false,
 		"isPlaybackRate2x" 		=> false,
-		'episode'				=> [
+		'initEpisode'			=> [
 			'title'	=> '',
 			'url'	=> '',
 			'media'	=> [],

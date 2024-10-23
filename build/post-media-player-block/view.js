@@ -1,6 +1,30 @@
 import * as __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__ from "@wordpress/interactivity";
 /******/ var __webpack_modules__ = ({
 
+/***/ "./src/post-media-player-block/utils.ts":
+/*!**********************************************!*\
+  !*** ./src/post-media-player-block/utils.ts ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   formatTime: () => (/* binding */ formatTime),
+/* harmony export */   parseTime: () => (/* binding */ parseTime)
+/* harmony export */ });
+function parseTime(seconds) {
+  let hours = Math.floor(seconds / 3600);
+  let minutes = Math.floor((seconds - hours * 3600) / 60);
+  seconds = seconds - hours * 3600 - minutes * 60;
+  return [hours, minutes, seconds];
+}
+function formatTime(seconds, totalSeconds = seconds) {
+  let totalWithoutLeadingZeroes = totalSeconds.slice(totalSeconds.findIndex(x => x !== 0));
+  return seconds.slice(seconds.length - totalWithoutLeadingZeroes.length).map(x => x.toString().padStart(2, "0")).join(":");
+}
+
+/***/ }),
+
 /***/ "@wordpress/interactivity":
 /*!*******************************************!*\
   !*** external "@wordpress/interactivity" ***!
@@ -38,6 +62,23 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__;
 /******/ }
 /******/ 
 /************************************************************************/
+/******/ /* webpack/runtime/define property getters */
+/******/ (() => {
+/******/ 	// define getter functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 			}
+/******/ 		}
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ (() => {
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ })();
+/******/ 
 /******/ /* webpack/runtime/make namespace object */
 /******/ (() => {
 /******/ 	// define __esModule on exports
@@ -58,9 +99,11 @@ var __webpack_exports__ = {};
   \*********************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/interactivity */ "@wordpress/interactivity");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ "./src/post-media-player-block/utils.ts");
 /**
  * WordPress dependencies
  */
+
 
 
 // view.js
@@ -106,10 +149,10 @@ const {
       return `calc(${state.currentTime / state.duration * 100}%)`;
     },
     get currentTimeHuman() {
-      return formatTime(parseTime(state.currentTime), parseTime(state.duration));
+      return (0,_utils__WEBPACK_IMPORTED_MODULE_1__.formatTime)((0,_utils__WEBPACK_IMPORTED_MODULE_1__.parseTime)(state.currentTime), (0,_utils__WEBPACK_IMPORTED_MODULE_1__.parseTime)(state.duration));
     },
     get durationHuman() {
-      return formatTime(parseTime(state.duration));
+      return (0,_utils__WEBPACK_IMPORTED_MODULE_1__.formatTime)((0,_utils__WEBPACK_IMPORTED_MODULE_1__.parseTime)(state.duration));
     },
     get isPlaybackRate1x() {
       return state.playbackRate === 1;
@@ -145,11 +188,12 @@ const {
     play() {
       const {
         audioEpisode,
-        playerRef
+        playerRef,
+        currentPlayingId
       } = state;
       if (audioEpisode) {
         state.playing = true;
-        if (playerRef && playerRef.getAttribute("current-play") !== audioEpisode?.id.toString()) {
+        if (playerRef && currentPlayingId !== audioEpisode?.id) {
           let playbackRate = playerRef.playbackRate;
           playerRef.load();
           playerRef.pause();
@@ -160,8 +204,8 @@ const {
       state.isShowAudioPlayer = true;
       state.isShowVideoPlayer = false;
       playerRef?.play();
-      // add a attribute to the player
-      playerRef?.setAttribute("current-play", audioEpisode?.id.toString() || "");
+      // add currentPlayingId
+      state.currentPlayingId = audioEpisode?.id || null;
     },
     pause() {
       const {
@@ -178,9 +222,10 @@ const {
     isPlaying() {
       const {
         playerRef,
-        audioEpisode
+        audioEpisode,
+        currentPlayingId
       } = state;
-      return audioEpisode ? state.playing && playerRef?.currentSrc && playerRef.getAttribute("current-play") === audioEpisode?.id.toString() : state.playing;
+      return audioEpisode ? state.playing && playerRef?.currentSrc && currentPlayingId === audioEpisode?.id : state.playing;
     },
     rewind10s() {
       const {
@@ -219,7 +264,7 @@ const {
       if (!playerRef) return;
       playerRef.currentTime = 0;
       playerRef.pause();
-      playerRef.setAttribute("current-play", "");
+      state.currentPlayingId = null;
     },
     // Audio player - slider
     handleSeekMouseDown() {
@@ -250,11 +295,11 @@ const {
     videoPlay() {
       const {
         videoEpisode,
-        videoPlayerRef
+        videoPlayerRef,
+        currentPlayingId
       } = state;
       if (videoEpisode) {
-        console.log(111, videoPlayerRef?.currentSrc, videoEpisode.media);
-        if (videoPlayerRef && videoPlayerRef.getAttribute("current-play") !== videoEpisode?.id.toString()) {
+        if (videoPlayerRef && currentPlayingId !== videoEpisode?.id) {
           let playbackRate = videoPlayerRef.playbackRate;
           videoPlayerRef.load();
           videoPlayerRef.pause();
@@ -265,8 +310,8 @@ const {
       state.isShowVideoPlayer = true;
       state.isShowAudioPlayer = false;
       videoPlayerRef?.play();
-      // add a attribute to the player
-      videoPlayerRef?.setAttribute("current-play", videoEpisode?.id.toString() || "");
+      // add currentPlayingId
+      state.currentPlayingId = videoEpisode?.id || null;
     },
     videoPause() {
       const {
@@ -280,16 +325,17 @@ const {
     isVideoPlaying() {
       const {
         videoPlayerRef,
-        videoEpisode
+        videoEpisode,
+        currentPlayingId
       } = state;
-      return videoEpisode ? !videoPlayerRef?.paused && videoPlayerRef?.currentSrc && videoPlayerRef.getAttribute("current-play") === videoEpisode?.id.toString() : !videoPlayerRef?.paused;
+      return videoEpisode ? !videoPlayerRef?.paused && videoPlayerRef?.currentSrc && currentPlayingId === videoEpisode?.id : !videoPlayerRef?.paused;
     },
     forceVideoEnd() {
       state.initEpisode = null;
       if (state.videoPlayerRef) {
         state.videoPlayerRef.currentTime = 0;
         state.videoPlayerRef.pause();
-        state.videoPlayerRef.setAttribute("current-play", "");
+        state.currentPlayingId = null;
       }
     },
     // Video Iframe <iframe> player actions
@@ -355,7 +401,17 @@ const {
       actions.forceEnd();
       actions.forceVideoEnd();
       actions.forceVideoIframeEnd();
+      // reset state
+      state.initEpisode = null;
+      state.currentPlayingId = null;
+      state.duration = 0;
+      state.currentTime = 0;
+      state.playing = false;
+      state.muted = false;
+      state.playbackRate = 1;
     }
+
+    //
   },
   callbacks: {
     onInit: () => {
@@ -365,19 +421,40 @@ const {
       state.playerRef = ref?.querySelector("audio#ncmazfse-media-player-audio");
       state.sliderRef = ref?.querySelector("input#ncmazfse-media-player-audio-slider-input");
       state.videoPlayerRef = ref?.querySelector("video#ncmazfse-media-player-video");
+
+      // update state from the local storage
+      const localStorageState = JSON.parse(localStorage.getItem("ncmazfse_media_player_current_state") || "");
+      if (localStorageState?.initEpisode?.id) {
+        state.initEpisode = localStorageState.initEpisode;
+        state.isShowAudioPlayer = localStorageState.isShowAudioPlayer;
+        state.isShowVideoPlayer = localStorageState.isShowVideoPlayer;
+
+        // update audio player state
+        if (localStorageState.initEpisode?.media?.type === "AUDIO" && state.playerRef) {
+          state.muted = localStorageState.muted;
+          state.duration = localStorageState.duration;
+          state.currentTime = localStorageState.currentTime;
+          state.playbackRate = localStorageState.playbackRate;
+          state.currentPlayingId = localStorageState.currentPlayingId;
+          // load and seek the audio player to the last time
+          state.playerRef.load();
+          state.playerRef.currentTime = localStorageState.currentTime;
+          state.playerRef.playbackRate = localStorageState.playbackRate;
+          state.playerRef.muted = localStorageState.muted;
+        } else if (localStorageState.initEpisode?.media?.type === "VIDEO" && state.videoPlayerRef) {
+          // load video player
+          state.videoPlayerRef.load();
+        }
+      }
+
+      // catch when window is beforeunload to save the current state
+      window.addEventListener("beforeunload", () => {
+        // save the current state to the local storage
+        localStorage.setItem("ncmazfse_media_player_current_state", JSON.stringify(state));
+      });
     }
   }
 });
-function parseTime(seconds) {
-  let hours = Math.floor(seconds / 3600);
-  let minutes = Math.floor((seconds - hours * 3600) / 60);
-  seconds = seconds - hours * 3600 - minutes * 60;
-  return [hours, minutes, seconds];
-}
-function formatTime(seconds, totalSeconds = seconds) {
-  let totalWithoutLeadingZeroes = totalSeconds.slice(totalSeconds.findIndex(x => x !== 0));
-  return seconds.slice(seconds.length - totalWithoutLeadingZeroes.length).map(x => x.toString().padStart(2, "0")).join(":");
-}
 })();
 
 
