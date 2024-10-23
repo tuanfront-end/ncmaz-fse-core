@@ -11,8 +11,6 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 
-use ParagonIE\Sodium\Core\Curve25519\H;
-
 if (! isset($block->context['postId'])) {
 	return '';
 }
