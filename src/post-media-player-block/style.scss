@@ -67,6 +67,14 @@
 	}
 }
 
+.wp-block-ncmfse-post-media-player__error {
+	font-size: var(--wp--preset--font-size--xs);
+	color: #f43f5e;
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
 .wp-block-ncmfse-post-media-player__content-slider {
 	// flex justify-between gap-6
 	display: flex;

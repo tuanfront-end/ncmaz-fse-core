@@ -37,6 +37,7 @@ wp_interactivity_state(
 		'playedWidth'	=> '0%',
 		'currentTimeHuman' => '00:00',
 		'durationHuman' => '00:00',
+		'audioHasError' => false,
 		// 
 		"isCurrentPostPlaying"	=> false,
 		// video player
@@ -88,6 +89,7 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 				</button>
 			</div>
 			<div class="wp-block-ncmfse-post-media-player__content">
+				<span data-wp-bind--hidden="!state.audioHasError" data-wp-text="state.audioErrorMess" class="wp-block-ncmfse-post-media-player__error"></span>
 				<div class="wp-block-ncmfse-post-media-player__title">
 
 					<!-- Title -->
@@ -237,14 +239,11 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 			data-wp-on-async--durationchange="actions.dispatchDurationChange"
 			data-wp-on-async--timeupdate="actions.dispatchCurrentTimeChange"
 			data-wp-bind--muted="state.muted">
-
-			<source data-wp-bind--src="state.audioEpisode.media.urls.audio_url_mp3" type="audio/mpeg">
-			<source data-wp-bind--src="state.audioEpisode.media.urls.audio_url_ogg" type="audio/ogg">
-			<source data-wp-bind--src="state.audioEpisode.media.urls.audio_url_wav" type="audio/wav">
-			<source data-wp-bind--src="state.audioEpisode.media.urls.audio_url_webm" type="audio/webm">
-			<source data-wp-bind--src="state.audioEpisode.media.urls.audio_url_acc" type="audio/aac">
-			<?php _e("Sorry, your browser doesn't support embedded audios"); ?>
-
+			<source data-wp-on-async--error="actions.dispatchAudioError" data-wp-bind--src="state.audioEpisode.media.urls.audio_url_mp3" type="audio/mpeg">
+			<source data-wp-on-async--error="actions.dispatchAudioError" data-wp-bind--src="state.audioEpisode.media.urls.audio_url_ogg" type="audio/ogg">
+			<source data-wp-on-async--error="actions.dispatchAudioError" data-wp-bind--src="state.audioEpisode.media.urls.audio_url_wav" type="audio/wav">
+			<source data-wp-on-async--error="actions.dispatchAudioError" data-wp-bind--src="state.audioEpisode.media.urls.audio_url_webm" type="audio/webm">
+			<source data-wp-on-async--error="actions.dispatchAudioError" data-wp-bind--src="state.audioEpisode.media.urls.audio_url_acc" type="audio/aac">
 		</audio>
 	</div>
 

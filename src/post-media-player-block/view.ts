@@ -59,6 +59,8 @@ interface TState {
 	thumbLeft: string;
 	currentTimeHuman: string;
 	durationHuman: string;
+	audioErrorMess: string;
+	audioHasError: boolean;
 	// other player state
 	videoPlaying: boolean;
 	videoMuted?: boolean;
@@ -183,6 +185,13 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			const { playerRef } = state;
 			state.currentTime = Math.floor(playerRef?.currentTime || 0);
 		},
+		dispatchAudioError(event: OnErrorEventHandler) {
+			if (!event?.target?.getAttribute("src")) {
+				return;
+			}
+			state.audioHasError = true;
+			state.audioErrorMess = "An error occurred while loading the audio.";
+		},
 
 		// Audio player actions
 		play() {
@@ -200,7 +209,22 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			}
 			state.isShowAudioPlayer = true;
 			state.isShowVideoPlayer = false;
-			playerRef?.play();
+			const playPromise = playerRef?.play();
+
+			if (playPromise !== undefined) {
+				playPromise
+					.then(function () {
+						// Automatic playback started!
+						state.audioHasError = false;
+						state.audioErrorMess = "";
+					})
+					.catch(function (error) {
+						// Automatic playback failed.
+						state.audioErrorMess = error.message;
+						state.audioHasError = true;
+					});
+			}
+
 			// add currentPlayingId
 			state.currentPlayingId = audioEpisode?.id || null;
 		},
@@ -250,6 +274,8 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			state.currentPlayingId = null;
 			state.initEpisode = null;
 			state.playing = false;
+			state.audioErrorMess = "";
+			state.audioHasError = false;
 
 			if (playerRef) {
 				playerRef.currentTime = 0;
@@ -426,7 +452,6 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			state.videoMuted = false;
 			state.videoVolume = 1;
 			state.videoPlaybackRate = 1;
-			//
 		},
 	},
 	callbacks: {
