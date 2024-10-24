@@ -37,10 +37,9 @@
     "spacing": {
       "padding": true,
       "margin": true,
-      "blockGap": true,
       "__experimentalDefaultControls": {
-        "padding": true,
-        "blockGap": true
+        "margin": true,
+        "padding": true
       }
     },
     "__experimentalBorder": {
@@ -53,12 +52,6 @@
         "radius": true,
         "style": true,
         "width": true
-      }
-    },
-    "layout": {
-      "default": {
-        "type": "flex",
-        "flexWrap": "nowrap"
       }
     },
     "interactivity": true

@@ -1,9 +1,8 @@
 import { __ } from "@wordpress/i18n";
-import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
+import { useBlockProps } from "@wordpress/block-editor";
 import "./editor.scss";
 import { TAttrs, EditProps } from "../types";
 import metadata from "./block.json";
-import { PanelBody, ToggleControl } from "@wordpress/components";
 
 type Attributes = TAttrs<typeof metadata.attributes>;
 
@@ -21,21 +20,15 @@ function Edit(props: EditProps<Attributes>) {
 
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody title={__("Settings", "ncmfse")}>
-					{/* <ToggleControl
-						__nextHasNoMarginBottom
-						label={__("Show Count", "ncmfse")}
-						help={__("Show/Hide count number", "ncmfse")}
-						checked={showCountText}
-						onChange={(newValue) => {
-							setAttributes({ showCountText: newValue });
-						}}
-					/> */}
-				</PanelBody>
-			</InspectorControls>
-
-			<div {...blockProps}>THIS IS THE MEDIA PLAYER</div>
+			<div {...blockProps}>
+				<p>{__("THIS IS THE MEDIA PLAYER", "ncmaz-fse-core")}</p>
+				<p style={{ fontSize: 14, marginTop: 0 }}>
+					{__(
+						"The player will hide and appear only when you start playing music/video.",
+						"ncmaz-fse-core",
+					)}
+				</p>
+			</div>
 		</>
 	);
 }
