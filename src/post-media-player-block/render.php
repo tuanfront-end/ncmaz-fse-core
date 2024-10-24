@@ -37,6 +37,8 @@ wp_interactivity_state(
 		'playedWidth'	=> '0%',
 		'currentTimeHuman' => '00:00',
 		'durationHuman' => '00:00',
+		// 
+		"isCurrentPostPlaying"	=> false,
 		// video player
 		"isShowAudioPlayer" 	=> false,
 		"isShowVideoPlayer" 	=> false,
@@ -251,13 +253,19 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 	<!-- VIDEO PLAYER -->
 	<div class="wp-block-ncmfse-post-media-player__video-wrap" id="ncmazfse-video-player" data-wp-bind--hidden="!state.isShowVideoPlayer">
 		<button class="wp-block-ncmfse-post-media-player__video-close" data-wp-on-async--click="actions.handleCloseAllPlayer">
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#ffffff" fill="none">
 				<path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 			</svg>
 		</button>
 
 		<!-- VIDEO -  MP4, WebM, Ogg -->
-		<video id="ncmazfse-media-player-video" controls width="400" height="225" data-wp-bind--hidden="!state.mediaIsVideo">
+		<video id="ncmazfse-media-player-video" controls width="400" height="225"
+			data-wp-bind--hidden="!state.mediaIsVideo"
+			data-wp-on-async--play="actions.dispatchVideoPlay"
+			data-wp-on-async--pause="actions.dispatchVideoPause"
+			data-wp-on-async--timeupdate="actions.dispatchVideoCurrentTimeChange"
+			data-wp-on-async--volumechange="actions.dispatchVideoVolumeChange"
+			data-wp-on-async--ratechange="actions.dispatchVideoPlaybackRateChange">
 			<source data-wp-bind--src="state.videoEpisode.media.urls.video_url_mp4" type="video/mp4">
 			<source data-wp-bind--src="state.videoEpisode.media.urls.video_url_webm" type="video/webm">
 			<source data-wp-bind--src="state.videoEpisode.media.urls.video_url_ogv" type="video/ogg">

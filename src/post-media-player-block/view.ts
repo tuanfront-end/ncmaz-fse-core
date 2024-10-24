@@ -60,6 +60,12 @@ interface TState {
 	currentTimeHuman: string;
 	durationHuman: string;
 	// other player state
+	videoPlaying: boolean;
+	videoMuted?: boolean;
+	videoVolume?: number;
+	videoCurrentTime?: number;
+	videoPlaybackRate?: number;
+	// other player state
 	videoPlayerRef: HTMLVideoElement | null;
 	isShowAudioPlayer: boolean;
 	isShowVideoPlayer: boolean;
@@ -67,7 +73,25 @@ interface TState {
 	mediaIsVideo: boolean;
 	mediaIsIframe: boolean;
 	mediaIsAudio: boolean;
+	//
+	isCurrentPostPlaying: boolean;
 }
+
+type TStateLocalStorage = Pick<
+	TState,
+	| "initEpisode"
+	| "muted"
+	| "duration"
+	| "currentTime"
+	| "playbackRate"
+	| "isShowAudioPlayer"
+	| "isShowVideoPlayer"
+	| "currentPlayingId"
+	| "videoCurrentTime"
+	| "videoPlaybackRate"
+	| "videoVolume"
+	| "videoMuted"
+>;
 
 const { state, actions } = store("ncmfse/post-media-player-block", {
 	state: {
@@ -124,6 +148,18 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 		get isPlaybackRate2x() {
 			return state.playbackRate === 2;
 		},
+		//
+		get isCurrentPostPlaying() {
+			const context = getContext<TContext>();
+			if (context.episodeContext?.id === state.initEpisode?.id) {
+				if (state.initEpisode?.media?.type === "AUDIO") {
+					return state.playing;
+				} else {
+					return state.videoPlaying;
+				}
+			}
+			return false;
+		},
 	} as TState,
 	actions: {
 		// audio player dispatchers
@@ -178,7 +214,7 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 				? state.playing &&
 						playerRef?.currentSrc &&
 						currentPlayingId === audioEpisode?.id
-				: state.playing;
+				: false;
 		},
 		rewind10s() {
 			const { playerRef } = state;
@@ -233,17 +269,39 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 		},
 
 		// Video <video> player actions
+		dispatchVideoPlay() {
+			state.videoPlaying = true;
+		},
+		dispatchVideoPause() {
+			state.videoPlaying = false;
+		},
+		dispatchVideoCurrentTimeChange() {
+			const { videoPlayerRef } = state;
+			state.videoCurrentTime = Math.floor(videoPlayerRef?.currentTime || 0);
+		},
+		dispatchVideoVolumeChange() {
+			const { videoPlayerRef } = state;
+			state.videoMuted = videoPlayerRef?.muted;
+			state.videoVolume = videoPlayerRef?.volume;
+		},
+		dispatchVideoPlaybackRateChange() {
+			const { videoPlayerRef } = state;
+			state.videoPlaybackRate = videoPlayerRef?.playbackRate;
+		},
+
 		videoPlay() {
 			const { videoEpisode, videoPlayerRef, currentPlayingId } = state;
 			if (videoEpisode) {
 				if (videoPlayerRef && currentPlayingId !== videoEpisode?.id) {
-					let playbackRate = videoPlayerRef.playbackRate;
 					videoPlayerRef.load();
 					videoPlayerRef.pause();
-					videoPlayerRef.playbackRate = playbackRate;
+					videoPlayerRef.playbackRate = 1;
 					videoPlayerRef.currentTime = 0;
+					videoPlayerRef.volume = 1;
+					videoPlayerRef.muted = false;
 				}
 			}
+			state.videoPlaying = true;
 			state.isShowVideoPlayer = true;
 			state.isShowAudioPlayer = false;
 			videoPlayerRef?.play();
@@ -260,14 +318,14 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 		isVideoPlaying() {
 			const { videoPlayerRef, videoEpisode, currentPlayingId } = state;
 			return videoEpisode
-				? !videoPlayerRef?.paused &&
+				? state.videoPlaying &&
 						videoPlayerRef?.currentSrc &&
 						currentPlayingId === videoEpisode?.id
-				: !videoPlayerRef?.paused;
+				: false;
 		},
 		forceVideoEnd() {
 			state.initEpisode = null;
-
+			state.videoPlaying = false;
 			if (state.videoPlayerRef) {
 				state.videoPlayerRef.currentTime = 0;
 				state.videoPlayerRef.pause();
@@ -279,9 +337,11 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 		videoIframePlay() {
 			state.isShowAudioPlayer = false;
 			state.isShowVideoPlayer = true;
+			state.videoPlaying = true;
 		},
 		forceVideoIframeEnd() {
 			state.initEpisode = null;
+			state.videoPlaying = false;
 		},
 
 		// other player actions ---
@@ -299,7 +359,7 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 				return;
 			}
 
-			if (context.episodeContext?.id === state.initEpisode?.id) {
+			if (context.episodeContext?.id === state.currentPlayingId) {
 				// if the same episode, toggle the player
 				if (state.mediaIsVideo) {
 					actions.videoToggle();
@@ -372,12 +432,13 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			// update state from the local storage
 			const localStorageState = JSON.parse(
 				localStorage.getItem("ncmazfse_media_player_current_state") || "",
-			) as TState;
+			) as TStateLocalStorage;
 
 			if (localStorageState?.initEpisode?.id) {
 				state.initEpisode = localStorageState.initEpisode;
 				state.isShowAudioPlayer = localStorageState.isShowAudioPlayer;
 				state.isShowVideoPlayer = localStorageState.isShowVideoPlayer;
+				state.currentPlayingId = localStorageState.currentPlayingId;
 
 				// update audio player state
 				if (
@@ -388,7 +449,6 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 					state.duration = localStorageState.duration;
 					state.currentTime = localStorageState.currentTime;
 					state.playbackRate = localStorageState.playbackRate;
-					state.currentPlayingId = localStorageState.currentPlayingId;
 					// load and seek the audio player to the last time
 					state.playerRef.load();
 					state.playerRef.currentTime = localStorageState.currentTime;
@@ -398,17 +458,60 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 					localStorageState.initEpisode?.media?.type === "VIDEO" &&
 					state.videoPlayerRef
 				) {
-					// load video player
+					// load video player and seek to the last time
 					state.videoPlayerRef.load();
+					state.videoPlayerRef.currentTime =
+						localStorageState.videoCurrentTime || 0;
+					state.videoPlayerRef.playbackRate =
+						localStorageState.videoPlaybackRate || 1;
+					state.videoPlayerRef.muted = !!localStorageState.videoMuted;
+					state.videoPlayerRef.volume = localStorageState.videoVolume || 1;
 				}
 			}
 
 			// catch when window is beforeunload to save the current state
 			window.addEventListener("beforeunload", () => {
-				// save the current state to the local storage
+				const stateToSave: TStateLocalStorage = {
+					initEpisode: state.initEpisode,
+					muted: state.muted,
+					duration: state.duration,
+					currentTime: state.currentTime,
+					playbackRate: state.playbackRate,
+					videoCurrentTime: state.videoCurrentTime,
+					videoMuted: state.videoMuted,
+					videoVolume: state.videoVolume,
+					videoPlaybackRate: state.videoPlaybackRate,
+					isShowAudioPlayer: state.isShowAudioPlayer,
+					isShowVideoPlayer: state.isShowVideoPlayer,
+					currentPlayingId: state.currentPlayingId,
+				};
+
+				if (state.initEpisode?.media?.type === "IFRAME") {
+					stateToSave.currentPlayingId = null;
+					if (state.initEpisode?.media?.urls?.media_url_iframe) {
+						// remove the autoplay=1 and auto_play=1 from the url
+						const newUrl = new URL(
+							state.initEpisode?.media?.urls?.media_url_iframe,
+						);
+						newUrl.searchParams.delete("autoplay");
+						newUrl.searchParams.delete("auto_play");
+
+						stateToSave.initEpisode = {
+							...state.initEpisode,
+							media: {
+								...state.initEpisode.media,
+								urls: {
+									...(state.initEpisode.media.urls || {}),
+									media_url_iframe: newUrl.toString(),
+								},
+							},
+						};
+					}
+				}
+
 				localStorage.setItem(
 					"ncmazfse_media_player_current_state",
-					JSON.stringify(state),
+					JSON.stringify(stateToSave),
 				);
 			});
 		},

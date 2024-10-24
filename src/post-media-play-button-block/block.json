@@ -8,7 +8,12 @@
 	"usesContext": ["postId", "postType", "queryId"],
 	"description": "A block that displays a play button over a post media.",
 	"example": {},
-	"attributes": {},
+	"attributes": {
+		"iconType": {
+			"type": "string",
+			"default": "1"
+		}
+	},
 	"supports": {
 		"anchor": false,
 		"html": false,
