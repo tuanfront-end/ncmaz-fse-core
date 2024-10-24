@@ -65,6 +65,8 @@ interface TState {
 	videoVolume?: number;
 	videoCurrentTime?: number;
 	videoPlaybackRate?: number;
+	//
+	iframePlaying: boolean;
 	// other player state
 	videoPlayerRef: HTMLVideoElement | null;
 	isShowAudioPlayer: boolean;
@@ -151,11 +153,15 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 		//
 		get isCurrentPostPlaying() {
 			const context = getContext<TContext>();
-			if (context.episodeContext?.id === state.initEpisode?.id) {
+			if (context.episodeContext?.id === state.currentPlayingId) {
 				if (state.initEpisode?.media?.type === "AUDIO") {
 					return state.playing;
-				} else {
+				}
+				if (state.initEpisode?.media?.type === "VIDEO") {
 					return state.videoPlaying;
+				}
+				if (state.initEpisode?.media?.type === "IFRAME") {
+					return state.iframePlaying;
 				}
 			}
 			return false;
@@ -241,12 +247,14 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 		},
 		forceEnd() {
 			const { playerRef } = state;
+			state.currentPlayingId = null;
 			state.initEpisode = null;
 			state.playing = false;
-			if (!playerRef) return;
-			playerRef.currentTime = 0;
-			playerRef.pause();
-			state.currentPlayingId = null;
+
+			if (playerRef) {
+				playerRef.currentTime = 0;
+				playerRef.pause();
+			}
 		},
 
 		// Audio player - slider
@@ -326,10 +334,10 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 		forceVideoEnd() {
 			state.initEpisode = null;
 			state.videoPlaying = false;
+			state.currentPlayingId = null;
 			if (state.videoPlayerRef) {
 				state.videoPlayerRef.currentTime = 0;
 				state.videoPlayerRef.pause();
-				state.currentPlayingId = null;
 			}
 		},
 
@@ -337,17 +345,19 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 		videoIframePlay() {
 			state.isShowAudioPlayer = false;
 			state.isShowVideoPlayer = true;
-			state.videoPlaying = true;
+			state.iframePlaying = true;
+			state.currentPlayingId = state.initEpisode?.id || null;
 		},
 		forceVideoIframeEnd() {
 			state.initEpisode = null;
-			state.videoPlaying = false;
+			state.iframePlaying = false;
+			state.currentPlayingId = null;
 		},
 
 		// other player actions ---
 		handleClickPostMediaPlayBtn() {
 			const context = getContext<TContext>();
-			console.log("click - episodeContext", context.episodeContext);
+			// console.log("click - episodeContext", context.episodeContext);
 
 			// check if urls is empty
 			if (
@@ -399,22 +409,25 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			}
 		},
 		handleCloseAllPlayer() {
-			state.isShowAudioPlayer = false;
-			state.isShowVideoPlayer = false;
 			actions.forceEnd();
 			actions.forceVideoEnd();
 			actions.forceVideoIframeEnd();
-			// reset state
-			state.initEpisode = null;
-			state.currentPlayingId = null;
+			//
+			state.isShowAudioPlayer = false;
+			state.isShowVideoPlayer = false;
+
+			// reset the audio player state
 			state.duration = 0;
 			state.currentTime = 0;
-			state.playing = false;
 			state.muted = false;
 			state.playbackRate = 1;
+			// reset the video player state
+			state.videoCurrentTime = 0;
+			state.videoMuted = false;
+			state.videoVolume = 1;
+			state.videoPlaybackRate = 1;
+			//
 		},
-
-		//
 	},
 	callbacks: {
 		onInit: () => {
@@ -446,8 +459,8 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 					state.playerRef
 				) {
 					state.muted = localStorageState.muted;
-					state.duration = localStorageState.duration;
-					state.currentTime = localStorageState.currentTime;
+					// state.duration = localStorageState.duration;
+					// state.currentTime = localStorageState.currentTime;
 					state.playbackRate = localStorageState.playbackRate;
 					// load and seek the audio player to the last time
 					state.playerRef.load();

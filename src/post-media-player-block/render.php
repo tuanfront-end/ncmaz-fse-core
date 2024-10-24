@@ -236,7 +236,6 @@ $rateIcon2x = '<svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="w
 			data-wp-on-async--pause="actions.dispatchPause"
 			data-wp-on-async--durationchange="actions.dispatchDurationChange"
 			data-wp-on-async--timeupdate="actions.dispatchCurrentTimeChange"
-			data-wp-on-async--onended="actions.dispatchEnded"
 			data-wp-bind--muted="state.muted">
 
 			<source data-wp-bind--src="state.audioEpisode.media.urls.audio_url_mp3" type="audio/mpeg">
