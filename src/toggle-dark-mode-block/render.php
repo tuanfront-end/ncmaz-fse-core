@@ -13,14 +13,27 @@
 
 // add scrip to header 
 if (!defined('IS_NCMFSE_TOOGLE_DARK_MODE_BLOCK_INSERTED')) {
-	add_action('wp_head', function () {
-		echo '<script type="text/javascript">
-		if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-			document.documentElement.classList.add("dark");
-		} else {
-			document.documentElement.classList.remove("dark");
-		}</script>';
-	});
+	if ($attributes['defaultMode'] === 'dark') {
+		add_action('wp_head', function () {
+			echo '<script type="text/javascript">
+				if(!localStorage.theme){
+					document.documentElement.classList.add("dark");
+				} else {
+					if(localStorage.theme === "dark"){
+						document.documentElement.classList.add("dark");
+						} else { document.documentElement.classList.remove("dark"); 	}
+				}
+				</script>';
+		}, 1);
+	} else {
+		add_action('wp_head', function () {
+			echo '<script type="text/javascript">
+				if(localStorage.theme === "dark"){
+						document.documentElement.classList.add("dark");
+						} else { document.documentElement.classList.remove("dark"); }
+				</script>';
+		}, 1);
+	}
 }
 
 // Set the interactivity state.

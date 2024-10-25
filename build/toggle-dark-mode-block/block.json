@@ -9,6 +9,10 @@
   "description": "Example block scaffolded with Create Block tool.",
   "example": {},
   "attributes": {
+    "defaultMode": {
+      "type": "string",
+      "default": "light"
+    },
     "darkIcon": {
       "type": "string",
       "default": "1"

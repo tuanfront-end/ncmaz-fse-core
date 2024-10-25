@@ -1,17 +1,17 @@
-/**
- * WordPress dependencies
- */
-import { store, getContext } from "@wordpress/interactivity";
+// /**
+//  * WordPress dependencies
+//  */
+// import { store, getContext } from "@wordpress/interactivity";
 
-// view.js
-interface TContext {}
+// // view.js
+// interface TContext {}
 
-interface TState {}
+// interface TState {}
 
-const { state } = store("ncmfse/init_demo", {
-	state: {} as TState,
-	actions: {},
-	callbacks: {
-		logHandleInit: () => {},
-	},
-});
+// const { state } = store("ncmfse/init_demo", {
+// 	state: {} as TState,
+// 	actions: {},
+// 	callbacks: {
+// 		logHandleInit: () => {},
+// 	},
+// });
