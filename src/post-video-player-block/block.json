@@ -1,42 +1,21 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "ncmfse/post-media-play-button",
+	"name": "ncmfse/post-video-player",
 	"version": "0.1.0",
-	"title": "Ncmaz Post Media Play Button",
+	"title": "Ncmaz Post Video Player",
 	"category": "ncmfse",
-	"usesContext": ["postId", "postType", "queryId"],
-	"description": "A block that displays a play button over a post media.",
+	"usesContext": ["postId", "postType"],
+	"description": "A block to display a video player for a post.",
 	"example": {},
-	"attributes": {
-		"iconType": {
-			"type": "string",
-			"default": "1"
-		},
-		"hideIfAudio": {
-			"type": "boolean",
-			"default": false
-		},
-		"hideIfVideo": {
-			"type": "boolean",
-			"default": false
-		}
-	},
+	"attributes": {},
 	"supports": {
 		"anchor": false,
 		"html": false,
 		"color": {
 			"gradients": true,
 			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true
-			}
-		},
-		"typography": {
-			"fontSize": true,
-			"lineHeight": true,
-			"__experimentalDefaultControls": {
-				"fontSize": true
+				"background": true
 			}
 		},
 		"shadow": true,

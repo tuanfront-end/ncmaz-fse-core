@@ -186,6 +186,7 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 			state.currentTime = Math.floor(playerRef?.currentTime || 0);
 		},
 		dispatchAudioError(event: OnErrorEventHandler) {
+			// @ts-ignore
 			if (!event?.target?.getAttribute("src")) {
 				return;
 			}

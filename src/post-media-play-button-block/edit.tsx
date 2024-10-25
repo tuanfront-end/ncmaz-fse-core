@@ -6,6 +6,7 @@ import { TAttrs, EditProps } from "../types";
 import metadata from "./block.json";
 import {
 	PanelBody,
+	ToggleControl,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOptionIcon as ToggleGroupControlOptionIcon,
 } from "@wordpress/components";
@@ -19,13 +20,7 @@ function Edit(props: EditProps<Attributes>) {
 		setAttributes,
 	} = props;
 
-	const { iconType } = attributes;
-
-	const { record } = useEntityRecord<Record<string, any>>(
-		"postType",
-		postType as string,
-		postId as number,
-	);
+	const { iconType, hideIfAudio, hideIfVideo } = attributes;
 
 	const blockProps = useBlockProps({});
 
@@ -102,10 +97,6 @@ function Edit(props: EditProps<Attributes>) {
 		}
 	};
 
-	if (record?.format !== "video" && record?.format !== "audio") {
-		return null;
-	}
-
 	return (
 		<>
 			<InspectorControls>
@@ -140,6 +131,27 @@ function Edit(props: EditProps<Attributes>) {
 							icon={renderIcon("4")}
 						/>
 					</ToggleGroupControl>
+
+					<ToggleControl
+						__nextHasNoMarginBottom
+						checked={hideIfAudio}
+						label={__("Hide if format audio", "ncmfse")}
+						help={__(
+							"Hide the play button if the post format is audio",
+							"ncmfse",
+						)}
+						onChange={(e) => setAttributes({ hideIfAudio: e })}
+					/>
+					<ToggleControl
+						__nextHasNoMarginBottom
+						checked={hideIfVideo}
+						label={__("Hide if format video", "ncmfse")}
+						help={__(
+							"Hide the play button if the post format is video",
+							"ncmfse",
+						)}
+						onChange={(e) => setAttributes({ hideIfVideo: e })}
+					/>
 				</PanelBody>
 			</InspectorControls>
 

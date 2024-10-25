@@ -24,6 +24,13 @@ $post_format = get_post_format($post_id);
 if (!in_array($post_format, ['audio', 'video'])) {
 	return null;
 }
+if ($attributes['hideIfAudio'] && $post_format === 'audio') {
+	return null;
+}
+if ($attributes['hideIfVideo'] && $post_format === 'video') {
+	return null;
+}
+
 
 // DASH / HLS - must be supported by the browser. or use a polyfill. or use a service like https://www.videojs.com/
 
