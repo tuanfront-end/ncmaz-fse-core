@@ -6,7 +6,7 @@
 	"title": "Ncmaz Post Video Player",
 	"category": "ncmfse",
 	"usesContext": ["postId", "postType"],
-	"description": "A block to display a video player for a post.",
+	"description": "A block to display video/iframe player for posts with video format.",
 	"example": {},
 	"attributes": {},
 	"supports": {

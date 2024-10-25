@@ -39,6 +39,20 @@ function Edit(props: EditProps<Attributes>) {
 				<figure className="wp-block-video">
 					<video controls src="placeholder"></video>
 				</figure>
+				<p
+					style={{
+						fontSize: 14,
+						padding: 16,
+						border: "1px solid #d1d5db",
+						borderRadius: 4,
+						fontStyle: "italic",
+					}}
+				>
+					{__(
+						"Display video/iframe player for posts with video format!",
+						"ncmfse",
+					)}
+				</p>
 			</div>
 		</>
 	);

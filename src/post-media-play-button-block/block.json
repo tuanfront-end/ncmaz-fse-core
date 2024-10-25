@@ -6,7 +6,7 @@
 	"title": "Ncmaz Post Media Play Button",
 	"category": "ncmfse",
 	"usesContext": ["postId", "postType", "queryId"],
-	"description": "A block that displays a play button over a post media.",
+	"description": "A block that show play button for audio/video posts. Button will not appear if post is not audio/video or does not have url for media.",
 	"example": {},
 	"attributes": {
 		"iconType": {
