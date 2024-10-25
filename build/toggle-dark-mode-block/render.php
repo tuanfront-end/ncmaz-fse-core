@@ -89,13 +89,24 @@ $light_icon = $light_icons[$attributes['lightIcon']];
 	</div>
 </a>
 
+<?php if ($attributes['defaultMode'] === 'dark') :  ?>
+	<script type="text/javascript">
+		if (!localStorage.theme) {
+			document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--dark").forEach((el) => el.classList.add("activated"));
+			document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--light").forEach((el) => el.classList.remove("activated"));
+		}
+	</script>
+<?php endif; ?>
+
 <script type="text/javascript">
-	if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-		document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--dark").forEach((el) => el.classList.add("activated"));
-		document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--light").forEach((el) => el.classList.remove("activated"));
-	} else {
-		document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--dark").forEach((el) => el.classList.remove("activated"));
-		document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--light").forEach((el) => el.classList.add("activated"));
+	if (localStorage.theme) {
+		if (localStorage.theme === "dark") {
+			document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--dark").forEach((el) => el.classList.add("activated"));
+			document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--light").forEach((el) => el.classList.remove("activated"));
+		} else {
+			document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--dark").forEach((el) => el.classList.remove("activated"));
+			document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--light").forEach((el) => el.classList.add("activated"));
+		}
 	}
 </script>
 
