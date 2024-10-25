@@ -470,29 +470,29 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 
 			// update state from the local storage
 			const localStorageState = JSON.parse(
-				localStorage.getItem("ncmazfse_media_player_current_state") || "",
-			) as TStateLocalStorage;
+				localStorage.getItem("ncmazfse_media_player_current_state") || "{}",
+			) as Partial<TStateLocalStorage>;
 
 			if (localStorageState?.initEpisode?.id) {
 				state.initEpisode = localStorageState.initEpisode;
-				state.isShowAudioPlayer = localStorageState.isShowAudioPlayer;
-				state.isShowVideoPlayer = localStorageState.isShowVideoPlayer;
-				state.currentPlayingId = localStorageState.currentPlayingId;
+				state.isShowAudioPlayer = !!localStorageState.isShowAudioPlayer;
+				state.isShowVideoPlayer = !!localStorageState.isShowVideoPlayer;
+				state.currentPlayingId = localStorageState.currentPlayingId || null;
 
 				// update audio player state
 				if (
 					localStorageState.initEpisode?.media?.type === "AUDIO" &&
 					state.playerRef
 				) {
-					state.muted = localStorageState.muted;
+					state.muted = !!localStorageState.muted;
 					// state.duration = localStorageState.duration;
 					// state.currentTime = localStorageState.currentTime;
-					state.playbackRate = localStorageState.playbackRate;
+					state.playbackRate = localStorageState.playbackRate || 1;
 					// load and seek the audio player to the last time
 					state.playerRef.load();
-					state.playerRef.currentTime = localStorageState.currentTime;
-					state.playerRef.playbackRate = localStorageState.playbackRate;
-					state.playerRef.muted = localStorageState.muted;
+					state.playerRef.currentTime = localStorageState.currentTime || 0;
+					state.playerRef.playbackRate = localStorageState.playbackRate || 1;
+					state.playerRef.muted = !!localStorageState.muted;
 				} else if (
 					localStorageState.initEpisode?.media?.type === "VIDEO" &&
 					state.videoPlayerRef
