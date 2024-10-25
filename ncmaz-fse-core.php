@@ -5,7 +5,7 @@
  * Description:       Ncmaz Fse Core is a plugin that provides some custom blocks for Full Site Editing.
  * Requires at least: 6.5
  * Requires PHP:      7.4
- * Version:           1.1.0
+ * Version:           1.2.0
  * Author:            BooliiTheme
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
-define('NCMAZ_FSE_CORE_VERSION', '1.1.0');
+define('NCMAZ_FSE_CORE_VERSION', '1.2.0');
 define('NCMAZ_FSE_CORE_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('NCMAZ_FSE_CORE_PLUGIN_BASE', plugin_basename(__FILE__));
 define('NCMAZ_FSE_CORE_PLUGIN_FILE', __FILE__);
@@ -68,6 +68,9 @@ function ncmaz_fse_core_register_blocks_init()
 		'reading-progress-block',
 		'post-format-icon-block',
 		'toggle-dark-mode-block',
+		'post-media-play-button-block',
+		'post-media-player-block',
+		"post-video-player-block",
 		//  SOME CUSTOM BLOCKS
 		'enable-linked-groups',
 		'enable-snapping-templates',

@@ -22,7 +22,7 @@ function Edit(props: EditProps<Attributes>) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__("Post Save Button", "ncmfse")}>
+				<PanelBody title={__("Settings", "ncmfse")}>
 					{/* <ToggleControl
 						__nextHasNoMarginBottom
 						label={__("Show Count", "ncmfse")}

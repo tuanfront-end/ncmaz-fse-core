@@ -1,1 +1,1 @@
-{"version":3,"file":"term-query-loop-block/style-index.css","mappings":";;;AAAA;EACC;AACD,C","sources":["webpack://todo-list/./src/term-query-loop-block/style.scss"],"sourcesContent":[".wp-block-ncmfse-term-query-loop {\n\tposition: relative;\n}\n"],"names":[],"sourceRoot":""}
+{"version":3,"file":"term-query-loop-block/style-index.css","mappings":";;;AAAA;EACC;AACD,C","sources":["webpack://ncmaz-fse-core/./src/term-query-loop-block/style.scss"],"sourcesContent":[".wp-block-ncmfse-term-query-loop {\n\tposition: relative;\n}\n"],"names":[],"sourceRoot":""}

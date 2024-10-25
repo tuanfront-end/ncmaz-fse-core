@@ -9,6 +9,7 @@ import {
 	PanelBody,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOptionIcon as ToggleGroupControlOptionIcon,
+	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from "@wordpress/components";
 
 type Attributes = TAttrs<typeof metadata.attributes>;
@@ -20,8 +21,7 @@ function Edit(props: EditProps<Attributes>) {
 		context: {},
 	} = props;
 
-	const { darkIcon, lightIcon } = attributes;
-
+	const { darkIcon, lightIcon, defaultMode } = attributes;
 	const [isDarkMode, setIsDarkMode] = useState(false);
 
 	const renderDarkIcon = (darkIcon: string) => {
@@ -171,6 +171,18 @@ function Edit(props: EditProps<Attributes>) {
 					title={__("Settings", "ncmfse")}
 					className="wp-block-ncmfse-toggle-dark-mode-PanelBody__settings"
 				>
+					<ToggleGroupControl
+						isBlock
+						label={__("Default theme mode")}
+						onChange={(value) =>
+							setAttributes({ defaultMode: value as string })
+						}
+						value={defaultMode}
+					>
+						<ToggleGroupControlOption label={__("Dark")} value={"dark"} />
+						<ToggleGroupControlOption label={__("Light")} value={"light"} />
+					</ToggleGroupControl>
+
 					<ToggleGroupControl
 						isBlock
 						label={__("Dark Icon")}

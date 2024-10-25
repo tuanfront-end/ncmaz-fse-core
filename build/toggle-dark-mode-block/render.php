@@ -13,14 +13,27 @@
 
 // add scrip to header 
 if (!defined('IS_NCMFSE_TOOGLE_DARK_MODE_BLOCK_INSERTED')) {
-	add_action('wp_head', function () {
-		echo '<script type="text/javascript">
-		if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-			document.documentElement.classList.add("dark");
-		} else {
-			document.documentElement.classList.remove("dark");
-		}</script>';
-	});
+	if ($attributes['defaultMode'] === 'dark') {
+		add_action('wp_head', function () {
+			echo '<script type="text/javascript">
+				if(!localStorage.theme){
+					document.documentElement.classList.add("dark");
+				} else {
+					if(localStorage.theme === "dark"){
+						document.documentElement.classList.add("dark");
+						} else { document.documentElement.classList.remove("dark"); 	}
+				}
+				</script>';
+		}, 1);
+	} else {
+		add_action('wp_head', function () {
+			echo '<script type="text/javascript">
+				if(localStorage.theme === "dark"){
+						document.documentElement.classList.add("dark");
+						} else { document.documentElement.classList.remove("dark"); }
+				</script>';
+		}, 1);
+	}
 }
 
 // Set the interactivity state.
@@ -76,13 +89,24 @@ $light_icon = $light_icons[$attributes['lightIcon']];
 	</div>
 </a>
 
+<?php if ($attributes['defaultMode'] === 'dark') :  ?>
+	<script type="text/javascript">
+		if (!localStorage.theme) {
+			document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--dark").forEach((el) => el.classList.add("activated"));
+			document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--light").forEach((el) => el.classList.remove("activated"));
+		}
+	</script>
+<?php endif; ?>
+
 <script type="text/javascript">
-	if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-		document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--dark").forEach((el) => el.classList.add("activated"));
-		document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--light").forEach((el) => el.classList.remove("activated"));
-	} else {
-		document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--dark").forEach((el) => el.classList.remove("activated"));
-		document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--light").forEach((el) => el.classList.add("activated"));
+	if (localStorage.theme) {
+		if (localStorage.theme === "dark") {
+			document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--dark").forEach((el) => el.classList.add("activated"));
+			document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--light").forEach((el) => el.classList.remove("activated"));
+		} else {
+			document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--dark").forEach((el) => el.classList.remove("activated"));
+			document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--light").forEach((el) => el.classList.add("activated"));
+		}
 	}
 </script>
 
