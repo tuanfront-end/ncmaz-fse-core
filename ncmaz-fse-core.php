@@ -308,9 +308,9 @@ function ncmfse_mega_menu_template_part_areas(array $areas)
 	$areas[] = array(
 		'area'        => 'menu',
 		'area_tag'    => 'div',
-		'description' => __('Menu templates are used to create sections of a mega menu.', 'ncmfse'),
+		'description' => __('Menu templates are used to create sections of a mega menu.', 'ncmaz-fse-core'),
 		'icon' 		  => 'layout',
-		'label'       => __('Menu', 'ncmfse'),
+		'label'       => __('Menu', 'ncmaz-fse-core'),
 	);
 
 	return $areas;

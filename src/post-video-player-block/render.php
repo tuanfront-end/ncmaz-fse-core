@@ -59,6 +59,7 @@ if (empty($media_url)) {
 	<?php echo wp_kses_data(get_block_wrapper_attributes([])); ?>>
 
 	<?php if ($media_type === "IFRAME") {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo (do_blocks('<!-- wp:embed {"url":"' . esc_url($media_url) . '","type":"video","providerNameSlug":"youtube","responsive":true,"className":"wp-embed-aspect-16-9 wp-has-aspect-ratio","style":{"layout":{"selfStretch":"fill","flexSize":null}}} -->
 		<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio">
 			<div class="wp-block-embed__wrapper">
@@ -69,6 +70,7 @@ if (empty($media_url)) {
 	}; ?>
 
 	<?php if ($media_type === "VIDEO") {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo do_blocks('<!-- wp:video {"metadata":{}} -->
 		<figure class="wp-block-video"><video controls src="' . esc_url($media_url) . '">
 			</video></figure>
