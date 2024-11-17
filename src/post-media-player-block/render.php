@@ -45,7 +45,9 @@ wp_interactivity_state(
 		"isShowVideoPlayer" 	=> false,
 		"mediaIsIframe" 		=> false,
 		"mediaIsVideo" 			=> false,
-
+		"isShowIframeInvalidUrl" => false,
+		"isVideoVerticalRatio" 	=> false,
+		"videoRatio" 			=> $attributes['videoRatio'] ?? "auto",
 	]
 );
 ?>
@@ -273,32 +275,41 @@ wp_interactivity_state(
 
 
 	<!-- VIDEO PLAYER -->
-	<div class="wp-block-ncmfse-post-media-player__video-wrap" id="ncmazfse-video-player" data-wp-bind--hidden="!state.isShowVideoPlayer">
+	<div class="wp-block-ncmfse-post-media-player__video-wrap"
+		data-wp-class--is-vertical-video="state.isVideoVerticalRatio"
+		id="ncmazfse-video-player" data-wp-bind--hidden="!state.isShowVideoPlayer">
 		<button class="wp-block-ncmfse-post-media-player__video-close" data-wp-on-async--click="actions.handleCloseAllPlayer">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#ffffff" fill="none">
-				<path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+				<path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 			</svg>
 		</button>
 
-		<!-- VIDEO -  MP4, WebM, Ogg -->
-		<video id="ncmazfse-media-player-video" controls width="400" height="225"
-			data-wp-bind--hidden="!state.mediaIsVideo"
-			data-wp-on-async--play="actions.dispatchVideoPlay"
-			data-wp-on-async--pause="actions.dispatchVideoPause"
-			data-wp-on-async--timeupdate="actions.dispatchVideoCurrentTimeChange"
-			data-wp-on-async--volumechange="actions.dispatchVideoVolumeChange"
-			data-wp-on-async--ratechange="actions.dispatchVideoPlaybackRateChange">
-			<source data-wp-bind--src="state.videoEpisode.media.urls.video_url_mp4" type="video/mp4">
-			<source data-wp-bind--src="state.videoEpisode.media.urls.video_url_webm" type="video/webm">
-			<source data-wp-bind--src="state.videoEpisode.media.urls.video_url_ogv" type="video/ogg">
-			<?php esc_html_e("Sorry, your browser doesn't support embedded videos", "ncmaz-fse-core"); ?>
-		</video>
+		<div class="wp-block-ncmfse-post-media-player__video-wrapper">
+			<!-- VIDEO -  MP4, WebM, Ogg -->
+			<video id="ncmazfse-media-player-video" controls width="400" height="225"
+				data-wp-bind--hidden="!state.mediaIsVideo"
+				data-wp-on-async--play="actions.dispatchVideoPlay"
+				data-wp-on-async--pause="actions.dispatchVideoPause"
+				data-wp-on-async--timeupdate="actions.dispatchVideoCurrentTimeChange"
+				data-wp-on-async--volumechange="actions.dispatchVideoVolumeChange"
+				data-wp-on-async--ratechange="actions.dispatchVideoPlaybackRateChange">
+				<source data-wp-bind--src="state.videoEpisode.media.urls.video_url_mp4" type="video/mp4">
+				<source data-wp-bind--src="state.videoEpisode.media.urls.video_url_webm" type="video/webm">
+				<source data-wp-bind--src="state.videoEpisode.media.urls.video_url_ogv" type="video/ogg">
+				<?php esc_html_e("Sorry, your browser doesn't support embedded videos", "ncmaz-fse-core"); ?>
+			</video>
 
-		<!-- IFRAME mediaIsIframe -->
-		<iframe
-			data-wp-bind--hidden="!state.mediaIsIframe"
-			id="ncmazfse-media-player-iframe" data-wp-bind--src="state.iframeEpisode.media.urls.media_url_iframe" width="400" height="225" frameborder="0" allow="autoplay" allowfullscreen>
-		</iframe>
+			<!-- IFRAME mediaIsIframe -->
+			<iframe
+				data-wp-bind--hidden="!state.mediaIsIframe"
+				id="ncmazfse-media-player-iframe" data-wp-bind--src="state.iframeEpisode.media.urls.media_url_iframe" width="400" height="225" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+			</iframe>
+
+			<!-- Invalid URL -->
+			<div class="wp-block-ncmfse-post-media-player__video-invalid-url" data-wp-bind--hidden="!state.isShowIframeInvalidUrl">
+				<?php esc_html_e("Invalid URL", "ncmaz-fse-core"); ?>
+			</div>
+		</div>
 
 
 		<div class="wp-block-ncmfse-post-media-player__video-info">

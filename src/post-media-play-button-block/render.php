@@ -37,6 +37,7 @@ if ($attributes['hideIfVideo'] && $post_format === 'video') {
 $icon = '';
 $media_type = '';
 $media_urls = (object)[];
+$iframe_init_url = null;
 
 if ($post_format === 'audio' && function_exists('get_field')) {
 	$audio_type = get_field('media_type', $post_id);
@@ -53,6 +54,7 @@ if ($post_format === 'audio' && function_exists('get_field')) {
 	} else if ($audio_type === 'iframe') {
 		$media_type = 'IFRAME';
 		$audio_url_iframe = get_field('audio_url_iframe', $post_id);
+		$iframe_init_url = $audio_url_iframe;
 		$iframe  = '';
 		if (!empty($audio_url_iframe)) {
 			$iframe  = wp_oembed_get($audio_url_iframe);
@@ -61,8 +63,12 @@ if ($post_format === 'audio' && function_exists('get_field')) {
 		// get iframe src
 		if (!empty($iframe)) {
 			$audio_url_iframe = ncmazfse_core_get_src_using_DOM($iframe);
-			// add autoplay to iframe
-			$audio_url_iframe = add_query_arg(['autoplay' => '1', 'auto_play' => '1'], $audio_url_iframe);
+			if ($audio_url_iframe && !empty($audio_url_iframe)) {
+				// add autoplay to iframe
+				$audio_url_iframe = add_query_arg(['autoplay' => '1', 'auto_play' => '1', 'playsinline' => '1'], $audio_url_iframe);
+			} else {
+				$audio_url_iframe = 'iframe_url_invalid';
+			}
 		} else {
 			$audio_url_iframe = 'iframe_url_invalid';
 		}
@@ -86,6 +92,7 @@ if ($post_format === 'video' && function_exists('get_field')) {
 	} else if ($video_type === 'iframe') {
 		$media_type = 'IFRAME';
 		$video_url_iframe = get_field('video_url_iframe', $post_id);
+		$iframe_init_url = $video_url_iframe;
 		$iframe  = '';
 
 		if (!empty($video_url_iframe)) {
@@ -94,8 +101,12 @@ if ($post_format === 'video' && function_exists('get_field')) {
 		// get iframe src
 		if (!empty($iframe)) {
 			$video_url_iframe = ncmazfse_core_get_src_using_DOM($iframe);
-			// add autoplay to iframe
-			$video_url_iframe = add_query_arg(['autoplay' => '1', 'auto_play' => '1'], $video_url_iframe);
+			if ($video_url_iframe && !empty($video_url_iframe)) {
+				// add autoplay to iframe
+				$video_url_iframe = add_query_arg(['autoplay' => '1', 'auto_play' => '1', 'playsinline' => '1'], $video_url_iframe);
+			} else {
+				$video_url_iframe = 'iframe_url_invalid';
+			}
 		} else {
 			$video_url_iframe = 'iframe_url_invalid';
 		}
@@ -151,7 +162,8 @@ wp_interactivity_state(
 			'author' => [
 				'name' => get_the_author_meta('display_name', get_post_field('post_author', $post_id)),
 				'href' => get_author_posts_url(get_post_field('post_author', $post_id)),
-			]
+			],
+			'iframe_init_url' => $iframe_init_url,
 		]
 	])); ?>
 	data-wp-on-async--click="actions.handleClickPostMediaPlayBtn">

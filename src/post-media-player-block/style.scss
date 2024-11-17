@@ -436,13 +436,29 @@ input#ncmazfse-media-player-audio-slider-input {
 	bottom: 0px;
 	position: fixed;
 	right: 12px;
+	bottom: 12px;
 	z-index: 50;
 	background-color: var(--wp--preset--color--shadcn-background);
 	box-shadow:
 		0 2px 5px 0 rgba(0, 0, 0, 0.1),
 		0 3px 6px 0 rgba(0, 0, 0, 0.1);
 	overflow: hidden;
-	border-radius: 12px 12px 0 0;
+	border-radius: 12px;
+	width: calc(100% - 24px);
+	@media screen and (min-width: 426px) {
+		width: 400px;
+	}
+
+	&.is-vertical-video {
+		width: 240px;
+		@media screen and (min-width: 426px) {
+			width: 288px;
+		}
+		.wp-block-ncmfse-post-media-player__video-wrapper {
+			padding-bottom: 177.78%;
+		}
+	}
+
 	//  flex if not hidden
 	&:not([hidden]) {
 		display: flex;
@@ -457,11 +473,14 @@ input#ncmazfse-media-player-audio-slider-input {
 		height: 32px;
 		background: linear-gradient(
 			180deg,
-			rgba(0, 0, 0, 0.5) 0%,
+			rgba(0, 0, 0, 0.8) 0%,
 			rgba(0, 0, 0, 0) 100%
 		);
-		opacity: 0;
+		opacity: 1;
 		transition: opacity 0.3s;
+		@media screen and (min-width: 426px) {
+			opacity: 0;
+		}
 	}
 	&:hover {
 		&::after {
@@ -471,7 +490,39 @@ input#ncmazfse-media-player-audio-slider-input {
 			display: block;
 		}
 	}
+
+	.wp-block-ncmfse-post-media-player__video-wrapper {
+		overflow-wrap: break-word;
+		margin: 0;
+		position: relative;
+		width: 100%;
+		padding-bottom: 56.25%;
+
+		iframe,
+		video {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
 }
+.wp-block-ncmfse-post-media-player__video-invalid-url:not([hidden]) {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: var(--wp--preset--color--shadcn-muted-foreground);
+	background: var(--wp--preset--color--shadcn-background);
+	font-size: var(--wp--preset--font-size--lg);
+	font-weight: 600;
+}
+
 .dark .wp-block-ncmfse-post-media-player__video-wrap {
 	border: 1px solid var(--wp--preset--color--shadcn-border-darker);
 }
@@ -482,7 +533,10 @@ input#ncmazfse-media-player-audio-slider-input {
 	right: 6px;
 	z-index: 2;
 	color: white;
-	display: none;
+	display: block;
+	@media screen and (min-width: 426px) {
+		display: none;
+	}
 }
 
 .wp-block-ncmfse-post-media-player__video-info {

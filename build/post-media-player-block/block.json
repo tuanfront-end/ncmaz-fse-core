@@ -8,7 +8,12 @@
   "usesContext": [],
   "description": "A block to display a media player.",
   "example": {},
-  "attributes": {},
+  "attributes": {
+    "videoRatio": {
+      "type": "string",
+      "default": "auto"
+    }
+  },
   "supports": {
     "anchor": false,
     "html": false,

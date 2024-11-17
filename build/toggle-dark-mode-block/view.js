@@ -1,1 +1,94 @@
-import*as e from"@wordpress/interactivity";var t={d:(e,o)=>{for(var c in o)t.o(o,c)&&!t.o(e,c)&&Object.defineProperty(e,c,{enumerable:!0,get:o[c]})},o:(e,t)=>Object.prototype.hasOwnProperty.call(e,t)};const o=(a={store:()=>e.store},r={},t.d(r,a),r),{state:c}=(0,o.store)("ncmfse/toggle-dark-mode",{state:{},actions:{handleDarkModeToggle:()=>{const e=document.documentElement;e.classList.toggle("dark");const t=e.classList.contains("dark");localStorage.theme=t?"dark":"light",t?(document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--dark").forEach((e=>e.classList.add("activated"))),document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--light").forEach((e=>e.classList.remove("activated")))):(document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--dark").forEach((e=>e.classList.remove("activated"))),document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--light").forEach((e=>e.classList.add("activated"))))}},callbacks:{}});var a,r;
+import * as __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__ from "@wordpress/interactivity";
+/******/ var __webpack_modules__ = ({
+
+/***/ "@wordpress/interactivity":
+/*!*******************************************!*\
+  !*** external "@wordpress/interactivity" ***!
+  \*******************************************/
+/***/ ((module) => {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__;
+
+/***/ })
+
+/******/ });
+/************************************************************************/
+/******/ // The module cache
+/******/ var __webpack_module_cache__ = {};
+/******/ 
+/******/ // The require function
+/******/ function __webpack_require__(moduleId) {
+/******/ 	// Check if module is in cache
+/******/ 	var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 	if (cachedModule !== undefined) {
+/******/ 		return cachedModule.exports;
+/******/ 	}
+/******/ 	// Create a new module (and put it into the cache)
+/******/ 	var module = __webpack_module_cache__[moduleId] = {
+/******/ 		// no module.id needed
+/******/ 		// no module.loaded needed
+/******/ 		exports: {}
+/******/ 	};
+/******/ 
+/******/ 	// Execute the module function
+/******/ 	__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 
+/******/ 	// Return the exports of the module
+/******/ 	return module.exports;
+/******/ }
+/******/ 
+/************************************************************************/
+/******/ /* webpack/runtime/make namespace object */
+/******/ (() => {
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = (exports) => {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/ })();
+/******/ 
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!********************************************!*\
+  !*** ./src/toggle-dark-mode-block/view.ts ***!
+  \********************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/interactivity */ "@wordpress/interactivity");
+/**
+ * WordPress dependencies
+ */
+
+
+// view.js
+
+const {
+  state
+} = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("ncmfse/toggle-dark-mode", {
+  state: {},
+  actions: {
+    handleDarkModeToggle: () => {
+      const htmlElement = document.documentElement;
+      htmlElement.classList.toggle("dark");
+      const isDarkMode = htmlElement.classList.contains("dark");
+      localStorage.theme = isDarkMode ? "dark" : "light";
+
+      // Update dom
+      if (isDarkMode) {
+        document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--dark").forEach(el => el.classList.add("activated"));
+        document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--light").forEach(el => el.classList.remove("activated"));
+      } else {
+        document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--dark").forEach(el => el.classList.remove("activated"));
+        document.querySelectorAll(".wp-block-ncmfse-toggle-dark-mode__icon--light").forEach(el => el.classList.add("activated"));
+      }
+    }
+  },
+  callbacks: {}
+});
+})();
+
+
+//# sourceMappingURL=view.js.map
