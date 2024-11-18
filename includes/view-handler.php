@@ -10,7 +10,7 @@ function ncmazfse_core__handle_views()
 		wp_send_json_error(__('Invalid post ID or user ID', 'ncmaz-fse-core'));
 	} else {
 		// Cập nhật thông tin lượt view
-		$view_count = ncmazfse_core__update_post_view($post_id,);
+		$view_count = ncmazfse_core__update_post_view($post_id);
 		// Trả về phản hồi (có thể là số lượt save mới, thông báo thành công, ...)
 		wp_send_json_success(
 			array(
@@ -73,8 +73,26 @@ function ncmazfse_core__update_post_view($post_id)
 	}
 }
 
-
+// Lấy số lượt view của post
+// @param $post_id: ID của post
+// @return: số lượt view của post
 function ncmazfse_core__get_post_view_count($post_id)
 {
-	return get_post_meta($post_id, 'view_count', true);
+	// Get the post view count
+	$args = array(
+		'meta_query' => array(
+			array('key' => 'post_id', 'value' => $post_id)
+		),
+		'post_type' => 'post_view',
+		'posts_per_page' => 1
+	);
+	$post_views = get_posts($args);
+
+	if (empty($post_views)) {
+		$view_count = 0;
+	} else {
+		$view_count = get_post_meta($post_views[0]->ID, 'view_count', true);
+	}
+
+	return $view_count;
 }
