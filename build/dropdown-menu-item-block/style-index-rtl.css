@@ -1,1 +1,32 @@
-.wp-block-ncmfse-dropdown-menu-item{border-radius:6px;display:flex;font-size:var(--wp--preset--font-size--sm);padding:var(--wp--preset--spacing--2);text-decoration:none;text-transform:capitalize;transition:background-color .1s linear,color .1s linear}.wp-block-ncmfse-dropdown-menu-item *{margin-block-end:0;margin-block-start:0}.wp-block-ncmfse-dropdown-menu-item:hover{background-color:var(--wp--preset--color--shadcn-accent)}.wp-block-ncmfse-dropdown-menu-item.is-style-none-hover{border-radius:initial}.wp-block-ncmfse-dropdown-menu-item.is-style-none-hover:hover{background-color:initial}.wp-block-ncmfse-dropdown-menu-item.is-active{background-color:var(--wp--preset--color--shadcn-accent);color:var(--wp--preset--color--shadcn-accent-text)}.wp-block-ncmfse-dropdown-menu-item a{text-decoration:none}
+/*!****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/dropdown-menu-item-block/style.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************************************/
+.wp-block-ncmfse-dropdown-menu-item {
+  display: flex;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.1s linear, color 0.1s linear;
+  padding: var(--wp--preset--spacing--2);
+  font-size: var(--wp--preset--font-size--sm);
+  text-transform: capitalize;
+}
+.wp-block-ncmfse-dropdown-menu-item * {
+  margin-block-end: 0;
+  margin-block-start: 0;
+}
+.wp-block-ncmfse-dropdown-menu-item:hover {
+  background-color: var(--wp--preset--color--shadcn-accent);
+}
+.wp-block-ncmfse-dropdown-menu-item.is-style-none-hover {
+  border-radius: initial;
+}
+.wp-block-ncmfse-dropdown-menu-item.is-style-none-hover:hover {
+  background-color: initial;
+}
+.wp-block-ncmfse-dropdown-menu-item.is-active {
+  background-color: var(--wp--preset--color--shadcn-accent);
+  color: var(--wp--preset--color--shadcn-accent-text);
+}
+.wp-block-ncmfse-dropdown-menu-item a {
+  text-decoration: none;
+}

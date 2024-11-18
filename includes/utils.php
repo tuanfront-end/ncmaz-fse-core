@@ -131,10 +131,14 @@ if (!function_exists('ncmazfse_core_get_src_using_DOM')):
     {
         $doc = new DOMDocument();
         @$doc->loadHTML($html); // Sử dụng @ để tránh cảnh báo về HTML không hợp lệ
-        $iframe = $doc->getElementsByTagName('iframe')->item(0);
+        $iframe = $doc->getElementsByTagName('iframe');
+        if (!$iframe->length) {
+            return '';
+        }
+        $iframe = $iframe->item(0);
         if ($iframe) {
             return $iframe->getAttribute('src');
         }
-        return null;
+        return '';
     }
 endif;

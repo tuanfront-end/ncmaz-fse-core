@@ -30,6 +30,7 @@ interface TPost {
 		name: string;
 		href: string;
 	};
+	iframe_init_url?: string | null;
 }
 
 // view.js
@@ -73,12 +74,16 @@ interface TState {
 	videoPlayerRef: HTMLVideoElement | null;
 	isShowAudioPlayer: boolean;
 	isShowVideoPlayer: boolean;
+	isShowIframeInvalidUrl: boolean;
 	//
 	mediaIsVideo: boolean;
 	mediaIsIframe: boolean;
 	mediaIsAudio: boolean;
 	//
 	isCurrentPostPlaying: boolean;
+	//
+	isVideoVerticalRatio: boolean;
+	videoRatio: string;
 }
 
 type TStateLocalStorage = Pick<
@@ -116,6 +121,13 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 				return null;
 			}
 			return state.initEpisode;
+		},
+		get isShowIframeInvalidUrl() {
+			return (
+				state.initEpisode?.media?.type === "IFRAME" &&
+				state.initEpisode?.media?.urls?.media_url_iframe ===
+					"iframe_url_invalid"
+			);
 		},
 		// Media type
 		get mediaIsIframe() {
@@ -167,6 +179,14 @@ const { state, actions } = store("ncmfse/post-media-player-block", {
 				}
 			}
 			return false;
+		},
+		get isVideoVerticalRatio() {
+			// if the video ratio is 9-16 or the video is an iframe youtube short video
+			return (
+				state.videoRatio === "9-16" ||
+				(state.videoRatio === "auto" &&
+					state.initEpisode?.iframe_init_url?.includes("youtube.com/shorts"))
+			);
 		},
 	} as TState,
 	actions: {

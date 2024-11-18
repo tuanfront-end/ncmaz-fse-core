@@ -1,1 +1,577 @@
-import*as e from"@wordpress/interactivity";var i={d:(e,a)=>{for(var t in a)i.o(a,t)&&!i.o(e,t)&&Object.defineProperty(e,t,{enumerable:!0,get:a[t]})},o:(e,i)=>Object.prototype.hasOwnProperty.call(e,i)};const a=(t={getContext:()=>e.getContext,getElement:()=>e.getElement,store:()=>e.store},r={},i.d(r,t),r);var t,r;function o(e){let i=Math.floor(e/3600),a=Math.floor((e-3600*i)/60);return[i,a,e=e-3600*i-60*a]}function d(e,i=e){let a=i.slice(i.findIndex((e=>0!==e)));return e.slice(e.length-a.length).map((e=>e.toString().padStart(2,"0"))).join(":")}const{state:n,actions:l}=(0,a.store)("ncmfse/post-media-player-block",{state:{get audioEpisode(){return"AUDIO"!==n.initEpisode?.media?.type?null:n.initEpisode},get videoEpisode(){return"VIDEO"!==n.initEpisode?.media?.type?null:n.initEpisode},get iframeEpisode(){return"IFRAME"!==n.initEpisode?.media?.type?null:n.initEpisode},get mediaIsIframe(){return"IFRAME"===n.initEpisode?.media?.type},get mediaIsVideo(){return"VIDEO"===n.initEpisode?.media?.type},get mediaIsAudio(){return"AUDIO"===n.initEpisode?.media?.type},get playedWidth(){return`calc(${n.currentTime/n.duration*100}% -  0.25rem)`},get thumbLeft(){return`calc(${n.currentTime/n.duration*100}%)`},get currentTimeHuman(){return d(o(n.currentTime),o(n.duration))},get durationHuman(){return d(o(n.duration))},get isPlaybackRate1x(){return 1===n.playbackRate},get isPlaybackRate1_5x(){return 1.5===n.playbackRate},get isPlaybackRate2x(){return 2===n.playbackRate},get isCurrentPostPlaying(){const e=(0,a.getContext)();if(e.episodeContext?.id===n.currentPlayingId){if("AUDIO"===n.initEpisode?.media?.type)return n.playing;if("VIDEO"===n.initEpisode?.media?.type)return n.videoPlaying;if("IFRAME"===n.initEpisode?.media?.type)return n.iframePlaying}return!1}},actions:{dispatchPlay(){n.playing=!0},dispatchPause(){n.playing=!1},dispatchDurationChange(){const{playerRef:e}=n;n.duration=Math.floor(e?.duration||0)},dispatchCurrentTimeChange(){const{playerRef:e}=n;n.currentTime=Math.floor(e?.currentTime||0)},dispatchAudioError(e){e?.target?.getAttribute("src")&&(n.audioHasError=!0,n.audioErrorMess="An error occurred while loading the audio.")},play(){const{audioEpisode:e,playerRef:i,currentPlayingId:a}=n;if(e&&(n.playing=!0,i&&a!==e?.id)){let e=i.playbackRate;i.load(),i.pause(),i.playbackRate=e,i.currentTime=0}n.isShowAudioPlayer=!0,n.isShowVideoPlayer=!1;const t=i?.play();void 0!==t&&t.then((function(){n.audioHasError=!1,n.audioErrorMess=""})).catch((function(e){n.audioErrorMess=e.message,n.audioHasError=!0})),n.currentPlayingId=e?.id||null},pause(){const{playerRef:e}=n;e?.pause()},toggle(){l.isPlaying()?l.pause():l.play()},toggleMute(){n.muted=!n.muted},isPlaying(){const{playerRef:e,audioEpisode:i,currentPlayingId:a}=n;return!!i&&n.playing&&e?.currentSrc&&a===i?.id},rewind10s(){const{playerRef:e}=n;e&&(e.currentTime+=-10)},forward10s(){const{playerRef:e}=n;e&&(e.currentTime+=10)},togglePlaybackRate(){const{playerRef:e}=n;e&&(1===n.playbackRate?n.playbackRate=1.5:1.5===n.playbackRate?n.playbackRate=2:n.playbackRate=1,e.playbackRate=n.playbackRate)},forceEnd(){const{playerRef:e}=n;n.currentPlayingId=null,n.initEpisode=null,n.playing=!1,n.audioErrorMess="",n.audioHasError=!1,e&&(e.currentTime=0,e.pause())},handleSeekMouseDown(){const{playerRef:e}=n;e?.pause()},handleSeekChange(){const{playerRef:e,sliderRef:i}=n;if(!e?.currentSrc||!i)return;const a=e.duration*parseFloat(i.value);n.currentTime=Math.floor(a),e.currentTime=Math.floor(a)},handleSeekMouseUp(){const{playerRef:e}=n;e?.play()},dispatchVideoPlay(){n.videoPlaying=!0},dispatchVideoPause(){n.videoPlaying=!1},dispatchVideoCurrentTimeChange(){const{videoPlayerRef:e}=n;n.videoCurrentTime=Math.floor(e?.currentTime||0)},dispatchVideoVolumeChange(){const{videoPlayerRef:e}=n;n.videoMuted=e?.muted,n.videoVolume=e?.volume},dispatchVideoPlaybackRateChange(){const{videoPlayerRef:e}=n;n.videoPlaybackRate=e?.playbackRate},videoPlay(){const{videoEpisode:e,videoPlayerRef:i,currentPlayingId:a}=n;e&&i&&a!==e?.id&&(i.load(),i.pause(),i.playbackRate=1,i.currentTime=0,i.volume=1,i.muted=!1),n.videoPlaying=!0,n.isShowVideoPlayer=!0,n.isShowAudioPlayer=!1,i?.play(),n.currentPlayingId=e?.id||null},videoPause(){const{videoPlayerRef:e}=n;e?.pause()},videoToggle(){l.isVideoPlaying()?l.videoPause():l.videoPlay()},isVideoPlaying(){const{videoPlayerRef:e,videoEpisode:i,currentPlayingId:a}=n;return!!i&&n.videoPlaying&&e?.currentSrc&&a===i?.id},forceVideoEnd(){n.initEpisode=null,n.videoPlaying=!1,n.currentPlayingId=null,n.videoPlayerRef&&(n.videoPlayerRef.currentTime=0,n.videoPlayerRef.pause())},videoIframePlay(){n.isShowAudioPlayer=!1,n.isShowVideoPlayer=!0,n.iframePlaying=!0,n.currentPlayingId=n.initEpisode?.id||null},forceVideoIframeEnd(){n.initEpisode=null,n.iframePlaying=!1,n.currentPlayingId=null},handleClickPostMediaPlayBtn(){const e=(0,a.getContext)();if(Object.values(e.episodeContext?.media?.urls||{}).every((e=>!e)))return void console.log("urls is empty");if(e.episodeContext?.id===n.currentPlayingId)return void(n.mediaIsVideo?l.videoToggle():n.mediaIsIframe?l.videoIframePlay():n.mediaIsAudio&&l.toggle());l.forceEnd(),l.forceVideoEnd(),l.forceVideoIframeEnd(),n.initEpisode=e.episodeContext||null;const i=e.episodeContext?.media?.type;"AUDIO"!==i?"VIDEO"!==i?"IFRAME"!==i||l.videoIframePlay():l.videoPlay():l.play()},handleCloseAllPlayer(){l.forceEnd(),l.forceVideoEnd(),l.forceVideoIframeEnd(),n.isShowAudioPlayer=!1,n.isShowVideoPlayer=!1,n.duration=0,n.currentTime=0,n.muted=!1,n.playbackRate=1,n.videoCurrentTime=0,n.videoMuted=!1,n.videoVolume=1,n.videoPlaybackRate=1}},callbacks:{onInit:()=>{const{ref:e}=(0,a.getElement)();n.playerRef=e?.querySelector("audio#ncmazfse-media-player-audio"),n.sliderRef=e?.querySelector("input#ncmazfse-media-player-audio-slider-input"),n.videoPlayerRef=e?.querySelector("video#ncmazfse-media-player-video");const i=JSON.parse(localStorage.getItem("ncmazfse_media_player_current_state")||"{}");i?.initEpisode?.id&&(n.initEpisode=i.initEpisode,n.isShowAudioPlayer=!!i.isShowAudioPlayer,n.isShowVideoPlayer=!!i.isShowVideoPlayer,n.currentPlayingId=i.currentPlayingId||null,"AUDIO"===i.initEpisode?.media?.type&&n.playerRef?(n.muted=!!i.muted,n.playbackRate=i.playbackRate||1,n.playerRef.load(),n.playerRef.currentTime=i.currentTime||0,n.playerRef.playbackRate=i.playbackRate||1,n.playerRef.muted=!!i.muted):"VIDEO"===i.initEpisode?.media?.type&&n.videoPlayerRef&&(n.videoPlayerRef.load(),n.videoPlayerRef.currentTime=i.videoCurrentTime||0,n.videoPlayerRef.playbackRate=i.videoPlaybackRate||1,n.videoPlayerRef.muted=!!i.videoMuted,n.videoPlayerRef.volume=i.videoVolume||1)),window.addEventListener("beforeunload",(()=>{const e={initEpisode:n.initEpisode,muted:n.muted,duration:n.duration,currentTime:n.currentTime,playbackRate:n.playbackRate,videoCurrentTime:n.videoCurrentTime,videoMuted:n.videoMuted,videoVolume:n.videoVolume,videoPlaybackRate:n.videoPlaybackRate,isShowAudioPlayer:n.isShowAudioPlayer,isShowVideoPlayer:n.isShowVideoPlayer,currentPlayingId:n.currentPlayingId};if("IFRAME"===n.initEpisode?.media?.type&&(e.currentPlayingId=null,n.initEpisode?.media?.urls?.media_url_iframe)){const i=new URL(n.initEpisode?.media?.urls?.media_url_iframe);i.searchParams.delete("autoplay"),i.searchParams.delete("auto_play"),e.initEpisode={...n.initEpisode,media:{...n.initEpisode.media,urls:{...n.initEpisode.media.urls||{},media_url_iframe:i.toString()}}}}localStorage.setItem("ncmazfse_media_player_current_state",JSON.stringify(e))}))}}});
+import * as __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__ from "@wordpress/interactivity";
+/******/ var __webpack_modules__ = ({
+
+/***/ "./src/post-media-player-block/utils.ts":
+/*!**********************************************!*\
+  !*** ./src/post-media-player-block/utils.ts ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   formatTime: () => (/* binding */ formatTime),
+/* harmony export */   parseTime: () => (/* binding */ parseTime)
+/* harmony export */ });
+function parseTime(seconds) {
+  let hours = Math.floor(seconds / 3600);
+  let minutes = Math.floor((seconds - hours * 3600) / 60);
+  seconds = seconds - hours * 3600 - minutes * 60;
+  return [hours, minutes, seconds];
+}
+function formatTime(seconds, totalSeconds = seconds) {
+  let totalWithoutLeadingZeroes = totalSeconds.slice(totalSeconds.findIndex(x => x !== 0));
+  return seconds.slice(seconds.length - totalWithoutLeadingZeroes.length).map(x => x.toString().padStart(2, "0")).join(":");
+}
+
+/***/ }),
+
+/***/ "@wordpress/interactivity":
+/*!*******************************************!*\
+  !*** external "@wordpress/interactivity" ***!
+  \*******************************************/
+/***/ ((module) => {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__;
+
+/***/ })
+
+/******/ });
+/************************************************************************/
+/******/ // The module cache
+/******/ var __webpack_module_cache__ = {};
+/******/ 
+/******/ // The require function
+/******/ function __webpack_require__(moduleId) {
+/******/ 	// Check if module is in cache
+/******/ 	var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 	if (cachedModule !== undefined) {
+/******/ 		return cachedModule.exports;
+/******/ 	}
+/******/ 	// Create a new module (and put it into the cache)
+/******/ 	var module = __webpack_module_cache__[moduleId] = {
+/******/ 		// no module.id needed
+/******/ 		// no module.loaded needed
+/******/ 		exports: {}
+/******/ 	};
+/******/ 
+/******/ 	// Execute the module function
+/******/ 	__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 
+/******/ 	// Return the exports of the module
+/******/ 	return module.exports;
+/******/ }
+/******/ 
+/************************************************************************/
+/******/ /* webpack/runtime/define property getters */
+/******/ (() => {
+/******/ 	// define getter functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 			}
+/******/ 		}
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ (() => {
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/make namespace object */
+/******/ (() => {
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = (exports) => {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/ })();
+/******/ 
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!*********************************************!*\
+  !*** ./src/post-media-player-block/view.ts ***!
+  \*********************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/interactivity */ "@wordpress/interactivity");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ "./src/post-media-player-block/utils.ts");
+/**
+ * WordPress dependencies
+ */
+
+
+
+// view.js
+
+const {
+  state,
+  actions
+} = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("ncmfse/post-media-player-block", {
+  state: {
+    get audioEpisode() {
+      if (state.initEpisode?.media?.type !== "AUDIO") {
+        return null;
+      }
+      return state.initEpisode;
+    },
+    get videoEpisode() {
+      if (state.initEpisode?.media?.type !== "VIDEO") {
+        return null;
+      }
+      return state.initEpisode;
+    },
+    get iframeEpisode() {
+      if (state.initEpisode?.media?.type !== "IFRAME") {
+        return null;
+      }
+      return state.initEpisode;
+    },
+    get isShowIframeInvalidUrl() {
+      return state.initEpisode?.media?.type === "IFRAME" && state.initEpisode?.media?.urls?.media_url_iframe === "iframe_url_invalid";
+    },
+    // Media type
+    get mediaIsIframe() {
+      return state.initEpisode?.media?.type === "IFRAME";
+    },
+    get mediaIsVideo() {
+      return state.initEpisode?.media?.type === "VIDEO";
+    },
+    get mediaIsAudio() {
+      return state.initEpisode?.media?.type === "AUDIO";
+    },
+    // Audio player state
+    get playedWidth() {
+      return `calc(${state.currentTime / state.duration * 100}% -  0.25rem)`;
+    },
+    get thumbLeft() {
+      return `calc(${state.currentTime / state.duration * 100}%)`;
+    },
+    get currentTimeHuman() {
+      return (0,_utils__WEBPACK_IMPORTED_MODULE_1__.formatTime)((0,_utils__WEBPACK_IMPORTED_MODULE_1__.parseTime)(state.currentTime), (0,_utils__WEBPACK_IMPORTED_MODULE_1__.parseTime)(state.duration));
+    },
+    get durationHuman() {
+      return (0,_utils__WEBPACK_IMPORTED_MODULE_1__.formatTime)((0,_utils__WEBPACK_IMPORTED_MODULE_1__.parseTime)(state.duration));
+    },
+    get isPlaybackRate1x() {
+      return state.playbackRate === 1;
+    },
+    get isPlaybackRate1_5x() {
+      return state.playbackRate === 1.5;
+    },
+    get isPlaybackRate2x() {
+      return state.playbackRate === 2;
+    },
+    //
+    get isCurrentPostPlaying() {
+      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      if (context.episodeContext?.id === state.currentPlayingId) {
+        if (state.initEpisode?.media?.type === "AUDIO") {
+          return state.playing;
+        }
+        if (state.initEpisode?.media?.type === "VIDEO") {
+          return state.videoPlaying;
+        }
+        if (state.initEpisode?.media?.type === "IFRAME") {
+          return state.iframePlaying;
+        }
+      }
+      return false;
+    },
+    get isVideoVerticalRatio() {
+      // if the video ratio is 9-16 or the video is an iframe youtube short video
+      return state.videoRatio === "9-16" || state.videoRatio === "auto" && state.initEpisode?.iframe_init_url?.includes("youtube.com/shorts");
+    }
+  },
+  actions: {
+    // audio player dispatchers
+    dispatchPlay() {
+      state.playing = true;
+    },
+    dispatchPause() {
+      state.playing = false;
+    },
+    dispatchDurationChange() {
+      const {
+        playerRef
+      } = state;
+      state.duration = Math.floor(playerRef?.duration || 0);
+    },
+    dispatchCurrentTimeChange() {
+      const {
+        playerRef
+      } = state;
+      state.currentTime = Math.floor(playerRef?.currentTime || 0);
+    },
+    dispatchAudioError(event) {
+      // @ts-ignore
+      if (!event?.target?.getAttribute("src")) {
+        return;
+      }
+      state.audioHasError = true;
+      state.audioErrorMess = "An error occurred while loading the audio.";
+    },
+    // Audio player actions
+    play() {
+      const {
+        audioEpisode,
+        playerRef,
+        currentPlayingId
+      } = state;
+      if (audioEpisode) {
+        state.playing = true;
+        if (playerRef && currentPlayingId !== audioEpisode?.id) {
+          let playbackRate = playerRef.playbackRate;
+          playerRef.load();
+          playerRef.pause();
+          playerRef.playbackRate = playbackRate;
+          playerRef.currentTime = 0;
+        }
+      }
+      state.isShowAudioPlayer = true;
+      state.isShowVideoPlayer = false;
+      const playPromise = playerRef?.play();
+      if (playPromise !== undefined) {
+        playPromise.then(function () {
+          // Automatic playback started!
+          state.audioHasError = false;
+          state.audioErrorMess = "";
+        }).catch(function (error) {
+          // Automatic playback failed.
+          state.audioErrorMess = error.message;
+          state.audioHasError = true;
+        });
+      }
+
+      // add currentPlayingId
+      state.currentPlayingId = audioEpisode?.id || null;
+    },
+    pause() {
+      const {
+        playerRef
+      } = state;
+      playerRef?.pause();
+    },
+    toggle() {
+      actions.isPlaying() ? actions.pause() : actions.play();
+    },
+    toggleMute() {
+      state.muted = !state.muted;
+    },
+    isPlaying() {
+      const {
+        playerRef,
+        audioEpisode,
+        currentPlayingId
+      } = state;
+      return audioEpisode ? state.playing && playerRef?.currentSrc && currentPlayingId === audioEpisode?.id : false;
+    },
+    rewind10s() {
+      const {
+        playerRef
+      } = state;
+      if (!playerRef) return;
+      playerRef.currentTime += -10;
+    },
+    forward10s() {
+      const {
+        playerRef
+      } = state;
+      if (!playerRef) return;
+      playerRef.currentTime += 10;
+    },
+    togglePlaybackRate() {
+      const {
+        playerRef
+      } = state;
+      if (!playerRef) return;
+      if (state.playbackRate === 1) {
+        state.playbackRate = 1.5;
+      } else if (state.playbackRate === 1.5) {
+        state.playbackRate = 2;
+      } else {
+        state.playbackRate = 1;
+      }
+      playerRef.playbackRate = state.playbackRate;
+    },
+    forceEnd() {
+      const {
+        playerRef
+      } = state;
+      state.currentPlayingId = null;
+      state.initEpisode = null;
+      state.playing = false;
+      state.audioErrorMess = "";
+      state.audioHasError = false;
+      if (playerRef) {
+        playerRef.currentTime = 0;
+        playerRef.pause();
+      }
+    },
+    // Audio player - slider
+    handleSeekMouseDown() {
+      const {
+        playerRef
+      } = state;
+      playerRef?.pause();
+    },
+    handleSeekChange() {
+      const {
+        playerRef,
+        sliderRef
+      } = state;
+      if (!playerRef?.currentSrc || !sliderRef) return;
+      const currentTime = playerRef.duration * parseFloat(sliderRef.value);
+      // update the state current time
+      state.currentTime = Math.floor(currentTime);
+      // Update the player's current time
+      playerRef.currentTime = Math.floor(currentTime);
+    },
+    handleSeekMouseUp() {
+      const {
+        playerRef
+      } = state;
+      playerRef?.play();
+    },
+    // Video <video> player actions
+    dispatchVideoPlay() {
+      state.videoPlaying = true;
+    },
+    dispatchVideoPause() {
+      state.videoPlaying = false;
+    },
+    dispatchVideoCurrentTimeChange() {
+      const {
+        videoPlayerRef
+      } = state;
+      state.videoCurrentTime = Math.floor(videoPlayerRef?.currentTime || 0);
+    },
+    dispatchVideoVolumeChange() {
+      const {
+        videoPlayerRef
+      } = state;
+      state.videoMuted = videoPlayerRef?.muted;
+      state.videoVolume = videoPlayerRef?.volume;
+    },
+    dispatchVideoPlaybackRateChange() {
+      const {
+        videoPlayerRef
+      } = state;
+      state.videoPlaybackRate = videoPlayerRef?.playbackRate;
+    },
+    videoPlay() {
+      const {
+        videoEpisode,
+        videoPlayerRef,
+        currentPlayingId
+      } = state;
+      if (videoEpisode) {
+        if (videoPlayerRef && currentPlayingId !== videoEpisode?.id) {
+          videoPlayerRef.load();
+          videoPlayerRef.pause();
+          videoPlayerRef.playbackRate = 1;
+          videoPlayerRef.currentTime = 0;
+          videoPlayerRef.volume = 1;
+          videoPlayerRef.muted = false;
+        }
+      }
+      state.videoPlaying = true;
+      state.isShowVideoPlayer = true;
+      state.isShowAudioPlayer = false;
+      videoPlayerRef?.play();
+      // add currentPlayingId
+      state.currentPlayingId = videoEpisode?.id || null;
+    },
+    videoPause() {
+      const {
+        videoPlayerRef
+      } = state;
+      videoPlayerRef?.pause();
+    },
+    videoToggle() {
+      actions.isVideoPlaying() ? actions.videoPause() : actions.videoPlay();
+    },
+    isVideoPlaying() {
+      const {
+        videoPlayerRef,
+        videoEpisode,
+        currentPlayingId
+      } = state;
+      return videoEpisode ? state.videoPlaying && videoPlayerRef?.currentSrc && currentPlayingId === videoEpisode?.id : false;
+    },
+    forceVideoEnd() {
+      state.initEpisode = null;
+      state.videoPlaying = false;
+      state.currentPlayingId = null;
+      if (state.videoPlayerRef) {
+        state.videoPlayerRef.currentTime = 0;
+        state.videoPlayerRef.pause();
+      }
+    },
+    // Video Iframe <iframe> player actions
+    videoIframePlay() {
+      state.isShowAudioPlayer = false;
+      state.isShowVideoPlayer = true;
+      state.iframePlaying = true;
+      state.currentPlayingId = state.initEpisode?.id || null;
+    },
+    forceVideoIframeEnd() {
+      state.initEpisode = null;
+      state.iframePlaying = false;
+      state.currentPlayingId = null;
+    },
+    // other player actions ---
+    handleClickPostMediaPlayBtn() {
+      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      // console.log("click - episodeContext", context.episodeContext);
+
+      // check if urls is empty
+      if (Object.values(context.episodeContext?.media?.urls || {}).every(x => !x)) {
+        console.log("urls is empty");
+        return;
+      }
+      if (context.episodeContext?.id === state.currentPlayingId) {
+        // if the same episode, toggle the player
+        if (state.mediaIsVideo) {
+          actions.videoToggle();
+        } else if (state.mediaIsIframe) {
+          actions.videoIframePlay();
+        } else if (state.mediaIsAudio) {
+          actions.toggle();
+        }
+        return;
+      }
+
+      //
+      actions.forceEnd();
+      actions.forceVideoEnd();
+      actions.forceVideoIframeEnd();
+      //
+      state.initEpisode = context.episodeContext || null;
+      //
+      const mediaType = context.episodeContext?.media?.type;
+
+      // play audio <audio>
+      if (mediaType === "AUDIO") {
+        actions.play();
+        return;
+      }
+
+      // play video <video>
+      if (mediaType === "VIDEO") {
+        actions.videoPlay();
+        return;
+      }
+
+      // play video Iframe <iframe>
+      if (mediaType === "IFRAME") {
+        actions.videoIframePlay();
+        return;
+      }
+    },
+    handleCloseAllPlayer() {
+      actions.forceEnd();
+      actions.forceVideoEnd();
+      actions.forceVideoIframeEnd();
+      //
+      state.isShowAudioPlayer = false;
+      state.isShowVideoPlayer = false;
+
+      // reset the audio player state
+      state.duration = 0;
+      state.currentTime = 0;
+      state.muted = false;
+      state.playbackRate = 1;
+      // reset the video player state
+      state.videoCurrentTime = 0;
+      state.videoMuted = false;
+      state.videoVolume = 1;
+      state.videoPlaybackRate = 1;
+    }
+  },
+  callbacks: {
+    onInit: () => {
+      const {
+        ref
+      } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
+      state.playerRef = ref?.querySelector("audio#ncmazfse-media-player-audio");
+      state.sliderRef = ref?.querySelector("input#ncmazfse-media-player-audio-slider-input");
+      state.videoPlayerRef = ref?.querySelector("video#ncmazfse-media-player-video");
+
+      // update state from the local storage
+      const localStorageState = JSON.parse(localStorage.getItem("ncmazfse_media_player_current_state") || "{}");
+      if (localStorageState?.initEpisode?.id) {
+        state.initEpisode = localStorageState.initEpisode;
+        state.isShowAudioPlayer = !!localStorageState.isShowAudioPlayer;
+        state.isShowVideoPlayer = !!localStorageState.isShowVideoPlayer;
+        state.currentPlayingId = localStorageState.currentPlayingId || null;
+
+        // update audio player state
+        if (localStorageState.initEpisode?.media?.type === "AUDIO" && state.playerRef) {
+          state.muted = !!localStorageState.muted;
+          // state.duration = localStorageState.duration;
+          // state.currentTime = localStorageState.currentTime;
+          state.playbackRate = localStorageState.playbackRate || 1;
+          // load and seek the audio player to the last time
+          state.playerRef.load();
+          state.playerRef.currentTime = localStorageState.currentTime || 0;
+          state.playerRef.playbackRate = localStorageState.playbackRate || 1;
+          state.playerRef.muted = !!localStorageState.muted;
+        } else if (localStorageState.initEpisode?.media?.type === "VIDEO" && state.videoPlayerRef) {
+          // load video player and seek to the last time
+          state.videoPlayerRef.load();
+          state.videoPlayerRef.currentTime = localStorageState.videoCurrentTime || 0;
+          state.videoPlayerRef.playbackRate = localStorageState.videoPlaybackRate || 1;
+          state.videoPlayerRef.muted = !!localStorageState.videoMuted;
+          state.videoPlayerRef.volume = localStorageState.videoVolume || 1;
+        }
+      }
+
+      // catch when window is beforeunload to save the current state
+      window.addEventListener("beforeunload", () => {
+        const stateToSave = {
+          initEpisode: state.initEpisode,
+          muted: state.muted,
+          duration: state.duration,
+          currentTime: state.currentTime,
+          playbackRate: state.playbackRate,
+          videoCurrentTime: state.videoCurrentTime,
+          videoMuted: state.videoMuted,
+          videoVolume: state.videoVolume,
+          videoPlaybackRate: state.videoPlaybackRate,
+          isShowAudioPlayer: state.isShowAudioPlayer,
+          isShowVideoPlayer: state.isShowVideoPlayer,
+          currentPlayingId: state.currentPlayingId
+        };
+        if (state.initEpisode?.media?.type === "IFRAME") {
+          stateToSave.currentPlayingId = null;
+          if (state.initEpisode?.media?.urls?.media_url_iframe) {
+            // remove the autoplay=1 and auto_play=1 from the url
+            const newUrl = new URL(state.initEpisode?.media?.urls?.media_url_iframe);
+            newUrl.searchParams.delete("autoplay");
+            newUrl.searchParams.delete("auto_play");
+            stateToSave.initEpisode = {
+              ...state.initEpisode,
+              media: {
+                ...state.initEpisode.media,
+                urls: {
+                  ...(state.initEpisode.media.urls || {}),
+                  media_url_iframe: newUrl.toString()
+                }
+              }
+            };
+          }
+        }
+        localStorage.setItem("ncmazfse_media_player_current_state", JSON.stringify(stateToSave));
+      });
+    }
+  }
+});
+})();
+
+
+//# sourceMappingURL=view.js.map
