@@ -76,7 +76,7 @@ function Edit(props) {
       videoRatio: value
     }),
     value: videoRatio,
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Choose the aspect ratio for the video player. If "auto", automatically detect short youtube videos and automatically display the video player 9/16', "ncmfse")
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Choose the aspect ratio for the video player. If "auto", auto-detects short videos on YouTube then auto-shows the video player to 9/16.', "ncmfse")
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.__experimentalToggleGroupControlOption, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Auto"),
     value: "auto"

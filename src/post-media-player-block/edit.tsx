@@ -33,7 +33,7 @@ function Edit(props: EditProps<Attributes>) {
 						onChange={(value) => setAttributes({ videoRatio: value as string })}
 						value={videoRatio}
 						help={__(
-							'Choose the aspect ratio for the video player. If "auto", automatically detect short youtube videos and automatically display the video player 9/16',
+							'Choose the aspect ratio for the video player. If "auto", auto-detects short videos on YouTube then auto-shows the video player to 9/16.',
 							"ncmfse",
 						)}
 					>
