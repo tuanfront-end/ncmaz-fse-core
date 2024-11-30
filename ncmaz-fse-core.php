@@ -475,7 +475,8 @@ function ncmaz_fse_core_modify_query_vars_for_query_blocks(array $query, WP_Bloc
 	if ($context['showUserSavedPosts'] ?? false) {
 		if (!empty($user_ids)) {
 			foreach ($user_ids as $user_id) {
-				$post_ids = array_merge($post_ids, ncmazfse_core__get_posts_like_save_view_by_user($user_id, 'save_count'));
+				$user_saved_posts = ncmazfse_core__get_posts_like_save_view_by_user($user_id, 'saved_posts');
+				$post_ids = array_merge($post_ids, $user_saved_posts);
 			}
 		} else {
 			// _anonymous user. Get post ids by cookie
@@ -485,7 +486,8 @@ function ncmaz_fse_core_modify_query_vars_for_query_blocks(array $query, WP_Bloc
 	if ($context['showUserLikedPosts'] ?? false) {
 		if (!empty($user_ids)) {
 			foreach ($user_ids as $user_id) {
-				$post_ids = array_merge($post_ids, ncmazfse_core__get_posts_like_save_view_by_user($user_id, 'like_count'));
+				$user_liked_posts = ncmazfse_core__get_posts_like_save_view_by_user($user_id, 'liked_posts');
+				$post_ids = array_merge($post_ids, $user_liked_posts);
 			}
 		} else {
 			// _anonymous user. Get post ids by cookie

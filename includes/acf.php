@@ -520,100 +520,7 @@ add_action('acf/include_fields', function () {
 });
 
 
-// AUDIO, VIDEO FIELDS --------------------------
-// add_action('acf/include_fields', function () {
-// 	if (! function_exists('acf_add_local_field_group')) {
-// 		return;
-// 	}
-
-// 	acf_add_local_field_group(array(
-// 		'key' => 'group_6714b909b6cd7',
-// 		'title' => 'Post Audio fields',
-// 		'fields' => array(
-// 			array(
-// 				'key' => 'field_6714b909b8ec0',
-// 				'label' => 'Audio URL',
-// 				'name' => 'audio_url',
-// 				'aria-label' => '',
-// 				'type' => 'url',
-// 				'instructions' => 'Enter the audio URL of the post.',
-// 				'required' => 0,
-// 				'conditional_logic' => 0,
-// 				'wrapper' => array(
-// 					'width' => '',
-// 					'class' => '',
-// 					'id' => '',
-// 				),
-// 				'default_value' => '',
-// 				'allow_in_bindings' => 1,
-// 				'placeholder' => 'https://',
-// 			),
-// 		),
-// 		'location' => array(
-// 			array(
-// 				array(
-// 					'param' => 'post_format',
-// 					'operator' => '==',
-// 					'value' => 'audio',
-// 				),
-// 			),
-// 		),
-// 		'menu_order' => 0,
-// 		'position' => 'normal',
-// 		'style' => 'default',
-// 		'label_placement' => 'top',
-// 		'instruction_placement' => 'label',
-// 		'hide_on_screen' => '',
-// 		'active' => true,
-// 		'description' => '',
-// 		'show_in_rest' => 1,
-// 	));
-
-// 	acf_add_local_field_group(array(
-// 		'key' => 'group_6714b7b2abdb5',
-// 		'title' => 'Post Video fields',
-// 		'fields' => array(
-// 			array(
-// 				'key' => 'field_6714b7b20f9f3',
-// 				'label' => 'Video URL',
-// 				'name' => 'video_url',
-// 				'aria-label' => '',
-// 				'type' => 'url',
-// 				'instructions' => 'Enter the video URL of the post.',
-// 				'required' => 0,
-// 				'conditional_logic' => 0,
-// 				'wrapper' => array(
-// 					'width' => '',
-// 					'class' => '',
-// 					'id' => '',
-// 				),
-// 				'default_value' => '',
-// 				'allow_in_bindings' => 1,
-// 				'placeholder' => 'https://',
-// 			),
-// 		),
-// 		'location' => array(
-// 			array(
-// 				array(
-// 					'param' => 'post_format',
-// 					'operator' => '==',
-// 					'value' => 'video',
-// 				),
-// 			),
-// 		),
-// 		'menu_order' => 0,
-// 		'position' => 'normal',
-// 		'style' => 'default',
-// 		'label_placement' => 'top',
-// 		'instruction_placement' => 'label',
-// 		'hide_on_screen' => '',
-// 		'active' => true,
-// 		'description' => '',
-// 		'show_in_rest' => 1,
-// 	));
-// });
-
-
+// POST AUDIO/VIDEO FIELDS --------------------------
 add_action('acf/include_fields', function () {
 	if (! function_exists('acf_add_local_field_group')) {
 		return;
@@ -975,5 +882,119 @@ add_action('acf/include_fields', function () {
 		'active' => true,
 		'description' => '',
 		'show_in_rest' => 1,
+	));
+});
+
+
+
+//  USER FIELDS --------------------------
+add_action('acf/include_fields', function () {
+	if (! function_exists('acf_add_local_field_group')) {
+		return;
+	}
+
+	acf_add_local_field_group(array(
+		'key' => 'group_6746dfa35ad8af',
+		'title' => 'User reaction fields',
+		'fields' => array(
+			array(
+				'key' => 'field_6746dfa31c7da2',
+				'label' => 'Liked posts',
+				'name' => 'liked_posts',
+				'aria-label' => '',
+				'type' => 'textarea',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => array(
+					'width' => '0',
+					'class' => 'hidden acf-hidden',
+					'id' => '',
+				),
+				'default_value' => '',
+				'maxlength' => '',
+				'allow_in_bindings' => 1,
+				'rows' => '',
+				'placeholder' => '',
+				'new_lines' => '',
+				'show_in_graphql' => 1,
+				'graphql_description' => '',
+				'graphql_field_name' => 'likedPosts',
+				'graphql_non_null' => 0,
+			),
+			array(
+				'key' => 'field_6746ed0961c7a3',
+				'label' => 'Saved posts',
+				'name' => 'saved_posts',
+				'aria-label' => '',
+				'type' => 'textarea',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => array(
+					'width' => '0',
+					'class' => 'hidden acf-hidden',
+					'id' => '',
+				),
+				'default_value' => '',
+				'maxlength' => '',
+				'allow_in_bindings' => 1,
+				'rows' => '',
+				'placeholder' => '',
+				'new_lines' => '',
+				'show_in_graphql' => 1,
+				'graphql_description' => '',
+				'graphql_field_name' => 'savedPosts',
+				'graphql_non_null' => 0,
+			),
+			array(
+				'key' => 'field_6746e0db31c7a4',
+				'label' => 'Viewed posts',
+				'name' => 'viewed_posts',
+				'aria-label' => '',
+				'type' => 'textarea',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => array(
+					'width' => '0',
+					'class' => 'hidden acf-hidden',
+					'id' => '',
+				),
+				'default_value' => '',
+				'maxlength' => '',
+				'allow_in_bindings' => 1,
+				'rows' => '',
+				'placeholder' => '',
+				'new_lines' => '',
+				'show_in_graphql' => 1,
+				'graphql_description' => '',
+				'graphql_field_name' => 'viewedPosts',
+				'graphql_non_null' => 0,
+			),
+
+		),
+		'location' => array(
+			array(
+				array(
+					'param' => 'user_role',
+					'operator' => '==',
+					'value' => 'all',
+				),
+			),
+		),
+		'menu_order' => 0,
+		'position' => 'normal',
+		'style' => 'default',
+		'label_placement' => 'top',
+		'instruction_placement' => 'label',
+		'hide_on_screen' => '',
+		'active' => true,
+		'description' => '',
+		'show_in_rest' => 1,
+		'show_in_graphql' => 1,
+		'graphql_field_name' => 'userReactionFields',
+		'map_graphql_types_from_location_rules' => 0,
+		'graphql_types' => '',
 	));
 });

@@ -190,13 +190,13 @@ endif;
 /**
  * 
  * @param int $user_id
- * @param string $meta_key // like_count / view_count / save_count
+ * @param string $user_meta_key // liked_posts / viewed_posts / saved_posts
  * @return array //array post_id
  * */
-function ncmazfse_core__get_posts_like_save_view_by_user($user_id, $meta_key)
+function ncmazfse_core__get_posts_like_save_view_by_user($user_id, $user_meta_key)
 {
     // Lấy thông tin lượt like hiện tại của user meta: 1,3,22,33...
-    $string_meta_ids = get_user_meta($user_id, $meta_key, true);
+    $string_meta_ids = get_user_meta($user_id, $user_meta_key, true);
 
     // Nếu string_meta_ids không tồn tại hoặc không phải là chuỗi, thì gán bằng chuỗi rỗng
     if (!$string_meta_ids || !is_string($string_meta_ids)) {
@@ -218,19 +218,24 @@ function ncmazfse_core__get_posts_like_save_view_by_user($user_id, $meta_key)
  * 
  * @param int $user_id
  * @param int $post_id
- * @param string $meta_key // like_count / view_count / save_count
+ * @param string $user_meta_key // liked_posts / viewed_posts / saved_posts
  * @param string $handle // remove or add
  * @return int
  * */
-function ncmazfse_core__update_user_meta_like_save_view($user_id, $post_id, $meta_key, $handle)
+function ncmazfse_core__update_user_meta_like_save_view($user_id, $post_id, $user_meta_key, $handle)
 {
 
     // Kiểm tra xem user_id và post_id có hợp lệ không
-    if (!$user_id || !$post_id || $meta_key !== 'like_count' || $meta_key !== 'view_count' || $meta_key !== 'save_count') {
+    if (!$user_id || !$post_id) {
         return 0;
     }
 
-    $array_meta_ids = ncmazfse_core__get_posts_like_save_view_by_user($user_id, $meta_key);
+    // Kiểm tra xem user_meta_key có hợp lệ không    
+    if ($user_meta_key !== 'liked_posts' && $user_meta_key !== 'viewed_posts' && $user_meta_key !== 'saved_posts') {
+        return 0;
+    }
+
+    $array_meta_ids = ncmazfse_core__get_posts_like_save_view_by_user($user_id, $user_meta_key);
 
     // Nếu $handle là 'add', thì thêm post_id vào mảng
     if ($handle === 'add') {
@@ -246,7 +251,7 @@ function ncmazfse_core__update_user_meta_like_save_view($user_id, $post_id, $met
     $string_meta_ids = implode(',', $array_meta_ids);
 
     // Cập nhật user meta mới
-    update_user_meta($user_id, $meta_key, $string_meta_ids);
+    update_user_meta($user_id, $user_meta_key, $string_meta_ids);
 
     // Trả về lượt like mới
     return count($array_meta_ids);
@@ -257,19 +262,24 @@ function ncmazfse_core__update_user_meta_like_save_view($user_id, $post_id, $met
  * 
  * @param int $user_id 
  * @param int $post_id
- * @param string $meta_key // like_count / view_count / save_count
+ * @param string $user_meta_key // liked_posts / viewed_posts / saved_posts
  * @return bool
  * */
-function ncmazfse_core__check_user_is_like_save_view($user_id, $post_id, $meta_key)
+function ncmazfse_core__check_user_is_like_save_view($user_id, $post_id, $user_meta_key)
 {
 
     // Kiểm tra xem user_id và post_id có hợp lệ không
-    if (!$user_id || !$post_id || $meta_key !== 'like_count' || $meta_key !== 'view_count' || $meta_key !== 'save_count') {
+    if (!$user_id || !$post_id) {
+        return false;
+    }
+
+    // Kiểm tra xem user_meta_key có hợp lệ không
+    if ($user_meta_key !== 'liked_posts' && $user_meta_key !== 'viewed_posts' && $user_meta_key !== 'saved_posts') {
         return false;
     }
 
     // Lấy thông tin lượt like hiện tại của user meta: 1,3,22,33...
-    $string_meta_ids = get_user_meta($user_id, $meta_key, true);
+    $string_meta_ids = get_user_meta($user_id, $user_meta_key, true);
 
     // Nếu string_meta_ids không tồn tại hoặc không phải là chuỗi, thì gán bằng chuỗi rỗng
     if (!$string_meta_ids || !is_string($string_meta_ids)) {

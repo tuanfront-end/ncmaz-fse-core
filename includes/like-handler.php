@@ -49,7 +49,7 @@ function ncmazfse_core__update_post_like($post_id, $user_id, $handle)
 	$new_count = ncmazfse_core__update_post_meta_like_save_view_count($post_id, 'like_count', $handle);
 
 	if ($user_id && $user_id !== "_anonymous") {
-		ncmazfse_core__update_user_meta_like_save_view($user_id, $post_id, 'like_count', $handle);
+		ncmazfse_core__update_user_meta_like_save_view($user_id, $post_id, 'liked_posts', $handle);
 	} else {
 		ncmazfse_core__update_like_save_view_posts_cookie($post_id, $handle, 'liked_posts');
 	}
@@ -85,7 +85,7 @@ function ncmazfse_core__check_user_like($post_id, $user_id)
 	}
 
 	//  for user logged in
-	return ncmazfse_core__check_user_is_like_save_view($user_id, $post_id, 'like_count');
+	return ncmazfse_core__check_user_is_like_save_view($user_id, $post_id, 'liked_posts');
 }
 
 /**
