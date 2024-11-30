@@ -5,7 +5,7 @@
  * Description:       Ncmaz Fse Core is a plugin that provides some custom blocks for Full Site Editing.
  * Requires at least: 6.5
  * Requires PHP:      7.4
- * Version:           1.3.0
+ * Version:           1.4.0
  * Author:            BooliiTheme
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
-define('NCMAZ_FSE_CORE_VERSION', '1.3.0');
+define('NCMAZ_FSE_CORE_VERSION', '1.4.0');
 define('NCMAZ_FSE_CORE_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('NCMAZ_FSE_CORE_PLUGIN_BASE', plugin_basename(__FILE__));
 define('NCMAZ_FSE_CORE_PLUGIN_FILE', __FILE__);
@@ -475,21 +475,21 @@ function ncmaz_fse_core_modify_query_vars_for_query_blocks(array $query, WP_Bloc
 	if ($context['showUserSavedPosts'] ?? false) {
 		if (!empty($user_ids)) {
 			foreach ($user_ids as $user_id) {
-				$post_ids = array_merge($post_ids, ncmazfse_core_get_all_post_saved_post_id_by_user($user_id));
+				$post_ids = array_merge($post_ids, ncmazfse_core__get_posts_like_save_view_by_user($user_id, 'save_count'));
 			}
 		} else {
 			// _anonymous user. Get post ids by cookie
-			$post_ids = ncmazfse_core__get_saved_posts_from_cookie();
+			$post_ids = ncmazfse_core__get_like_save_view_posts_from_cookie('saved_posts');
 		}
 	}
 	if ($context['showUserLikedPosts'] ?? false) {
 		if (!empty($user_ids)) {
 			foreach ($user_ids as $user_id) {
-				$post_ids = array_merge($post_ids, ncmazfse_core_get_all_post_liked_post_id_by_user($user_id));
+				$post_ids = array_merge($post_ids, ncmazfse_core__get_posts_like_save_view_by_user($user_id, 'like_count'));
 			}
 		} else {
 			// _anonymous user. Get post ids by cookie
-			$post_ids = ncmazfse_core__get_liked_posts_from_cookie();
+			$post_ids = ncmazfse_core__get_like_save_view_posts_from_cookie('liked_posts');
 		}
 	}
 

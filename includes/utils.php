@@ -142,3 +142,182 @@ if (!function_exists('ncmazfse_core_get_src_using_DOM')):
         return '';
     }
 endif;
+
+
+if (!function_exists("ncmazfse_core__update_post_meta_like_save_view_count")) :
+    /**
+     * 
+     * @param int $post_id
+     * @param string $meta_key // like_count / view_count / save_count
+     * @param string $handle // remove or add
+     * @return int
+     * */
+
+    function ncmazfse_core__update_post_meta_like_save_view_count($post_id, $meta_key, $handle)
+    {
+
+        // Kiểm tra xem post_id có hợp lệ không
+        if (!$post_id || $meta_key !== 'like_count' || $meta_key !== 'view_count' || $meta_key !== 'save_count') {
+            return 0;
+        }
+
+        // Lấy thông tin lượt like hiện tại
+        $meta_count = get_post_meta($post_id, $meta_key, true);
+
+        // Nếu meta_count không phải là số, hoặc không tồn tại, thì gán bằng 0
+        if (!is_numeric($meta_count)) {
+            $meta_count = 0;
+        } else {
+            $meta_count =  intval($meta_count);
+        }
+
+        // Nếu $handle là 'add', thì tăng lượt like lên 1
+        if ($handle === 'add') {
+            $meta_count++;
+        } elseif ($handle === 'remove') {
+            // Nếu $handle là 'remove', thì giảm lượt like đi 1
+            $meta_count--;
+        }
+
+        // Cập nhật lượt like mới
+        update_post_meta($post_id, $meta_key, $meta_count);
+
+        // Trả về lượt like mới
+        return $meta_count;
+    }
+endif;
+
+/**
+ * 
+ * @param int $user_id
+ * @param string $meta_key // like_count / view_count / save_count
+ * @return array //array post_id
+ * */
+function ncmazfse_core__get_posts_like_save_view_by_user($user_id, $meta_key)
+{
+    // Lấy thông tin lượt like hiện tại của user meta: 1,3,22,33...
+    $string_meta_ids = get_user_meta($user_id, $meta_key, true);
+
+    // Nếu string_meta_ids không tồn tại hoặc không phải là chuỗi, thì gán bằng chuỗi rỗng
+    if (!$string_meta_ids || !is_string($string_meta_ids)) {
+        $string_meta_ids = '';
+    }
+    // convert to array
+    $array_meta_ids = explode(',', $string_meta_ids);
+
+    // check $array_meta_ids is array or not
+    if (!is_array($array_meta_ids)) {
+        $array_meta_ids = [];
+    }
+
+    return $array_meta_ids;
+}
+
+
+/**
+ * 
+ * @param int $user_id
+ * @param int $post_id
+ * @param string $meta_key // like_count / view_count / save_count
+ * @param string $handle // remove or add
+ * @return int
+ * */
+function ncmazfse_core__update_user_meta_like_save_view($user_id, $post_id, $meta_key, $handle)
+{
+
+    // Kiểm tra xem user_id và post_id có hợp lệ không
+    if (!$user_id || !$post_id || $meta_key !== 'like_count' || $meta_key !== 'view_count' || $meta_key !== 'save_count') {
+        return 0;
+    }
+
+    $array_meta_ids = ncmazfse_core__get_posts_like_save_view_by_user($user_id, $meta_key);
+
+    // Nếu $handle là 'add', thì thêm post_id vào mảng
+    if ($handle === 'add') {
+        if (!in_array($post_id, $array_meta_ids)) {
+            $array_meta_ids[] = $post_id;
+        }
+    } elseif ($handle === 'remove') {
+        // Nếu $handle là 'remove', thì xóa post_id khỏi mảng
+        $array_meta_ids = array_diff($array_meta_ids, [$post_id]);
+    }
+
+    // convert to string
+    $string_meta_ids = implode(',', $array_meta_ids);
+
+    // Cập nhật user meta mới
+    update_user_meta($user_id, $meta_key, $string_meta_ids);
+
+    // Trả về lượt like mới
+    return count($array_meta_ids);
+}
+
+
+/**
+ * 
+ * @param int $user_id 
+ * @param int $post_id
+ * @param string $meta_key // like_count / view_count / save_count
+ * @return bool
+ * */
+function ncmazfse_core__check_user_is_like_save_view($user_id, $post_id, $meta_key)
+{
+
+    // Kiểm tra xem user_id và post_id có hợp lệ không
+    if (!$user_id || !$post_id || $meta_key !== 'like_count' || $meta_key !== 'view_count' || $meta_key !== 'save_count') {
+        return false;
+    }
+
+    // Lấy thông tin lượt like hiện tại của user meta: 1,3,22,33...
+    $string_meta_ids = get_user_meta($user_id, $meta_key, true);
+
+    // Nếu string_meta_ids không tồn tại hoặc không phải là chuỗi, thì gán bằng chuỗi rỗng
+    if (!$string_meta_ids || !is_string($string_meta_ids)) {
+        $string_meta_ids = '';
+    }
+    // convert to array
+    $array_meta_ids = explode(',', $string_meta_ids);
+
+    // check $array_meta_ids is array or not
+    if (!is_array($array_meta_ids)) {
+        $array_meta_ids = [];
+    }
+
+    // Nếu post_id có trong mảng, thì trả về true
+    return in_array($post_id, $array_meta_ids);
+}
+
+
+/**
+ *  
+ * @param string $cookie_key // saved_posts / liked_posts / viewed_posts
+ * @return array //array post_id
+ * */
+function ncmazfse_core__get_like_save_view_posts_from_cookie($cookie_key)
+{
+    $ids = json_decode(sanitize_text_field(wp_unslash($_COOKIE[$cookie_key] ?? '[]')));
+    if (! $ids || ! is_array($ids)) {
+        return [];
+    }
+    return $ids;
+}
+
+
+/**
+ * 
+ * @param int $post_id
+ * @param string $handle // remove or add
+ * @param string $cookie_key // saved_posts / liked_posts / viewed_posts
+ * @return void
+ * */
+function ncmazfse_core__update_like_save_view_posts_cookie($post_id, $cookie_key, $handle)
+{
+    $ids = ncmazfse_core__get_like_save_view_posts_from_cookie($cookie_key);
+
+    if ($handle === 'remove') {
+        $ids = array_diff($ids, array($post_id));
+    } elseif ($handle === 'add') {
+        $ids[] = $post_id;
+    }
+    setcookie($cookie_key, wp_json_encode($ids), time() + 3600 * 24 * 30, '/');
+}

@@ -16,14 +16,15 @@ function ncmazfse_core__handle_like()
 		wp_send_json_error(__('Invalid post ID or user ID', 'ncmaz-fse-core'));
 	} else {
 		// Cập nhật thông tin lượt like
-		$liked = ncmazfse_core__update_post_like($post_id, $user_id, $handle);
+		$aLike = ncmazfse_core__update_post_like($post_id, $user_id, $handle);
 		// Trả về phản hồi (có thể là số lượt like mới, thông báo thành công, ...)
 		wp_send_json_success(
 			array(
-				'is_liked' => $liked,
-				'user_id'  => $user_id,
-				'post_id'  => $post_id,
-				'post_type' => get_post_type($post_id),
+				'is_liked' 		=> $aLike['is_liked'],
+				'like_count' 	=> $aLike['like_count'],
+				'user_id'  		=> $user_id,
+				'post_id'  		=> $post_id,
+				'post_type' 	=> get_post_type($post_id),
 			)
 		);
 	}
@@ -35,180 +36,79 @@ add_action('wp_ajax_handle_like', 'ncmazfse_core__handle_like'); // Đăng ký a
 add_action('wp_ajax_nopriv_handle_like', 'ncmazfse_core__handle_like'); // Đăng ký action cho người dùng chưa đăng nhập
 
 
+/**
+ * 
+ * @param int $post_id
+ * @param string $user_id  // _anonymous or user_id
+ * @param string $handle // remove or add
+ * @return array( 'is_liked' => bool,'like_count' => int)
+ * */
+
 function ncmazfse_core__update_post_like($post_id, $user_id, $handle)
 {
-	// Lấy danh sách lượt like là danh sách post-type "post like", có author là user_id, và title là post_id
-	$post_likes = get_posts(
-		array(
-			'post_type'   => 'post_like',
-			'numberposts' => 1,
-			'title'       => $post_id,
-			'meta_query'  => array(
-				array(
-					'key'   => 'user_id',
-					'value' => $user_id,
-				),
-				array(
-					'key'   => 'post_id',
-					'value' => $post_id,
-				),
-			),
-		)
-	);
+	$new_count = ncmazfse_core__update_post_meta_like_save_view_count($post_id, 'like_count', $handle);
 
-	// User chưa đăng nhập
-	if ($user_id === '_anonymous') {
-		// Nếu đã like, thì bỏ like
-		if ($handle === 'remove') {
-			wp_delete_post($post_likes[0]->ID, true);
-			// remove from cookie
-			ncmazfse_core__update_liked_posts_cookie($post_id, 'remove');
-			return false;
-		} elseif ($handle === 'add') {
-			// Nếu chưa save, thì thêm save
-			wp_insert_post(
-				array(
-					'post_type'   => 'post_like',
-					'post_title'  => $post_id,
-					'post_status' => 'publish',
-					'meta_input'  => array(
-						'user_id' => $user_id,
-						'post_id' => $post_id,
-						'post_type' => get_post_type($post_id),
-					),
-				)
-			);
-			// add to cookie
-			ncmazfse_core__update_liked_posts_cookie($post_id, 'add');
-			return true;
-		}
-
-		return false;
-	}
-
-	// Nếu đã like, thì bỏ like
-	if ($post_likes) {
-		wp_delete_post($post_likes[0]->ID, true);
-		return false;
+	if ($user_id && $user_id !== "_anonymous") {
+		ncmazfse_core__update_user_meta_like_save_view($user_id, $post_id, 'like_count', $handle);
 	} else {
-		// Nếu chưa like, thì thêm like
-		wp_insert_post(
-			array(
-				'post_type'   => 'post_like',
-				'post_title'  => $post_id,
-				'post_status' => 'publish',
-				'meta_input'  => array(
-					'user_id' => $user_id,
-					'post_id' => $post_id,
-					'post_type' => get_post_type($post_id),
-				),
-			)
-		);
-		return true;
+		ncmazfse_core__update_like_save_view_posts_cookie($post_id, $handle, 'liked_posts');
 	}
+
+	return [
+		'is_liked' => ncmazfse_core__check_user_like($post_id, $user_id),
+		'like_count' => $new_count
+	];
 }
 
+
+/**
+ * 
+ * @param int $post_id
+ * @param string $user_id // _anonymous or user_id
+ * @return bool
+ * */
 function ncmazfse_core__check_user_like($post_id, $user_id)
 {
 	if (! $post_id) {
 		return false;
 	}
 
-	if (! $user_id) {
-		$user_id = '_anonymous';
+	// for user not logged in  _anonymous
+	if (! $user_id || $user_id === '_anonymous') {
 		// check cookie
-		$liked_posts = ncmazfse_core__get_liked_posts_from_cookie();
-		if (in_array($post_id, $liked_posts)) {
+		$ids = ncmazfse_core__get_like_save_view_posts_from_cookie('liked_posts');
+		if (in_array($post_id, $ids)) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	$post_likes = get_posts(
-		array(
-			'post_type'   => 'post_like',
-			'numberposts' => 1,
-			'title'       => $post_id,
-			'meta_query'  => array(
-				array(
-					'key'   => 'user_id',
-					'value' => $user_id,
-				),
-				array(
-					'key'   => 'post_id',
-					'value' => $post_id,
-				),
-			),
-		)
-	);
-
-	if ($post_likes) {
-		return true;
-	} else {
-		return false;
-	}
+	//  for user logged in
+	return ncmazfse_core__check_user_is_like_save_view($user_id, $post_id, 'like_count');
 }
 
-function ncmazfse_core__get_post_likes($post_id)
-{
-	if (! $post_id) {
-		return array();
-	}
-	$post_likes = get_posts(
-		array(
-			'post_type'   => 'post_like',
-			'numberposts' => -1,
-			'title'       => $post_id,
-		)
-	);
-
-	return $post_likes;
-}
-
+/**
+ * 
+ * @param int $post_id
+ * @return int // count
+ * */
 function ncmazfse_core__get_post_likes_count($post_id)
 {
-	return count(ncmazfse_core__get_post_likes($post_id));
+	ncmazfse_core__get_post_like_count($post_id);
 }
 
 
-function ncmazfse_core_get_all_post_liked_post_id_by_user($user_id)
+/**
+ * 
+ * @param int $post_id
+ * @return int // count
+ * */
+function ncmazfse_core__get_post_like_count($post_id)
 {
-	$post_likes = get_posts(
-		array(
-			'post_type'   => 'post_like',
-			'numberposts' => -1,
-			'meta_query'  => array(
-				array(
-					'key'   => 'user_id',
-					'value' => $user_id,
-				),
-			),
-		)
-	);
-
-	$post_ids = array();
-	foreach ($post_likes as $post_like) {
-		$post_ids[] = $post_like->post_title;
+	$count = get_post_meta($post_id, 'like_count', true);
+	if (! $count) {
+		return 0;
 	}
-
-	return $post_ids;
-}
-
-
-function ncmazfse_core__update_liked_posts_cookie($post_id, $handle)
-{
-	$liked_posts = ncmazfse_core__get_liked_posts_from_cookie();
-
-	if ($handle === 'remove') {
-		$liked_posts = array_diff($liked_posts, array($post_id));
-	} elseif ($handle === 'add') {
-		$liked_posts[] = $post_id;
-	}
-	setcookie('liked_posts', wp_json_encode($liked_posts), time() + 3600 * 24 * 30, '/');
-}
-
-function ncmazfse_core__get_liked_posts_from_cookie()
-{
-	return json_decode(sanitize_text_field(wp_unslash($_COOKIE['liked_posts'] ?? '[]')));
+	return intval($count);
 }
