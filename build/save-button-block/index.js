@@ -65,7 +65,8 @@ function Edit(props) {
     attributes,
     setAttributes,
     context: {
-      postId
+      postId,
+      postType
     },
     activeColor,
     activeBgColor,
@@ -80,34 +81,21 @@ function Edit(props) {
     customActiveColor,
     showCountText
   } = attributes;
-  const currentUserId = window.wp.data.select("core").getCurrentUser()?.id || 0;
-  const {
-    records
-  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityRecords)("postType", "post_save", {
-    post_status: "publish",
-    per_page: -1,
-    meta_key: "post_id",
-    meta_value: postId
-  });
-  const postSavesCount = records?.length || 0;
+  const currentUser = window.wp.data.select("core").getCurrentUser() || {};
 
-  // check if the current user liked the post
+  // get the record of the post
   const {
-    records: isSavedRecords
-  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityRecords)("postType", "post_save", {
-    post_status: "publish",
-    per_page: -1,
-    meta_query: [{
-      key: "user_id",
-      value: currentUserId,
-      compare: "="
-    }, {
-      key: "post_id",
-      value: postId,
-      compare: "="
-    }]
-  });
-  const isSaved = (isSavedRecords?.length || 0) > 0;
+    record
+  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityRecord)("postType", postType, postId);
+  const postSaveCount = postId ? record?.acf?.save_count || 0 : 99;
+
+  // liked_posts is a string of post ids separated by commas: "1,2,3,4"
+  let user_saved_posts = currentUser?.acf?.saved_posts || "";
+  if (typeof user_saved_posts !== "string") {
+    user_saved_posts = "";
+  }
+  const savedPosts = user_saved_posts.split(",");
+  const isSaved = savedPosts.includes(String(postId));
 
   //
   const colorGradientSettings = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.__experimentalUseMultipleOriginColorsAndGradients)();
@@ -231,7 +219,7 @@ function Edit(props) {
     ...innerBlocksProps
   }, children, showCountText ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "nc__count"
-  }, postSavesCount) : null)));
+  }, postSaveCount) : null)));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.withColors)({
   activeColor: "active-color",

@@ -157,7 +157,12 @@ if (!function_exists("ncmazfse_core__update_post_meta_like_save_view_count")) :
     {
 
         // Kiểm tra xem post_id có hợp lệ không
-        if (!$post_id || $meta_key !== 'like_count' || $meta_key !== 'view_count' || $meta_key !== 'save_count') {
+        if (!$post_id) {
+            return 0;
+        }
+
+        // Kiểm tra xem meta_key có hợp lệ không
+        if ($meta_key !== 'like_count' && $meta_key !== 'view_count' && $meta_key !== 'save_count') {
             return 0;
         }
 

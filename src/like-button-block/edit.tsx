@@ -1,5 +1,5 @@
 import { __ } from "@wordpress/i18n";
-import { useEntityRecords } from "@wordpress/core-data";
+import { useEntityRecord } from "@wordpress/core-data";
 import {
 	InspectorControls,
 	useBlockProps,
@@ -37,36 +37,29 @@ function Edit(props: EditProps<Attributes>) {
 		showCountText,
 	} = attributes;
 
-	const currentUserId = window.wp.data.select("core").getCurrentUser()?.id || 0;
-	let postId = postIdContext;
+	const currentUser = window.wp.data.select("core").getCurrentUser() || {};
+	let postId = postIdContext as number;
 
 	if (!postType && !postIdContext && commentId) {
-		postId = commentId;
+		postId = commentId as number;
 	}
 
-	// get the post likes count
-	const { records } = useEntityRecords("postType", "post_like", {
-		post_status: "publish",
-		per_page: -1,
-		meta_key: "post_id",
-		meta_value: postId || 0,
-	});
-	const postLikesCount = postId ? records?.length || 0 : 99;
+	// get the record of the post
+	const { record } = useEntityRecord<Record<string, any>>(
+		"postType",
+		postType as string,
+		postId,
+	);
+	const postLikeCount = postId ? record?.acf?.like_count || 0 : 99;
 
 	// check if the current user liked the post
-	const { records: isLikedRecords } = useEntityRecords(
-		"postType",
-		"post_like",
-		{
-			post_status: "publish",
-			per_page: -1,
-			meta_query: [
-				{ key: "user_id", value: currentUserId, compare: "=" },
-				{ key: "post_id", value: postId, compare: "=" },
-			],
-		},
-	);
-	const isLiked = (isLikedRecords?.length || 0) > 0;
+	// liked_posts is a string of post ids separated by commas: "1,2,3,4"
+	let user_liked_posts: string = currentUser?.acf?.liked_posts || "";
+	if (typeof user_liked_posts !== "string") {
+		user_liked_posts = "";
+	}
+	const likedPosts = user_liked_posts.split(",");
+	const isLiked = likedPosts.includes(String(postId));
 
 	//
 	const colorGradientSettings = useMultipleOriginColorsAndGradients() as any;
@@ -195,11 +188,12 @@ function Edit(props: EditProps<Attributes>) {
 				</p>
 			</InspectorControls>
 
+			{/* @ts-ignore */}
 			<div {...blockProps}>
 				<div {...innerBlocksProps}>
 					{children}
 					{showCountText ? (
-						<span className="nc__count">{postLikesCount}</span>
+						<span className="nc__count">{postLikeCount}</span>
 					) : null}
 				</div>
 			</div>

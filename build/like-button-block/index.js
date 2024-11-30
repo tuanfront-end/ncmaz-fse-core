@@ -85,40 +85,26 @@ function Edit(props) {
     customActiveColor,
     showCountText
   } = attributes;
-  const currentUserId = window.wp.data.select("core").getCurrentUser()?.id || 0;
+  const currentUser = window.wp.data.select("core").getCurrentUser() || {};
   let postId = postIdContext;
   if (!postType && !postIdContext && commentId) {
     postId = commentId;
   }
 
-  // get the post likes count
+  // get the record of the post
   const {
-    records
-  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityRecords)("postType", "post_like", {
-    post_status: "publish",
-    per_page: -1,
-    meta_key: "post_id",
-    meta_value: postId || 0
-  });
-  const postLikesCount = postId ? records?.length || 0 : 99;
+    record
+  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityRecord)("postType", postType, postId);
+  const postLikeCount = postId ? record?.acf?.like_count || 0 : 99;
 
   // check if the current user liked the post
-  const {
-    records: isLikedRecords
-  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityRecords)("postType", "post_like", {
-    post_status: "publish",
-    per_page: -1,
-    meta_query: [{
-      key: "user_id",
-      value: currentUserId,
-      compare: "="
-    }, {
-      key: "post_id",
-      value: postId,
-      compare: "="
-    }]
-  });
-  const isLiked = (isLikedRecords?.length || 0) > 0;
+  // liked_posts is a string of post ids separated by commas: "1,2,3,4"
+  let user_liked_posts = currentUser?.acf?.liked_posts || "";
+  if (typeof user_liked_posts !== "string") {
+    user_liked_posts = "";
+  }
+  const likedPosts = user_liked_posts.split(",");
+  const isLiked = likedPosts.includes(String(postId));
 
   //
   const colorGradientSettings = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.__experimentalUseMultipleOriginColorsAndGradients)();
@@ -242,7 +228,7 @@ function Edit(props) {
     ...innerBlocksProps
   }, children, showCountText ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "nc__count"
-  }, postLikesCount) : null)));
+  }, postLikeCount) : null)));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.withColors)({
   activeColor: "active-color",
