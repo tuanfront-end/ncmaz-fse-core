@@ -87,6 +87,7 @@ add_action('init', 'ncmaz_fse_core_register_blocks_init');
 require_once plugin_dir_path(__FILE__) . 'includes/hooks.php';
 require_once plugin_dir_path(__FILE__) . 'includes/utils.php';
 require_once plugin_dir_path(__FILE__) . 'includes/acf.php';
+require_once plugin_dir_path(__FILE__) . 'includes/like-save-view-common-funcs.php';
 require_once plugin_dir_path(__FILE__) . 'includes/like-handler.php';
 require_once plugin_dir_path(__FILE__) . 'includes/save-handler.php';
 require_once plugin_dir_path(__FILE__) . 'includes/view-handler.php';
