@@ -522,7 +522,7 @@ function ncmaz_fse_core__sample_admin_notice__error()
         return;
     }
 
-    $class = 'notice notice-warning';
+    $class = 'notice notice-warning is-dismissible';
     $message = __('You have upgraded the Ncmaz FSE core plugin to version 1.4.0. To sync data about your Like/Save/View posts please click the sync button below.', 'ncmaz-fse-core');
     $form_like = '<form method="post" action="#">
         <input type="hidden" name="ncmaz_fse_core_1_4_async_post_like" value="yes_ok">
