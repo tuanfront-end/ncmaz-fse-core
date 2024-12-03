@@ -15,16 +15,16 @@ function ncmazfse_core__handle_save()
 	if (! $post_id || ! $user_id) {
 		wp_send_json_error(__('Invalid post ID or user ID', 'ncmaz-fse-core'));
 	} else {
-		// Cập nhật thông tin lượt like
-		$aSave = ncmazfse_core__update_post_save($post_id, $user_id, $handle);
+		$handle_result = ncmazfse_core__handle_client_like_save_view_post($post_id, $user_id, 'save', $handle);
 		// Trả về phản hồi (có thể là số lượt save mới, thông báo thành công, ...)
 		wp_send_json_success(
 			array(
-				'is_saved' 		=> $aSave['is_saved'],
-				'save_count' 	=> $aSave['save_count'],
+				'is_saved' 		=> $handle_result['is_ok'],
+				'save_count' 	=> $handle_result['count'],
+				'update_result' => $handle_result['update_result'] ?? [],
 				'user_id'  		=> $user_id,
 				'post_id'  		=> $post_id,
-				'post_type' 	=> get_post_type($post_id),
+				// 'post_type' 	=> get_post_type($post_id),
 			)
 		);
 	}
@@ -39,35 +39,10 @@ add_action('wp_ajax_nopriv_handle_save', 'ncmazfse_core__handle_save'); // Đăn
 /**
  * 
  * @param int $post_id
- * @param string $user_id  // _anonymous or user_id
- * @param string $handle // remove or add
- * @return array( 'is_saved' => bool,'save_count' => int)
- * */
-
-function ncmazfse_core__update_post_save($post_id, $user_id, $handle)
-{
-	$new_count = ncmazfse_core__update_post_meta_like_save_view_count($post_id, 'save_count', $handle);
-
-	if ($user_id && $user_id !== "_anonymous") {
-		ncmazfse_core__update_user_meta_like_save_view($user_id, $post_id, 'saved_posts', $handle);
-	} else {
-		ncmazfse_core__update_like_save_view_posts_cookie($post_id, $handle, 'saved_posts');
-	}
-
-	return [
-		'is_saved' => ncmazfse_core__check_user_save($post_id, $user_id),
-		'save_count' => $new_count
-	];
-}
-
-
-/**
- * 
- * @param int $post_id
  * @param string $user_id // _anonymous or user_id
  * @return bool
  * */
-function ncmazfse_core__check_user_save($post_id, $user_id)
+function ncmazfse_core__check_client_is_saved($post_id, $user_id)
 {
 	if (! $post_id) {
 		return false;

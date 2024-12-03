@@ -66,7 +66,7 @@ add_action(
 	'template_redirect',
 	function () {
 		if (is_single() || is_page()) {
-			ncmazfse_core__update_post_view(get_the_ID(), get_current_user_id(), 'add');
+			ncmazfse_core__handle_client_like_save_view_post(get_the_ID(), get_current_user_id(), 'view', 'add');
 		}
 	}
 );

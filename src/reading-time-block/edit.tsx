@@ -18,8 +18,8 @@ export default function Edit(props: EditProps<Attributes>) {
 
 	const { record } = useEntityRecord<Record<string, any>>(
 		"postType",
-		postType,
-		postId,
+		postType as string,
+		postId as number,
 	);
 
 	const content = (record?.content.rendered as string) || "";

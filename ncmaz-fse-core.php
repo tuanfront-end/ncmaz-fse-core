@@ -513,18 +513,3 @@ function ncmaz_fse_core_modify_query_vars_for_query_blocks(array $query, WP_Bloc
 	return $new_query;
 }
 add_filter('query_loop_block_query_vars', 'ncmaz_fse_core_modify_query_vars_for_query_blocks', 10, 2);
-
-
-// teststesteststse
-add_action('init', function () {
-	//  5996
-	// update post meta like count/ save count/ view count for post id 5996
-	// ncmazfse_core__update_post_meta_like_save_view_count(5996, 'like_count', 'add');
-	// ncmazfse_core__update_post_meta_like_save_view_count(5996, 'save_count', 'add');
-	// ncmazfse_core__update_post_meta_like_save_view_count(5996, 'view_count', 'add');
-	// $x = get_post_meta(5996, 'like_count', true); // 1
-	// $y = get_post_meta(5996, 'save_count', true); // 1
-	// $z = get_post_meta(5996, 'view_count', true); // 1
-
-	// var_dump($x, $y, $z);
-});

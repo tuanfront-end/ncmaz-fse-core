@@ -169,6 +169,7 @@ function Edit(props: EditProps<Attributes>) {
 				</p>
 			</InspectorControls>
 
+			{/* @ts-ignore */}
 			<div {...blockProps}>
 				<div {...innerBlocksProps}>
 					{children}

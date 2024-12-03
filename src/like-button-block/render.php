@@ -12,8 +12,8 @@ if ($comment_id) {
 	$current_post_id = $comment_id;
 }
 
-$isLiked = ncmazfse_core__check_user_like($current_post_id, $user_id);
-$likeCount = ncmazfse_core__get_post_likes_count($current_post_id);
+$isLiked = ncmazfse_core__check_client_is_liked($current_post_id, $user_id);
+$likeCount = ncmazfse_core__get_post_like_count($current_post_id);
 
 // Set the interactivity state.
 wp_interactivity_state(

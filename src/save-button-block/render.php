@@ -32,7 +32,7 @@ wp_interactivity_state(
 
 // Get the post likes.
 $saveCount = ncmazfse_core__get_post_save_count($current_post_id);
-$isSaved = ncmazfse_core__check_user_save($current_post_id, $user_id);
+$isSaved = ncmazfse_core__check_client_is_saved($current_post_id, $user_id);
 
 // Get the block attributes colors.
 $colorCssVars = [

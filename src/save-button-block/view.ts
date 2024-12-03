@@ -74,13 +74,7 @@ const { state } = store("ncmfse/save-button-btn", {
 							throw new Error("Server error");
 						}
 						const isSaved = Boolean(data.is_saved);
-						let saveCount = 0;
-
-						if (isSaved) {
-							saveCount = context.contextSaveCount + 1;
-						} else if (context.contextSaveCount > 0) {
-							saveCount = context.contextSaveCount - 1;
-						}
+						let saveCount = data.save_count;
 
 						// Update the local-context
 						context.contextSaveCount = saveCount;

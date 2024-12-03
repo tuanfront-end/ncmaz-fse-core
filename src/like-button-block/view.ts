@@ -74,13 +74,7 @@ const { state } = store("ncmazfse-core/like-button", {
 							throw new Error("Server error");
 						}
 						const isLiked = Boolean(data.is_liked);
-						let likeCount = 0;
-
-						if (isLiked) {
-							likeCount = context.contextLikeCount + 1;
-						} else if (context.contextLikeCount > 0) {
-							likeCount = context.contextLikeCount - 1;
-						}
+						let likeCount = data.like_count;
 
 						// Update the local-context
 						context.contextLikeCount = likeCount;
