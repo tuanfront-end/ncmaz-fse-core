@@ -279,6 +279,10 @@ function ncmazfse_core__handle_client_like_save_view_post($post_id, $user_id, $r
         }
     }
 
+    // Check if user_meta or cookie changed or not -------------------------------------
+    $update_result['is_meta_changed'] = $update_result['is_meta_changed'] ?? false;
+    $update_result['is_cookie_changed'] = $update_result['is_cookie_changed'] ?? false;
+
     // Update post meta / or Not update ---------------------------------------------------
     if ($update_result['is_meta_changed'] || $update_result['is_cookie_changed']) { // if user_meta or cookie changed
         if ($reaction === 'like') {
@@ -306,3 +310,253 @@ function ncmazfse_core__handle_client_like_save_view_post($post_id, $user_id, $r
         'update_result' => $update_result
     ];
 }
+
+
+
+
+// ==================== For version 1.4 above - Sync user meta view_count/like_count/save_count when update plugin. ====================
+// ==================== For version 1.4 above - Sync user meta view_count/like_count/save_count when update plugin. ====================
+// Will delete this code in the couple next version...
+
+// Sync post like -------------------
+add_action(
+    'admin_init',
+    function () {
+        // check form 
+        if (($_POST['ncmaz_fse_core_1_4_async_post_like'] ?? "") !== 'yes_ok') {
+            return;
+        }
+
+        // check option exists
+        if (get_option('ncmazfse_core_1_4_async_post_like_to_post_meta')) {
+            return;
+        }
+        update_option('ncmazfse_core_1_4_async_post_like_to_post_meta', true);
+
+        // get all post like
+        $post_likes = get_posts(array(
+            'post_type' => 'post_like',
+            'numberposts' => -1,
+            'post_status' => 'publish',
+        ));
+        if (empty($post_likes)) {
+            return;
+        }
+
+        // update post meta from post_like. Post_like title is post_id of post
+        foreach ($post_likes as $post_like) {
+            $post_id = $post_like->post_title;
+            $like_count = get_post_meta($post_id, 'like_count', true);
+            $like_count = empty($like_count) ? 0 : intval($like_count);
+            update_post_meta($post_id, 'like_count', $like_count + 1);
+        }
+    }
+);
+
+// Sync post save -------------------
+add_action(
+    'admin_init',
+    function () {
+        // check form 
+        if (($_POST['ncmaz_fse_core_1_4_async_post_save'] ?? "") !== 'yes_ok') {
+            return;
+        }
+
+        // check option exists
+        if (get_option('ncmazfse_core_1_4_async_post_save_to_post_meta')) {
+            return;
+        }
+        update_option('ncmazfse_core_1_4_async_post_save_to_post_meta', true);
+
+
+        // get all post save
+        $post_saves = get_posts(array(
+            'post_type' => 'post_save',
+            'numberposts' => -1,
+            'post_status' => 'publish',
+        ));
+        if (empty($post_saves)) {
+            return;
+        }
+
+        // update post meta from post_save. Post_save title is post_id of post
+        foreach ($post_saves as $post_save) {
+            $post_id = $post_save->post_title;
+            $save_count = get_post_meta($post_id, 'save_count', true);
+            $save_count = empty($save_count) ? 0 : intval($save_count);
+            update_post_meta($post_id, 'save_count', $save_count + 1);
+        }
+    }
+);
+
+// Sync post view -------------------
+add_action(
+    'admin_init',
+    function () {
+        // check form 
+        if (($_POST['ncmaz_fse_core_1_4_async_post_view'] ?? "") !== 'yes_ok') {
+            return;
+        }
+
+        // check option exists
+        if (get_option('ncmazfse_core_1_4_async_post_view_to_post_meta')) {
+            return;
+        }
+        update_option('ncmazfse_core_1_4_async_post_view_to_post_meta', true);
+
+        // get all post view
+        $post_views = get_posts(array(
+            'post_type' => 'post_view',
+            'numberposts' => -1,
+            'post_status' => 'publish',
+        ));
+        if (empty($post_views)) {
+            return;
+        }
+
+        // update post meta from post_view. Post_view title is post_id of post
+        foreach ($post_views as $post_view) {
+            $post_id = $post_view->post_title;
+            $view_count = get_post_meta($post_id, 'view_count', true);
+            $view_count = empty($view_count) ? 0 : intval($view_count);
+            update_post_meta($post_id, 'view_count', $view_count + 1);
+        }
+    }
+);
+
+// Sync user meta -------------------
+add_action('admin_init', function () {
+    // check form 
+    if (($_POST['ncmaz_fse_core_1_4_async_user_meta'] ?? "") !== 'yes_ok') {
+        return;
+    }
+
+    // check option exists
+    if (get_option('ncmazfse_core_1_4_async_user_meta')) {
+        return;
+    }
+    update_option('ncmazfse_core_1_4_async_user_meta', true);
+
+    // get all user
+    $users = get_users();
+
+    // each post like/save have post meta user_id is user_id of user and post_id is id of post. Now, create a user meta liked_posts/saved_posts to store all post_id that user liked/saved.
+    foreach ($users as $user) {
+        $user_id = $user->ID;
+        $liked_posts = [];
+        $saved_posts = [];
+
+        // check if user have liked_posts/saved_posts meta. Don't update if exists
+        $old_liked_posts = get_user_meta($user_id, 'liked_posts', true);
+        $old_saved_posts = get_user_meta($user_id, 'saved_posts', true);
+
+        if (empty($old_liked_posts)) {
+            // get all post like of user
+            $post_likes = get_posts(array(
+                'fields'     => 'ids',
+                'post_type' => 'post_like',
+                'numberposts' => -1,
+                'post_status' => 'publish',
+                'meta_key' => 'user_id',
+                'meta_value' => $user_id,
+            ));
+            // update user meta liked_posts and saved_posts
+            foreach ($post_likes as $post_id) {
+                $liked_posts[] = $post_id;
+            }
+            update_user_meta($user_id, 'liked_posts', $liked_posts);
+        }
+
+        if (empty($old_saved_posts)) {
+            // get all post save of user
+            $post_saves = get_posts(array(
+                'fields'     => 'ids',
+                'post_type' => 'post_save',
+                'numberposts' => -1,
+                'post_status' => 'publish',
+                'meta_key' => 'user_id',
+                'meta_value' => $user_id,
+            ));
+            // update user meta liked_posts and saved_posts
+            foreach ($post_saves as $post_id) {
+                $saved_posts[] = $post_id;
+            }
+            update_user_meta($user_id, 'saved_posts', $saved_posts);
+        }
+    }
+});
+
+// Show admin notice to sync data
+function ncmaz_fse_core__sample_admin_notice__error()
+{
+    $async_post_like_opt = get_option('ncmazfse_core_1_4_async_post_like_to_post_meta');
+    $async_post_save_opt = get_option('ncmazfse_core_1_4_async_post_save_to_post_meta');
+    $async_post_view_opt = get_option('ncmazfse_core_1_4_async_post_view_to_post_meta');
+    $async_user_meta_opt = get_option('ncmazfse_core_1_4_async_user_meta');
+    // check if all data is synced
+    if ($async_post_like_opt && $async_post_save_opt && $async_post_view_opt && $async_user_meta_opt) {
+        return;
+    }
+
+    $post_save = get_posts(array(
+        'fields' => 'ids',
+        'post_type' => 'post_save',
+        'numberposts' => 1,
+        'post_status' => 'publish',
+    ));
+    $post_like = get_posts(array(
+        'fields' => 'ids',
+        'post_type' => 'post_like',
+        'numberposts' => 1,
+        'post_status' => 'publish',
+    ));
+    $post_view = get_posts(array(
+        'fields' => 'ids',
+        'post_type' => 'post_view',
+        'numberposts' => 1,
+        'post_status' => 'publish',
+    ));
+
+    // check is new user
+    if (empty($post_save) && empty($post_like) && empty($post_view)) {
+        return;
+    }
+
+    $class = 'notice notice-warning';
+    $message = __('You have upgraded the Ncmaz FSE core plugin to version 1.4.0. To sync data about your Like/Save/View posts please click the sync button below.', 'ncmaz-fse-core');
+    $form_like = '<form method="post" action="#">
+        <input type="hidden" name="ncmaz_fse_core_1_4_async_post_like" value="yes_ok">
+        <input type="submit" value="1. Sync liked posts" class="button ">
+    </form>';
+    if ($async_post_like_opt || empty($post_like)) {
+        $form_like = '<button class="button" disabled>1. Sync liked posts</button>';
+    }
+    $form_save = '<form method="post" action="#">
+        <input type="hidden" name="ncmaz_fse_core_1_4_async_post_save" value="yes_ok">
+        <input type="submit" value="2. Sync saved posts" class="button ">
+    </form>';
+    if ($async_post_save_opt || empty($post_save)) {
+        $form_save = '<button class="button" disabled>2. Sync saved posts</button>';
+    }
+    $form_view = '<form method="post" action="#">
+        <input type="hidden" name="ncmaz_fse_core_1_4_async_post_view" value="yes_ok">
+        <input type="submit" value="3. Sync viewed posts" class="button ">
+    </form>';
+    if ($async_post_view_opt || empty($post_view)) {
+        $form_view = '<button class="button" disabled>3. Sync viewed posts</button>';
+    }
+    $form_user = '<form method="post" action="#">
+        <input type="hidden" name="ncmaz_fse_core_1_4_async_user_meta" value="yes_ok">
+        <input type="submit" value="4. Sync user meta" class="button action">
+    </form>';
+    if ($async_user_meta_opt) {
+        $form_user = '<button class="button" disabled>4. Sync user meta</button>';
+    }
+
+    printf('<div class="%1$s"><p>%2$s</p><p>Please read the <a href="https://nghiaxchis.gitbook.io/ncmaz-blog-magazine-full-site-editing-wordpress/basics/changelog" target="_blank" rel="noopener noreferrer">Changelog</a> for more details.</p>
+	<div style="display: flex; gap: 4px; padding-bottom: 0.5rem;">
+	%3$s %4$s %5$s %6$s </div></div>', esc_attr($class), esc_html($message), $form_like, $form_save, $form_view, $form_user);
+}
+add_action('admin_notices', 'ncmaz_fse_core__sample_admin_notice__error');
+
+// ==================== End sync user meta view_count/like_count/save_count when update plugin. ====================
