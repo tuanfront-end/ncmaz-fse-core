@@ -65,7 +65,8 @@ function Edit(props) {
     attributes,
     setAttributes,
     context: {
-      postId
+      postId,
+      postType
     },
     activeColor,
     activeBgColor,
@@ -80,21 +81,13 @@ function Edit(props) {
     customActiveColor,
     showCountText
   } = attributes;
+
+  // get the record of the post
   const {
-    records
-  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityRecords)("postType", "post_view", {
-    post_status: "publish",
-    per_page: 1,
-    meta_query: [{
-      key: "post_id",
-      value: postId,
-      compare: "="
-    }]
-  });
-  let viewCount = 0;
-  if (records?.length) {
-    viewCount = records[0].acf.view_count || 0;
-  }
+    record
+  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityRecord)("postType", postType, postId);
+  const postViewCount = postId ? record?.acf?.view_count || 0 : 99;
+
   //
   const colorGradientSettings = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.__experimentalUseMultipleOriginColorsAndGradients)();
   const colorSettings = [{
@@ -217,7 +210,7 @@ function Edit(props) {
     ...innerBlocksProps
   }, children, showCountText ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "nc__count"
-  }, viewCount) : null)));
+  }, postViewCount) : null)));
 
   // Other code will go here, don't forget or delete the closing curly brace!
 }

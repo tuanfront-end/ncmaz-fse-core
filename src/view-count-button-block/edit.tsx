@@ -1,5 +1,5 @@
 import { __ } from "@wordpress/i18n";
-import { useEntityRecords } from "@wordpress/core-data";
+import { useEntityRecord } from "@wordpress/core-data";
 import {
 	InspectorControls,
 	useBlockProps,
@@ -20,7 +20,7 @@ function Edit(props: EditProps<Attributes>) {
 		clientId,
 		attributes,
 		setAttributes,
-		context: { postId },
+		context: { postId, postType },
 		activeColor,
 		activeBgColor,
 		activeBorderColor,
@@ -36,20 +36,14 @@ function Edit(props: EditProps<Attributes>) {
 		showCountText,
 	} = attributes;
 
-	const { records } = useEntityRecords<Record<string, any>>(
+	// get the record of the post
+	const { record } = useEntityRecord<Record<string, any>>(
 		"postType",
-		"post_view",
-		{
-			post_status: "publish",
-			per_page: 1,
-			meta_query: [{ key: "post_id", value: postId, compare: "=" }],
-		},
+		postType as string,
+		postId as number,
 	);
+	const postViewCount = postId ? record?.acf?.view_count || 0 : 99;
 
-	let viewCount = 0;
-	if (records?.length) {
-		viewCount = records[0].acf.view_count || 0;
-	}
 	//
 	const colorGradientSettings = useMultipleOriginColorsAndGradients() as any;
 	const colorSettings = [
@@ -177,11 +171,12 @@ function Edit(props: EditProps<Attributes>) {
 				</p>
 			</InspectorControls>
 
+			{/* @ts-ignore */}
 			<div {...blockProps}>
 				<div {...innerBlocksProps}>
 					{children}
 					{showCountText ? (
-						<span className="nc__count">{viewCount}</span>
+						<span className="nc__count">{postViewCount}</span>
 					) : null}
 				</div>
 			</div>

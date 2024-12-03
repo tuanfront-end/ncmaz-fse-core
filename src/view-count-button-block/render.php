@@ -2,24 +2,10 @@
 global $post;
 
 // Generate unique id for aria-controls.
-$current_post_id =  $block->context['postId'] ?? 0;
+$current_post_id = $block->context['postId'] ?? 0;
 
 // Get the post view count
-$args = array(
-	'meta_query' => array(
-		array('key' => 'post_id', 'value' => $current_post_id)
-	),
-	'post_type' => 'post_view',
-	'posts_per_page' => 1
-);
-$post_views = get_posts($args);
-
-if (empty($post_views)) {
-	$view_count = 0;
-} else {
-	$view_count = get_post_meta($post_views[0]->ID, 'view_count', true);
-}
-
+$viewCount = ncmazfse_core__get_post_view_count($current_post_id);
 // get link to the post
 $post_link = get_permalink($current_post_id);
 
@@ -55,7 +41,7 @@ foreach ($colorCssVars as $key => $value) {
 	echo $content; ?>
 	<?php if ($attributes["showCountText"]): ?>
 		<span class="nc__count">
-			<?php echo esc_html($view_count); ?>
+			<?php echo esc_html($viewCount); ?>
 		</span>
 	<?php endif; ?>
 

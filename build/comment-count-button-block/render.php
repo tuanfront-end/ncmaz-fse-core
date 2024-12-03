@@ -1,6 +1,4 @@
 <?php
-global $post;
-
 // Generate unique id for aria-controls.
 $current_post_id =  $block->context['postId'] ?? 0;
 
@@ -8,7 +6,6 @@ $current_post_id =  $block->context['postId'] ?? 0;
 $comment_count = get_comments_number($current_post_id);
 // get link to the post comment form 
 $comment_link = get_comments_link($current_post_id);
-
 
 // Get the block attributes colors.
 $colorCssVars = [

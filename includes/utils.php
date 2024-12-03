@@ -1,12 +1,14 @@
 <?php
 
-function my_var_export($value)
-{
+if (!function_exists('my_var_export')):
+    function my_var_export($value)
+    {
+        echo '<pre>';
+        var_export($value);
+        echo '</pre>';
+    }
+endif;
 
-    echo '<pre>';
-    var_export($value);
-    echo '</pre>';
-}
 
 if (!function_exists('ncmfse_core_getSpacingPresetCssVar')):
     function ncmfse_core_getSpacingPresetCssVar($value)

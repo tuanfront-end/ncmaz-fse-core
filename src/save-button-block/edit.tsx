@@ -1,5 +1,5 @@
 import { __ } from "@wordpress/i18n";
-import { useEntityRecords } from "@wordpress/core-data";
+import { useEntityRecord } from "@wordpress/core-data";
 import {
 	InspectorControls,
 	useBlockProps,
@@ -20,7 +20,7 @@ function Edit(props: EditProps<Attributes>) {
 		clientId,
 		attributes,
 		setAttributes,
-		context: { postId },
+		context: { postId, postType },
 		activeColor,
 		activeBgColor,
 		activeBorderColor,
@@ -36,30 +36,23 @@ function Edit(props: EditProps<Attributes>) {
 		showCountText,
 	} = attributes;
 
-	const currentUserId = window.wp.data.select("core").getCurrentUser()?.id || 0;
+	const currentUser = window.wp.data.select("core").getCurrentUser() || {};
 
-	const { records } = useEntityRecords("postType", "post_save", {
-		post_status: "publish",
-		per_page: -1,
-		meta_key: "post_id",
-		meta_value: postId,
-	});
-	const postSavesCount = records?.length || 0;
-
-	// check if the current user liked the post
-	const { records: isSavedRecords } = useEntityRecords(
+	// get the record of the post
+	const { record } = useEntityRecord<Record<string, any>>(
 		"postType",
-		"post_save",
-		{
-			post_status: "publish",
-			per_page: -1,
-			meta_query: [
-				{ key: "user_id", value: currentUserId, compare: "=" },
-				{ key: "post_id", value: postId, compare: "=" },
-			],
-		},
+		postType as string,
+		postId as number,
 	);
-	const isSaved = (isSavedRecords?.length || 0) > 0;
+	const postSaveCount = postId ? record?.acf?.save_count || 0 : 99;
+
+	// liked_posts is a string of post ids separated by commas: "1,2,3,4"
+	let user_saved_posts: string = currentUser?.acf?.saved_posts || "";
+	if (typeof user_saved_posts !== "string") {
+		user_saved_posts = "";
+	}
+	const savedPosts = user_saved_posts.split(",");
+	const isSaved = savedPosts.includes(String(postId as number));
 
 	//
 	const colorGradientSettings = useMultipleOriginColorsAndGradients() as any;
@@ -188,11 +181,12 @@ function Edit(props: EditProps<Attributes>) {
 				</p>
 			</InspectorControls>
 
+			{/* @ts-ignore */}
 			<div {...blockProps}>
 				<div {...innerBlocksProps}>
 					{children}
 					{showCountText ? (
-						<span className="nc__count">{postSavesCount}</span>
+						<span className="nc__count">{postSaveCount}</span>
 					) : null}
 				</div>
 			</div>
