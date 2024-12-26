@@ -11,7 +11,6 @@ interface TContext {
 }
 
 interface TState {
-	saveButtonNonce: string;
 	ajaxUrl: string;
 	userId: number;
 	saveCount: number;
@@ -56,39 +55,63 @@ const { state } = store("ncmfse/save-button-btn", {
 				// Update the state
 				state.loadingList.push(postId);
 
+				// Get the nonce
+				const noneFormData = new FormData();
+				noneFormData.append("action", "get_like_save_view_block_nonce");
+				noneFormData.append("block_type", "save_button");
+
 				// Send the data to the server
 				const formData = new FormData();
 				formData.append("action", "handle_save");
-				formData.append("_ajax_nonce", state.saveButtonNonce);
 				formData.append("post_id", postId.toString());
 				formData.append("user_id", state.userId.toString());
 				formData.append("handle", state.isSaved ? "remove" : "add");
 
 				fetch(state.ajaxUrl, {
 					method: "POST",
-					body: formData,
+					body: noneFormData,
 				})
-					.then((response) => response.json())
-					.then(({ data, success }) => {
-						if (!success) {
+					.then((res1) => res1.json())
+					.then((nonceData) => {
+						if (!nonceData?.success) {
 							throw new Error("Server error");
 						}
-						const isSaved = Boolean(data.is_saved);
-						let saveCount = data.save_count;
 
-						// Update the local-context
-						context.contextSaveCount = saveCount;
-						context.contextIsSaved = isSaved;
+						// add the nonce to the form data
+						formData.append("_ajax_nonce", nonceData?.data?.nonce);
 
-						state.saveData = {
-							...state.saveData,
-							[postId]: {
-								isSaved,
-								saveCount,
-							},
-						};
+						fetch(state.ajaxUrl, {
+							method: "POST",
+							body: formData,
+						})
+							.then((response) => response.json())
+							.then(({ data, success }) => {
+								if (!success) {
+									throw new Error("Server error");
+								}
+								const isSaved = Boolean(data.is_saved);
+								let saveCount = data.save_count;
+
+								// Update the local-context
+								context.contextSaveCount = saveCount;
+								context.contextIsSaved = isSaved;
+
+								state.saveData = {
+									...state.saveData,
+									[postId]: {
+										isSaved,
+										saveCount,
+									},
+								};
+							})
+							.finally(() => {
+								state.loadingList = state.loadingList.filter(
+									(id) => id !== postId,
+								);
+							});
 					})
-					.finally(() => {
+					.catch((e) => {
+						console.log("Error Server data!", e);
 						state.loadingList = state.loadingList.filter((id) => id !== postId);
 					});
 			} catch (e) {

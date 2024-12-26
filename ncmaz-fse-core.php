@@ -5,7 +5,7 @@
  * Description:       Ncmaz Fse Core is a plugin that provides some custom blocks for Full Site Editing.
  * Requires at least: 6.5
  * Requires PHP:      7.4
- * Version:           1.4.0
+ * Version:           1.4.1
  * Author:            BooliiTheme
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
-define('NCMAZ_FSE_CORE_VERSION', '1.4.0');
+define('NCMAZ_FSE_CORE_VERSION', '1.4.1');
 define('NCMAZ_FSE_CORE_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('NCMAZ_FSE_CORE_PLUGIN_BASE', plugin_basename(__FILE__));
 define('NCMAZ_FSE_CORE_PLUGIN_FILE', __FILE__);

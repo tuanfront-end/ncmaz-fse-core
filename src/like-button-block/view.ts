@@ -11,7 +11,6 @@ interface TContext {
 }
 
 interface TState {
-	likeButtonNonce: string;
 	ajaxUrl: string;
 	userId: number;
 	isLiked: boolean;
@@ -56,39 +55,64 @@ const { state } = store("ncmazfse-core/like-button", {
 				// Update the state
 				state.loadingList.push(postId);
 
+				// Get the nonce
+				const noneFormData = new FormData();
+				noneFormData.append("action", "get_like_save_view_block_nonce");
+				noneFormData.append("block_type", "like_button");
+
 				// Send the data to the server
 				const formData = new FormData();
 				formData.append("action", "handle_like");
-				formData.append("_ajax_nonce", state.likeButtonNonce);
 				formData.append("post_id", postId.toString());
 				formData.append("user_id", state.userId.toString());
 				formData.append("handle", state.isLiked ? "remove" : "add");
 
 				fetch(state.ajaxUrl, {
 					method: "POST",
-					body: formData,
+					body: noneFormData,
 				})
-					.then((response) => response.json())
-					.then(({ data, success }) => {
-						if (!success) {
+					.then((res1) => res1.json())
+					.then((nonceData) => {
+						if (!nonceData?.success) {
 							throw new Error("Server error");
 						}
-						const isLiked = Boolean(data.is_liked);
-						let likeCount = data.like_count;
 
-						// Update the local-context
-						context.contextLikeCount = likeCount;
-						context.contextIsLiked = isLiked;
+						// add the nonce to the form data
+						formData.append("_ajax_nonce", nonceData?.data?.nonce);
 
-						state.likeData = {
-							...state.likeData,
-							[postId]: {
-								likeCount,
-								isLiked,
-							},
-						};
+						fetch(state.ajaxUrl, {
+							method: "POST",
+							body: formData,
+						})
+							.then((res2) => res2.json())
+							.then(({ data, success }) => {
+								if (!success) {
+									throw new Error("Server error");
+								}
+
+								const isLiked = Boolean(data.is_liked);
+								let likeCount = data.like_count;
+
+								// Update the local-context
+								context.contextLikeCount = likeCount;
+								context.contextIsLiked = isLiked;
+
+								state.likeData = {
+									...state.likeData,
+									[postId]: {
+										likeCount,
+										isLiked,
+									},
+								};
+							})
+							.finally(() => {
+								state.loadingList = state.loadingList.filter(
+									(id) => id !== postId,
+								);
+							});
 					})
-					.finally(() => {
+					.catch((e) => {
+						console.log("Error Server data!", e);
 						state.loadingList = state.loadingList.filter((id) => id !== postId);
 					});
 			} catch (e) {
