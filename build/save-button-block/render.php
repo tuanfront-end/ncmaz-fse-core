@@ -10,7 +10,7 @@ wp_interactivity_state(
 	'ncmfse/save-button-btn',
 	[
 		'ajaxUrl' => admin_url('admin-ajax.php'),
-		'saveButtonNonce'   => wp_create_nonce('save_button_nonce'),
+		// 'saveButtonNonce'   => wp_create_nonce('save_button_nonce'),
 		"userId" => $user_id,
 		'saveCount' => function () {
 			$context = wp_interactivity_get_context();

@@ -20,7 +20,6 @@ wp_interactivity_state(
 	'ncmazfse-core/like-button',
 	[
 		'ajaxUrl' 			=> admin_url('admin-ajax.php'),
-		'likeButtonNonce'   => wp_create_nonce('like_button_nonce'),
 		'userId' 			=> $user_id,
 		'likeCount' => function () {
 			$context = wp_interactivity_get_context();

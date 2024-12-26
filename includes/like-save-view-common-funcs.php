@@ -1,6 +1,30 @@
 <?php
 
 /**
+ *  Get nonce for like, save, view block
+ *  @return json
+ */
+function ncmazfse_core__get_block_like_save_view_nonce_callback()
+{
+    $block_type  = sanitize_text_field(wp_unslash($_POST['block_type'] ?? "")); // like / view / save
+    $nonce = '';
+
+    if ($block_type === 'like_button') {
+        $nonce = wp_create_nonce('like_button_nonce');
+    } else if ($block_type === 'save_button') {
+        $nonce = wp_create_nonce('save_button_nonce');
+    } else if ($block_type === 'view') {
+        $nonce = wp_create_nonce('handle_view_nonce');
+    }
+
+    wp_send_json_success(array('nonce' => $nonce));
+    wp_die();
+}
+add_action('wp_ajax_get_like_save_view_block_nonce', 'ncmazfse_core__get_block_like_save_view_nonce_callback');
+add_action('wp_ajax_nopriv_get_like_save_view_block_nonce', 'ncmazfse_core__get_block_like_save_view_nonce_callback');
+
+
+/**
  * 
  * @param int $post_id
  * @param string $meta_key // like_count / view_count / save_count
