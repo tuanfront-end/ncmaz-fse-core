@@ -21,7 +21,9 @@ if (!defined('IS_NCMFSE_TOOGLE_DARK_MODE_BLOCK_INSERTED')) {
 				} else {
 					if(localStorage.theme === "dark"){
 						document.documentElement.classList.add("dark");
-						} else { document.documentElement.classList.remove("dark"); 	}
+					} else { 
+						document.documentElement.classList.remove("dark"); 	
+					}
 				}
 				</script>';
 		}, 1);
@@ -29,8 +31,10 @@ if (!defined('IS_NCMFSE_TOOGLE_DARK_MODE_BLOCK_INSERTED')) {
 		add_action('wp_head', function () {
 			echo '<script type="text/javascript">
 				if(localStorage.theme === "dark"){
-						document.documentElement.classList.add("dark");
-						} else { document.documentElement.classList.remove("dark"); }
+					document.documentElement.classList.add("dark");
+				} else { 
+					document.documentElement.classList.remove("dark"); 
+				}
 				</script>';
 		}, 1);
 	}
@@ -84,7 +88,7 @@ $light_icon = $light_icons[$attributes['lightIcon']];
 		<?php echo wp_kses($dark_icon, $allowed_tags); ?>
 	</div>
 
-	<div class="wp-block-ncmfse-toggle-dark-mode__icon wp-block-ncmfse-toggle-dark-mode__icon--light">
+	<div class="wp-block-ncmfse-toggle-dark-mode__icon wp-block-ncmfse-toggle-dark-mode__icon--light activated">
 		<?php echo wp_kses($light_icon, $allowed_tags); ?>
 	</div>
 </a>
