@@ -22,7 +22,7 @@ $contextQueryId = $block->context['ncmazfse_termQueryId'] ?? '';
 $inherit_query = (isset($block->context['ncmazfse_termQuery']['inherit']) && $block->context['ncmazfse_termQuery']['inherit']);
 $term_query    = array(
 	'taxonomy' => 'category',
-	'orderby ' => $contextQuery['orderby'] ?? 'name',
+	'orderby' => $contextQuery['orderby'] ?? $contextQuery['orderBy'] ?? 'name',
 	'order'    => $contextQuery['order'] ?? 'ASC',
 );
 

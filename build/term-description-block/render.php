@@ -2,7 +2,6 @@
 
 /**
  * @param array    $attributes Block attributes.
- * @param string   $content    Block default content.
  * @param WP_Block $block      Block instance.
  * @return string Returns the filtered post excerpt for the current post wrapped inside "p" tags.
  */
@@ -36,9 +35,10 @@ if (isset($attributes['style']['elements']['link']['color']['text'])) {
 }
 
 $wrapper_attributes = get_block_wrapper_attributes(array('class' => implode(' ', $classes)));
-$content               = '<p class="wp-block-ncmfse-term-description__description">' . $description . '</p>';
 ?>
 
 <div <?php echo wp_kses_data($wrapper_attributes); ?>>
-	<?php esc_html($content); ?>
+	<?php if (!empty($description)) : ?>
+		<p class="wp-block-ncmfse-term-description__description"><?php echo esc_html($description); ?></p>
+	<?php endif; ?>
 </div>
