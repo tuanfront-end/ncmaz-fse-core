@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Plugin Name:       Ncmaz Fse Core
- * Description:       Ncmaz Fse Core is a plugin that provides some custom blocks for Full Site Editing.
+ * Plugin Name:       Ciseco Fse Core
+ * Description:       Ciseco Fse Core is a plugin that provides some custom blocks for Full Site Editing.
  * Requires at least: 6.5
  * Requires PHP:      7.4
  * Version:           1.4.3
  * Author:            BooliiTheme
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       ncmaz-fse-core
+ * Text Domain:       ciseco-fse-core
  *
  * @package CreateBlock
  */
@@ -18,43 +18,20 @@ if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
-define('NCMAZ_FSE_CORE_VERSION', '1.4.3');
-define('NCMAZ_FSE_CORE_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('NCMAZ_FSE_CORE_PLUGIN_BASE', plugin_basename(__FILE__));
-define('NCMAZ_FSE_CORE_PLUGIN_FILE', __FILE__);
-define('NCMAZ_FSE_CORE_PLUGIN_ASSETS', NCMAZ_FSE_CORE_PLUGIN_URL . 'assets/');
-define('NCMAZ_FSE_CORE_PLUGIN_BUILD', NCMAZ_FSE_CORE_PLUGIN_URL . 'build/');
-define('NCMAZ_FSE_CORE_PLUGIN_SRC', NCMAZ_FSE_CORE_PLUGIN_URL . 'src/');
-define('NCMAZ_FSE_CORE_PLUGIN_INCLUDES', NCMAZ_FSE_CORE_PLUGIN_URL . 'includes/');
-
-// register_activation_hook function to run code when the plugin is activated.
-function ncmaz_fse_core_plugin_activation_function()
-{
-	if (get_option('ncmaz_fse_core_activation_created')) {
-		return;
-	}
-	// ...
-	update_option('ncmaz_fse_core_activation_created', true);
-}
-// Đăng ký hook kích hoạt
-register_activation_hook(__FILE__, 'ncmaz_fse_core_plugin_activation_function');
+define('CISECO_FSE_CORE_VERSION', '0.0.1');
+define('CISECO_FSE_CORE_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('CISECO_FSE_CORE_PLUGIN_BASE', plugin_basename(__FILE__));
+define('CISECO_FSE_CORE_PLUGIN_FILE', __FILE__);
+define('CISECO_FSE_CORE_PLUGIN_ASSETS', CISECO_FSE_CORE_PLUGIN_URL . 'assets/');
+define('CISECO_FSE_CORE_PLUGIN_BUILD', CISECO_FSE_CORE_PLUGIN_URL . 'build/');
+define('CISECO_FSE_CORE_PLUGIN_SRC', CISECO_FSE_CORE_PLUGIN_URL . 'src/');
+define('CISECO_FSE_CORE_PLUGIN_INCLUDES', CISECO_FSE_CORE_PLUGIN_URL . 'includes/');
 
 // 
-function ncmaz_fse_core_register_blocks_init()
+function ciseco_fse_core_register_blocks_init()
 {
 	$ncmfse_blocks = [
 		'common-css-block',
-		'like-button-block',
-		'save-button-block',
-		'comment-count-button-block',
-		'reading-time-block',
-		'view-count-button-block',
-		'term-query-loop-block',
-		'term-template-block',
-		'term-name-block',
-		'term-description-block',
-		'term-count-block',
-		'term-featured-image-block',
 		'snap-scroll-arrows-block',
 		'snap-scroll-arrow-next-block',
 		'snap-scroll-arrow-previous-block',
@@ -64,35 +41,20 @@ function ncmaz_fse_core_register_blocks_init()
 		'dropdown-menu-trigger-block',
 		'dropdown-menu-content-block',
 		'dropdown-menu-item-block',
-		'current-user-name-block',
-		'reading-progress-block',
-		'post-format-icon-block',
 		'toggle-dark-mode-block',
-		'post-media-play-button-block',
-		'post-media-player-block',
-		"post-video-player-block",
 		//  SOME CUSTOM BLOCKS
 		'enable-linked-groups',
 		'enable-snapping-templates',
-		'enable-logged-user-avatar',
-		'enable-saved-liked-post-query-loop',
 	];
 	foreach ($ncmfse_blocks as $block) {
 		register_block_type(__DIR__ . '/build/' . $block);
 	}
 }
-add_action('init', 'ncmaz_fse_core_register_blocks_init');
+add_action('init', 'ciseco_fse_core_register_blocks_init');
 
 //  Import file utils.php
 require_once plugin_dir_path(__FILE__) . 'includes/hooks.php';
 require_once plugin_dir_path(__FILE__) . 'includes/utils.php';
-require_once plugin_dir_path(__FILE__) . 'includes/acf.php';
-require_once plugin_dir_path(__FILE__) . 'includes/like-save-view-common-funcs.php';
-require_once plugin_dir_path(__FILE__) . 'includes/like-handler.php';
-require_once plugin_dir_path(__FILE__) . 'includes/save-handler.php';
-require_once plugin_dir_path(__FILE__) . 'includes/view-handler.php';
-require_once plugin_dir_path(__FILE__) . 'includes/term-blocks-funcs.php';
-require_once plugin_dir_path(__FILE__) . 'includes/nc-mailpoet-form-handler.php';
 
 // enqueue scripts
 require_once plugin_dir_path(__FILE__) . 'includes/enqueue-scripts.php';
@@ -103,7 +65,7 @@ require_once plugin_dir_path(__FILE__) . 'includes/enqueue-scripts.php';
  * 
  * @since 0.1.0
  */
-function ncmazfse_enable_linked_groups_block_styles()
+function ciseco_enable_linked_groups_block_styles()
 {
 	wp_enqueue_block_style(
 		'core/group',
@@ -115,9 +77,9 @@ function ncmazfse_enable_linked_groups_block_styles()
 		)
 	);
 }
-add_action('init', 'ncmazfse_enable_linked_groups_block_styles');
+add_action('init', 'ciseco_enable_linked_groups_block_styles');
 
-function ncmazfse_enable_linked_groups_render_block($block_content, $block, $instance)
+function ciseco_enable_linked_groups_render_block($block_content, $block, $instance)
 {
 	if (! isset($block['attrs']['href']) && ! isset($block['attrs']['linkDestination'])) {
 		return $block_content;
@@ -186,7 +148,7 @@ function ncmazfse_enable_linked_groups_render_block($block_content, $block, $ins
 
 	return $block_content;
 }
-add_filter('render_block_core/group', 'ncmazfse_enable_linked_groups_render_block', 10, 3);
+add_filter('render_block_core/group', 'ciseco_enable_linked_groups_render_block', 10, 3);
 
 /**
  * Enable border for paragraph.
@@ -195,7 +157,7 @@ add_filter('render_block_core/group', 'ncmazfse_enable_linked_groups_render_bloc
  * @param string $block_type The block type name, including namespace.
  * @return array             The modified block arguments.
  */
-function ncmazfse_enable_border_to_paragraph_blocks($args, $block_type)
+function ciseco_enable_border_to_paragraph_blocks($args, $block_type)
 {
 
 	// Only add the filter to Media & Text blocks.
@@ -210,7 +172,7 @@ function ncmazfse_enable_border_to_paragraph_blocks($args, $block_type)
 
 	return $args;
 }
-add_filter('register_block_type_args', 'ncmazfse_enable_border_to_paragraph_blocks', 10, 2);
+add_filter('register_block_type_args', 'ciseco_enable_border_to_paragraph_blocks', 10, 2);
 
 
 /**
@@ -220,7 +182,7 @@ add_filter('register_block_type_args', 'ncmazfse_enable_border_to_paragraph_bloc
  * @param string $block_type The block type name, including namespace.
  * @return array             The modified block arguments.
  */
-function ncmazfse_core_enable_typography_to_navigation_submenu_blocks($args, $block_type)
+function ciseco_core_enable_typography_to_navigation_submenu_blocks($args, $block_type)
 {
 	if ('core/navigation-submenu' === $block_type) {
 		$args['supports'] ??= [];
@@ -231,7 +193,7 @@ function ncmazfse_core_enable_typography_to_navigation_submenu_blocks($args, $bl
 	}
 	return $args;
 }
-add_filter('register_block_type_args', 'ncmazfse_core_enable_typography_to_navigation_submenu_blocks', 10, 2);
+add_filter('register_block_type_args', 'ciseco_core_enable_typography_to_navigation_submenu_blocks', 10, 2);
 
 
 
@@ -241,7 +203,7 @@ add_filter('register_block_type_args', 'ncmazfse_core_enable_typography_to_navig
  * 
  * @since 0.1.0
  */
-function ncmazfse_enable_snapping_templates_block_styles()
+function ciseco_enable_snapping_templates_block_styles()
 {
 	wp_enqueue_block_style(
 		'ncmfse/term-template',
@@ -262,15 +224,15 @@ function ncmazfse_enable_snapping_templates_block_styles()
 		)
 	);
 }
-add_action('init', 'ncmazfse_enable_snapping_templates_block_styles');
+add_action('init', 'ciseco_enable_snapping_templates_block_styles');
 
-function ncmazfse_enable_snapping_templates_render_block($block_content, $block, $instance)
+function ciseco_enable_snapping_templates_render_block($block_content, $block, $instance)
 {
 	if (! ($block['attrs']['isHorizontalScrollSnapping'] ?? "")) {
 		return $block_content;
 	}
 
-	$queryId = $instance->context['queryId'] ?? $instance->context['ncmazfse_termQueryId'] ?? "";
+	$queryId = $instance->context['queryId'] ?? $instance->context['ciseco_termQueryId'] ?? "";
 
 	$childWidth             = $block['attrs']['childWidth'] ?? '';
 	$showScrollbar          = $block['attrs']['showScrollbar'] ?? '';
@@ -287,8 +249,8 @@ function ncmazfse_enable_snapping_templates_render_block($block_content, $block,
 
 	return $block_content;
 }
-add_filter('render_block_ncmfse/term-template', 'ncmazfse_enable_snapping_templates_render_block', 10, 3);
-add_filter('render_block_core/post-template', 'ncmazfse_enable_snapping_templates_render_block', 10, 3);
+add_filter('render_block_ncmfse/term-template', 'ciseco_enable_snapping_templates_render_block', 10, 3);
+add_filter('render_block_core/post-template', 'ciseco_enable_snapping_templates_render_block', 10, 3);
 
 
 /**
@@ -303,7 +265,7 @@ add_filter('render_block_core/post-template', 'ncmazfse_enable_snapping_template
  * @param array $areas Existing array of template part areas.
  * @return array Modified array of template part areas including the new mega menu area.
  */
-function ncmfse_mega_menu_template_part_areas(array $areas)
+function ciseco_mega_menu_template_part_areas(array $areas)
 {
 
 	$areas[] = array(
@@ -316,13 +278,13 @@ function ncmfse_mega_menu_template_part_areas(array $areas)
 
 	return $areas;
 }
-add_filter('default_wp_template_part_areas', 'ncmfse_mega_menu_template_part_areas');
+add_filter('default_wp_template_part_areas', 'ciseco_mega_menu_template_part_areas');
 
 
 /**
  * Enable shadow for Group blocks.
  */
-function ncmazfse_core_enable_shadow_to_group_blocks($args, $block_type)
+function ciseco_core_enable_shadow_to_group_blocks($args, $block_type)
 {
 	// Only apply the filter to Media & Text blocks.
 	if ('core/group' !== $block_type) {
@@ -334,13 +296,13 @@ function ncmazfse_core_enable_shadow_to_group_blocks($args, $block_type)
 
 	return $args;
 }
-add_filter('register_block_type_args', 'ncmazfse_core_enable_shadow_to_group_blocks', 10, 2);
+add_filter('register_block_type_args', 'ciseco_core_enable_shadow_to_group_blocks', 10, 2);
 
 
 /**
  * Enable spacing for core/query-pagination blocks.
  */
-function ncmazfse_core_enable_spacing_to_loop_pagination_blocks($args, $block_type)
+function ciseco_enable_spacing_to_loop_pagination_blocks($args, $block_type)
 {
 	// Only apply the filter to core/query-pagination.
 	if ('core/query-pagination' !== $block_type) {
@@ -353,13 +315,13 @@ function ncmazfse_core_enable_spacing_to_loop_pagination_blocks($args, $block_ty
 	$args['supports']['spacing']['blockGap'] = true;
 	return $args;
 }
-add_filter('register_block_type_args', 'ncmazfse_core_enable_spacing_to_loop_pagination_blocks', 10, 2);
+add_filter('register_block_type_args', 'ciseco_enable_spacing_to_loop_pagination_blocks', 10, 2);
 
 
 /**
  * Enable Typo for outermost/social-sharing blocks.
  */
-function ncmazfse_core_enable_typo_to_outermost_social_sharing_blocks($args, $block_type)
+function ciseco_enable_typo_to_outermost_social_sharing_blocks($args, $block_type)
 {
 	// Only apply the filter to outermost/social-sharing.
 	if ('outermost/social-sharing' !== $block_type) {
@@ -372,13 +334,13 @@ function ncmazfse_core_enable_typo_to_outermost_social_sharing_blocks($args, $bl
 	$args['supports']['typography']['__experimentalFontWeight'] = true;
 	return $args;
 }
-add_filter('register_block_type_args', 'ncmazfse_core_enable_typo_to_outermost_social_sharing_blocks', 10, 2);
+add_filter('register_block_type_args', 'ciseco_enable_typo_to_outermost_social_sharing_blocks', 10, 2);
 
 
 /**
  * Enable Logged in User Avatar
  */
-function ncmazfse_enable_logged_in_user_avatar_render_block($block_content, $block, $instance)
+function ciseco_enable_logged_in_user_avatar_render_block($block_content, $block, $instance)
 {
 	if (! ($block['attrs']['isCurrentLogged'] ?? false) || isset($block->context['commentId']) || !is_user_logged_in()) {
 		return $block_content;
@@ -408,109 +370,4 @@ function ncmazfse_enable_logged_in_user_avatar_render_block($block_content, $blo
 
 	return $block_content;
 }
-add_filter('render_block_core/avatar', 'ncmazfse_enable_logged_in_user_avatar_render_block', 10, 3);
-
-
-/**
- *  Enable Saved Liked Post Query Loop
- *  Change context query args and query vars for query blocks
- */
-function ncmaz_fse_core_register_more_context_to_all_query_blocks($args, $block_type)
-{
-	// add providesContext to only core/query block
-	if ($block_type === 'core/query') {
-		$args['attributes']['showUserSavedPosts'] = [
-			'type' => 'boolean',
-			'default' => false,
-		];
-		$args['attributes']['showUserLikedPosts'] = [
-			'type' => 'boolean',
-			'default' => false,
-		];
-		$args['provides_context']['showUserSavedPosts'] = 'showUserSavedPosts';
-		$args['provides_context']['showUserLikedPosts'] = 'showUserLikedPosts';
-		return $args;
-	}
-
-	// check $block_type is not in $all_query_blocks
-	$all_query_blocks = ['core/post-template', 'core/query-pagination', 'core/query-pagination-next', 'core/query-pagination-numbers', 'core/query-no-results'];
-	// Not to need to modify with 'core/query-pagination-previous'. Because it is use query.
-	if (!in_array($block_type, $all_query_blocks)) {
-		return $args;
-	}
-
-	if (! isset($args['uses_context'])) {
-		$args['uses_context'] = array();
-	}
-	$args['uses_context'][] = "showUserLikedPosts";
-	$args['uses_context'][] = "showUserSavedPosts";
-
-	return $args;
-}
-add_filter('register_block_type_args', 'ncmaz_fse_core_register_more_context_to_all_query_blocks', 10, 2);
-
-
-function ncmaz_fse_core_modify_query_vars_for_query_blocks(array $query, WP_Block $block)
-{
-	$all_query_blocks = ['core/post-template', 'core/query-pagination', 'core/query-pagination-next', 'core/query-pagination-numbers', 'core/query-no-results'];
-	// Not to need to modify with 'core/query-pagination-previous'. Because it is use query.
-	if (!in_array($block->name, $all_query_blocks)) {
-		return $query;
-	}
-
-	$context = $block->context;
-	if (!($context['showUserLikedPosts'] ?? false) && !($context['showUserSavedPosts'] ?? false)) {
-		return $query;
-	}
-
-	// Get user ids
-	$user_ids = [];
-	if (!empty($context['query']['author'] ?? '')) {
-		$user_ids = explode(',', $context['query']['author']);
-	} else if (is_user_logged_in()) {
-		$user_ids = [get_current_user_id()];
-	}
-
-	// Get post ids by context showUserSavedPosts / showUserLikedPosts
-	$post_ids = [];
-	if ($context['showUserSavedPosts'] ?? false) {
-		if (!empty($user_ids)) {
-			foreach ($user_ids as $user_id) {
-				$user_saved_posts = ncmazfse_core__get_posts_like_save_view_by_user($user_id, 'saved_posts');
-				$post_ids = array_merge($post_ids, $user_saved_posts);
-			}
-		} else {
-			// _anonymous user. Get post ids by cookie
-			$post_ids = ncmazfse_core__get_like_save_view_posts_from_cookie('saved_posts');
-		}
-	}
-	if ($context['showUserLikedPosts'] ?? false) {
-		if (!empty($user_ids)) {
-			foreach ($user_ids as $user_id) {
-				$user_liked_posts = ncmazfse_core__get_posts_like_save_view_by_user($user_id, 'liked_posts');
-				$post_ids = array_merge($post_ids, $user_liked_posts);
-			}
-		} else {
-			// _anonymous user. Get post ids by cookie
-			$post_ids = ncmazfse_core__get_like_save_view_posts_from_cookie('liked_posts');
-		}
-	}
-
-	$new_query = array_merge($query, [
-		'post__in' => empty($post_ids) ? [0] : $post_ids,
-		'post_status' => 'publish',
-		'ignore_sticky_posts' => true,
-		'exclude' => [],
-	]);
-
-	// unset post__not_in
-	if (isset($new_query['post__not_in'])) {
-		unset($new_query['post__not_in']);
-	}
-	if (isset($new_query['author__in'])) {
-		unset($new_query['author__in']);
-	}
-
-	return $new_query;
-}
-add_filter('query_loop_block_query_vars', 'ncmaz_fse_core_modify_query_vars_for_query_blocks', 10, 2);
+add_filter('render_block_core/avatar', 'ciseco_enable_logged_in_user_avatar_render_block', 10, 3);

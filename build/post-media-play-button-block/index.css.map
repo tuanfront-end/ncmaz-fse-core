@@ -1,1 +1,0 @@
-{"version":3,"file":"post-media-play-button-block/index.css","mappings":";;;AAEC;EACC;AADF,C","sources":["webpack://ncmaz-fse-core/./src/post-media-play-button-block/editor.scss"],"sourcesContent":[".wp-block-ncmfse-post-media-play-button-PanelBody__settings\n\t.components-toggle-group-control {\n\tsvg {\n\t\tcolor: currentColor;\n\t}\n}\n"],"names":[],"sourceRoot":""}

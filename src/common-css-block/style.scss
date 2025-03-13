@@ -116,40 +116,6 @@
 	}
 }
 
-//for post reaction button blocks: Like button block, Save button block, View count button block, Comment button block,
-.nc-post-reaction-button {
-	cursor: pointer;
-	line-height: 1;
-	text-decoration: none;
-	font-size: var(--wp--preset--font-size--xs);
-	border: 0px solid transparent;
-	background-color: initial;
-	background-image: none;
-	&:focus {
-		outline: none;
-	}
-	&.is-actived,
-	&:hover {
-		color: var(--active-color, inherit) !important;
-		border-color: var(--active-border-color, initial) !important;
-		background-color: var(--active-background-color, initial) !important;
-		.wp-block-outermost-icon-block .icon-container {
-			color: var(--active-color, inherit) !important;
-			transition-duration: 0.3s;
-		}
-	}
-	&.is-actived {
-		svg {
-			fill: var(--active-color, inherit);
-			color: var(--active-color, inherit);
-		}
-	}
-	.nc__count {
-		min-width: 0.5rem;
-		text-align: start;
-	}
-}
-
 // MODAL LIGHT BLOCK
 .wp-block-cloudcatch-light-modal-block__wrapper {
 	background-color: rgba(0, 0, 0, 0.4);
