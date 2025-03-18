@@ -1,0 +1,62 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ncmfse/term-query-loop",
+	"title": "Ncmaz Terms Query Loop",
+	"category": "ncmfse",
+	"description": "An advanced block that allows displaying post types based on different query parameters and visual configurations.",
+	"textdomain": "default",
+	"attributes": {
+		"myQueryId": {
+			"type": "number",
+			"myType": 0
+		},
+		"myQuery": {
+			"type": "object",
+			"default": {
+				"perPage": 8,
+				"isFilterByOrder": true,
+				"taxonomySlug": "category",
+				"termIdList": [],
+				"inherit": false,
+				"postType": "post",
+				"orderBy": "name",
+				"order": "desc",
+				"parentIdString": null,
+				"hideEmpty": true,
+				"excludeIdList": [],
+				"page": 1
+			}
+		},
+		"tagName": {
+			"type": "string",
+			"default": "div"
+		},
+		"namespace": {
+			"type": "string"
+		},
+		"enhancedPagination": {
+			"type": "boolean",
+			"default": false
+		},
+		"displayLayout": {
+			"type": "object",
+			"myType": {}
+		}
+	},
+	"providesContext": {
+		"ncmazfse_termQueryId": "myQueryId",
+		"ncmazfse_termQuery": "myQuery",
+		"displayLayout": "displayLayout",
+		"enhancedPagination": "enhancedPagination"
+	},
+	"supports": {
+		"align": ["wide", "full"],
+		"html": false,
+		"layout": true,
+		"interactivity": true
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ncmfse/post-media-play-button",
+  "version": "0.1.0",
+  "title": "Ncmaz Post Media Play Button",
+  "category": "ncmfse",
+  "usesContext": [
+    "postId",
+    "postType",
+    "queryId"
+  ],
+  "description": "A block that show play button for audio/video posts. Button will not appear if post is not audio/video or does not have url for media.",
+  "example": {},
+  "attributes": {
+    "iconType": {
+      "type": "string",
+      "default": "1"
+    },
+    "hideIfAudio": {
+      "type": "boolean",
+      "default": false
+    },
+    "hideIfVideo": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "supports": {
+    "anchor": false,
+    "html": false,
+    "color": {
+      "gradients": true,
+      "__experimentalDefaultControls": {
+        "background": true,
+        "text": true
+      }
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "__experimentalDefaultControls": {
+        "fontSize": true
+      }
+    },
+    "shadow": true,
+    "spacing": {
+      "padding": true,
+      "margin": true,
+      "__experimentalDefaultControls": {
+        "padding": true
+      }
+    },
+    "__experimentalBorder": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true,
+      "__experimentalDefaultControls": {
+        "color": true,
+        "radius": true,
+        "style": true,
+        "width": true
+      }
+    },
+    "interactivity": true
+  },
+  "textdomain": "default",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "viewScriptModule": "file:./view.js"
+}

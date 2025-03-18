@@ -1,0 +1,14 @@
+// Lowest specificity on wrapper margins to avoid overriding layout styles.
+:where(.wp-block-ncmfse-term-description) {
+	// This block has customizable padding, border-box makes that more predictable.
+	box-sizing: border-box;
+
+	margin-top: var(--wp--style--block-gap);
+	margin-bottom: var(--wp--style--block-gap);
+}
+
+// Zero out the margin on the excerpt paragraph, to match the body paragraphs.
+.wp-block-ncmfse-term-description__description {
+	margin-top: 0;
+	margin-bottom: 0;
+}

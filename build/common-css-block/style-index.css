@@ -215,6 +215,36 @@
   display: none;
 }
 
+.nc-post-reaction-button {
+  cursor: pointer;
+  line-height: 1;
+  text-decoration: none;
+  font-size: var(--wp--preset--font-size--xs);
+  border: 0px solid transparent;
+  background-color: initial;
+  background-image: none;
+}
+.nc-post-reaction-button:focus {
+  outline: none;
+}
+.nc-post-reaction-button.is-actived, .nc-post-reaction-button:hover {
+  color: var(--active-color, inherit) !important;
+  border-color: var(--active-border-color, initial) !important;
+  background-color: var(--active-background-color, initial) !important;
+}
+.nc-post-reaction-button.is-actived .wp-block-outermost-icon-block .icon-container, .nc-post-reaction-button:hover .wp-block-outermost-icon-block .icon-container {
+  color: var(--active-color, inherit) !important;
+  transition-duration: 0.3s;
+}
+.nc-post-reaction-button.is-actived svg {
+  fill: var(--active-color, inherit);
+  color: var(--active-color, inherit);
+}
+.nc-post-reaction-button .nc__count {
+  min-width: 0.5rem;
+  text-align: start;
+}
+
 .wp-block-cloudcatch-light-modal-block__wrapper {
   background-color: rgba(0, 0, 0, 0.4);
 }
