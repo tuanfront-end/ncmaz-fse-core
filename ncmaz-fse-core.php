@@ -44,7 +44,7 @@ function ncmaz_fse_core_register_blocks_init()
 {
 	$ncmfse_blocks = [
 		'common-css-block',
-
+		'fe-editor-block',
 	];
 	foreach ($ncmfse_blocks as $block) {
 		register_block_type(__DIR__ . '/build/' . $block);
