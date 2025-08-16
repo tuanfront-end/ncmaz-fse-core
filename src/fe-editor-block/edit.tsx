@@ -49,9 +49,9 @@ function Edit(props: EditProps<Attributes>) {
 					/>
 					<NumberControl
 						__next40pxDefaultSize
-						onChange={(newValue) => {
-							if (typeof newValue === "number") {
-								setAttributes({ maxCategoriesSelect: newValue });
+						onChange={(value) => {
+							if (!isNaN(Number(value))) {
+								setAttributes({ maxCategoriesSelect: Number(value) });
 							}
 						}}
 						label={__("Max Categories Select", "ncmfse")}
@@ -60,9 +60,9 @@ function Edit(props: EditProps<Attributes>) {
 					/>
 					<NumberControl
 						__next40pxDefaultSize
-						onChange={(newValue) => {
-							if (typeof newValue === "number") {
-								setAttributes({ maxTagsSelect: newValue });
+						onChange={(value) => {
+							if (!isNaN(Number(value))) {
+								setAttributes({ maxTagsSelect: Number(value) });
 							}
 						}}
 						label={__("Max Tags Select", "ncmfse")}
@@ -79,8 +79,8 @@ function Edit(props: EditProps<Attributes>) {
 						min={0}
 						value={maxFileSizeUpload}
 						onChange={(value) => {
-							if (typeof value === "number") {
-								setAttributes({ maxFileSizeUpload: value });
+							if (!isNaN(Number(value))) {
+								setAttributes({ maxFileSizeUpload: Number(value) });
 							}
 						}}
 					/>

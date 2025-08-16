@@ -87,10 +87,10 @@ function Edit(props) {
     }
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.__experimentalNumberControl, {
     __next40pxDefaultSize: true,
-    onChange: newValue => {
-      if (typeof newValue === "number") {
+    onChange: value => {
+      if (!isNaN(Number(value))) {
         setAttributes({
-          maxCategoriesSelect: newValue
+          maxCategoriesSelect: Number(value)
         });
       }
     },
@@ -99,10 +99,10 @@ function Edit(props) {
     value: maxCategoriesSelect
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.__experimentalNumberControl, {
     __next40pxDefaultSize: true,
-    onChange: newValue => {
-      if (typeof newValue === "number") {
+    onChange: value => {
+      if (!isNaN(Number(value))) {
         setAttributes({
-          maxTagsSelect: newValue
+          maxTagsSelect: Number(value)
         });
       }
     },
@@ -119,9 +119,9 @@ function Edit(props) {
     min: 0,
     value: maxFileSizeUpload,
     onChange: value => {
-      if (typeof value === "number") {
+      if (!isNaN(Number(value))) {
         setAttributes({
-          maxFileSizeUpload: value
+          maxFileSizeUpload: Number(value)
         });
       }
     }

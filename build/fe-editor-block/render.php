@@ -60,7 +60,12 @@ $post_formats = get_theme_support('post-formats');
 $result_post_formats = [];
 if ($post_formats && is_array($post_formats[0])) {
 	$result_post_formats = $post_formats[0];
+	// check 'standard' not in $result_post_formats
+	if (!in_array('standard', $result_post_formats)) {
+		$result_post_formats[] = 'standard';
+	}
 }
+
 
 wp_register_script('fe-editor-block-php-to-js', '');
 wp_enqueue_script('fe-editor-block-php-to-js');
