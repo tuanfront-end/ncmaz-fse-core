@@ -76,6 +76,8 @@ wp_localize_script('fe-editor-block-php-to-js', 'feEditorBlockData', [
 	'categories' => $result_categories,
 	'tags' => $result_tags,
 	'postFormats' => $result_post_formats,
+	'default_category' => get_option('default_category'),
+
 ]);
 
 ?>

@@ -10,13 +10,13 @@ import {
 	RangeControl,
 } from "@wordpress/components";
 // @ts-ignore
-import FeEditorPng from "./fe-editor.png";
+import feEditorPngUrl from "./fe-editor.png";
 
 type Attributes = TAttrs<typeof metadata.attributes>;
 
 function Edit(props: EditProps<Attributes>) {
 	const {
-		clientId,
+		// clientId,
 		attributes,
 		setAttributes,
 		context: {},
@@ -88,7 +88,7 @@ function Edit(props: EditProps<Attributes>) {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<img src={FeEditorPng} alt="Front-end Editor Block" />
+				<img src={feEditorPngUrl} alt="Front-end Editor Block" />
 			</div>
 		</>
 	);
