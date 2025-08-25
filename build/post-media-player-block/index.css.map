@@ -1,1 +1,0 @@
-{"version":3,"file":"post-media-player-block/index.css","mappings":";;;AAAA;EACC;EACA;EACA;AACD,C","sources":["webpack://ncmaz-fse-core/./src/post-media-player-block/editor.scss"],"sourcesContent":[".wp-block-ncmfse-post-media-player {\n\tpadding: 1rem;\n\tborder: 2px dashed #f00;\n\tborder-radius: 8px;\n}\n"],"names":[],"sourceRoot":""}
