@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ncmfse/fe-editor-block",
+  "version": "0.1.0",
+  "title": "FE Editor Block",
+  "category": "ncmfse",
+  "usesContext": [],
+  "description": "FE Editor Block is a custom block for the Ncmaz FSE plugin that allows users to edit/submission content in the front-end editor.",
+  "example": {},
+  "attributes": {
+    "multiCategorySelect": {
+      "type": "boolean",
+      "default": true,
+      "description": "Controls whether to allow multiple categories to be selected."
+    },
+    "maxTagsSelect": {
+      "type": "number",
+      "default": 15,
+      "description": "Maximum number of tags that can be selected."
+    },
+    "maxCategoriesSelect": {
+      "type": "number",
+      "default": 15,
+      "description": "Maximum number of categories that can be selected."
+    },
+    "maxFileSizeUpload": {
+      "type": "number",
+      "default": 5,
+      "description": "Maximum file size for uploads in MB."
+    }
+  },
+  "supports": {
+    "anchor": false,
+    "html": false,
+    "color": {
+      "gradients": true,
+      "__experimentalDefaultControls": {
+        "background": true,
+        "text": true
+      }
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "__experimentalFontFamily": true,
+      "__experimentalFontWeight": true,
+      "__experimentalFontStyle": true,
+      "__experimentalTextTransform": true,
+      "__experimentalTextDecoration": true,
+      "__experimentalLetterSpacing": true,
+      "__experimentalWritingMode": true,
+      "__experimentalDefaultControls": {
+        "fontSize": true
+      }
+    }
+  },
+  "textdomain": "default",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}
